@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+    <meta name="keywords" content="practo clone, doccure, doctor appointment, Practo clone html template, doctor booking template">
+    <meta name="author" content="Practo Clone HTML Template - Doctor Booking Template">
+    <meta property="og:url" content="https://doccure.dreamstechnologies.com/html/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Doctors Appointment HTML Website Templates | Doccure">
+    <meta property="og:description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+    <meta property="og:image" content={{ asset('img/preview-banner.jpg') }}>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="https://doccure.dreamstechnologies.com/html/">
+    <meta property="twitter:url" content="https://doccure.dreamstechnologies.com/html/">
+    <meta name="twitter:title" content="Doctors Appointment HTML Website Templates | Doccure">
+    <meta name="twitter:description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+    <meta name="twitter:image" content={{ asset('img/preview-banner.jpg') }}>
+    <title>Doccure</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href={{ asset('img/favicon.png') }} type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href={{ asset('css/bootstrap.min.css') }}>
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href={{ asset('plugins/fontawesome/css/fontawesome.min.css') }}>
+    <link rel="stylesheet" href={{ asset('plugins/fontawesome/css/all.min.css') }}>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href={{ asset('css/feather.css') }}>
+
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href={{ asset('css/bootstrap-datetimepicker.min.css') }}>
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href={{ asset('css/owl.carousel.min.css') }}>
+
+    <!-- Animation CSS -->
+    <link rel="stylesheet" href={{ asset('css/aos.css') }}>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href={{ asset('css/custom.css') }}>
+
+</head>
+
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper home-one">
+
+        <!-- Header -->
+        <header class="header header-custom header-fixed header-one home-head-one">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg header-nav">
+                    <div class="navbar-header">
+                        <a id="mobile_btn" href="javascript:void(0);">
+                            <span class="bar-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </a>
+                        <a href="index.html" class="navbar-brand logo">
+                            <img src={{ asset('img/logo-01.svg') }} class="img-fluid" alt="Logo">
+                        </a>
+                    </div>
+                    <div class="main-menu-wrapper">
+                        <div class="menu-header">
+                            <a href="index.html" class="menu-logo">
+                                <img src={{ asset('img/logo-01.svg') }} class="img-fluid" alt="Logo">
+                            </a>
+                            <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </div>
+                        <ul class="main-nav">
+                            <li class="has-submenu megamenu active">
+                                <a href="javascript:void(0);">Home <i class="fas fa-chevron-down"></i></a>
+                                <ul class="submenu mega-submenu">
+                                    <li>
+                                        <div class="megamenu-wrapper">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo active">
+                                                        <div class="demo-img">
+                                                            <a href="index.html" class="inner-demo-img"><img src={{ asset('img/home/home-01.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index.html" class="inner-demo-img">General Home 1</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-2.html" class="inner-demo-img"><img src={{ asset('img/home/home-02.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-2.html" class="inner-demo-img">General Home 2</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-3.html" class="inner-demo-img"><img src={{ asset('img/home/home-03.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-3.html" class="inner-demo-img">General Home 3</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-5.html" class="inner-demo-img"><img src={{ asset('img/home/home-04.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-5.html" class="inner-demo-img">Cardiology</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-6.html" class="inner-demo-img"><img src={{ asset('img/home/home-05.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-6.html" class="inner-demo-img">Eyecare</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo ">
+                                                        <div class="demo-img">
+                                                            <a href="index-7.html" class="inner-demo-img"><img src={{ asset('img/home/home-06.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-7.html" class="inner-demo-img">Veterinary</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-8.html" class="inner-demo-img"><img src={{ asset('img/home/home-07.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-8.html" class="inner-demo-img">Pediatric</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-9.html" class="inner-demo-img"><img src={{ asset('img/home/home-08.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-9.html" class="inner-demo-img">Fertility</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-10.html" class="inner-demo-img"><img src={{ asset('img/home/home-09.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-10.html" class="inner-demo-img">ENT</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-11.html" class="inner-demo-img"><img src={{ asset('img/home/home-10.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-11.html" class="inner-demo-img">Cosmetics</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-12.html" class="inner-demo-img"><img src={{ asset('img/home/home-11.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-12.html" class="inner-demo-img">Lab Test</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="pharmacy-index.html" class="inner-demo-img"><img src={{ asset('img/home/home-12.jpg') }} class="img-fluid" alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-12.html" class="inner-demo-img">Pharmacy</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-13.html" class="inner-demo-img"><img src={{ asset('img/home/home-13.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-13.html" class="inner-demo-img">Home Care</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="single-demo">
+                                                        <div class="demo-img">
+                                                            <a href="index-14.html" class="inner-demo-img"><img src={{ asset('img/home/home-14.jpg') }} class="img-fluid " alt="img"></a>
+                                                        </div>
+                                                        <div class="demo-info">
+                                                            <a href="index-14.html" class="inner-demo-img">Dentists</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="javascript:void(0);">Doctors <i class="fas fa-chevron-down"></i></a>
+                                <ul class="submenu">
+                                    <li><a href="doctor-dashboard.html">Doctor Dashboard</a></li>
+                                    <li><a href="appointments.html">Appointments</a></li>
+                                    <li><a href="available-timings.html">Available Timing</a></li>
+                                    <li><a href="my-patients.html">Patients List</a></li>
+                                    <li><a href="patient-profile.html">Patients Profile</a></li>
+                                    <li><a href="chat-doctor.html">Chat</a></li>
+                                    <li><a href="invoices.html">Invoices</a></li>
+                                    <li><a href="doctor-profile-settings.html">Profile Settings</a></li>
+                                    <li><a href="reviews.html">Reviews</a></li>
+                                    <li><a href="doctor-register.html">Doctor Register</a></li>
+                                    <li class="has-submenu">
+                                        <a href="doctor-blog.html">Blog</a>
+                                        <ul class="submenu">
+                                            <li><a href="doctor-blog.html">Blog</a></li>
+                                            <li><a href="blog-details.html">Blog view</a></li>
+                                            <li><a href="doctor-add-blog.html">Add Blog</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="javascript:void(0);">Patients <i class="fas fa-chevron-down"></i></a>
+                                <ul class="submenu">
+                                    <li><a href="patient-dashboard.html">Patient Dashboard</a></li>
+                                    <li class="has-submenu">
+                                        <a href="javascript:void(0);">Doctors</a>
+                                        <ul class="submenu inner-submenu">
+                                            <li><a href="map-grid.html">Map Grid</a></li>
+                                            <li><a href="map-list.html">Map List</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="javascript:void(0);">Search Doctor</a>
+                                        <ul class="submenu inner-submenu">
+                                            <li><a href="search.html">Search Doctor 1</a></li>
+                                            <li><a href="search-2.html">Search Doctor 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="javascript:void(0);">Doctor Profile</a>
+                                        <ul class="submenu inner-submenu">
+                                            <li><a href="doctor-profile.html">Doctor Profile 1</a></li>
+                                            <li><a href="doctor-profile-2.html">Doctor Profile 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="javascript:void(0);">Booking</a>
+                                        <ul class="submenu inner-submenu">
+                                            <li><a href="booking.html">Booking 1</a></li>
+                                            <li><a href="booking-2.html">Booking 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="checkout.html">Checkout</a></li>
+                                    <li><a href="booking-success.html">Booking Success</a></li>
+                                    <li><a href="favourites.html">Favourites</a></li>
+                                    <li><a href="chat.html">Chat</a></li>
+                                    <li><a href="profile-settings.html">Profile Settings</a></li>
+                                    <li><a href="change-password.html">Change Password</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="javascript:void(0);">Pharmacy <i class="fas fa-chevron-down"></i></a>
+                                <ul class="submenu">
+                                    <li><a href="pharmacy-index.html">Pharmacy</a></li>
+                                    <li><a href="pharmacy-details.html">Pharmacy Details</a></li>
+                                    <li><a href="pharmacy-search.html">Pharmacy Search</a></li>
+                                    <li><a href="product-all.html">Product</a></li>
+                                    <li><a href="product-description.html">Product Description</a></li>
+                                    <li><a href="cart.html">Cart</a></li>
+                                    <li><a href="product-checkout.html">Product Checkout</a></li>
+                                    <li><a href="payment-success.html">Payment Success</a></li>
+                                    <li><a href="pharmacy-register.html">Pharmacy Register</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="javascript:void(0);">Pages <i class="fas fa-chevron-down"></i></a>
+                                <ul class="submenu">
+                                    <li><a href="about-us.html">About Us</a></li>
+                                    <li><a href="contact-us.html">Contact Us</a></li>
+                                    <li class="has-submenu">
+                                        <a href="javascript:void(0);">Call</a>
+                                        <ul class="submenu inner-submenu">
+                                            <li><a href="voice-call.html">Voice Call</a></li>
+                                            <li><a href="video-call.html">Video Call</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="javascript:void(0);">Invoices</a>
+                                        <ul class="submenu inner-submenu">
+                                            <li><a href="invoices.html">Invoices</a></li>
+                                            <li><a href="invoice-view.html">Invoice View</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="javascript:void(0);">Authentication</a>
+                                        <ul class="submenu inner-submenu">
+                                            <li><a href="login-email.html">Login Email</a></li>
+                                            <li><a href="login-phone.html">Login Phone</a></li>
+                                            <li><a href="doctor-signup.html">Doctor Signup</a></li>
+                                            <li><a href="patient-signup.html">Patient Signup</a></li>
+                                            <li><a href="forgot-password.html">Forgot Password 1</a></li>
+                                            <li><a href="forgot-password2.html">Forgot Password 2</a></li>
+                                            <li><a href="login-email-otp.html">Email OTP</a></li>
+                                            <li><a href="login-phone-otp.html">Phone OTP</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="javascript:void(0);">Error Pages</a>
+                                        <ul class="submenu inner-submenu">
+                                            <li><a href="error-404.html">404 Error</a></li>
+                                            <li><a href="error-500.html">500 Error</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="blank-page.html">Starter Page</a></li>
+                                    <li><a href="pricing.html">Pricing Plan</a></li>
+                                    <li><a href="faq.html">FAQ</a></li>
+                                    <li><a href="maintenance.html">Maintenance</a></li>
+                                    <li><a href="coming-soon.html">Coming Soon</a></li>
+                                    <li><a href="terms-condition.html">Terms & Condition</a></li>
+                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                    <li><a href="components.html">Components</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#">Blog <i class="fas fa-chevron-down"></i></a>
+                                <ul class="submenu">
+                                    <li><a href="blog-list.html">Blog List</a></li>
+                                    <li><a href="blog-grid.html">Blog Grid</a></li>
+                                    <li><a href="blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#">Admin <i class="fas fa-chevron-down"></i></a>
+                                <ul class="submenu">
+                                    <li><a href="admin/index.html" target="_blank">Admin</a></li>
+                                    <li><a href="pharmacy/index.html" target="_blank">Pharmacy Admin</a></li>
+                                </ul>
+                            </li>
+                            <li class="searchbar">
+                                <a href="javascript:void(0);"><i class="feather-search"></i></a>
+                                <div class="togglesearch">
+                                    <form action="search.html">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control">
+                                            <button type="submit" class="btn">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="login-link"><a href="login.html">Login / Signup</a></li>
+                        </ul>
+                    </div>
+                    <ul class="nav header-navbar-rht">
+                        <li class="register-btn">
+                            <a href="register.html" class="btn reg-btn"><i class="feather-user"></i>Register</a>
+                        </li>
+                        <li class="register-btn">
+                            <a href="login.html" class="btn btn-primary log-btn"><i class="feather-lock"></i>Login</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <!-- /Header -->
+
+        <!-- Home Banner -->
+        <section class="section section-search">
+            <div class="container-fluid">
+                <div class="banner-wrapper">
+                    <div class="banner-header text-center aos" data-aos="fade-up">
+                        <h1>Search Doctor, Make an Appointment</h1>
+                        <p>Discover the best doctors, clinic & hospital the city nearest to you.</p>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="search-box">
+                        <form action="search.html">
+                            <div class="mb-3 search-location aos" data-aos="fade-up">
+                                <input type="text" class="form-control" placeholder="Search Location">
+                                <span class="form-text">Based on your Location</span>
+                            </div>
+                            <div class="mb-3 search-info aos" data-aos="fade-up">
+                                <input type="text" class="form-control" placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc">
+                                <span class="form-text">Ex : Dental or Sugar Check up etc</span>
+                            </div>
+                            <button type="submit" class="btn btn-primary search-btn mt-0 aos" data-aos="fade-up"><i class="fas fa-search"></i> <span>Search</span></button>
+                        </form>
+                    </div>
+                    <!-- /Search -->
+
+                </div>
+            </div>
+        </section>
+        <!-- /Home Banner -->
+
+
+        <!-- Specialities Section -->
+        <section class="specialities-section-one">
+            <div class="container">
+                <div class="service-sec-one">
+                    <div class="row row-cols-7 row-cols-xxl-7 row-cols-xl-4 row-cols-lg-4 rows-cols-md-6 justify-content-center">
+                        <div class="col-12 d-flex col-xxl col-lg-3 col-sm-6">
+                            <a href="javascript:void(0);" class="serv-wrap blue-bg flex-fill">
+                                <span>
+                                    <img src={{ asset('img/icons/service-01.svg') }} alt="heart-image">
+                                </span>
+                                <h4>Book Appointment</h4>
+                            </a>
+                        </div>
+                        <div class="col-12 d-flex col-xxl col-lg-3 col-sm-6">
+                            <a href="javascript:void(0);" class="serv-wrap green-bg flex-fill">
+                                <span>
+                                    <img src={{ asset('img/icons/service-02.svg') }} alt="heart-image">
+                                </span>
+                                <h4>Lab Testing Services</h4>
+                            </a>
+                        </div>
+                        <div class="col-12 d-flex col-xxl col-lg-3 col-sm-6">
+                            <a href="javascript:void(0);" class="serv-wrap info-bg flex-fill">
+                                <span>
+                                    <img src={{ asset('img/icons/service-03.svg') }} alt="heart-image">
+                                </span>
+                                <h4>Medicines & Supplies</h4>
+                            </a>
+                        </div>
+                        <div class="col-12 d-flex col-xxl col-lg-3 col-sm-6">
+                            <a href="javascript:void(0);" class="serv-wrap red-bg flex-fill">
+                                <span>
+                                    <img src={{ asset('img/icons/service-04.svg') }} alt="heart-image">
+                                </span>
+                                <h4>Hospitals / Clinics</h4>
+                            </a>
+                        </div>
+                        <div class="col-12 d-flex col-xxl col-lg-3 col-sm-6">
+                            <a href="javascript:void(0);" class="serv-wrap success-bg flex-fill">
+                                <span>
+                                    <img src={{ asset('img/icons/service-05.svg') }} alt="heart-image">
+                                </span>
+                                <h4>Health Care Services</h4>
+                            </a>
+                        </div>
+                        <div class="col-12 d-flex col-xxl col-lg-3 col-sm-6">
+                            <a href="javascript:void(0);" class="serv-wrap pink-bg flex-fill">
+                                <span>
+                                    <img src={{ asset('img/icons/service-06.svg') }} alt="heart-image">
+                                </span>
+                                <h4>Talk to Doctor’s</h4>
+                            </a>
+                        </div>
+                        <div class="col-12 d-flex col-xxl col-lg-3 col-sm-6">
+                            <a href="javascript:void(0);" class="serv-wrap danger-bg flex-fill">
+                                <span>
+                                    <img src={{ asset('img/icons/service-07.svg') }} alt="heart-image">
+                                </span>
+                                <h4>Home Care Services</h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-7 aos" data-aos="fade-up">
+                        <div class="section-header-one section-header-slider">
+                            <h2 class="section-title">Specialities</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-5  aos" data-aos="fade-up">
+                        <div class="owl-nav slide-nav-1 text-end nav-control"></div>
+                    </div>
+                </div>
+                <div class="owl-carousel specialities-slider-one owl-theme aos" data-aos="fade-up">
+                    <div class="item">
+                        <div class="specialities-item">
+                            <div class="specialities-img">
+                                <span><img src={{ asset('img/specialities/specialities-01.svg') }} alt="heart-image"></span>
+                            </div>
+                            <p>Cardiology</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="specialities-item">
+                            <div class="specialities-img">
+                                <span><img src={{ asset('img/specialities/specialities-02.svg') }} alt="brain-image"></span>
+                            </div>
+                            <p>Neurology</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="specialities-item">
+                            <div class="specialities-img">
+                                <span><img src={{ asset('img/specialities/specialities-03.svg') }} alt="kidney-image"></span>
+                            </div>
+                            <p>Urology</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="specialities-item">
+                            <div class="specialities-img">
+                                <span><img src={{ asset('img/specialities/specialities-04.svg') }} alt="bone-image"></span>
+                            </div>
+                            <p>Orthopedic</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="specialities-item">
+                            <div class="specialities-img">
+                                <span><img src={{ asset('img/specialities/specialities-05.svg') }} alt="dentist"></span>
+                            </div>
+                            <p>Dentist</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="specialities-item">
+                            <div class="specialities-img">
+                                <span><img src={{ asset('img/specialities/specialities-06.svg') }} alt="eye-image"></span>
+                            </div>
+                            <p>Ophthalmology</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="specialities-item">
+                            <div class="specialities-img">
+                                <span><img src={{ asset('img/specialities/specialities-02.svg') }} alt="brain-image"></span>
+                            </div>
+                            <p>Neurology</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="specialities-btn aos" data-aos="fade-up">
+                    <a href="search.html" class="btn">
+                        See All Specialities
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- /Specialities Section -->
+
+        <!-- Doctors Section -->
+        <section class="doctors-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 aos" data-aos="fade-up">
+                        <div class="section-header-one section-header-slider text-center">
+                            <h2 class="section-title">Best Doctors</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-carousel doctor-slider-one owl-theme aos" data-aos="fade-up">
+
+                    <!-- Doctor Item -->
+                    <div class="item">
+                        <div class="doctor-profile-widget doc-item">
+                            <div class="doc-pro-img">
+                                <a href="doctor-profile.html">
+                                    <div class="doctor-profile-img">
+                                        <img src={{ asset('img/doctors/doctor-03.jpg') }} class="img-fluid" alt="Ruby Perrin">
+                                    </div>
+                                </a>
+                                <div class="doctor-amount">
+                                    <span>$200</span>
+                                </div>
+                            </div>
+                            <div class="doc-content">
+                                <div class="doc-pro-info">
+                                    <div class="doc-pro-name">
+                                        <a href="doctor-profile.html">Dr. Downer</a>
+                                        <p>Orthopedic</p>
+                                    </div>
+                                    <div class="reviews-ratings">
+                                        <p>
+                                            <span><i class="fas fa-star"></i> 4.5</span> (35)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="doc-pro-location">
+                                    <p><i class="feather-map-pin"></i> Newyork, USA</p>
+                                    <span class="badge badge-success doc-badge"><i class="fa-solid fa-circle"></i>Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Doctor Item -->
+
+                    <!-- Doctor Item -->
+                    <div class="item">
+                        <div class="doctor-profile-widget doc-item">
+                            <div class="doc-pro-img">
+                                <a href="doctor-profile.html">
+                                    <div class="doctor-profile-img">
+                                        <img src={{ asset('img/doctors/doctor-02.jpg') }} class="img-fluid" alt="Paul Richard">
+                                    </div>
+                                </a>
+                                <div class="doctor-amount">
+                                    <span>$300</span>
+                                </div>
+                            </div>
+                            <div class="doc-content">
+                                <div class="doc-pro-info">
+                                    <div class="doc-pro-name">
+                                        <a href="doctor-profile.html">Dr. John Doe</a>
+                                        <p>Dentist</p>
+                                    </div>
+                                    <div class="reviews-ratings">
+                                        <p>
+                                            <span><i class="fas fa-star"></i> 4.3</span> (45)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="doc-pro-location">
+                                    <p><i class="feather-map-pin"></i> Austin, TX</p>
+                                    <span class="badge badge-success doc-badge"><i class="fa-solid fa-circle"></i>Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Doctor Item -->
+
+                    <!-- Doctor Item -->
+                    <div class="item">
+                        <div class="doctor-profile-widget doc-item">
+                            <div class="doc-pro-img">
+                                <a href="doctor-profile.html">
+                                    <div class="doctor-profile-img">
+                                        <img src={{ asset('img/doctors/doctor-04.jpg') }} class="img-fluid" alt="Darren Elder">
+                                    </div>
+                                </a>
+                                <div class="doctor-amount">
+                                    <span>$100</span>
+                                </div>
+                            </div>
+                            <div class="doc-content">
+                                <div class="doc-pro-info">
+                                    <div class="doc-pro-name">
+                                        <a href="doctor-profile.html">Dr. Aviles</a>
+                                        <p>Neurology</p>
+                                    </div>
+                                    <div class="reviews-ratings">
+                                        <p>
+                                            <span><i class="fas fa-star"></i> 4.0</span> (20)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="doc-pro-location">
+                                    <p><i class="feather-map-pin"></i> Newyork, USA</p>
+                                    <span class="badge badge-danger doc-badge"><i class="fa-solid fa-circle"></i>Unavailable</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Doctor Item -->
+
+                    <!-- Doctor Item -->
+                    <div class="item">
+                        <div class="doctor-profile-widget doc-item">
+                            <div class="doc-pro-img">
+                                <a href="doctor-profile.html">
+                                    <div class="doctor-profile-img">
+                                        <img src={{ asset('img/doctors/doctor-05.jpg') }} class="img-fluid" alt="Sofia Brient">
+                                    </div>
+                                </a>
+                                <div class="doctor-amount">
+                                    <span>$250</span>
+                                </div>
+                            </div>
+                            <div class="doc-content">
+                                <div class="doc-pro-info">
+                                    <div class="doc-pro-name">
+                                        <a href="doctor-profile.html">Dr. Palmore</a>
+                                        <p>Immunologist</p>
+                                    </div>
+                                    <div class="reviews-ratings">
+                                        <p>
+                                            <span><i class="fas fa-star"></i> 4.5</span> (35)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="doc-pro-location">
+                                    <p><i class="feather-map-pin"></i> Waipahu, HI</p>
+                                    <span class="badge badge-success doc-badge"><i class="fa-solid fa-circle"></i>Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Doctor Item -->
+
+                    <!-- Doctor Item -->
+                    <div class="item">
+                        <div class="doctor-profile-widget doc-item">
+                            <div class="doc-pro-img">
+                                <a href="doctor-profile.html">
+                                    <div class="doctor-profile-img">
+                                        <img src={{ asset('img/doctors/doctor-01.jpg') }} class="img-fluid" alt="John Doe">
+                                    </div>
+                                </a>
+                                <div class="doctor-amount">
+                                    <span>$880</span>
+                                </div>
+                            </div>
+                            <div class="doc-content">
+                                <div class="doc-pro-info">
+                                    <div class="doc-pro-name">
+                                        <a href="doctor-profile.html">Dr. Paul Richard</a>
+                                        <p>Dentist</p>
+                                    </div>
+                                    <div class="reviews-ratings">
+                                        <p>
+                                            <span><i class="fas fa-star"></i> 4.4</span> (50)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="doc-pro-location">
+                                    <p><i class="feather-map-pin"></i> California, USA</p>
+                                    <span class="badge badge-success doc-badge"><i class="fa-solid fa-circle"></i>Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Doctor Item -->
+
+                </div>
+            </div>
+        </section>
+        <!-- /Doctors Section -->
+
+        <!-- Work Section -->
+        <section class="work-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 work-img-info aos" data-aos="fade-up">
+                        <div class="work-img">
+                            <img src={{ asset('img/work-img.png') }} class="img-fluid" alt="doctor-image">
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-12 work-details">
+                        <div class="section-header-one aos" data-aos="fade-up">
+                            <h5>How it Works</h5>
+                            <h2 class="section-title">4 easy steps to get your solution</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 aos" data-aos="fade-up">
+                                <div class="work-info">
+                                    <div class="work-icon">
+                                        <span><img src={{ asset('img/icons/work-01.svg') }} alt="search-doctor-icon"></span>
+                                    </div>
+                                    <div class="work-content">
+                                        <h5>Search Doctor</h5>
+                                        <p>Search for a doctor based on specialization, location, or availability. </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 aos" data-aos="fade-up">
+                                <div class="work-info">
+                                    <div class="work-icon">
+                                        <span><img src={{ asset('img/icons/work-02.svg') }} alt="doctor-profile-icon"></span>
+                                    </div>
+                                    <div class="work-content">
+                                        <h5>Check Doctor Profile</h5>
+                                        <p>Explore detailed doctor profiles on our platform to make informed healthcare decisions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 aos" data-aos="fade-up">
+                                <div class="work-info">
+                                    <div class="work-icon">
+                                        <span><img src={{ asset('img/icons/work-03.svg') }} alt="calendar-icon"></span>
+                                    </div>
+                                    <div class="work-content">
+                                        <h5>Schedule Appointment</h5>
+                                        <p>After choose your preferred doctor, select a convenient time slot, & confirm your appointment.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 aos" data-aos="fade-up">
+                                <div class="work-info">
+                                    <div class="work-icon">
+                                        <span><img src={{ asset('img/icons/work-04.svg') }} alt="solution-icon"></span>
+                                    </div>
+                                    <div class="work-content">
+                                        <h5>Get Your Solution</h5>
+                                        <p>Discuss your health concerns with the doctor and receive personalized advice & solution.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Work Section -->
+
+        <!-- Articles Section -->
+        <section class="articles-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 aos" data-aos="fade-up">
+                        <div class="section-header-one text-center">
+                            <h2 class="section-title">Latest Articles</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 d-flex aos" data-aos="fade-up">
+                        <div class="articles-grid w-100">
+                            <div class="articles-info">
+                                <div class="articles-left">
+                                    <a href="blog-details.html">
+                                        <div class="articles-img">
+                                            <img src={{ asset('img/blog/blog-11.jpg') }} class="img-fluid" alt="John Doe">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="articles-right">
+                                    <div class="articles-content">
+                                        <ul class="articles-list nav">
+                                            <li>
+                                                <i class="feather-user"></i> John Doe
+                                            </li>
+                                            <li>
+                                                <i class="feather-calendar"></i> 13 Aug, 2023
+                                            </li>
+                                        </ul>
+                                        <h4>
+                                            <a href="blog-details.html">Navigating Telehealth: A Guide to Virtual Healthcare Visits</a>
+                                        </h4>
+                                        <p>Explore the benefits & challenges of virtual healthcare appointments, along with tips for making good health.</p>
+                                        <a href="blog-details.html" class="btn">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 d-flex aos" data-aos="fade-up">
+                        <div class="articles-grid w-100">
+                            <div class="articles-info">
+                                <div class="articles-left">
+                                    <a href="blog-details.html">
+                                        <div class="articles-img">
+                                            <img src={{ asset('img/blog/blog-24.jpg') }} class="img-fluid" alt="Darren Elder">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="articles-right">
+                                    <div class="articles-content">
+                                        <ul class="articles-list nav">
+                                            <li>
+                                                <i class="feather-user"></i> Darren Elder
+                                            </li>
+                                            <li>
+                                                <i class="feather-calendar"></i> 10 Sep, 2023
+                                            </li>
+                                        </ul>
+                                        <h4>
+                                            <a href="blog-details.html">Work-Life Harmony: Balancing Career and Personal Wellness</a>
+                                        </h4>
+                                        <p>Uncover strategies to achieve a harmonious balance between professional commitments and personal well-being.</p>
+                                        <a href="blog-details.html" class="btn">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 d-flex aos" data-aos="fade-up">
+                        <div class="articles-grid w-100">
+                            <div class="articles-info">
+                                <div class="articles-left">
+                                    <a href="blog-details.html">
+                                        <div class="articles-img">
+                                            <img src={{ asset('img/blog/blog-25.jpg') }} class="img-fluid" alt="Ruby Perrin">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="articles-right">
+                                    <div class="articles-content">
+                                        <ul class="articles-list nav">
+                                            <li>
+                                                <i class="feather-user"></i> Ruby Perrin
+                                            </li>
+                                            <li>
+                                                <i class="feather-calendar"></i> 30 Oct, 2023
+                                            </li>
+                                        </ul>
+                                        <h4>
+                                            <a href="blog-details.html">Sleep Solutions: Unveiling the Secrets to a Restful Night</a>
+                                        </h4>
+                                        <p>Explore importance of quality sleep & learn tips to improve your sleep, ensuring you wake up refreshed & ready to face the day.</p>
+                                        <a href="blog-details.html" class="btn">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 d-flex aos" data-aos="fade-up">
+                        <div class="articles-grid w-100">
+                            <div class="articles-info">
+                                <div class="articles-left">
+                                    <a href="blog-details.html">
+                                        <div class="articles-img">
+                                            <img src={{ asset('img/blog/blog-12.jpg') }} class="img-fluid" alt="Sofia Brient">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="articles-right">
+                                    <div class="articles-content">
+                                        <ul class="articles-list nav">
+                                            <li>
+                                                <i class="feather-user"></i> Sofia Brient
+                                            </li>
+                                            <li>
+                                                <i class="feather-calendar"></i> 08 Nov, 2023
+                                            </li>
+                                        </ul>
+                                        <h4>
+                                            <a href="blog-details.html">Mental Wellness in a Digital Age: Strategies for a Healthy Mind Online</a>
+                                        </h4>
+                                        <p>Delve into the impact of digital life on mental health & discover practical strategies to maintain mental well-being.</p>
+                                        <a href="blog-details.html" class="btn">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Articles Section -->
+
+        <!-- App Section -->
+        <section class="app-section pt-0">
+            <div class="container">
+                <div class="app-bg">
+                    <div class="row align-items-end">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="app-content">
+                                <div class="app-header aos" data-aos="fade-up">
+                                    <h5>Working for Your Better Health.</h5>
+                                    <h2>Download the Doccure App today!</h2>
+                                </div>
+                                <div class="app-scan aos" data-aos="fade-up">
+                                    <p>Scan the QR code to get the app now</p>
+                                    <img src={{ asset('img/scan-img.png') }} alt="scan-image">
+                                </div>
+                                <div class="google-imgs aos" data-aos="fade-up">
+                                    <a href="javascript:void(0);"><img src={{ asset('img/icons/google-play-icon.svg') }} alt="img"></a>
+                                    <a href="javascript:void(0);"><img src={{ asset('img/icons/app-store-icon.svg') }} alt="img"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 aos" data-aos="fade-up">
+                            <div class="mobile-img">
+                                <img src={{ asset('img/mobile-img.png') }} class="img-fluid" alt="img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /App Section -->
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-header-one aos" data-aos="fade-up">
+                            <h5>Get Your Answer</h5>
+                            <h2 class="section-title">Frequently Asked Questions</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12 aos" data-aos="fade-up">
+                        <div class="faq-img">
+                            <img src={{ asset('img/faq-img.png') }} class="img-fluid" alt="img">
+                            <div class="faq-patients-count">
+                                <div class="faq-smile-img">
+                                    <img src={{ asset('img/icons/smiling-icon.svg') }} alt="icon">
+                                </div>
+                                <div class="faq-patients-content">
+                                    <h4><span class="count-digit">95</span>k+</h4>
+                                    <p>Happy Patients</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="faq-info aos" data-aos="fade-up">
+                            <div class="accordion" id="faq-details">
+
+                                <!-- FAQ Item -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <a href="javascript:void(0);" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            How do I book an appointment with a doctor?
+                                        </a>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faq-details">
+                                        <div class="accordion-body">
+                                            <div class="accordion-content">
+                                                <p>Yes, simply visit our website and log in or create an account. Search for a doctor based on specialization, location, or availability & confirm your booking.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /FAQ Item -->
+
+                                <!-- FAQ Item -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <a href="javascript:void(0);" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Can I request a specific doctor when booking my appointment?
+                                        </a>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faq-details">
+                                        <div class="accordion-body">
+                                            <div class="accordion-content">
+                                                <p>Yes, you can usually request a specific doctor when booking your appointment, though availability may vary based on their schedule.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /FAQ Item -->
+
+                                <!-- FAQ Item -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <a href="javascript:void(0);" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            What should I do if I need to cancel or reschedule my appointment?
+                                        </a>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faq-details">
+                                        <div class="accordion-body">
+                                            <div class="accordion-content">
+                                                <p>If you need to cancel or reschedule your appointment, contact the doctor as soon as possible to inform them and to reschedule for another available time slot.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /FAQ Item -->
+
+                                <!-- FAQ Item -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                        <a href="javascript:void(0);" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            What if I'm running late for my appointment?
+                                        </a>
+                                    </h2>
+                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faq-details">
+                                        <div class="accordion-body">
+                                            <div class="accordion-content">
+                                                <p>If you know you will be late, it's courteous to call the doctor's office and inform them. Depending on their policy and schedule, they may be able to accommodate you or reschedule your appointment.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /FAQ Item -->
+
+                                <!-- FAQ Item -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFive">
+                                        <a href="javascript:void(0);" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                            Can I book appointments for family members or dependents?
+                                        </a>
+                                    </h2>
+                                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faq-details">
+                                        <div class="accordion-body">
+                                            <div class="accordion-content">
+                                                <p>Yes, in many cases, you can book appointments for family members or dependents. However, you may need to provide their personal information and consent to do so.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /FAQ Item -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /FAQ Section -->
+
+        <!-- Testimonial Section -->
+        <section class="testimonial-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="testimonial-slider slick">
+                            <div class="testimonial-grid">
+                                <div class="testimonial-info">
+                                    <div class="testimonial-img">
+                                        <img src={{ asset('img/clients/client-01.jpg') }} class="img-fluid" alt="John Doe">
+                                    </div>
+                                    <div class="testimonial-content">
+                                        <div class="section-header-one section-header section-inner-header testimonial-header">
+                                            <h5>Testimonials</h5>
+                                            <h2 class="section-title">What Our Client Says</h2>
+                                        </div>
+                                        <div class="testimonial-details">
+                                            <p>Doccure exceeded my expectations in healthcare. The seamless booking process, coupled with the expertise of the doctors, made my experience exceptional. Their commitment to quality care and convenience truly sets them apart. I highly recommend Doccure
+                                                for anyone seeking reliable and accessible healthcare services.</p>
+                                            <h6><span class="d-block">John Doe</span> New York</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-grid">
+                                <div class="testimonial-info">
+                                    <div class="testimonial-img">
+                                        <img src={{ asset('img/clients/client-03.jpg') }} class="img-fluid" alt="Amanda Warren">
+                                    </div>
+                                    <div class="testimonial-content">
+                                        <div class="section-header section-inner-header testimonial-header">
+                                            <h5>Testimonials</h5>
+                                            <h2>What Our Client Says</h2>
+                                        </div>
+                                        <div class="testimonial-details">
+                                            <p>As a busy professional, I don't have time to wait on hold or play phone tag to schedule doctor appointments. Thanks to Doccure, booking appointments has never been easier! The user-friendly interface allows me to quickly find available appointment slots
+                                                that fit my schedule and book them with just a few clicks. It's a game-changer for anyone looking to streamline their healthcare management.</p>
+                                            <h6><span class="d-block">Andrew Denner</span> Nevada</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-grid">
+                                <div class="testimonial-info">
+                                    <div class="testimonial-img">
+                                        <img src={{ asset('img/clients/client-11.jpg') }} class="img-fluid" alt="Betty Carlson">
+                                    </div>
+                                    <div class="testimonial-content">
+                                        <div class="section-header section-inner-header testimonial-header">
+                                            <h5>Testimonials</h5>
+                                            <h2>What Our Client Says</h2>
+                                        </div>
+                                        <div class="testimonial-details">
+                                            <p>As a parent, coordinating doctor appointments for my family can be overwhelming. Doccure has simplified the process and made scheduling appointments a breeze! I love being able to see all available appointment times in one place and book appointments
+                                                for multiple family members with ease. Plus, the automatic reminders ensure we never miss an appointment. I highly recommend Doccure to other busy parents!</p>
+                                            <h6><span class="d-block">Niya Patel</span> New York</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Testimonial Section -->
+
+        <!-- Partners Section -->
+        <section class="partners-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-header-one text-center aos" data-aos="fade-up">
+                            <h2 class="section-title">Our Partners</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="partners-info aos" data-aos="fade-up">
+                    <ul class="owl-carousel partners-slider d-flex">
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-1.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-2.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-3.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-4.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-5.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-6.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-1.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-2.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-3.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-4.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-5.svg') }} alt="partners">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <img class="img-fluid" src={{ asset('img/partners/partners-6.svg') }} alt="partners">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- /Partners Section -->
+
+        <!-- Footer -->
+        <footer class="footer footer-one">
+            <div class="footer-top aos" data-aos="fade-up">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4">
+                            <div class="footer-widget footer-about">
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src={{ asset('img/logo-01.svg') }} alt="logo"></a>
+                                </div>
+                                <div class="footer-about-content">
+                                    <p>Effortlessly schedule your medical appointments with Doccure. Connect with healthcare professionals, manage appointments & prioritize your well being </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4">
+                                    <div class="footer-widget footer-menu">
+                                        <h2 class="footer-title">Company</h2>
+                                        <ul>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="search.html">Specialities</a></li>
+                                            <li><a href="video-call.html">Video Consult</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4">
+                                    <div class="footer-widget footer-menu">
+                                        <h2 class="footer-title">Specialities</h2>
+                                        <ul>
+                                            <li><a href="search.html">Neurology</a></li>
+                                            <li><a href="search.html">Cardiologist</a></li>
+                                            <li><a href="search.html">Dentist</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-4">
+                                    <div class="footer-widget footer-contact">
+                                        <h2 class="footer-title">Contact Us</h2>
+                                        <div class="footer-contact-info">
+                                            <div class="footer-address">
+                                                <p><i class="feather-map-pin"></i> 3556 Beech Street, USA</p>
+                                            </div>
+                                            <div class="footer-address">
+                                                <p><i class="feather-phone-call"></i> +1 315 369 5943</p>
+                                            </div>
+                                            <div class="footer-address mb-0">
+                                                <p><i class="feather-mail"></i> doccure@example.com</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-7">
+                            <div class="footer-widget">
+                                <h2 class="footer-title">Join Our Newsletter</h2>
+                                <div class="subscribe-form">
+                                    <form action="#">
+                                        <input type="email" class="form-control" placeholder="Enter Email">
+                                        <button type="submit" class="btn">Submit</button>
+                                    </form>
+                                </div>
+                                <div class="social-icon">
+                                    <ul>
+                                        <li>
+                                            <a href="javascript:void(0);"><i class="fab fa-facebook"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);"><i class="fab fa-instagram"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);"><i class="fab fa-twitter"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);"><i class="fab fa-linkedin-in"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <!-- Copyright -->
+                    <div class="copyright">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="copyright-text">
+                                    <p class="mb-0">Copyright © 2024 Doccure. All Rights Reserved</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+
+                                <!-- Copyright Menu -->
+                                <div class="copyright-menu">
+                                    <ul class="policy-menu">
+                                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                        <li><a href="terms-condition.html">Terms and Conditions</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /Copyright Menu -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Copyright -->
+                </div>
+            </div>
+        </footer>
+        <!-- /Footer -->
+
+        <!-- Cursor -->
+        <div class="mouse-cursor cursor-outer"></div>
+        <div class="mouse-cursor cursor-inner"></div>
+        <!-- /Cursor -->
+
+    </div>
+    <!-- /Main Wrapper -->
+
+    <!-- ScrollToTop -->
+    <div class="progress-wrap active-progress">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919px, 307.919px; stroke-dashoffset: 228.265px;"></path>
+        </svg>
+    </div>
+    <!-- /ScrollToTop -->
+
+    <!-- jQuery -->
+    <script src={{ asset('js/jquery-3.7.1.min.js') }}></script>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src={{ asset('js/bootstrap.bundle.min.js') }}></script>
+
+    <!-- Feather Icon JS -->
+    <script src={{ asset('js/feather.min.js') }}></script>
+
+    <!-- Datepicker JS -->
+    <script src={{ asset('js/moment.min.js') }}></script>
+    <script src={{ asset('js/bootstrap-datetimepicker.min.js') }}></script>
+
+    <!-- Owl Carousel JS -->
+    <script src={{ asset('js/owl.carousel.min.js') }}></script>
+
+    <!-- Slick JS -->
+    <script src={{ asset('js/slick.js') }}></script>
+
+    <!-- Animation JS -->
+    <script src={{ asset('js/aos.js') }}></script>
+
+    <!-- Counter JS -->
+    <script src={{ asset('js/counter.js') }}></script>
+
+    <!-- BacktoTop JS -->
+    <script src={{ asset('js/backToTop.js') }}></script>
+
+    <!-- Custom JS -->
+    <script src={{ asset('js/script.js') }}></script>
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+-see and set roles during login
+-protect routes, apply gaurds
+
+###admin
+-login
+-match roles and then send to dashboard.
+
+-to do (finds)
+-load roles from db and store them in cache on app boot. flush cache at role create/update
+create_users.blade.php
+    make role dropdown dynamic so newly added roles can be fetched automatically
+make roles dynamic in authcontroller in store() function while validating
+-user_list.blade.php role column is using role array from config. this might cause process overload. look into this.
+-role is not working for /admin/dashboard somehow, check it.
+-set default title in main layout (low priority).
+-clean main layout of bloats, keywords, tags, descriptions etc.
+-add profile picture column in db
+-remove bloats from user card in admin's user list page.
+-filter by not working on admin's user list page.
+-load only 9 users and then add load more functionality.
+-add constant for gender somewhere, preferrebaly all the constants in a single file.
+-add dob column
+-add href links on whatsapp and phone
+- make create user, view/edit user with same partials. so that errors and success messages can be displayed at the same page.
+- remove bloats such as scripts and stylesheets from footer and header. push only needed ones to the views. saves load time.
+- add appointment fees somewhere.
+- setup ajax for everything in admin panel. Make some universal template/partial/solution to make code less redundant and easily managable.
+- change classes name for different pages. for instance, appointment list template is used in clinic list. everywhere the css classes are
+according to appointments. change them to clinics otherwise it'll cause confusion in future.
+-(superadmin)add an option to make a clinic inactive, also need to add status column in migration.
+- need to setup pagination or load more option where required. write once use many
+- fetch admin's details on view clinic page on superadmin panel (use model relationships)
+- while deleting a lot from js ajax we need to send the post request to the sub domain route instead of the old route.
+    -solution: store the prefix route somewhere so that it can be accessed globally.(think about this,
+    this technique will be used in all the ajax call in future)
+-check the animation and css of see all clinics button on index page.
+-on main index page, select2 is disabled for now because it's css is clashing with other css and breaking the ui.
+- use datatables where can be instead of panel's list ui. datatables inbuilt searching and sorting.
+make sure to use ajax for searching, filters etc to fetch data from the backend asynchronously.
+
+#current task
+    #patient
+        -add clinic logo in db and view.
+        -next available
+        -clinic reviews
+        -add map location on clinic and then patients can know how much farther the clinic is from their location.(extra feature)
+
+-fix clinic slider on app's index page . Problem arising because of the class used and triggered by js.
+    -solution: isolate that class, change name etc.
+
+-make a clinic's profile page just like doctor's profile page.
+    -Decide what to display on doctor's profile (copy from practo).
+    -Decide what to display on clinic's profile (copy from practo).
+    -can change doctor profile 1 or 2 depending upon the content to display on page.
+    -add city in users/doctor's  migration and then fetch the search results by city too.
+-see all doctors button have wrong vertical spacing on doctors caraousel.
+-check header and footer. push scripts and css only on the pages needed.
