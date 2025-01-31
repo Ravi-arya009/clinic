@@ -15,11 +15,14 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('patient_id');
             $table->uuid('doctor_id');
-            $table->uuid('time_slot');
-            $table->dateTime('date_booked');
-            $table->integer('appointment_type');
-            $table->integer('status');
+            $table->uuid('clinic_id');
+            $table->uuid('time_slot_id');
+            $table->date('appointment_date');
+            $table->tinyInteger('appointment_type')->nullable(); //online, offline
+            $table->tinyInteger('payment_method'); //online, offline
+            $table->tinyInteger('status')->default(0); //pending, confirmed, cancelled etc.
             $table->timestamps();
+            $table->unique(['patient_id', 'clinic_id','doctor_id','time_slot_id', 'appointment_date'], 'unique_slot_per_patient');
         });
     }
 

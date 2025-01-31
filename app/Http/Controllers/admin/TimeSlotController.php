@@ -7,6 +7,7 @@ use App\Models\TimeSlot;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Str;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -46,6 +47,7 @@ class TimeSlotController extends Controller
 
             try {
                 TimeSlot::create([
+                    'id' => Str::uuid(),
                     'slot_time' => $validated['time'],
                     'day_of_week' => $day,
                     'doctor_id' => $request->doctor_id,

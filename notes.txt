@@ -55,3 +55,89 @@ make sure to use ajax for searching, filters etc to fetch data from the backend 
     -add city in users/doctor's  migration and then fetch the search results by city too.
 -see all doctors button have wrong vertical spacing on doctors caraousel.
 -check header and footer. push scripts and css only on the pages needed.
+
+-add media queries for time slots on doctor profile.
+
+-can start with current date and day name(fetch both from system). then loop through date/days and fetch time slots for respective
+day number via timeSlots collection already fetched from db. no need to store, order, or track anything.
+once this is done, frontend logic can be taken care of. if frontend becomes complex then create partials to include.
+
+
+
+###############
+Start with app's landing page and cover till patient's appointment.
+-check for any imporovements, ui, bugs, partials, layout etc.
+-note them down.
+-make an action plan.
+-make jira.
+-start working.
+######
+
+#App's index page
+
+    -Search Section
+        -load more //later when doing ajax and js
+
+    -3rd Speciality section
+        -when clicked on see all, send to search page and display results. //later (search page)
+        -when clicked on single Speciality send to search page with results. //later (search page)
+        -need to make a search page with partials that can display both clinics and doctors with see all. (search page)
+    -Book our best clinic
+        -book now will send to.
+        -need to create a section where doctors for respective clinic can be shown. //later (search page)
+        -check that cards are showing right infromation and properly fetching from the db.
+    -Book our best doctors
+        -view profile will send to profile
+        -Book now will send to doctor's profile with time slots section focused.
+        -check that cards are showing right infromation and properly fetching from the db. (need to create new doctor table with extra columns)
+
+    -Navbar
+            -Apply links on menus. //later
+            -make a button for doctor/clinic registration right beside the login/signup(maybe later) //later
+    -2nd section
+            -keep it like this only. ask later for changes or links etc.
+    -footer
+        -for now do nohting.
+        -Ask for content later.
+
+    -bugs
+        -when going to doctor, an error is generated saying undefined key. fix that. onlyl anand kumar's profile is working.
+    -Misc
+        -check each view and see they should be extending layouts, using partials properly.
+        -check that all the views are using only css and scripts they need. use push.
+        -fix doctor and clinic profile
+            -only keep content that is required.
+            -add any other content that is missing.
+        appointment flow.
+            -fix payment page's ui
+            -fix booking succes pages content.
+            -fix links.
+        fix routes
+        fix controllers and functions
+
+
+-fix the uis for doctor and clinic profile, fix the time slot's card's ui
+-think about the search page and filters. can clinic and doctor search be combined?
+    -make the filter/search page and also include the filter/search parameters.
+-add logo in clinics and doctors.
+    -if image is not set then show some default image.
+-book appointment overlay is not covering the navbar. fix it.
+-timeslot is a function of doctor, not user. fix that everywhere. (update: user is doctor because of role column, all doctors are users but all users are not doctors)
+-services and pricing section is not dynamic on the doctor's profile
+-after patient logs in send to home
+-use intended route where necessary.(while booking,)
+-layouts and partials are not getting included in register and login page. fix that.
+-while registering patients while booking appointment, an extra parameter $source can be sent. by default it should be null.
+    if $source is null return views and shits else return $patient.
+- use sessions to store needed values temporarily while booking appointment.
+
+use validated['name'] instead of $request->name. research.
+
+-fix show clinic page. also fetch all the doctors associated with that clinic.
+####checking flow/routewise. reviewing code while organizing them.
+- if timeslot is booked, don't show it.
+-fix register/login pages. include layout and partials.
+-fix the user dropdown when user is loggen in. show options logout, dashboard, my appointments etc.
+
+-start with clinic admin backend and check everything
+-fetch appointments.

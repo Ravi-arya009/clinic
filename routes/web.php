@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AppointmentController as AdminAppointmentController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\doctor\DashboardController as DoctorDashboardController;
@@ -7,11 +8,12 @@ use App\Http\Controllers\staff\DashboardController as StaffDashboardController;
 use App\Http\Controllers\patient\DashboardController as PatientDashboardController;
 use App\Http\Controllers\patient\AuthController as PatientAuthController;
 use App\Http\Controllers\admin\TimeSlotController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\super_admin\ClinicController;
 use App\Http\Controllers\super_admin\DashboardController;
+use App\Http\Controllers\TempController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
@@ -21,18 +23,22 @@ use Illuminate\Support\Facades\Route;
 
 //global logout route. (Temporary, only for testing purposes)
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
-
+Route::get('/temp', [TempController::class, 'temp'])->name('temp');
 ####Routes for testing purposes end####
 ########################################################################################
 ########################################################################################
 
+// Guest Routes
 Route::get('/', [WebsiteController::class, 'index'])->name('index');
 Route::get('/doctor/{id?}', [WebsiteController::class, 'ShowDoctorProfile'])->name('doctor.profile');
 Route::get('/clinic/{id?}', [WebsiteController::class, 'ShowClinicProfile'])->name('clinic.profile');
-Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/search', [SearchController::class, 'ajaxSearch'])->name('search.ajax');
 Route::get('/search/doctor', [SearchController::class, 'searchDoctor'])->name('search.doctor');
 Route::get('/search/clinic', [SearchController::class, 'searchClinic'])->name('search.clinic');
-
+Route::get('/search/all', [SearchController::class, 'all'])->name('search.all');
+Route::get('/appointment/create', [AppointmentController::class, 'create'])->name('appointment.create');
+Route::post('/appointment/store', [AppointmentController::class, 'store'])->name('appointment.store');
+// Guest Routes
 
 // clinic dynamic landing route
 Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
@@ -49,6 +55,7 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
         Route::get('user/{userId}', [UserController::class, 'show'])->name('admin.user.show');
         Route::put('user/{userId}', [UserController::class, 'update'])->name('admin.user.update');
         Route::get('available_timings/{doctor_id?}', [TimeSlotController::class, 'availableTimings'])->name('admin.available_timings');
+        Route::get('appointments', [AdminAppointmentController::class, 'index'])->name('admin.appointments.index');
 
         //not working for now because not sending the ajax reques to sub domain. see notes.
         Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'deleteSlot'])->name('admin.slot.delete');

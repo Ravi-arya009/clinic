@@ -1,4 +1,3 @@
-
 <head>
 
     <meta charset="UTF-8">
@@ -37,6 +36,9 @@
 
     <!-- Datepicker CSS -->
     <link rel="stylesheet" href={{ asset('css/bootstrap-datetimepicker.min.css') }}>
+
+    <!-- Daterangepikcer CSS -->
+    <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
 
     <!-- Owl Carousel CSS -->
     <link rel="stylesheet" href={{ asset('css/owl.carousel.min.css') }}>

@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
 use App\Models\Clinic;
+use App\Models\State;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -32,6 +34,11 @@ class UserFactory extends Factory
             'phone' => fake()->unique()->numerify('##########'),
             'whatsapp' => fake()->unique()->numerify('##########'),
             'gender' => fake()->numberBetween(1, 2),
+            'state_id' => State::inRandomOrder()->first()->id, // Fetching a random state
+            'city_id' => City::inRandomOrder()->first()->id, // Fetching a random city
+            'area' => fake()->city,
+            'address' => fake()->address,
+            'pincode' => fake()->numerify('######'),
             'role' => 2,
             'clinic_id' => Clinic::inRandomOrder()->first()->id,
             'email_verified_at' => now(),

@@ -29,8 +29,8 @@ class ClinicFactory extends Factory
             'address' => fake()->address,
             'area' => fake()->city,
             'speciality_id' => Speciality::inRandomOrder()->first()->id, // Fetching a random speciality
-            'city' => City::inRandomOrder()->first()->id, // Fetching a random city
-            'state' => State::inRandomOrder()->first()->id, // Fetching a random state
+            'city_id' => City::inRandomOrder()->first()->id, // Fetching a random city
+            'state_id' => State::inRandomOrder()->first()->id, // Fetching a random state
         ];
     }
 }
