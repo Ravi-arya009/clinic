@@ -28582,7 +28582,7 @@ a.mute-video.stop {
 
 .doc-department {
     color: #20c0f3;
-    font-size: 14px;
+    font-size: 18px;
     margin-bottom: 8px;
 }
 
@@ -29693,8 +29693,8 @@ a.mute-video.stop {
     position: absolute;
     opacity: 0;
     cursor: pointer;
-    height: 0;
-    width: 0;
+    height: inherit;
+    width: inherit;
 }
 
 .payment-radio .checkmark {
@@ -31495,11 +31495,16 @@ span.refund {
 }
 
 .our-doctors-section .our-doctors-card .doctors-body .location {
-    padding: 15px 0 24px;
-    border-bottom: 1px solid #E5E7EB;
-    margin-bottom: 24px;
+    padding: 40px 0 0 !important;
 }
 
+.my-border {
+    border-bottom: 1px solid #E5E7EB;
+    padding: 0 0 19px !important;
+}
+.my-review-text{
+    font-size:12px;
+}
 .our-doctors-section .our-doctors-card .doctors-body .location p {
     font-size: 12px;
     color: #374151;
@@ -53979,7 +53984,9 @@ input:checked+.tog-slider:before {
 }
 
 .time-slot ul li {
-    display: block;
+    /* display: inline-block; */
+    width: 25% !important;
+    float: left !important;
     margin-bottom: 15px;
 }
 
@@ -53988,30 +53995,31 @@ input:checked+.tog-slider:before {
 }
 
 .time-slot li .timing {
-    background: #F5F5F5;
-    border: 2px solid #F3F3F3;
+    background: #ffffff !important;
+    border: 1px solid #0E82FD !important;
     border-radius: 8px;
     color: #595959;
     margin: 0;
-    padding: 10px 15px;
+    padding: 4px 6px !important;
     text-align: center;
     position: relative;
-    box-shadow: inset 0 0 0 0 #ffffff;
+    box-shadow: inset 0 0 0 0 #0E82FD;
     -webkit-transition: 0.7s;
     -ms-transition: 0.7s;
     transition: 0.7s;
 }
 
 .time-slot li .timing:hover {
-    background: #ffffff;
-    box-shadow: inset 0 0 0 50px #ffffff;
+    background: #0E82FD !important;
+    box-shadow: inset 0 0 0 50px #0E82FD !important;
+    color: #ffffff;
     -webkit-transition: 0.7s;
     -ms-transition: 0.7s;
     transition: 0.7s;
 }
 
 .time-slot li .timing.active {
-    background: #09e5ab;
+    background: #0E82FD !important;
     border: 2px solid #09e5ab;
     color: #ffffff;
     box-shadow: inset 0 0 0 0 #09e5ab;
@@ -63074,6 +63082,7 @@ ul li {
 .result-items::-webkit-scrollbar {
     display: none;
 }
+
 /* Individual result items */
 .result-items .result-item {
     padding: 5px 10px;
@@ -63089,4 +63098,31 @@ ul li {
 
 .my-dark-background {
     background: #F9FCFF;
+}
+
+.hide {
+    display: none !important;
+}
+
+.speciality-badge {
+    font-size: 12px !important;
+}
+
+
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    z-index: 1;
+}
+
+.booking-card {
+    position: relative;
+    z-index: 2;
 }

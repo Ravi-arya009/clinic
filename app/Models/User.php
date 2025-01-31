@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +38,6 @@ class User extends Authenticatable
     protected $casts = [
         'id' => 'string',
     ];
-
     //custom code to accomodate uuid
 
     /**
@@ -60,6 +61,26 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function timeSlots()
+    {
+        return $this->hasMany(TimeSlot::class, 'doctor_id')->orderBy('day_of_week')->orderBy('slot_time');
+
+    }
+
+    public function doctorProfile()
+    {
+        return $this->hasOne(Doctor::class, 'user_id', 'id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id')->select('id', 'name');
+    }
+    public function clinic()
+    {
+        return $this->belongsTo(Clinic::class, 'clinic_id', 'id');
     }
 
 }

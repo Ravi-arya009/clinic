@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Clinic extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $primaryKey = 'id';
     public $incrementing = false;
@@ -41,6 +42,10 @@ class Clinic extends Model
     }
     public function speciality()
     {
-        return $this->belongsTo(Speciality::class, 'speciality_id', 'id')->select('id','name');
+        return $this->belongsTo(Speciality::class, 'speciality_id', 'id')->select('id', 'name', 'image');
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id')->select('id', 'name');
     }
 }

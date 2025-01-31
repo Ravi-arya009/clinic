@@ -85,11 +85,14 @@ class DatabaseSeeder extends Seeder
             'gender' => 1
         ]);
 
+        $this->call(QualificationSeeder::class);
         $this->call(StateSeeder::class);
         $this->call(CitySeeder::class);
         $this->call(SpecialitySeeder::class);
         $this->call(ClinicSeeder::class);
-        User::factory(25)->create();
+        $this->call(DoctorSeeder::class);
+        $this->call(FirstClinicDoctorsSeeder::class);
+        // User::factory(25)->create()
 
     }
 }

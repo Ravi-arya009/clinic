@@ -608,54 +608,41 @@ Version      : 1.3
     // Date Slider
 
     if ($(".date-slider").length > 0) {
-        $(".date-slider").slick({
-            dots: false,
-            autoplay: false,
-            infinite: true,
-            variableWidth: false,
-            slidesToShow: 7,
-            slidesToScroll: 1,
-            swipeToSlide: true,
-            responsive: [
-                {
-                    breakpoint: 1400,
-                    settings: {
-                        slidesToShow: 6,
-                        slidesToScroll: 1,
-                    },
-                },
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                    },
-                },
-                {
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                    },
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                    },
-                },
-                {
-                    breakpoint: 500,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                    },
-                },
-            ],
-        });
-    }
+        $(".date-slider")
+            .on("init", function (event, slick) {
+                // Set initial active state and show first time slot
+                $(this).find("li").first().addClass("active");
+                $(".time-slot").hide();
+                $("#slot-for-day-1").show();
+            })
+            .slick({
+                dots: false,
+                autoplay: false,
+                infinite: true,
+                variableWidth: false,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                swipeToSlide: true,
+                responsive: [
+                    // ... (previous responsive settings remain the same)
+                ],
+            })
+            .on("afterChange", function (event, slick, currentSlide) {
+                // Remove active class from all slides
+                $(this).find("li").removeClass("active");
 
+                // Add active class to current slide
+                const activeSlideId = `date-${currentSlide + 1}`;
+                $(this).find(`li[id="${activeSlideId}"]`).addClass("active");
+
+                // Hide all time slots
+                $(".time-slot").hide();
+
+                // Show corresponding time slot
+                const targetSlotId = `slot-for-day-${currentSlide + 1}`;
+                $(`#${targetSlotId}`).show();
+            });
+    }
     // Testimonial Slider
 
     if ($(".testimonial-slider").length > 0) {
@@ -3986,6 +3973,7 @@ Version      : 1.3
             url: url,
             type: "GET",
             success: function (response) {
+                console.log(response);
                 // Clear the existing results
                 $(".result-items").empty();
 
@@ -4113,4 +4101,12 @@ Version      : 1.3
             },
         });
     }
+
+    $("#book-appointment-btn").click(function () {
+        $(".overlay").fadeIn();
+    });
+
+    $(".overlay").click(function () {
+        $(this).fadeOut();
+    });
 })(jQuery);

@@ -16,27 +16,19 @@ class SpecialitySeeder extends Seeder
     public function run()
     {
         $specialities = [
-            ['name' => 'Neurology', 'status' => 1],
-            ['name' => 'Orthopedics', 'status' => 1],
-            ['name' => 'Cardiology', 'status' => 1],
-            ['name' => 'Dermatology', 'status' => 1],
-            ['name' => 'Pediatrics', 'status' => 1],
-            ['name' => 'Psychiatry', 'status' => 1],
-            ['name' => 'Gynecology', 'status' => 1],
-            ['name' => 'Urology', 'status' => 1],
-            ['name' => 'Ophthalmology', 'status' => 1],
-            ['name' => 'ENT (Ear, Nose, Throat)', 'status' => 1],
-            ['name' => 'General Medicine', 'status' => 1],
-            ['name' => 'Oncology', 'status' => 1],
-            ['name' => 'Pulmonology', 'status' => 1],
-            ['name' => 'Endocrinology', 'status' => 1],
-            ['name' => 'Gastroenterology', 'status' => 1],
+            ['name' => 'Cardiology', 'image' => 'specialities-01.svg', 'status' => 1],
+            ['name' => 'Neurology', 'image' => 'specialities-02.svg', 'status' => 1],
+            ['name' => 'Urology', 'image' => 'specialities-03.svg', 'status' => 1],
+            ['name' => 'Orthopedic', 'image' => 'specialities-04.svg', 'status' => 1],
+            ['name' => 'Dentist', 'image' => 'specialities-05.svg', 'status' => 1],
+            ['name' => 'Ophthalmology', 'image' => 'specialities-06.svg', 'status' => 1],
         ];
 
         foreach ($specialities as $speciality) {
             Speciality::create([
                 'id' => Str::uuid(),
                 'name' => $speciality['name'],
+                'image' => $speciality['image'],
                 'status' => $speciality['status'],
             ]);
         }

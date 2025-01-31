@@ -20,6 +20,12 @@ return new class extends Migration
             $table->integer('gender')->nullable(); //1 for male, 2 for female
             $table->integer('role');
             $table->uuid('clinic_id');
+            $table->uuid('state_id')->nullable();
+            $table->uuid('city_id')->nullable();
+            $table->string('address')->nullable();
+            $table->string('area')->nullable();
+            $table->string('pincode')->nullable();
+            $table->string('profile_image')->nullable();
             $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

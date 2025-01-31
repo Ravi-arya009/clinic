@@ -22,8 +22,9 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('area')->nullable();
             $table->uuid('speciality_id')->nullable();
-            $table->uuid('city')->nullable();
-            $table->uuid('state')->nullable();
+            $table->foreign('speciality_id')->references('id')->on('specialities');
+            $table->uuid('city_id')->nullable();
+            $table->uuid('state_id')->nullable();
             $table->timestamps();
         });
     }

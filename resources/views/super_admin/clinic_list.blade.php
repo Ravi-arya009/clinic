@@ -218,6 +218,10 @@
                         <li class="appointment-start">
                             <a href="{{ route('super_admin.clinic.show', ['clinicId' => $clinic->id]) }}" class="start-link">Edit</a>
                         </li>
+
+                        <li class="appointment-start">
+                            <a href="{{ route('super_admin.clinic.show', ['clinicId' => $clinic->id]) }}" class="text-info">Visit Admin</a>
+                        </li>
                     </ul>
                 </div>
             @endforeach

@@ -42,18 +42,20 @@
                 </li>
 
                 <li>
+                    <a href="{{route('admin.appointments.index')}}">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="doctor-request.html">
                         <i class="fa-solid fa-calendar-check"></i>
                         <span>Requests</span>
                         <small class="unread-msg">2</small>
                     </a>
                 </li>
-                <li>
-                    <a href="appointments.html">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <span>Appointments</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="available-timings.html">
                         <i class="fa-solid fa-calendar-day"></i>
