@@ -11,14 +11,18 @@ use App\Models\State;
 use App\Models\TimeSlot;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class FirstClinicDoctorsSeeder extends Seeder
 {
+    use HasUuids;
     /**
      * Run the database seeds.
+     * This is a temporary seeder created to fill dummy clinic, doctor and timeslot.
+     * This will not make in production.
      */
     public function run(): void
     {
@@ -59,7 +63,7 @@ class FirstClinicDoctorsSeeder extends Seeder
                     'id' => Str::uuid(),
                     'doctor_id' => $user->id,
                     'clinic_id' => $clinic->id,
-                    'slot_time' => fake()->time(),
+                    'slot_time' => fake()->dateTimeBetween('09:00', '21:00')->format('H:i'),
                     'day_of_week' => fake()->randomElement([1, 2, 3, 4, 5, 6, 7]),
                 ]);
             }

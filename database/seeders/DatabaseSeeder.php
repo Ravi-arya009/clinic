@@ -92,6 +92,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ClinicSeeder::class);
         $this->call(DoctorSeeder::class);
         $this->call(FirstClinicDoctorsSeeder::class);
+        $this->call(MedicineMasterSeeder::class);
+
         // User::factory(25)->create()
 
     }

@@ -199,7 +199,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="specialities-btn aos" data-aos="fade-up">
+            <div class="specialities-btn aos pt-3" data-aos="fade-up">
                 <a href="{{ route('search.clinic') }}" class="btn">
                     See All Clinics
                 </a>
@@ -266,7 +266,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="specialities-btn aos" data-aos="fade-up">
+            <div class="specialities-btn aos pt-3" data-aos="fade-up">
                 <a href="{{ route('search.doctor') }}" class="btn">
                     See All Doctors
                 </a>

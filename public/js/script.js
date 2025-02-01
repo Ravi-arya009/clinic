@@ -3329,41 +3329,27 @@ Version      : 1.3
             '<div class="d-flex flex-wrap medication-wrap align-items-center">' +
             '<div class="input-block input-block-new">' +
             '<label class="form-label">Name</label>' +
-            '<input type="text" class="form-control">' +
-            "</div>" +
-            '<div class="input-block input-block-new">' +
-            '<label class="form-label">Type</label>' +
-            '<select class="select form-control">' +
-            "<option>Select</option>" +
-            "<option>Direct Visit</option>" +
-            "<option>Video Call</option>" +
-            "</select>" +
+            '<input type="text" class="form-control" name="medicine_name[]">' +
             "</div>" +
             '<div class="input-block input-block-new">' +
             '<label class="form-label">Dosage</label>' +
-            '<input type="text" class="form-control">' +
+            '<input type="text" class="form-control" name="dosage[]">' +
             "</div>" +
             '<div class="input-block input-block-new">' +
             '<label class="form-label">Duration</label>' +
-            '<input type="text" class="form-control" placeholder="1-0-0">' +
-            "</div>" +
-            '<div class="input-block input-block-new">' +
-            '<label class="form-label">Duration</label>' +
-            '<select class="select form-control">' +
-            "<option>Select</option>" +
-            "<option>Not Available</option>" +
-            "</select>" +
+            '<input type="text" class="form-control" placeholder="1-0-0" name="duration[]">' +
             "</div>" +
             '<div class="input-block input-block-new">' +
             '<label class="form-label">Instruction</label>' +
-            '<input type="text" class="form-control">' +
+            '<input type="text" class="form-control" name="instructions[]">' +
             "</div>" +
             '<div class="delete-row">' +
             '<a href="#" class="delete-btn delete-medication trash text-danger"><i class="fa-solid fa-trash-can"></i></a>' +
             "</div>" +
+            "</div>" +
             "</div>";
-
-        $(".meditation-row").append(servcontent);
+        // $(".meditation-row").append(servcontent);
+        $(".add-new-med").before(servcontent);
 
         if ($(".select").length > 0) {
             $(".select").select2({
@@ -4108,5 +4094,68 @@ Version      : 1.3
 
     $(".overlay").click(function () {
         $(this).fadeOut();
+    });
+
+    $("#medicineName").keyup(function (event) {
+        if (event.key === "Enter") {
+            $("#add-medicine-button").click();
+        }
+    });
+
+    let table = new DataTable("#medicine-master-table");
+
+    $("#add_medicine").on("shown.bs.modal", function () {
+        $("#medicineName").val("");
+        $("#medicineName").focus();
+    });
+    $("#add-medicine-button").on("click", function () {
+        var medicineName = $('.modal-body input[type="text"]').val();
+        var errorDiv = $(".modal-body .alert");
+
+        if (medicineName.trim() === "") {
+            errorDiv.removeClass("d-none");
+            errorDiv.find("li").html("Error: Medicine name is required.");
+        } else {
+            errorDiv.addClass("d-none");
+            console.log("Medicine name:", medicineName);
+
+            $.ajax({
+                type: "POST",
+                url: medicineStoreRoute,
+                data: { medicineName: medicineName },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                success: function (response) {
+                    var table = $("#medicine-master-table").DataTable();
+                    if (table) {
+                        var newRow = [
+                            "-",
+                            response.name,
+                            '<span class="badge badge-success-bg">Completed</span>',
+                            '<a href="#request_details_modal" class="account-action" data-bs-toggle="modal"><i class="fa-solid fa-link"></i></a>',
+                        ];
+                        var row = table.row.add(newRow).draw(false).node();
+                        $("#add_medicine").modal("hide");
+                        $(row).find("td").addClass("highlight");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status == 422) {
+                        errorDiv.removeClass("d-none");
+                        errorDiv.find("li").html("Medicine already exists.");
+                    }
+                    console.log("Error adding medicine:", error);
+                },
+            });
+        }
+    });
+
+    $(".edit-medicine-button").on("click", function () {
+        var medicineId = $(this).data("medicine-id");
+        var medicineName = $(this).data("medicine-name");
+        $("#edit-medicine-name").val(medicineName).focus();
     });
 })(jQuery);
