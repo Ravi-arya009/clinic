@@ -30422,7 +30422,7 @@ a.mute-video.stop {
 .custom-new-table .table-responsive .table thead tr th {
     border: 0;
     background: #E2E8F0;
-    padding: 12px;
+    /* padding: 12px; */
     font-weight: 600;
     white-space: nowrap;
 }
@@ -63108,9 +63108,6 @@ ul li {
     font-size: 12px !important;
 }
 
-
-
-
 .overlay {
     position: fixed;
     top: 0;
@@ -63125,4 +63122,9 @@ ul li {
 .booking-card {
     position: relative;
     z-index: 2;
+}
+
+.table>:not(caption)>*>.highlight {
+    background-color: #dff0d8 !important;
+
 }

@@ -220,7 +220,7 @@
                         </li>
 
                         <li class="appointment-start">
-                            <a href="{{ route('super_admin.clinic.show', ['clinicId' => $clinic->id]) }}" class="text-info">Visit Admin</a>
+                            <a href="{{ route('admin.dashboard', ['clinicSlug' => $clinic->slug]) }}" class="text-info" target="_blank">Visit Admin</a>
                         </li>
                     </ul>
                 </div>

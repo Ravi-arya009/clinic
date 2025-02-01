@@ -141,3 +141,20 @@ use validated['name'] instead of $request->name. research.
 
 -start with clinic admin backend and check everything
 -fetch appointments.
+-order appointments by date and time. do it via datatables.
+-apply datatables where necessary. make it in such a way that it doesn't break the current ui.
+    -solution: make custom table with css that resembels the current ui and then apply datatables to it (without css maybe).
+
+-add address in patients table and include it on the view appointment page.
+
+#current
+    - see what details can doctor fill.
+    - save it to the backend.
+        -make tables if required.
+    -see what else can be loaded on the screen(patient's data etc) (later, very low priority).
+        -if not loading anything else the clean bloats.
+- fetch appointments on the basis of status.
+once the appointment details are filled the status changes and it is removed from the appointments automatically.
+
+- create add medicine frontend and backend. everything will be on the same page.
+

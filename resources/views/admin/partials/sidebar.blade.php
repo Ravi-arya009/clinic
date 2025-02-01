@@ -41,10 +41,17 @@
                     </a>
                 </li>
 
-                <li>
+                <li class="{{ request()->routeIs('admin.appointments.index','admin.appointment.show') ? 'active' : '' }}">
                     <a href="{{route('admin.appointments.index')}}">
                         <i class="fa-solid fa-calendar-days"></i>
                         <span>Appointments</span>
+                    </a>
+                </li>
+
+                <li class="{{ request()->routeIs('admin.medicines.index') ? 'active' : '' }}">
+                    <a href="{{route('admin.medicines.index')}}">
+                        <i class="fa-duotone fa-solid fa-capsules"></i>
+                        <span>Medicines</span>
                     </a>
                 </li>
 

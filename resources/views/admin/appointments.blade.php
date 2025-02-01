@@ -1,4 +1,3 @@
-{{-- {{dump($appointments)}} --}}
 @extends('admin.layouts.main')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -83,7 +82,7 @@
                             </div>
                             <div class="filter-set-content">
                                 <div class="filter-set-content-head">
-                                    <a href="#" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Appointment Type<i class="fa-solid fa-chevron-right"></i></a>
+                                    <a href="#" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="fa-solid fa-chevron-right"></i></a>
                                 </div>
                                 <div class="filter-set-contents accordion-collapse collapse show" id="collapseOne" data-bs-parent="#accordionExample">
                                     <ul>
@@ -219,18 +218,18 @@
                                 </a>
                                 <div class="patient-info">
                                     {{-- <p>#Apt0001</p> --}}
-                                    <h6><a href="doctor-upcoming-appointment.html">{{ucwords($appointment->patient->name)}}</a></h6>
+                                    <h6><a href="doctor-upcoming-appointment.html">{{ ucwords($appointment->patient->name) }}</a></h6>
                                 </div>
                             </div>
                         </li>
                         <li class="appointment-info">
                             <p><i class="fa-solid fa-calendar-days"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</p>
-                            <p><i class="fa-solid fa-clock"></i>{{$appointment->timeSlot->slot_time}}</p>
+                            <p><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</p>
                         </li>
                         <li class="mail-info-patient">
                             <ul>
                                 <li><i class="fa-solid fa-envelope"></i>{{ optional($appointment->patient)->email ?? 'N/A' }}</li>
-                                <li><i class="fa-solid fa-phone"></i>{{$appointment->patient->phone}}</li>
+                                <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
                             </ul>
                         </li>
                         <li class="appointment-action">
@@ -247,7 +246,7 @@
                             </ul>
                         </li>
                         <li class="appointment-start">
-                            <a href="doctor-appointment-start.html" class="start-link">Start Now</a>
+                            <a href="{{route('admin.appointment.show',['appointmentId' => $appointment->id])}}" class="start-link">Start Now</a>
                         </li>
                     </ul>
                 </div>
@@ -308,7 +307,7 @@
 
                     </li>
                     <li class="appointment-detail-btn">
-                        <a href="doctor-cancelled-appointment.html" class="start-link">View Details</a>
+                        <a href="#" class="start-link">View Details</a>
                     </li>
                 </ul>
             </div>
@@ -340,6 +339,7 @@
                 </ul>
             </div>
             <!-- /Pagination -->
+
         </div>
         <div class="tab-pane fade" id="pills-complete" role="tabpanel" aria-labelledby="pills-complete-tab">
             <!-- Appointment List -->

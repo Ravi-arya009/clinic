@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AppointmentController as AdminAppointmentController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\admin\MedicineController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\doctor\DashboardController as DoctorDashboardController;
 use App\Http\Controllers\staff\DashboardController as StaffDashboardController;
@@ -55,7 +56,13 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
         Route::get('user/{userId}', [UserController::class, 'show'])->name('admin.user.show');
         Route::put('user/{userId}', [UserController::class, 'update'])->name('admin.user.update');
         Route::get('available_timings/{doctor_id?}', [TimeSlotController::class, 'availableTimings'])->name('admin.available_timings');
+
+
         Route::get('appointments', [AdminAppointmentController::class, 'index'])->name('admin.appointments.index');
+        Route::get('/appointment/{appointmentId}', [AdminAppointmentController::class, 'show'])->name('admin.appointment.show');
+        Route::post('/appointment_details/store', [AdminAppointmentController::class, 'store'])->name('admin.appointment_details.store');
+        Route::get('/medicines', [MedicineController::class, 'index'])->name('admin.medicines.index');
+        Route::post('/medicine', [MedicineController::class, 'store'])->name('admin.medicine.store');
 
         //not working for now because not sending the ajax reques to sub domain. see notes.
         Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'deleteSlot'])->name('admin.slot.delete');
