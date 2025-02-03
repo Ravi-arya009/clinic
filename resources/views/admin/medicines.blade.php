@@ -37,16 +37,16 @@
                             </thead>
                             <tbody>
                                 @foreach ($medicines as $medicine)
-                                    <tr>
+                                    <tr id="medicine-row-{{ $medicine->id }}" class="">
                                         <td>
                                             {{ $loop->iteration }}
                                         </td>
-                                        <td>{{ $medicine->name }}</td>
+                                        <td id="medicine-name-{{ $medicine->id }}">{{ $medicine->name }}</td>
                                         <td>
                                             <span class="badge badge-success-bg">Completed</span>
                                         </td>
                                         <td>
-                                            <a href="#edit_medicine" class="edit-medicine-button account-action" data-bs-toggle="modal" title="Edit Medicine" data-medicine-id="{{$medicine->id}}" data-medicine-name="{{$medicine->name}}">
+                                            <a href="#edit_medicine" class="edit-medicine-button account-action" data-bs-toggle="modal" title="Edit Medicine" data-medicine-id="{{ $medicine->id }}" data-medicine-name="{{ $medicine->name }}">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
                                         </td>
@@ -119,7 +119,7 @@
 
                     <div class="form-set-button">
                         <button class="btn btn-light" type="button" data-bs-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary" id="edit-medicine-button">Save Changes</button>
+                        <button class="btn btn-primary" id="update-medicine-button">Save Changes</button>
                     </div>
                 </div>
             </div>
@@ -400,6 +400,7 @@
 @push('scripts')
     <script>
         var medicineStoreRoute = '{{ route('admin.medicine.store') }}';
+        var medicineUpdateRoute = "{{ route('admin.medicine.update', ':medicine') }}";
     </script>
     <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/editor/2.2.1/js/dataTables.editor.min.js"></script>

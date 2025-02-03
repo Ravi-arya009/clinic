@@ -164,7 +164,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="input-block input-block-new">
-                                        <textarea class="form-control" rows="3" name="notes">{{ old('notes') }}</textarea>
+                                        <textarea class="form-control" rows="3" name="notes">{{ $appointment->appointmentDetails->notes ?? old('notes') }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -174,15 +174,22 @@
                                 <h5>Medications</h5>
                             </div>
                             <div class="row meditation-row">
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="medicine-row">
                                     <div class="d-flex flex-wrap medication-wrap align-items-center">
                                         <div class="input-block input-block-new">
                                             <label class="form-label">Name</label>
-                                            <input type="text" class="form-control" name="medicine_name[]">
+                                            <select id="medicine_select2" class="form-control select2_dropdown" name="medicine_id[]">
+                                                @foreach ($medicines as $medicine)
+                                                    <option value="{{ $medicine->id }}" {{ in_array($medicine->id, old('medicine_id', [])) ? 'selected' : '' }}>
+                                                        {{ $medicine->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
+
                                         <div class="input-block input-block-new">
                                             <label class="form-label">Dosage</label>
-                                            <input type="text" class="form-control" name="dosage[]">
+                                            <input type="text" class="form-control" name="dosage[]" value="{{ old('dosage') }}">
                                         </div>
                                         <div class="input-block input-block-new">
                                             <label class="form-label">Duration</label>
@@ -222,7 +229,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="input-block input-block-new">
-                                        <textarea class="form-control" rows="3" name="advice">{{ old('advice') }}</textarea>
+                                        <textarea class="form-control" rows="3" name="advice">{{ $appointment->appointmentDetails->advice ?? old('advice') }}</textarea>
                                     </div>
                                 </div>
                             </div>
