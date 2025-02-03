@@ -31,7 +31,7 @@ class MedicineController extends Controller
                 'string',
                 'max:255',
                 Rule::unique('medicine_masters', 'name')
-                ->where('clinic_id', $this->clinicId)
+                    ->where('clinic_id', $this->clinicId)
             ],
         ]);
         $medicineMAster = MedicineMaster::create([
@@ -41,7 +41,25 @@ class MedicineController extends Controller
         return $medicineMAster;
     }
 
-    public function update(){
-        return "update function ran";
+    public function update(Request $request, $clinicSlug, $medicineId)
+    {
+        $validatedData = $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('medicine_masters', 'name')
+                    ->where('clinic_id', $this->clinicId)
+                    ->ignore($medicineId)
+            ],
+        ]);
+        $medicine = MedicineMaster::where('id', $medicineId)
+            ->where('clinic_id', $this->clinicId)
+            ->firstOrFail();
+
+        $medicine->name = $validatedData['name'];
+        $medicine->save();
+
+        return 'saved';
     }
 }

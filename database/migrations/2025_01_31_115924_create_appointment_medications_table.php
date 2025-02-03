@@ -15,7 +15,8 @@ return new class extends Migration
             $table->uuid('id')->unique();
             $table->uuid('appointment_id');
             $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
-            $table->string('medicine_name');
+            $table->uuid('medicine_id');
+            $table->foreign('medicine_id')->references('id')->on('medicine_masters')->onDelete('cascade');
             $table->string('dosage');
             $table->string('duration');
             $table->string('instructions')->nullable();

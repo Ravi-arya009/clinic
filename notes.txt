@@ -156,5 +156,8 @@ use validated['name'] instead of $request->name. research.
 - fetch appointments on the basis of status.
 once the appointment details are filled the status changes and it is removed from the appointments automatically.
 
-- create add medicine frontend and backend. everything will be on the same page.
-
+-appointment details should be create or update instead of just create.
+-add press enter to upate medicine. this feature is working while adding the medicine.
+    -refactor jquery code for medicines.
+    -make a universal jquery library for ajax,
+-add medicine is not working. easy but bt task. do with clear mind.

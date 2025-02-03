@@ -63,6 +63,7 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
         Route::post('/appointment_details/store', [AdminAppointmentController::class, 'store'])->name('admin.appointment_details.store');
         Route::get('/medicines', [MedicineController::class, 'index'])->name('admin.medicines.index');
         Route::post('/medicine', [MedicineController::class, 'store'])->name('admin.medicine.store');
+        Route::put('/medicine/{medicineId}', [MedicineController::class, 'update'])->name('admin.medicine.update');
 
         //not working for now because not sending the ajax reques to sub domain. see notes.
         Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'deleteSlot'])->name('admin.slot.delete');

@@ -32,4 +32,12 @@ class Appointment extends Model
     {
         return $this->belongsTo(TimeSlot::class)->select('id', 'slot_time');
     }
+
+    public function appointmentDetails(){
+        return $this->hasOne(AppointmentDetail::class);
+    }
+
+    public function medications(){
+        return $this->hasMany(AppointmentMedication::class);
+    }
 }
