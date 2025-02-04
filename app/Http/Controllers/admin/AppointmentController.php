@@ -31,7 +31,6 @@ class AppointmentController extends Controller
         $appointmentId = $request->appointmentId;
         $appointment = Appointment::with('patient', 'timeSlot', 'appointmentDetails', 'medications')->where('id',$appointmentId)->first();
         $medicines = MedicineMaster::where('clinic_id', $this->clinicId)->get();
-        dump($appointment);
         return view('admin.view_appointment', compact('appointment','medicines'));
     }
 
