@@ -161,3 +161,10 @@ once the appointment details are filled the status changes and it is removed fro
     -refactor jquery code for medicines.
     -make a universal jquery library for ajax,
 -add medicine is not working. easy but bt task. do with clear mind.
+- build a partial for the medication section on napointment details page.
+    -makes the store/update exceptions smooth
+-delete medicatins funciton.
+-see if autosave type of feature can be implemented on the appointment booking page.
+- there should be a unique rule in the apointment medications migration too. fix that.
+- apointment details should be insert or update instead of just insert.
+- test the appointment details page once.

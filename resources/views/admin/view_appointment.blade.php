@@ -174,35 +174,72 @@
                                 <h5>Medications</h5>
                             </div>
                             <div class="row meditation-row">
-                                <div class="col-md-12" id="medicine-row">
-                                    <div class="d-flex flex-wrap medication-wrap align-items-center">
-                                        <div class="input-block input-block-new">
-                                            <label class="form-label">Name</label>
-                                            <select id="medicine_select2" class="form-control select2_dropdown" name="medicine_id[]">
-                                                @foreach ($medicines as $medicine)
-                                                    <option value="{{ $medicine->id }}" {{ in_array($medicine->id, old('medicine_id', [])) ? 'selected' : '' }}>
-                                                        {{ $medicine->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                               @if($appointment->medications->isEmpty())
+                                   <div class="col-md-12" id="medicine-row">
+                                       <div class="d-flex flex-wrap medication-wrap align-items-center">
+                                           <div class="input-block input-block-new">
+                                               <label class="form-label">Name</label>
+                                               <select id="medicine_select2" class="form-control select2_dropdown" name="medicine_id[]">
+                                                   @foreach ($medicines as $medicine)
+                                                       <option value="{{ $medicine->id }}" {{ in_array($medicine->id, old('medicine_id', [])) ? 'selected' : '' }}>
+                                                           {{ $medicine->name }}
+                                                       </option>
+                                                   @endforeach
+                                               </select>
+                                           </div>
 
-                                        <div class="input-block input-block-new">
-                                            <label class="form-label">Dosage</label>
-                                            <input type="text" class="form-control" name="dosage[]" value="{{ old('dosage') }}">
-                                        </div>
-                                        <div class="input-block input-block-new">
-                                            <label class="form-label">Duration</label>
-                                            <input type="text" class="form-control" placeholder="1-0-0" name="duration[]">
-                                        </div>
-                                        <div class="input-block input-block-new">
-                                            <label class="form-label">Instruction</label>
-                                            <input type="text" class="form-control" name="instructions[]">
-                                        </div>
-                                        <div class="delete-row">
-                                            <a href="#" class="delete-btn delete-medication trash text-danger"><i class="fa-solid fa-trash-can"></i></a>
-                                        </div>
-                                    </div>
+                                           <div class="input-block input-block-new">
+                                               <label class="form-label">Dosage</label>
+                                               <input type="text" class="form-control" name="dosage[]" value="{{ old('dosage') }}">
+                                           </div>
+                                           <div class="input-block input-block-new">
+                                               <label class="form-label">Duration</label>
+                                               <input type="text" class="form-control" placeholder="1-0-0" name="duration[]">
+                                           </div>
+                                           <div class="input-block input-block-new">
+                                               <label class="form-label">Instruction</label>
+                                               <input type="text" class="form-control" name="instructions[]">
+                                           </div>
+                                           <div class="delete-row">
+                                               <a href="#" class="delete-btn delete-medication trash text-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                           </div>
+                                       </div>
+                                   </div>
+                               @else
+                                   @foreach ($appointment->medications as $medication)
+                                       <div class="col-md-12" id="medicine-row">
+                                           <div class="d-flex flex-wrap medication-wrap align-items-center">
+                                               <div class="input-block input-block-new">
+                                                   <label class="form-label">Name</label>
+                                                   <select id="medicine_select2" class="form-control select2_dropdown" name="medicine_id[]">
+                                                       @foreach ($medicines as $medicine)
+                                                           <option value="{{ $medicine->id }}" {{ $medicine->id == $medication->medicine_id ? 'selected' : '' }}>
+                                                               {{ $medicine->name }}
+                                                           </option>
+                                                       @endforeach
+                                                   </select>
+                                               </div>
+
+                                               <div class="input-block input-block-new">
+                                                   <label class="form-label">Dosage</label>
+                                                   <input type="text" class="form-control" name="dosage[]" value="{{ old('dosage.'.$loop->index, $medication->dosage) }}">
+                                               </div>
+                                               <div class="input-block input-block-new">
+                                                   <label class="form-label">Duration</label>
+                                                   <input type="text" class="form-control" placeholder="1-0-0" name="duration[]" value="{{ old('duration.'.$loop->index, $medication->duration) }}">
+                                               </div>
+                                               <div class="input-block input-block-new">
+                                                   <label class="form-label">Instruction</label>
+                                                   <input type="text" class="form-control" name="instructions[]" value="{{ old('instructions.'.$loop->index, $medication->instruction) }}">
+                                               </div>
+                                               <div class="delete-row">
+                                                   <a href="#" class="delete-btn delete-medication trash text-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   @endforeach
+                               @endif
+                                <div class="col">
                                     <div class="add-new-med text-end mb-4">
                                         <a href="#" class="add-medical more-item mb-0">Add New</a>
                                     </div>
