@@ -27,10 +27,9 @@ class TimeSlotController extends Controller
 
         if ($doctorId) {
             $timeSlots = TimeSlot::where('doctor_id', $doctorId)->orderBy('slot_time', 'asc')->get()->groupBy('day_of_week');
-            return view('admin.available_timings', compact('doctors', 'timeSlots'));
-        } else {
-            return view('admin.available_timings', compact('doctors'));
         }
+
+        return view('admin.available_timings', compact('doctors') + ($doctorId ? compact('timeSlots') : []));
     }
 
     public function store(Request $request)

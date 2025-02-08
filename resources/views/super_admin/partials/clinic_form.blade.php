@@ -1,3 +1,4 @@
+{{-- {{dd($clinic)}} --}}
 <form action="{{ $action }}" method="POST">
     @csrf
     <div class="setting-title">
@@ -25,7 +26,7 @@
                     <select class="form-control select2_dropdown" name="state" id="state">
                         <option value="" selected>Select</option>
                         @foreach ($states as $state)
-                            <option value="{{ $state->id }}" @if (isset($clinic) && $clinic->state == $state->id) selected @endif>{{ $state->name }}</option>
+                            <option value="{{ $state->id }}" @if (old('state', $clinic->state_id ?? '') == $state->id) selected @endif>{{ $state->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -37,12 +38,11 @@
                     <select class="form-control select2_dropdown" name="city" id="city">
                         <option value="" selected>Select</option>
                         @foreach ($cities as $city)
-                            <option value="{{ $city->id }}" @if (isset($clinic) && $clinic->city == $city->id) selected @endif>{{ $city->name }}</option>
+                            <option value="{{ $city->id }}" @if (old('city', $clinic->city_id ?? '') == $city->id) selected @endif>{{ $city->name }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-
             <div class="col-lg-6 col-md-6">
                 <div class="form-wrap">
                     <label class="col-form-label">Address</label>
@@ -83,7 +83,7 @@
                     <select class="form-control select2_dropdown" name="speciality" id="speciality">
                         <option value="" selected>Select</option>
                         @foreach ($specialities as $speciality)
-                            <option value="{{ $speciality->id }}" @if (isset($clinic) && $clinic->speciality_id == $speciality->id) selected @endif>{{ $speciality->name }}</option>
+                            <option value="{{ $speciality->id }}" @if (old('speciality', $clinic->speciality_id ?? '') == $speciality->id) selected @endif>{{ $speciality->name }}</option>
                         @endforeach
                     </select>
                 </div>

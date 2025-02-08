@@ -19,7 +19,7 @@ class MedicineController extends Controller
 
     public function index()
     {
-        $medicines = MedicineMaster::where('clinic_id', $this->clinicId)->get();
+        $medicines = MedicineMaster::where('clinic_id', $this->clinicId)->orderBy('created_at','Desc')->get();
         return view('admin.medicines', compact('medicines'));
     }
 

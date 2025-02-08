@@ -45,7 +45,6 @@ class ClinicController extends Controller
             'admin_phone' => 'required|digits_between:10,13|unique:users,phone',
 
         ]);
-        // dd($request->speciality);
 
         // both clinic and admin transaction should succeed or both should fail, hence a try catch block with db transaction.
         DB::beginTransaction();
@@ -58,16 +57,15 @@ class ClinicController extends Controller
                 'phone' => $request->phone,
                 'contact_person' => $request->contact_person,
                 'contact_person_phone' => $request->contact_person_phone,
-                'state' => $request->state,
-                'city' => $request->city,
+                'state_id' => $request->state,
+                'city_id' => $request->city,
                 'address' => $request->address,
                 'area' => $request->area,
                 'speciality_id' => $request->speciality,
 
             ]);
-
             // storing the admin's details in users table
-            $clinicAdmin = User::create([
+            User::create([
                 'id' => Str::uuid(),
                 'name' => $request->admin_name,
                 'phone' => $request->admin_phone,
@@ -83,8 +81,6 @@ class ClinicController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Something Went wrong');
         }
-
-        return redirect()->route('super_admin.clinic.show', ['clinicId' => $clinic->id])->with('success', 'Clinic registered successfully!');
     }
 
     public function index()
@@ -132,12 +128,11 @@ class ClinicController extends Controller
         $clinic->phone = $request->phone;
         $clinic->contact_person = $request->contact_person;
         $clinic->contact_person_phone = $request->contact_person_phone;
-        $clinic->state = $request->state;
-        $clinic->city = $request->city;
+        $clinic->state_id = $request->state;
+        $clinic->city_id = $request->city;
         $clinic->address = $request->address;
         $clinic->area = $request->area;
         $clinic->speciality_id = $request->speciality;
-
         $clinic->save();
 
         //updating admin

@@ -44,7 +44,20 @@ return [
         'patients' => [
             'driver' => 'session',
             'provider' => 'patients',
-            'login_route' => 'patient.login'
+            'login_route' => 'patient.login',
+            'index_route' => 'patient.dashboard'
+        ],
+        'super_admin' => [
+            'driver' => 'session',
+            'provider' => 'super_admins',
+            'login_route' => 'super_admin.login',
+            'index_route' => 'super_admin.dashboard'
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'users',
+            'login_route' => 'admin.login',
+            'index_route' => 'admin.dashboard'
         ],
     ],
 
@@ -74,6 +87,10 @@ return [
         'patients' => [
             'driver' => 'eloquent',
             'model' => App\Models\Patient::class,
+        ],
+        'super_admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SuperAdmin::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

@@ -18,7 +18,8 @@ class IsLoggedIn
     {
         //can use the same middleware for other users too. define route in guards to make it dynamic.
         if (!Auth::guard($guard)->check()) {
-            return redirect()->route('patient.login');
+            $loginRoute = config("auth.guards.{$guard}.login_route");
+            return redirect()->route($loginRoute);
         }
         return $next($request);
     }

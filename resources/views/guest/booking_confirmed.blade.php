@@ -33,7 +33,7 @@
                                     <ul>
                                         <li>Booking Date: <span>{{ $date = date('D, d M Y', strtotime($bookingData->appointment_date)) }}</span></li>
                                         <li>Booking Time: <span>{{ $time = date('h.iA', strtotime($bookingData->appointment_time)) }}</span></li>
-                                        <li>Consultaion Fee: <span>₹ {{ $bookingData->consultaion_fee }}.00</span></li>
+                                        <li>Consultaion Fee: <span>₹ {{ $bookingData->consultation_fee }}.00</span></li>
                                     </ul>
                                 </div>
                             </div>

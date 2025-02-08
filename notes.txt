@@ -168,3 +168,70 @@ once the appointment details are filled the status changes and it is removed fro
 - there should be a unique rule in the apointment medications migration too. fix that.
 - apointment details should be insert or update instead of just insert.
 - test the appointment details page once.
+
+-global auth and middleware is working, setup to all the users.
+
+
+#### Super Admin ####
+
+#Things left
+    -Profile settings not working
+    -Specialities and services featue is not implementd
+    -Not added datatables on the clinic list page.
+        -search, filters, sortings, etc will be handled by datatables only.
+    -Quick view option is not setup on recent clinics widget on dashboard.
+
+#### Admin ####
+
+-create user.
+-on guest doctor profile send data using sessions or something else. do not use get in a href. and use validation for qualificaion,speciality and other nullable columns.
+
+#Later
+-fix create/update clinic/user form ui(cards in card).
+-see if filters can too be added to datatables on search page.
+
+app logo, name, etc should come from a single place throughout the whole app.
+check why clinicSlug is a compulsory parameter in some functions.
+rename role column to role_id in users table.
+
+
+#### flow ###
+-fix appointment details store method. we have new working code but it's shit. combine it with old code, refractor it and make it clean and concise.
+-quick view button on clinic list is not working. show modal with clinic info on button click.
+
+-on appointment details page new medicine's row is fetched from the page's Dom itself. save it in a js variable and render that on add new click button.
+-currently if the medicine row is left blank an integrity constraint error for not nullable column is thrown. if the row is deleted, it works fine.
+-in medicine section when a medicine is added then the edit action button doesn't work because the whole section is rendered dynamically via js, fix that.
+
+-check all the pages and their respective routes and attach middlewares to it.
+-fix delete slots
+
+#datatables
+
+#next
+-remove bloats from appointments page. (use datatables then remove)
+generate perscription dynamically after the appointment ends.
+
+-remove bloats from doctor's page
+-fix view clinic page on guest (when testing guest/patient).
+-in future fill clinic admin details from super admin panel while creating clinics.
+
+-naming convention of the routes should be as per laravel standards. Review all the routes once a panel is done with review and changes.
+
+-change patient's contact information on appointments list. currently it's showing contact person's info.
+    -it'll happen after gues user is able to add multiple patients to their account.
+
+-medicine's list datable is not loading medicine name automatically when updating the medicine second time.
+#######naveen sir's changes####
+
+fetch doctor's list randomly.
+alternate/patient's phone number (otp,call will be recieved on this). with checkmarks.
+    patient's account can add multiple pateint's on their own account. (max 5)
+ od bd tds,sos (doctor's medicine)
+sos medicine (take when required)
+make medicine ui seamless (after meal)
+turn on laboratory test (ask rahul sir)
+follow up mein calendar lagao which shows sundays marked with red.
+doctor's perscription has a qr that sends to website. (show text login to see medical details/history etc.)
+#bug
+    patients can book apointment twice if pressed back

@@ -14,7 +14,7 @@ class Clinic extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $casts = [
-        'id' => 'string',
+        'id' => 'string'
     ];
 
     protected $fillable = [
@@ -28,8 +28,8 @@ class Clinic extends Model
         'admin_phone',
         'admin_password',
         'super_admin',
-        'state',
-        'city',
+        'state_id',
+        'city_id',
         'area',
         'address',
         'speciality_id'
@@ -38,7 +38,7 @@ class Clinic extends Model
 
     public function admin()
     {
-        return $this->hasOne(User::class, 'clinic_id', 'id')->select('id', 'name', 'phone', 'clinic_id');
+        return $this->hasOne(User::class, 'clinic_id', 'id')->where('role', config('role.admin'))->select('id', 'name', 'phone', 'clinic_id');
     }
     public function speciality()
     {

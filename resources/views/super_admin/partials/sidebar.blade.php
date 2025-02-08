@@ -5,7 +5,7 @@
                 <img src={{ asset('img/doctors-dashboard/doctor-profile-img.jpg') }} alt="User Image">
             </a>
             <div class="profile-det-info">
-                <h3><a href="doctor-profile.html">Jai Pratap</a></h3>
+                <h3><a href="doctor-profile.html">{{ auth()->guard('super_admin')->user()->name }}</a></h3>
                 <span class="badge doctor-role-badge"><i class="fa-solid fa-circle"></i>Super Admin</span>
             </div>
         </div>
@@ -28,91 +28,21 @@
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs(['super_admin.clinic.index','super_admin.clinic.show']) ? 'active' : '' }}">
+                <li class="{{ request()->routeIs(['super_admin.clinic.index', 'super_admin.clinic.show']) ? 'active' : '' }}">
                     <a href="{{ route('super_admin.clinic.index') }}">
                         <i class="fa-solid fa-list"></i>
                         <span>Clinic List</span>
                     </a>
                 </li>
-
-
                 <li>
-                    <a href="doctor-request.html">
-                        <i class="fa-solid fa-calendar-check"></i>
-                        <span>Requests</span>
-                        <small class="unread-msg">2</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="appointments.html">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <span>Appointments</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="available-timings.html">
-                        <i class="fa-solid fa-calendar-day"></i>
-                        <span>Available Timings</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="doctor-specialities.html">
+                    <a href="#">
                         <i class="fa-solid fa-clock"></i>
                         <span>Specialties & Services</span>
                     </a>
                 </li>
+
                 <li>
-                    <a href="reviews.html">
-                        <i class="fas fa-star"></i>
-                        <span>Reviews</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="accounts.html">
-                        <i class="fa-solid fa-file-contract"></i>
-                        <span>Accounts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="invoices.html">
-                        <i class="fa-solid fa-file-lines"></i>
-                        <span>Invoices</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="doctor-payment.html">
-                        <i class="fa-solid fa-money-bill-1"></i>
-                        <span>Payout Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat-doctor.html">
-                        <i class="fa-solid fa-comments"></i>
-                        <span>Message</span>
-                        <small class="unread-msg">7</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="doctor-profile-settings.html">
-                        <i class="fa-solid fa-user-pen"></i>
-                        <span>Profile Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="social-media.html">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span>Social Media</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="doctor-change-password.html">
-                        <i class="fa-solid fa-key"></i>
-                        <span>Change Password</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="login.html">
+                    <a href="{{route('super_admin.logout')}}">
                         <i class="fa-solid fa-calendar-check"></i>
                         <span>Logout</span>
                     </a>

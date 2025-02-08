@@ -28,7 +28,12 @@ class User extends Authenticatable
         'gender',
         'password',
         'role',
-        'clinic_id'
+        'clinic_id',
+        'state_id',
+        'city_id',
+        'address',
+        'area',
+        'pincode'
     ];
 
 

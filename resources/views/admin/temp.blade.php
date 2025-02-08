@@ -355,5 +355,8 @@
                 });
             }
         });
+        // $(function(){
+        //     $("#success-modal").modal("show");
+        // });
     </script>
 @endpush

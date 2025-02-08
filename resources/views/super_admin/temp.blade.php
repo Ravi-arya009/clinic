@@ -1,17 +1,18 @@
-@extends('admin.layouts.main')
+@extends('super_admin.layouts.main')
 
-@section('title', 'Appointments')
+@section('title', 'Clinic List')
 
-@section('breadcrum-title', 'Appointments')
+@section('breadcrum-title', 'Clinic List')
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', 'Appointments')
+@section('breadcrum-link-two', 'Clinic List')
+
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
 @section('content')
 
     <div class="dashboard-header">
-        <h3>Appointments</h3>
+        <h3>Clinic List</h3>
         <ul class="header-list-btns">
             <li>
                 <div class="input-block dash-search-input">
@@ -20,58 +21,54 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <i class="fa-solid fa-xmark hide" style="cursor: pointer;"></i>
                     </span>
+
                 </div>
             </li>
         </ul>
     </div>
 
-    <table class="my-datatable table-hover">
-        <thead>
+    <table id="clinic-table" class="my-datatable table-hover">
+        <thead class="my-table-hover">
             <tr>
                 <th>Name</th>
-                <th>Date</th>
+                <th>Location</th>
                 <th>Contact Person</th>
-                <th>Patient</th>
-                <th>Action</th>
+                <th>Actions</th>
             </tr>
         </thead>
-
-        @foreach ($appointments as $appointment)
+        @foreach ($clinics as $clinic)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
-                    <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
+                    <a href="doctor-upcoming-appointment.html">
+                        <img src="{{ asset('img/bg/ring-2.png') }}" alt="User Image">
+                    </a>
                     <div class="patient-info">
-                        <p>#Apt0001</p>
-                        <h6>{{ ucwords($appointment->patient->name) }}</h6>
+                        <h6><a href="doctor-upcoming-appointment.html">{{ $clinic->name }}</a></h6>
                     </div>
                 </td>
+
                 <td class="mail-info-patient">
                     <ul>
-                        <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</li>
-                        <li><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</li>
+                        <li>{{ isset($clinic) ? ucfirst($clinic->area) : 'N/A' }}</li>
+                        <li>{{ isset($clinic) ? ucfirst($clinic->city->name) : 'N/A' }}</li>
                     </ul>
                 </td>
+
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>
-                        <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
-                    </ul>
-                </td>
-                <td class="mail-info-patient">
-                    <ul>
-                        <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>
-                        <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
+                        <li><i class="fa fa-user"></i>{{ isset($clinic) ? ucfirst($clinic->contact_person) : 'N/A' }}</li>
+                        <li><i class="fa fa-phone"></i>{{ $clinic->contact_person_phone ?? 'N/A' }}</li>
                     </ul>
                 </td>
                 <td class="appointment-start">
-                    <a href="{{route('admin.appointment.show',['appointmentId' => $appointment->id])}}" class="start-link">View</a>
+                    <a href="{{ route('clinic.landing', ['clinicSlug' => $clinic->slug]) }}" target="_blank" title="quick View"><i class="fa-solid fa-eye"></i></a>
+                    <a class="ps-3" href="{{ route('super_admin.clinic.show', ['clinicId' => $clinic->id]) }}" class="start-link">Edit</a>
                 </td>
             </tr>
         @endforeach
     </table>
-
+    <hr>
 @endsection
-
 
 @push('scripts')
     <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>

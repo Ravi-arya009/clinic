@@ -6,7 +6,14 @@
                     <a href="doctor-profile.html">
                         <img src={{ asset('img/doctors/doctor-thumb-' . str_pad(rand(1, 21), 2, '0', STR_PAD_LEFT) . '.jpg') }} class="img-fluid" alt="User Image">
                     </a>
-                    <h4 class="doc-department mt-4"><img src={{ asset('img/specialities/' . $entity->speciality->image) }} class="img-fluid" alt="Speciality">{{ $entity->speciality->name }}</h4>
+                    <h4 class="doc-department mt-4">
+                        @if(isset($entity->speciality))
+                            <img src={{ asset('img/specialities/' . $entity->speciality->image) }} class="img-fluid" alt="Speciality">
+                            {{ $entity->speciality->name }}
+                        @else
+                            -
+                        @endif
+                    </h4>
                 </div>
                 <div class="doc-info-cont">
                     <h4 class="doc-name"><a href="doctor-profile.html">{{ $entity->name }}</a></h4>

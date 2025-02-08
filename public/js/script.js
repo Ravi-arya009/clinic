@@ -3323,43 +3323,43 @@ Version      : 1.3
         $(this).closest(".medication-wrap").remove();
         return false;
     });
-   $(".add-medical").on("click", function () {
-       var servcontent =
-           '<div class="col-md-12">' +
-           '<div class="d-flex flex-wrap medication-wrap align-items-center">' +
-           '<div class="input-block input-block-new">' +
-           '<label class="form-label">Name</label>' +
-           $("#medicine_select2").clone()[0].outerHTML +
-           "</div>" +
-           '<div class="input-block input-block-new">' +
-           '<label class="form-label">Dosage</label>' +
-           '<input type="text" class="form-control" name="dosage[]">' +
-           "</div>" +
-           '<div class="input-block input-block-new">' +
-           '<label class="form-label">Duration</label>' +
-           '<input type="text" class="form-control" placeholder="1-0-0" name="duration[]">' +
-           "</div>" +
-           '<div class="input-block input-block-new">' +
-           '<label class="form-label">Instruction</label>' +
-           '<input type="text" class="form-control" name="instructions[]">' +
-           "</div>" +
-           '<div class="delete-row">' +
-           '<a href="#" class="delete-btn delete-medication trash text-danger"><i class="fa-solid fa-trash-can"></i></a>' +
-           "</div>" +
-           "</div>" +
-           "</div>";
+    $(".add-medical").on("click", function () {
+        var servcontent =
+            '<div class="col-md-12">' +
+            '<div class="d-flex flex-wrap medication-wrap align-items-center">' +
+            '<div class="input-block input-block-new">' +
+            '<label class="form-label">Name</label>' +
+            $("#medicine_select2").clone()[0].outerHTML +
+            "</div>" +
+            '<div class="input-block input-block-new">' +
+            '<label class="form-label">Dosage</label>' +
+            '<input type="text" class="form-control" name="dosage[]">' +
+            "</div>" +
+            '<div class="input-block input-block-new">' +
+            '<label class="form-label">Duration</label>' +
+            '<input type="text" class="form-control" placeholder="1-0-0" name="duration[]">' +
+            "</div>" +
+            '<div class="input-block input-block-new">' +
+            '<label class="form-label">Instruction</label>' +
+            '<input type="text" class="form-control" name="instructions[]">' +
+            "</div>" +
+            '<div class="delete-row">' +
+            '<a href="#" class="delete-btn delete-medication trash text-danger"><i class="fa-solid fa-trash-can"></i></a>' +
+            "</div>" +
+            "</div>" +
+            "</div>";
 
-       $(".add-new-med").before(servcontent);
+        $(".add-new-med").before(servcontent);
 
-       if ($(".select2_dropdown").length > 0) {
-           $(".select2_dropdown").select2({
-               minimumResultsForSearch: -1,
-               width: "100%",
-           });
-       }
+        if ($(".select2_dropdown").length > 0) {
+            $(".select2_dropdown").select2({
+                minimumResultsForSearch: -1,
+                width: "100%",
+            });
+        }
 
-       return false;
-   });
+        return false;
+    });
 
     //Chat Search Visible
     $(".chat-search-btn").on("click", function () {
@@ -4096,110 +4096,29 @@ Version      : 1.3
         $(this).fadeOut();
     });
 
-    $("#medicineName").keyup(function (event) {
-        if (event.key === "Enter") {
-            $("#add-medicine-button").click();
-        }
-    });
+    $(".add-lab-test-button").on("click", function () {
+        var labTestContent =
+            '<div class="col-md-12">' +
+            '<div class="d-flex flex-wrap lab-test-wrap align-items-center">' +
+            '<div class="input-block input-block-new">' +
+            '<label class="form-label">Name</label>' +
+            $("#lab_test_select2").clone()[0].outerHTML +
+            "</div>" +
+            '<div class="delete-row">' +
+            '<a href="#" class="delete-btn delete-test trash text-danger"><i class="fa-solid fa-trash-can"></i></a>' +
+            "</div>" +
+            "</div>" +
+            "</div>";
 
-    let table = new DataTable("#medicine-master-table");
+        $(".add-new-lab-test").before(labTestContent);
 
-    $("#add_medicine").on("shown.bs.modal", function () {
-        $("#medicineName").val("");
-        $("#medicineName").focus();
-    });
-    $("#add-medicine-button").on("click", function () {
-        var medicineName = $('.modal-body input[type="text"]').val();
-        var errorDiv = $(".modal-body .alert");
-
-        if (medicineName.trim() === "") {
-            errorDiv.removeClass("d-none");
-            errorDiv.find("li").html("Error: Medicine name is required.");
-        } else {
-            errorDiv.addClass("d-none");
-            console.log("Medicine name:", medicineName);
-
-            $.ajax({
-                type: "POST",
-                url: medicineStoreRoute,
-                data: { medicineName: medicineName },
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                        "content"
-                    ),
-                },
-                success: function (response) {
-                    var table = $("#medicine-master-table").DataTable();
-                    if (table) {
-                        var newRow = [
-                            "-",
-                            response.name,
-                            '<span class="badge badge-success-bg">Completed</span>',
-                            '<a href="#request_details_modal" class="account-action" data-bs-toggle="modal"><i class="fa-solid fa-link"></i></a>',
-                        ];
-                        var row = table.row.add(newRow).draw(false).node();
-                        $("#add_medicine").modal("hide");
-                        $(row).find("td").addClass("highlight");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    if (xhr.status == 422) {
-                        errorDiv.removeClass("d-none");
-                        errorDiv.find("li").html("Medicine already exists.");
-                    }
-                    console.log("Error adding medicine:", error);
-                },
+        if ($(".select2_dropdown").length > 0) {
+            $(".select2_dropdown").select2({
+                minimumResultsForSearch: -1,
+                width: "100%",
             });
         }
-    });
 
-    $(".edit-medicine-button").on("click", function () {
-        var medicineId = $(this).data("medicine-id");
-        var medicineName = $(this).data("medicine-name");
-        $("#edit-medicine-name").val(medicineName).focus();
-        $("#update-medicine-button").data("medicine-id", medicineId);
-        $("#update-medicine-button").data("medicine-name", medicineName);
-    });
-
-    $("#update-medicine-button").on("click", function () {
-        var medicineId = $(this).data("medicine-id");
-        var medicineName = $("#edit-medicine-name").val();
-        var errorDiv = $(".modal-body .alert");
-
-        if (medicineName.trim() === "") {
-            errorDiv.removeClass("d-none");
-            errorDiv.find("li").html("Error: Medicine name is required.");
-        } else {
-            errorDiv.addClass("d-none");
-            console.log("Medicine name:", medicineName);
-            $.ajax({
-                type: "PUT",
-                url: medicineUpdateRoute.replace(":medicine", medicineId),
-                data: {
-                    name: medicineName,
-                    method: "PUT",
-                },
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                        "content"
-                    ),
-                },
-                success: function (response) {
-                    console.log(response);
-                    $("#medicine-name-" + medicineId).text(medicineName);
-                    $("#medicine-row-" + medicineId)
-                        .children("td")
-                        .addClass("highlight");
-                    $("#edit_medicine").modal("hide");
-                },
-                error: function (xhr, status, error) {
-                    if (xhr.status == 422) {
-                        errorDiv.removeClass("d-none");
-                        errorDiv.find("li").html("Medicine already exists.");
-                    }
-                    console.log("Error adding medicine:", error);
-                },
-            });
-        }
+        return false;
     });
 })(jQuery);

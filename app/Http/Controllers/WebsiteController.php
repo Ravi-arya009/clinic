@@ -16,7 +16,7 @@ class WebsiteController extends Controller
         $doctors = User::with('doctorProfile.speciality', 'city')->where('role', config('role.doctor'))->limit(10)->get();
         $this->doctorTransformer($doctors);
         $specialities = Speciality::where('status', 1)->limit(10)->get();
-        // dd($doctors);
+
         return view('guest.index', compact('clinics', 'cities', 'doctors', 'specialities'));
     }
 

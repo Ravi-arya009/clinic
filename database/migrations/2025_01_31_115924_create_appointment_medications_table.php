@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('duration');
             $table->string('instructions')->nullable();
             $table->timestamps();
+            $table->unique(['appointment_id', 'medicine_id'], 'unique_medicine_per_appointment');
         });
     }
 
