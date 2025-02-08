@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AppointmentController as AdminAppointmentController;
+use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\MedicineController;
 use App\Http\Controllers\admin\UserController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\admin\TimeSlotController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\super_admin\AuthController as Super_adminAuthController;
 use App\Http\Controllers\super_admin\ClinicController;
 use App\Http\Controllers\super_admin\DashboardController;
 use App\Http\Controllers\TempController;
@@ -24,10 +26,60 @@ use Illuminate\Support\Facades\Route;
 
 //global logout route. (Temporary, only for testing purposes)
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
-Route::get('/temp', [TempController::class, 'temp'])->name('temp');
+// Route::get('temp', [TempController::class, 'temp'])->name('temp');
+
+Route::domain('{clinicSlug}.localhost')->group(
+    function () {
+        Route::get('admin/temp', [TempController::class, 'temp'])->name('temp');
+        // Route::get('appointments', [AdminAppointmentController::class, 'index'])->name('admin.appointments.index');
+    });
+
 ####Routes for testing purposes end####
 ########################################################################################
 ########################################################################################
+
+//Super Admin Routes
+Route::prefix('super_admin')->group(
+    function () {
+        Route::middleware('RedirectIfAuthenticated:super_admin')->group(function () {
+            Route::get('/login', [Super_adminAuthController::class, 'login'])->name('super_admin.login');
+            Route::post('/login', [Super_adminAuthController::class, 'authenticate'])->name('super_admin.authenticate');
+        });
+        Route::middleware('IsLoggedIn:super_admin')->group(function () {
+            Route::get('/', [DashboardController::class, 'dashboard'])->name('super_admin.index');
+            Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('super_admin.dashboard');
+            Route::get('clinic/index', [ClinicController::class, 'index'])->name('super_admin.clinic.index');
+            Route::get('clinic/create', [ClinicController::class, 'create'])->name('super_admin.clinic.create');
+            Route::post('clinic/store', [ClinicController::class, 'store'])->name('super_admin.clinic.store');
+            Route::get('clinic/view/{clinicId}', [ClinicController::class, 'show'])->name('super_admin.clinic.show');
+            Route::post('clinic/update/{clinicId}', [ClinicController::class, 'update'])->name('super_admin.clinic.update');
+            Route::get('logout', [Super_adminAuthController::class, 'logout'])->name('super_admin.logout');
+        });
+    }
+);
+
+//Clinic Admin Routes
+Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::middleware('RedirectIfAuthenticated:admin')->group(function () {
+            Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
+            Route::post('/login', [AdminAuthController::class, 'authenticate'])->name('admin.authenticate');
+        });
+
+        Route::middleware('IsLoggedIn:admin')->group(function () {
+            Route::get('/', [AdminDashboardController::class, 'dashboard'])->name('admin.index');
+            Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
+            Route::get('user/create', [UserController::class, 'create'])->name('admin.user.create');
+            Route::post('user/store', [UserController::class, 'store'])->name('admin.user.store');
+
+            Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+        });
+    });
+});
+
+
+################
+
 
 // Guest Routes
 Route::get('/', [WebsiteController::class, 'index'])->name('index');
@@ -48,11 +100,10 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
 
     //Admin routes
     Route::prefix('admin')->group(function () {
-        Route::get('/', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
+
         Route::get('users/{role_id?}', [UserController::class, 'index'])->name('admin.user.index');
-        Route::get('user/create', [UserController::class, 'create'])->name('admin.user.create');
-        Route::post('user/store', [UserController::class, 'store'])->name('admin.user.store');
+
+
         Route::get('user/{userId}', [UserController::class, 'show'])->name('admin.user.show');
         Route::put('user/{userId}', [UserController::class, 'update'])->name('admin.user.update');
         Route::get('available_timings/{doctor_id?}', [TimeSlotController::class, 'availableTimings'])->name('admin.available_timings');
@@ -91,24 +142,6 @@ Route::prefix('patient')->group(function () {
         Route::post('register', [PatientAuthController::class, 'store'])->name('patient.store');
     });
 });
-
-
-
-
-
-Route::prefix('super_admin')->group(
-    function () {
-        Route::get('/', [DashboardController::class, 'dashboard'])->name('super_admin.home');
-        Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('super_admin.dashboard');
-
-        Route::get('clinic/create', [ClinicController::class, 'create'])->name('super_admin.clinic.create');
-        Route::post('clinic/store', [ClinicController::class, 'store'])->name('super_admin.clinic.store');
-        Route::get('clinic/index', [ClinicController::class, 'index'])->name('super_admin.clinic.index');
-        Route::get('clinic/view/{clinicId}', [ClinicController::class, 'show'])->name('super_admin.clinic.show');
-        Route::post('clinic/update/{clinicId}', [ClinicController::class, 'update'])->name('super_admin.clinic.update');
-    }
-);
-
 
 
 

@@ -19,45 +19,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        // User::factory()->create([
-        //     'id' => Str::uuid(),
-        //     'name' => 'Admin',
-        //     'phone' => '8181000621',
-        //     'whatsapp' => '8181000621',
-        //     'password' => Hash::make('ravi'),
-        //     'role' => 1,
-        //     'gender' => 1
-        // ]);
-
-        // User::factory()->create([
-        //     'id' => Str::uuid(),
-        //     'name' => 'Doctor',
-        //     'phone' => '8181000721',
-        //     'password' => Hash::make('ravi'),
-        //     'role' => 2,
-        //     'gender' => 1
-
-        // ]);
-
-        // User::factory()->create([
-        //     'id' => Str::uuid(),
-        //     'name' => 'Staff',
-        //     'phone' => '8181000821',
-        //     'password' => Hash::make('ravi'),
-        //     'role' => 3,
-        //     'gender' => 1
-        // ]);
-
-        // User::factory()->create([
-        //     'id' => Str::uuid(),
-        //     'name' => 'patient',
-        //     'phone' => '8181000921',
-        //     'password' => Hash::make('ravi'),
-        //     'role' => 4,
-        //     'gender' => 1
-        // ]);
-
+        
+        SuperAdmin::create([
+            'id' => Str::uuid(),
+            'name' => 'Ravi Arya',
+            'phone' => '8181000621',
+            'whatsapp' => '8181000621',
+            'email' => 'ravi.arya009@gmail.com',
+            'password' => Hash::make('ravi'),
+            'gender' => 1
+        ]);
+       
         Role::create([
             'role_name' => 'admin',
             'role_id' => Str::uuid()
@@ -73,16 +45,6 @@ class DatabaseSeeder extends Seeder
         Role::create([
             'role_name' => 'patient',
             'role_id' => Str::uuid()
-        ]);
-
-        SuperAdmin::create([
-            'id' => Str::uuid(),
-            'name' => 'Super Admin',
-            'phone' => '8181000621',
-            'whatsapp' => '8181000621',
-            'email' => 'ravi.arya009@gmail.com',
-            'password' => Hash::make('ravi'),
-            'gender' => 1
         ]);
 
         $this->call(QualificationSeeder::class);

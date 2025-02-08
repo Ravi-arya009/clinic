@@ -18,7 +18,8 @@ class RedirectIfAuthenticated
     {
         //can use the same middleware for other users too. define route in guards to make it dynamic.
         if (Auth::guard($guard)->check()) {
-            return redirect()->route('patient.dashboard');
+            $indexRoute = config("auth.guards.{$guard}.index_route");
+            return redirect()->route($indexRoute);
         }
         return $next($request);
     }

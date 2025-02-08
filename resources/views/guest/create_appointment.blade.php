@@ -182,10 +182,10 @@
                             <div class="booking-list">
                                 <div class="booking-date-list consultation-date-list">
                                     <ul>
-                                        <li>Consultation Fee: <span>₹ {{ $bookingData->consultaion_fee }}</span></li>
+                                        <li>Consultation Fee: <span>₹ {{ $bookingData->consultation_fee }}</span></li>
                                         <li>Booking Fee: <span>₹ 0.00</span></li>
                                         <li>Tax: <span>₹ 0.00</span></li>
-                                        <li><span class="total-amount"></span>Total <span>₹ {{ $bookingData->consultaion_fee }}</span></li>
+                                        <li><span class="total-amount"></span>Total <span>₹ {{ $bookingData->consultation_fee }}</span></li>
                                     </ul>
                                 </div>
                             </div>

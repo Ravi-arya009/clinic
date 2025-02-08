@@ -14,8 +14,12 @@
                             </div>
                             <div class="doc-info-cont">
                                 <span class="badge doc-avail-badge"><i class="fa-solid fa-circle"></i>Available </span>
-                                <h4 class="doc-name">{{ $doctor->name }} <img src={{ asset('img/icons/badge-check.svg') }} alt="Img"><span class="badge doctor-role-badge"><i class="fa-solid fa-circle"></i>{{ $doctor->speciality->name }}</span></h4>
-                                <p>Qualification : {{ $doctor->qualification->name }}</p>
+                                <h4 class="doc-name">
+                                    {{ $doctor->name }}
+                                    <img src={{ asset('img/icons/badge-check.svg') }} alt="Img">
+                                    <span class="badge doctor-role-badge"><i class="fa-solid fa-circle"></i>{{ isset($doctor->speciality) ? $doctor->speciality->name : '-' }}</span>
+                                </h4>
+                                <p>Qualification : {{ isset($doctor->qualification->name) ? $doctor->qualification->name : '-' }}</p>
                                 <p class="address-detail"><span class="loc-icon"><i class="feather-map-pin"></i></span>{{ $doctor->address }}</p>
                                 <p>
                                 <div class="rating">
@@ -332,6 +336,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
+                                    {{-- {{dd($doctor)}} --}}
                                     @foreach ($doctor->slotsByDate as $date => $timeSlots)
                                         <div class="time-slot time-slot-blk" id="slot-for-day-{{ $loop->iteration }}">
                                             <h4>Morning</h4>
@@ -345,12 +350,12 @@
                                                                     'doctor_id' => $doctor->id,
                                                                     'doctor_name' => $doctor->name,
                                                                     'doctor_address' => $doctor->address,
-                                                                    'doctor_qualification' => $doctor->qualification->name,
-                                                                    'doctor_speciality' => $doctor->speciality->name,
+                                                                    'doctor_qualification' => isset($doctor->qualification->name) ? $doctor->qualification->name : '-',
+                                                                    'doctor_speciality' => isset($doctor->speciality->name) ? $doctor->speciality->name : '-',
                                                                     'slot_id' => $slot->id,
                                                                     'appointment_date' => $date,
                                                                     'appointment_time' => $slot->slot_time,
-                                                                    'consultaion_fee' => $doctor->doctorProfile->consultation_fee,
+                                                                    'consultation_fee' => $doctor->doctorProfile->consultation_fee,
                                                                 ]) }}">
                                                                 <span>{{ date('h:i A', strtotime($slot->slot_time)) }}</span>
                                                             </a>

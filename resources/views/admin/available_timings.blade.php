@@ -27,118 +27,23 @@
         </div>
     @endif
 
-    <div class="appointment-tabs">
-        <ul class="nav available-nav">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" href="#" data-bs-toggle="tab" data-bs-target="#general-availability">General Availability</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" href="#" data-bs-toggle="tab" data-bs-target="#clinic-availability">Clinic Availability</a>
-            </li>
-        </ul>
-    </div>
-    <div class="tab-content pt-0 timing-content">
-
-        <!-- General Availability -->
-        <div class="tab-pane fade show active" id="general-availability">
-            <div class="clinic-wrap">
-                <h5>Select Doctor</h5>
-                <div class="row">
-                    <div class="col-md-6">
-                        <select class="select select2_dropdown" id="doctor_dropdown">
-                            <option selected>Select Doctor</option>
-                            @foreach ($doctors as $doctor)
-                                <option value="{{ $doctor->id }}" data-url="{{ route('admin.available_timings', $doctor->id) }}" {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
-                                    {{ $doctor->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+    <div class="tab-pane fade show active" id="general-availability">
+        <div class="clinic-wrap">
+            <h5>Select Doctor</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <select class="select select2_dropdown" id="doctor_dropdown">
+                        <option selected>Select Doctor</option>
+                        @foreach ($doctors as $doctor)
+                            <option value="{{ $doctor->id }}" data-url="{{ route('admin.available_timings', $doctor->id) }}" {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
+                                {{ $doctor->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
-
-            @if (request('doctor_id'))
-                <div class="card custom-card">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h3>Select Available Slots</h3>
-                        </div>
-
-                        <div class="available-tab">
-                            <ul class="nav">
-                                <li>
-                                    <a href="#" class="active" data-bs-toggle="tab" data-bs-target="#day_1">Monday</a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bs-toggle="tab" data-bs-target="#day_2">Tuesday</a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bs-toggle="tab" data-bs-target="#day_3">Wednesday</a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bs-toggle="tab" data-bs-target="#day_4">Thursday</a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bs-toggle="tab" data-bs-target="#day_5">Friday</a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bs-toggle="tab" data-bs-target="#day_6">Saturday</a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bs-toggle="tab" data-bs-target="#day_7">Sunday</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="tab-content pt-0">
-                            @for ($i = 1; $i <= 7; $i++)
-                                <div class="tab-pane {{ $i == 1 ? 'active show' : 'fade' }}" id="day_{{ $i }}">
-                                    <div class="slot-box">
-                                        <div class="slot-header">
-                                            <h5>Available Slots</h5>
-                                            <ul>
-                                                <li>
-                                                    <a href="#" class="add-slot add_time_slot" data-bs-toggle="modal" data-bs-target="#add_slot" data-day="{{ $i }}">Add Slots</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="slot-body">
-                                            <ul class="time-slots">
-                                                @if (isset($timeSlots) && isset($timeSlots[$i]) && $timeSlots[$i]->count() > 0)
-                                                    @foreach ($timeSlots[$i] as $slot)
-                                                        <li class="time_slot_li" id="slot_{{$slot->id}}" data-id="{{$slot->id}}" data-bs-toggle="modal" data-bs-target="#delete_slot"><i class="fa-regular fa-clock"></i>{{ date('h:i A', strtotime($slot->slot_time)) }}</li>
-                                                    @endforeach
-                                                @else
-                                                    <p>No Slots Available</p>
-                                                @endif
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endfor
-                        </div>
-
-                    </div>
-                </div>
-            @endif
         </div>
-        <!-- /General Availability -->
 
-        <!-- Clinic Availability -->
-        <div class="tab-pane fade" id="clinic-availability">
-            <div class="clinic-wrap">
-                <h5>Select Clinic</h5>
-                <div class="row">
-                    <div class="col-md-6">
-                        <select class="select-img">
-                            <option data-image="assets/img/doctors-dashboard/clinic-01.jpg">The Family Dentistry Clinic</option>
-                            <option data-image="assets/img/doctors-dashboard/clinic-02.jpg">Dentistry Clinic</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+        @if (request('doctor_id'))
             <div class="card custom-card">
                 <div class="card-body">
                     <div class="card-header">
@@ -146,203 +51,67 @@
                     </div>
 
                     <div class="available-tab">
-                        <label class="form-label">Select Available days</label>
                         <ul class="nav">
                             <li>
-                                <a href="#" class="active" data-bs-toggle="tab" data-bs-target="#monday-slot">Monday</a>
+                                <a href="#" class="active" data-bs-toggle="tab" data-bs-target="#day_1">Monday</a>
                             </li>
                             <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#tuesday-slot">Tuesday</a>
+                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_2">Tuesday</a>
                             </li>
                             <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#wednesday-slot">Wedneday</a>
+                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_3">Wednesday</a>
                             </li>
                             <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#thursday-slot">Thursday</a>
+                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_4">Thursday</a>
                             </li>
                             <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#friday-slot">Friday</a>
+                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_5">Friday</a>
                             </li>
                             <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#saturday-slot">Saturday</a>
+                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_6">Saturday</a>
                             </li>
                             <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#sunday-slot">Sunday</a>
+                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_7">Sunday</a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="tab-content pt-0">
-
-                        <!-- Slot -->
-                        <div class="tab-pane active show" id="monday-slot">
-                            <div class="slot-box">
-                                <div class="slot-header">
-                                    <h5>Monday</h5>
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="add-slot" data-bs-toggle="modal" data-bs-target="#add_slot">Add Slots</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="slot-body">
-                                    <ul class="time-slots">
-                                        <li><i class="fa-regular fa-clock"></i>09:00 AM</li>
-                                        <li><i class="fa-regular fa-clock"></i>09:30 AM</li>
-                                        <li class="slot-space">Space : 2</li>
-                                        <li><i class="fa-regular fa-clock"></i>10:30 AM</li>
-                                        <li><i class="fa-regular fa-clock"></i>11:00 AM</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Slot -->
-
-                        <!-- Slot -->
-                        <div class="tab-pane fade" id="tuesday-slot">
-                            <div class="slot-box">
-                                <div class="slot-header">
-                                    <h5>Tuesday</h5>
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="add-slot" data-bs-toggle="modal" data-bs-target="#add_slot">Add Slots</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="slot-body">
-                                    <p>No Slots Available</p>
+                        @for ($i = 1; $i <= 7; $i++)
+                            <div class="tab-pane {{ $i == 1 ? 'active show' : 'fade' }}" id="day_{{ $i }}">
+                                <div class="slot-box">
+                                    <div class="slot-header">
+                                        <h5>Available Slots</h5>
+                                        <ul>
+                                            <li>
+                                                <a href="#" class="add-slot add_time_slot" data-bs-toggle="modal" data-bs-target="#add_slot" data-day="{{ $i }}">Add Slots</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="slot-body">
+                                        <ul class="time-slots">
+                                            @if (isset($timeSlots) && isset($timeSlots[$i]) && $timeSlots[$i]->count() > 0)
+                                                @foreach ($timeSlots[$i] as $slot)
+                                                    <li class="time_slot_li" id="slot_{{ $slot->id }}" data-id="{{ $slot->id }}" data-bs-toggle="modal" data-bs-target="#delete_slot"><i class="fa-regular fa-clock"></i>{{ date('h:i A', strtotime($slot->slot_time)) }}</li>
+                                                @endforeach
+                                            @else
+                                                <p>No Slots Available</p>
+                                            @endif
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- /Slot -->
-
-                        <!-- Slot -->
-                        <div class="tab-pane fade" id="wednesday-slot">
-                            <div class="slot-box">
-                                <div class="slot-header">
-                                    <h5>Wednesday</h5>
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="add-slot" data-bs-toggle="modal" data-bs-target="#add_slot">Add Slots</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="slot-body">
-                                    <p>No Slots Available</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Slot -->
-
-                        <!-- Slot -->
-                        <div class="tab-pane fade" id="thursday-slot">
-                            <div class="slot-box">
-                                <div class="slot-header">
-                                    <h5>Thursday</h5>
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="add-slot" data-bs-toggle="modal" data-bs-target="#add_slot">Add Slots</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="slot-body">
-                                    <p>No Slots Available</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Slot -->
-
-                        <!-- Slot -->
-                        <div class="tab-pane fade" id="friday-slot">
-                            <div class="slot-box">
-                                <div class="slot-header">
-                                    <h5>Friday</h5>
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="add-slot" data-bs-toggle="modal" data-bs-target="#add_slot">Add Slots</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="slot-body">
-                                    <p>No Slots Available</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Slot -->
-
-                        <!-- Slot -->
-                        <div class="tab-pane fade" id="saturday-slot">
-                            <div class="slot-box">
-                                <div class="slot-header">
-                                    <h5>Saturday</h5>
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="add-slot" data-bs-toggle="modal" data-bs-target="#add_slot">Add Slots</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="slot-body">
-                                    <p>No Slots Available</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Slot -->
-
-                        <!-- Slot -->
-                        <div class="tab-pane fade" id="sunday-slot">
-                            <div class="slot-box">
-                                <div class="slot-header">
-                                    <h5>Sunday</h5>
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="add-slot" data-bs-toggle="modal" data-bs-target="#add_slot">Add Slots</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="slot-body">
-                                    <p>No Slots Available</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Slot -->
-
-                        <div class="form-wrap">
-                            <label class="col-form-label">Appointment Fees ($)</label>
-                            <input type="text" class="form-control" value="254">
-                        </div>
-                        <div class="modal-btn text-end">
-                            <a href="#" class="btn btn-gray" data-bs-toggle="modal" data-bs-dismiss="modal">Cancel</a>
-                            <button class="btn btn-primary prime-btn">Save Changes</button>
-                        </div>
+                        @endfor
                     </div>
 
                 </div>
             </div>
-        </div>
-        <!-- /Clinic Availability -->
-
+        @endif
     </div>
+
 
 @endsection
 
@@ -360,7 +129,7 @@
                 <form action="{{ route('doctor.add_time_slot') }}" method="POST">
                     @csrf
 
-                    <input type="hidden" id="doctor_id" name="doctor_id" value="{{request('doctor_id')}}">
+                    <input type="hidden" id="doctor_id" name="doctor_id" value="{{ request('doctor_id') }}">
                     <div class="modal-body">
                         <div class="timing-modal">
                             <div class="row">

@@ -171,7 +171,7 @@
                                     <h4>{{ $clinic->name }}</h4>
                                 </a>
                                 <p class="pt-2">
-                                    <span class="badge badge-primary doc-badge speciality-badge px-2 py-1">{{ $clinic->speciality->name }}</span>
+                                    <span class="badge badge-primary doc-badge speciality-badge px-2 py-1">{{ isset($clinic->speciality) ? $clinic->speciality->name : '-' }}</span>
                                 </p>
                                 <div class="location d-flex">
                                     <p><i class="fas fa-map-marker-alt"></i> {{ $clinic->area }}, {{ $clinic->city->name }}</p>
@@ -237,7 +237,7 @@
                                     <h4>{{ $doctor->name }}</h4>
                                 </a>
                                 <p class="pt-2">
-                                    <span class="badge badge-primary doc-badge speciality-badge px-2 py-1">{{ $doctor->speciality->name }}</span>
+                                    <span class="badge badge-primary doc-badge speciality-badge px-2 py-1">{{ isset($doctor->speciality) ? $doctor->speciality->name : '-' }}</span>
                                 </p>
 
                                 <div class="location d-flex">
