@@ -4099,7 +4099,7 @@ Version      : 1.3
     $(".add-lab-test-button").on("click", function () {
         var labTestContent =
             '<div class="col-md-12">' +
-            '<div class="d-flex flex-wrap lab-test-wrap align-items-center">' +
+            '<div class="d-flex flex-wrap medication-wrap align-items-center">' +
             '<div class="input-block input-block-new">' +
             '<label class="form-label">Name</label>' +
             $("#lab_test_select2").clone()[0].outerHTML +

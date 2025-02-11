@@ -12,6 +12,9 @@ use App\Http\Controllers\patient\AuthController as PatientAuthController;
 use App\Http\Controllers\admin\TimeSlotController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\doctor\AppointmentController as DoctorAppointmentController;
+use App\Http\Controllers\doctor\AuthController as DoctorAuthController;
+use App\Http\Controllers\doctor\PatientController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\super_admin\AuthController as Super_adminAuthController;
 use App\Http\Controllers\super_admin\ClinicController;
@@ -32,7 +35,8 @@ Route::domain('{clinicSlug}.localhost')->group(
     function () {
         Route::get('admin/temp', [TempController::class, 'temp'])->name('temp');
         // Route::get('appointments', [AdminAppointmentController::class, 'index'])->name('admin.appointments.index');
-    });
+    }
+);
 
 ####Routes for testing purposes end####
 ########################################################################################
@@ -60,6 +64,7 @@ Route::prefix('super_admin')->group(
 
 //Clinic Admin Routes
 Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
+    Route::get('/', [TenantController::class, 'landing'])->name('clinic.landing');
     Route::prefix('admin')->group(function () {
         Route::middleware('RedirectIfAuthenticated:admin')->group(function () {
             Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
@@ -69,10 +74,47 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
         Route::middleware('IsLoggedIn:admin')->group(function () {
             Route::get('/', [AdminDashboardController::class, 'dashboard'])->name('admin.index');
             Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
+            Route::get('users/{role_id?}', [UserController::class, 'index'])->name('admin.user.index');
             Route::get('user/create', [UserController::class, 'create'])->name('admin.user.create');
             Route::post('user/store', [UserController::class, 'store'])->name('admin.user.store');
-
+            Route::get('user/{userId}', [UserController::class, 'show'])->name('admin.user.show');
+            Route::put('user/{userId}', [UserController::class, 'update'])->name('admin.user.update');
+            Route::get('available_timings/{doctor_id?}', [TimeSlotController::class, 'availableTimings'])->name('admin.available_timings');
+            Route::get('appointments', [AdminAppointmentController::class, 'index'])->name('admin.appointments.index');
+            Route::get('/appointment/{appointmentId}', [AdminAppointmentController::class, 'show'])->name('admin.appointment.show');
+            Route::post('/appointment_details/store', [AdminAppointmentController::class, 'store'])->name('admin.appointment_details.store');
+            Route::get('/medicines', [MedicineController::class, 'index'])->name('admin.medicines.index');
+            Route::post('/medicine', [MedicineController::class, 'store'])->name('admin.medicine.store');
+            Route::put('/medicine/{medicineId}', [MedicineController::class, 'update'])->name('admin.medicine.update');
             Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+            //not working for now because not sending the ajax reques to sub domain. see notes.
+            Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'deleteSlot'])->name('admin.slot.delete');
+            Route::get('admin_temp', [TempController::class, 'index'])->name('admin_temp');
+        });
+    });
+});
+
+//Clinic Doctor Routes
+Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
+    Route::prefix('doctor')->group(function () {
+
+        Route::middleware('RedirectIfAuthenticated:doctor')->group(function () {
+            Route::get('/login', [DoctorAuthController::class, 'login'])->name('doctor.login');
+            Route::post('/login', [DoctorAuthController::class, 'authenticate'])->name('doctor.authenticate');
+        });
+
+        Route::middleware('IsLoggedIn:doctor')->group(function () {
+            Route::get('/', [DoctorDashboardController::class, 'dashboard'])->name('doctor.index');
+            Route::get('dashboard', [DoctorDashboardController::class, 'dashboard'])->name('doctor.dashboard');
+            Route::get('patients', [PatientController::class, 'index'])->name('doctor.patient.index');
+            Route::get('patient/{patientId}', [PatientController::class, 'show'])->name('doctor.patient.show');
+            Route::put('patient/{patientId}', [PatientController::class, 'update'])->name('doctor.patient.update');
+            Route::get('appointments', [DoctorAppointmentController::class, 'index'])->name('doctor.appointments.index');
+            Route::get('/appointment/{appointmentId}', [DoctorAppointmentController::class, 'show'])->name('doctor.appointment.show');
+            Route::post('/appointment_details/store', [DoctorAppointmentController::class, 'store'])->name('doctor.appointment_details.store');
+            Route::get('appointments/history', [DoctorAppointmentController::class, 'appointmentHistory'])->name('doctor.appointments.history');
+            Route::get('/logout', [DoctorAuthController::class, 'logout'])->name('doctor.logout');
         });
     });
 });
@@ -92,34 +134,6 @@ Route::get('/search/all', [SearchController::class, 'all'])->name('search.all');
 Route::get('/appointment/create', [AppointmentController::class, 'create'])->name('appointment.create');
 Route::post('/appointment/store', [AppointmentController::class, 'store'])->name('appointment.store');
 // Guest Routes
-
-// clinic dynamic landing route
-Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
-    // Landing page for the clinic
-    Route::get('/', [TenantController::class, 'landing'])->name('clinic.landing');
-
-    //Admin routes
-    Route::prefix('admin')->group(function () {
-
-        Route::get('users/{role_id?}', [UserController::class, 'index'])->name('admin.user.index');
-
-
-        Route::get('user/{userId}', [UserController::class, 'show'])->name('admin.user.show');
-        Route::put('user/{userId}', [UserController::class, 'update'])->name('admin.user.update');
-        Route::get('available_timings/{doctor_id?}', [TimeSlotController::class, 'availableTimings'])->name('admin.available_timings');
-
-
-        Route::get('appointments', [AdminAppointmentController::class, 'index'])->name('admin.appointments.index');
-        Route::get('/appointment/{appointmentId}', [AdminAppointmentController::class, 'show'])->name('admin.appointment.show');
-        Route::post('/appointment_details/store', [AdminAppointmentController::class, 'store'])->name('admin.appointment_details.store');
-        Route::get('/medicines', [MedicineController::class, 'index'])->name('admin.medicines.index');
-        Route::post('/medicine', [MedicineController::class, 'store'])->name('admin.medicine.store');
-        Route::put('/medicine/{medicineId}', [MedicineController::class, 'update'])->name('admin.medicine.update');
-
-        //not working for now because not sending the ajax reques to sub domain. see notes.
-        Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'deleteSlot'])->name('admin.slot.delete');
-    });
-});
 
 // Patient routes
 Route::prefix('patient')->group(function () {

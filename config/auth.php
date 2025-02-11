@@ -59,6 +59,12 @@ return [
             'login_route' => 'admin.login',
             'index_route' => 'admin.dashboard'
         ],
+        'doctor' => [
+            'driver' => 'session',
+            'provider' => 'users',
+            'login_route' => 'doctor.login',
+            'index_route' => 'doctor.dashboard'
+        ],
     ],
 
     /*

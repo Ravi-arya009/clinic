@@ -87,7 +87,8 @@ class ClinicController extends Controller
     {
         $clinics = Clinic::orderBy('created_at', 'asc')->get();
         $clinicCount = $clinics->count();
-        return view('super_admin.clinic_list', compact('clinics', 'clinicCount'));
+        $cities = City::where('status', 1)->orderBy('name', 'asc')->get();
+        return view('super_admin.clinic_list', compact('clinics', 'clinicCount', 'cities'));
     }
 
     public function show($clinicId)

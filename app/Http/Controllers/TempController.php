@@ -2,33 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
-use App\Models\Clinic;
-use App\Models\Doctor;
 use App\Models\MedicineMaster;
-use App\Models\temp;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use illuminate\Support\Str;
+use App\Services\TimeSlotService;
 
 class TempController extends Controller
 {
 
-    protected $clinicId;
+    protected $clinicId, $timeSlotService;
 
-    public function __construct()
+    public function __construct(TimeSlotService $timeSlotService)
     {
+        $this->timeSlotService = $timeSlotService;
         $this->clinicId = Session::get('current_clinic')['id'];
     }
     public function index()
     {
-        return view('temp');
+        return $this->timeSlotService->getDoctorAvailableTimeSlots('9a9cf142-4f6c-4035-bf38-495d933dfa05');
     }
     public function temp()
     {
         $medicines = MedicineMaster::where('clinic_id', $this->clinicId)->get();
         return view('admin.temp', compact('medicines'));
     }
+
 }
