@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
-class LabTestMaster extends Model
+class AppointmentLabTest extends Model
 {
     use HasUuids;
     protected $primaryKey = 'id';
@@ -16,7 +16,7 @@ class LabTestMaster extends Model
 
     protected $fillable = [
         'id',
-        'name',
-        'status'
+        'appointment_id',
+        'lab_test_id',
     ];
 }

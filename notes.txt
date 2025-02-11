@@ -230,8 +230,24 @@ alternate/patient's phone number (otp,call will be recieved on this). with check
  od bd tds,sos (doctor's medicine)
 sos medicine (take when required)
 make medicine ui seamless (after meal)
-turn on laboratory test (ask rahul sir)
+turn on laborato
+ry test (ask rahul sir)
 follow up mein calendar lagao which shows sundays marked with red.
 doctor's perscription has a qr that sends to website. (show text login to see medical details/history etc.)
 #bug
     patients can book apointment twice if pressed back
+
+medicine delete feature is not available.
+
+put common partials, layouts, views, and controllers in a single global place. (use gates and policies to restrict access)
+
+admin can not edit patient type user because patients are getting saved in a different table than user(just a theory, check it.).
+
+add necessary columns in patients migration also update the patient edit in doctor's panel .
+
+fix appointment page.
+    remove patient's information (age, bloodgroup etc) or add into db. remove session ends in 00min
+
+make medicine controller global.
+make timslot controller global
+appointment controller can be global(think)

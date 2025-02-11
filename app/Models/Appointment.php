@@ -40,4 +40,8 @@ class Appointment extends Model
     public function medications(){
         return $this->hasMany(AppointmentMedication::class);
     }
+    public function labTests()
+    {
+        return $this->hasMany(AppointmentLabTest::class);
+    }
 }
