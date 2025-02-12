@@ -15,6 +15,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\doctor\AppointmentController as DoctorAppointmentController;
 use App\Http\Controllers\doctor\AuthController as DoctorAuthController;
 use App\Http\Controllers\doctor\PatientController;
+use App\Http\Controllers\doctor\TimeSlotController as DoctorTimeSlotController;
+use App\Http\Controllers\patient\AppointmentController as PatientAppointmentController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\super_admin\AuthController as Super_adminAuthController;
 use App\Http\Controllers\super_admin\ClinicController;
@@ -79,7 +81,9 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::post('user/store', [UserController::class, 'store'])->name('admin.user.store');
             Route::get('user/{userId}', [UserController::class, 'show'])->name('admin.user.show');
             Route::put('user/{userId}', [UserController::class, 'update'])->name('admin.user.update');
-            Route::get('available_timings/{doctor_id?}', [TimeSlotController::class, 'availableTimings'])->name('admin.available_timings');
+            Route::get('time_slots/{doctor_id?}', [TimeSlotController::class, 'index'])->name('admin.time_slots.index');
+            Route::post('time_slots', [TimeSlotController::class, 'store'])->name('admin.time_slots.store');
+            Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'delete'])->name('admin.slot.delete');
             Route::get('appointments', [AdminAppointmentController::class, 'index'])->name('admin.appointments.index');
             Route::get('/appointment/{appointmentId}', [AdminAppointmentController::class, 'show'])->name('admin.appointment.show');
             Route::post('/appointment_details/store', [AdminAppointmentController::class, 'store'])->name('admin.appointment_details.store');
@@ -87,10 +91,6 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::post('/medicine', [MedicineController::class, 'store'])->name('admin.medicine.store');
             Route::put('/medicine/{medicineId}', [MedicineController::class, 'update'])->name('admin.medicine.update');
             Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-
-            //not working for now because not sending the ajax reques to sub domain. see notes.
-            Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'deleteSlot'])->name('admin.slot.delete');
-            Route::get('admin_temp', [TempController::class, 'index'])->name('admin_temp');
         });
     });
 });
@@ -115,6 +115,10 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::post('/appointment_details/store', [DoctorAppointmentController::class, 'store'])->name('doctor.appointment_details.store');
             Route::get('appointments/history', [DoctorAppointmentController::class, 'appointmentHistory'])->name('doctor.appointments.history');
             Route::get('/logout', [DoctorAuthController::class, 'logout'])->name('doctor.logout');
+
+            Route::get('time_slots', [DoctorTimeSlotController::class, 'index'])->name('doctor.time_slots.index');
+            Route::post('time_slots', [DoctorTimeSlotController::class, 'store'])->name('doctor.time_slots.store');
+            Route::post('delete_slot/{slot_id?}', [DoctorTimeSlotController::class, 'delete'])->name('doctor.slot.delete');
         });
     });
 });
@@ -135,6 +139,7 @@ Route::get('/appointment/create', [AppointmentController::class, 'create'])->nam
 Route::post('/appointment/store', [AppointmentController::class, 'store'])->name('appointment.store');
 // Guest Routes
 
+
 // Patient routes
 Route::prefix('patient')->group(function () {
     // routes allowed only to logged in patients
@@ -142,10 +147,17 @@ Route::prefix('patient')->group(function () {
 
     Route::middleware('IsLoggedIn:patients')->group(function () {
         Route::get('dashboard', [PatientDashboardController::class, 'dashboard'])->name('patient.dashboard');
-        Route::get('logout', [PatientAuthController::class, 'logout'])->name('patient.logout');
 
+        Route::get('appointments', [PatientAppointmentController::class, 'index'])->name('patient.appointments.index');
+        Route::get('appointment/{appointmentId}', [PatientAppointmentController::class, 'show'])->name('patient.appointment.show');
+        Route::get('family_members', [PatientDashboardController::class, 'dashboard'])->name('patient.family.index');
+        Route::get('invoices', [PatientDashboardController::class, 'dashboard'])->name('patient.invoices.index');
+        Route::get('perscription', [PatientDashboardController::class, 'dashboard'])->name('patient.perscription.index');
+        Route::get('doctors', [PatientDashboardController::class, 'dashboard'])->name('patient.doctors.index');
         Route::get('clinics', [PatientDashboardController::class, 'clinics'])->name('patient.clinics');
         Route::get('clinic/{clinicId}', [PatientDashboardController::class, 'show'])->name('patient.clinic.show');
+        Route::get('logout', [PatientAuthController::class, 'logout'])->name('patient.logout');
+        Route::get('temp', [PatientDashboardController::class, 'temp'])->name('patient.temp');
     });
 
     // routes allowed only to guests
@@ -166,5 +178,3 @@ Route::post('/user/login', [AuthController::class, 'login'])->name('user.login')
 Route::get('/doctor/dashboard', [DoctorDashboardController::class, 'dashboard'])->name('doctor.dashboard');
 Route::get('/staff/dashboard', [StaffDashboardController::class, 'dashboard'])->name('staff.dashboard')->middleware(['role:' . config('role.staff')]);
 
-Route::get('/doctor/time_slots', [TimeSlotController::class, 'viewTimeSlot'])->name('doctor.view_time_slot');
-Route::post('/doctor/time_slots', [TimeSlotController::class, 'store'])->name('doctor.add_time_slot');

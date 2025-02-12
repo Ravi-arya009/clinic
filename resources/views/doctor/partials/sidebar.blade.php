@@ -43,10 +43,10 @@
                 </li>
 
 
-                <li class="{{ request()->routeIs('#') ? 'active' : '' }}">
-                    <a href="#">
+                <li class="{{ request()->routeIs('doctor.time_slots.index') ? 'active' : '' }}">
+                    <a href="{{route('doctor.time_slots.index')}}">
                         <i class="fa-solid fa-calendar-day"></i>
-                        <span>Available Timings</span>
+                        <span>Time Slots</span>
                     </a>
                 </li>
 

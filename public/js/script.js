@@ -3928,9 +3928,10 @@ Version      : 1.3
     $("#delete_slot_modal_button").on("click", function () {
         var slot_id = $(this).attr("data-slot_id");
         $.ajax({
-            url: "/admin/delete_slot/" + slot_id,
+            url: "/doctor/delete_slot/" + slot_id,
             type: "POST",
             success: function (response) {
+                console.log(response);
                 if (response.success) {
                     $("#slot_" + slot_id).remove();
                     $("#alert_modal").modal("show");

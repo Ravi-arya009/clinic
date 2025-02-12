@@ -204,7 +204,6 @@ rename role column to role_id in users table.
 -in medicine section when a medicine is added then the edit action button doesn't work because the whole section is rendered dynamically via js, fix that.
 
 -check all the pages and their respective routes and attach middlewares to it.
--fix delete slots
 
 #datatables
 
@@ -249,5 +248,12 @@ fix appointment page.
     remove patient's information (age, bloodgroup etc) or add into db. remove session ends in 00min
 
 make medicine controller global.
-make timslot controller global
 appointment controller can be global(think)
+
+
+
+#refractor
+-make time slot card partial and use it in admin and doctor's panel
+-cascade delete everywhere throughout the project.
+- while fetching appointments for patient on using appointment service, there should be other relationships such as doctors and cliinics etc. fix that.
+

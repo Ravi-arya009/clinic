@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('doctor.layouts.main')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('title', 'Available Timings')
@@ -20,88 +20,71 @@
     <x-Alert />
 
     <div class="tab-pane fade show active" id="general-availability">
-        <div class="clinic-wrap">
-            <h5>Select Doctor</h5>
-            <div class="row">
-                <div class="col-md-6">
-                    <select class="select select2_dropdown" id="doctor_dropdown">
-                        <option selected>Select Doctor</option>
-                        @foreach ($doctors as $doctor)
-                            <option value="{{ $doctor->id }}" data-url="{{ route('admin.time_slots.index', $doctor->id) }}" {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
-                                {{ $doctor->name }}</option>
-                        @endforeach
-                    </select>
+        <div class="card custom-card">
+            <div class="card-body">
+                <div class="card-header">
+                    <h3>Select Available Slots</h3>
                 </div>
-            </div>
-        </div>
 
-        @if (request('doctor_id'))
-            <div class="card custom-card">
-                <div class="card-body">
-                    <div class="card-header">
-                        <h3>Select Available Slots</h3>
-                    </div>
+                <div class="available-tab">
+                    <ul class="nav">
+                        <li>
+                            <a href="#" class="active" data-bs-toggle="tab" data-bs-target="#day_1">Monday</a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="tab" data-bs-target="#day_2">Tuesday</a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="tab" data-bs-target="#day_3">Wednesday</a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="tab" data-bs-target="#day_4">Thursday</a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="tab" data-bs-target="#day_5">Friday</a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="tab" data-bs-target="#day_6">Saturday</a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="tab" data-bs-target="#day_7">Sunday</a>
+                        </li>
+                    </ul>
+                </div>
 
-                    <div class="available-tab">
-                        <ul class="nav">
-                            <li>
-                                <a href="#" class="active" data-bs-toggle="tab" data-bs-target="#day_1">Monday</a>
-                            </li>
-                            <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_2">Tuesday</a>
-                            </li>
-                            <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_3">Wednesday</a>
-                            </li>
-                            <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_4">Thursday</a>
-                            </li>
-                            <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_5">Friday</a>
-                            </li>
-                            <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_6">Saturday</a>
-                            </li>
-                            <li>
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#day_7">Sunday</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="tab-content pt-0">
-                        @for ($i = 1; $i <= 7; $i++)
-                            <div class="tab-pane {{ $i == 1 ? 'active show' : 'fade' }}" id="day_{{ $i }}">
-                                <div class="slot-box">
-                                    <div class="slot-header">
-                                        <h5>Available Slots</h5>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="add-slot add_time_slot" data-bs-toggle="modal" data-bs-target="#add_slot" data-day="{{ $i }}">Add Slots</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="slot-body">
-                                        <ul class="time-slots">
-                                            @if (isset($timeSlots) && isset($timeSlots[$i]) && $timeSlots[$i]->count() > 0)
-                                                @foreach ($timeSlots[$i] as $slot)
-                                                    <li class="time_slot_li" id="slot_{{ $slot->id }}" data-id="{{ $slot->id }}" data-bs-toggle="modal" data-bs-target="#delete_slot"><i class="fa-regular fa-clock"></i>{{ date('h:i A', strtotime($slot->slot_time)) }}</li>
-                                                @endforeach
-                                            @else
-                                                <p>No Slots Available</p>
-                                            @endif
-                                        </ul>
-                                    </div>
+                <div class="tab-content pt-0">
+                    @for ($i = 1; $i <= 7; $i++)
+                        <div class="tab-pane {{ $i == 1 ? 'active show' : 'fade' }}" id="day_{{ $i }}">
+                            <div class="slot-box">
+                                <div class="slot-header">
+                                    <h5>Available Slots</h5>
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="add-slot add_time_slot" data-bs-toggle="modal" data-bs-target="#add_slot" data-day="{{ $i }}">Add Slots</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="slot-body">
+                                    <ul class="time-slots">
+                                        @if (isset($timeSlots) && isset($timeSlots[$i]) && $timeSlots[$i]->count() > 0)
+                                            @foreach ($timeSlots[$i] as $slot)
+                                                <li class="time_slot_li" id="slot_{{ $slot->id }}" data-id="{{ $slot->id }}" data-bs-toggle="modal" data-bs-target="#delete_slot"><i class="fa-regular fa-clock"></i>{{ date('h:i A', strtotime($slot->slot_time)) }}</li>
+                                            @endforeach
+                                        @else
+                                            <p>No Slots Available</p>
+                                        @endif
+                                    </ul>
                                 </div>
                             </div>
-                        @endfor
-                    </div>
-
+                        </div>
+                    @endfor
                 </div>
+
             </div>
-        @endif
+        </div>
     </div>
 
 
@@ -118,7 +101,7 @@
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
-                <form action="{{ route('admin.time_slots.store') }}" method="POST">
+                <form action="{{ route('doctor.time_slots.store') }}" method="POST">
                     @csrf
 
                     <input type="hidden" id="doctor_id" name="doctor_id" value="{{ request('doctor_id') }}">

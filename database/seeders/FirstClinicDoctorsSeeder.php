@@ -58,15 +58,15 @@ class FirstClinicDoctorsSeeder extends Seeder
                 'bio' => fake()->paragraph,
             ]);
 
-            for ($j = 0; $j < 10; $j++) {
-                TimeSlot::create([
-                    'id' => Str::uuid(),
-                    'doctor_id' => $user->id,
-                    'clinic_id' => $clinic->id,
-                    'slot_time' => fake()->dateTimeBetween('09:00', '21:00')->format('H:i'),
-                    'day_of_week' => fake()->randomElement([1, 2, 3, 4, 5, 6, 7]),
-                ]);
-            }
+            // for ($j = 0; $j < 10; $j++) {
+            //     TimeSlot::create([
+            //         'id' => Str::uuid(),
+            //         'doctor_id' => $user->id,
+            //         'clinic_id' => $clinic->id,
+            //         'slot_time' => fake()->dateTimeBetween('09:00', '21:00')->format('H:i'),
+            //         'day_of_week' => fake()->randomElement([1, 2, 3, 4, 5, 6, 7]),
+            //     ]);
+            // }
         }
     }
 }

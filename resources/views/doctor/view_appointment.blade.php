@@ -33,7 +33,7 @@
                                 <ul>
                                     <li><i class="fa-solid fa-envelope"></i>{{ optional($appointment->patient)->email ?? 'N/A' }}</li>
                                     <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
-                                    <li><i class="fas fa-map-marker-alt"></i>An 544 ka/58 Balaganj Lucknow</li>
+                                    <li><i class="fas fa-map-marker-alt"></i>{{ $appointment->patient->address }}</li>
                                     {{-- make address dynamic --}}
                                 </ul>
                             </div>
@@ -114,7 +114,7 @@
                                 <ul class="info-list">
                                     <li>Gender</li>
                                     <li>
-                                        <h6>Female</h6>
+                                        <h6>{{ !empty($appointment->patient->gender) ? ($appointment->patient->gender == 1 ? 'Male' : ($appointment->patient->gender == 2 ? 'Female' : '-')) : '-' }}</h6>
                                     </li>
                                 </ul>
                             </div>

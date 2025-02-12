@@ -5,7 +5,7 @@
                 <img src={{ asset('img/doctors-dashboard/doctor-profile-img.jpg') }} alt="User Image">
             </a>
             <div class="profile-det-info">
-                <h3><a href="doctor-profile.html">Amit Kumar</a></h3>
+                <h3><a href="doctor-profile.html">{{ucwords(Auth::guard('patients')->user()->name)}}</a></h3>
                 <span class="badge doctor-role-badge"><i class="fa-solid fa-circle"></i>Patient</span>
             </div>
         </div>
@@ -21,92 +21,49 @@
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs('patient.clinics') ? 'active' : '' }}">
-                    <a href="{{ route('patient.clinics') }}">
-                        <i class="fa-solid fa-house-chimney-medical"></i>
-                        <span>Clinics</span>
-                    </a>
-                </li>
-
-
-                <li>
-                    <a href="doctor-request.html">
-                        <i class="fa-solid fa-calendar-check"></i>
-                        <span>Requests</span>
-                        <small class="unread-msg">2</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="appointments.html">
+                <li class="{{ request()->routeIs('patient.appointments.index') ? 'active' : '' }}">
+                    <a href="{{route('patient.appointments.index')}}">
                         <i class="fa-solid fa-calendar-days"></i>
-                        <span>Appointments</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="available-timings.html">
-                        <i class="fa-solid fa-calendar-day"></i>
-                        <span>Available Timings</span>
+                        <span>My Appointments</span>
                     </a>
                 </li>
 
-                <li>
-                    <a href="doctor-specialities.html">
-                        <i class="fa-solid fa-clock"></i>
-                        <span>Specialties & Services</span>
+                <li class="{{ request()->routeIs('patient.family.index') ? 'active' : '' }}">
+                    <a href="{{route('patient.family.index')}}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Family Members</span>
                     </a>
                 </li>
-                <li>
-                    <a href="reviews.html">
-                        <i class="fas fa-star"></i>
-                        <span>Reviews</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="accounts.html">
-                        <i class="fa-solid fa-file-contract"></i>
-                        <span>Accounts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="invoices.html">
+                <li class="{{ request()->routeIs('patient.invoices.index') ? 'active' : '' }}">
+                    <a href="{{route('patient.invoices.index')}}">
                         <i class="fa-solid fa-file-lines"></i>
                         <span>Invoices</span>
                     </a>
                 </li>
-                <li>
-                    <a href="doctor-payment.html">
-                        <i class="fa-solid fa-money-bill-1"></i>
-                        <span>Payout Settings</span>
+                <li class="{{ request()->routeIs('patient.perscription.index') ? 'active' : '' }}">
+                    <a href="{{route('patient.perscription.index')}}">
+                        <i class="fa-solid fa-file-contract"></i>
+                        <span>Perscriptions</span>
                     </a>
                 </li>
-                <li>
-                    <a href="chat-doctor.html">
-                        <i class="fa-solid fa-comments"></i>
-                        <span>Message</span>
-                        <small class="unread-msg">7</small>
+
+                {{-- send to clinic search page --}}
+                <li class="{{ request()->routeIs('patient.clinics') ? 'active' : '' }}">
+                    <a href="{{route('patient.clinics')}}">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                        <span>Clinics</span>
                     </a>
                 </li>
-                <li>
-                    <a href="doctor-profile-settings.html">
-                        <i class="fa-solid fa-user-pen"></i>
-                        <span>Profile Settings</span>
+                {{-- send to doctor search page --}}
+                <li class="{{ request()->routeIs('patient.doctors.index') ? 'active' : '' }}">
+                    <a href="{{route('patient.doctors.index')}}">
+                        <i class="fa-solid fa-user-doctor"></i>
+                        <span>Doctors</span>
                     </a>
                 </li>
-                <li>
-                    <a href="social-media.html">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span>Social Media</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="doctor-change-password.html">
-                        <i class="fa-solid fa-key"></i>
-                        <span>Change Password</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="login.html">
-                        <i class="fa-solid fa-calendar-check"></i>
+                <li class="{{ request()->routeIs('patient.logout') ? 'active' : '' }}">
+                    <a href="{{route('patient.logout')}}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
                         <span>Logout</span>
                     </a>
                 </li>

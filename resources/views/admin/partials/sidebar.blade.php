@@ -35,8 +35,8 @@
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs('admin.available_timings') ? 'active' : '' }}">
-                    <a href="{{ route('admin.available_timings') }}">
+                <li class="{{ request()->routeIs('admin.time_slots.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.time_slots.index') }}">
                         <i class="fa-solid fa-calendar-day"></i>
                         <span>Available Timings</span>
                     </a>

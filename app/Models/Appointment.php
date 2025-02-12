@@ -25,7 +25,17 @@ class Appointment extends Model
     ];
 
     public function patient(){
-        return $this->belongsTo(Patient::class)->select('id','name','phone','email');
+        return $this->belongsTo(Patient::class)->select('id','name','phone','email','address','gender');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(User::class)->select('id', 'name', 'phone', 'email');
+    }
+
+    public function clinic()
+    {
+        return $this->belongsTo(Clinic::class)->select('id','name', 'address');
     }
 
     public function timeSlot()

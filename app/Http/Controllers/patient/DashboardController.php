@@ -4,11 +4,18 @@ namespace App\Http\Controllers\patient;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clinic;
+use App\Services\AppointmentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+    protected $appointmentService;
+
+    public function __construct(AppointmentService $appointmentService)
+    {
+        $this->appointmentService = $appointmentService;
+    }
     public function dashboard()
     {
         $currentUser = Auth::guard('patients')->user();
@@ -32,3 +39,5 @@ class DashboardController extends Controller
         return view('patient.view_clinic', ['clinic' => $clinic]);
     }
 }
+
+

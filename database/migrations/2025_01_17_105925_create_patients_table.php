@@ -18,6 +18,13 @@ return new class extends Migration
             $table->string('phone', length: 13)->unique();
             $table->string('whatsapp', length: 13)->unique()->nullable();
             $table->integer('gender')->nullable(); //1 for male, 2 for female
+            $table->uuid('state_id')->nullable();
+            $table->uuid('city_id')->nullable();
+            $table->string('address')->nullable();
+            $table->string('area')->nullable();
+            $table->string('pincode')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('profile_image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
