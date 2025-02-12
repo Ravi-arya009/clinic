@@ -46,7 +46,6 @@
 </head>
 
 <body>
-
     <!-- Main Wrapper -->
     <div class="main-wrapper">
 

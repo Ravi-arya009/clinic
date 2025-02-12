@@ -42,6 +42,11 @@ class PatientController extends Controller
             'whatsapp' => 'nullable|digits_between:10,13|unique:users,whatsapp,' . $patientId,
             'gender' => 'nullable|digits_between:1,2',
             'email' => 'nullable|email',
+            'state' => 'nullable|exists:states,id',
+            'city' => 'nullable|exists:cities,id',
+            'area' => 'nullable|string|max:255',
+            'pincode' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:511',
         ]);
 
         $user = Patient::where('id', $patientId)->firstOrFail();
@@ -51,7 +56,11 @@ class PatientController extends Controller
         $user->email = $request->email;
         $user->whatsapp = $request->whatsapp;
         $user->gender = $request->gender;
-
+        $user->state_id = $request->state;
+        $user->city_id = $request->city;
+        $user->area = $request->area;
+        $user->pincode = $request->pincode;
+        $user->address = $request->address;
         $user->save();
 
         return redirect()->back()->with('success', 'Patient updated successfully!');

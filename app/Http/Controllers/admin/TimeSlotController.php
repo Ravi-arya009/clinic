@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\TimeSlot;
 use App\Models\User;
+use App\Services\TimeSlotService;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Str;
@@ -14,55 +15,37 @@ use Illuminate\Support\Facades\Session;
 
 class TimeSlotController extends Controller
 {
-    protected $clinicId;
+    protected $clinicId, $timeSlotService;
 
-    public function __construct()
+    public function __construct(TimeSlotService $timeSlotService)
     {
+        $this->timeSlotService = $timeSlotService;
         $this->clinicId = Session::get('current_clinic')['id'];
     }
 
-    public function availableTimings($clinicSlug, $doctorId = null)
+    public function index($clinicSlug, $doctorId = null)
     {
         $doctors = User::where('role', config('role.' . 'doctor'))->where('clinic_id', $this->clinicId)->get();
 
         if ($doctorId) {
-            $timeSlots = TimeSlot::where('doctor_id', $doctorId)->orderBy('slot_time', 'asc')->get()->groupBy('day_of_week');
+            $timeSlots = $this->timeSlotService->getDoctorAvailableTimeSlots($doctorId);
         }
-
         return view('admin.available_timings', compact('doctors') + ($doctorId ? compact('timeSlots') : []));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'time' => 'required|date_format:h:i A',
             'days' => 'array',
             'days.*' => 'in:1,2,3,4,5,6,7',
+            'doctor_id' => 'required|exists:users,id',
         ]);
 
-        $validated['time'] = DateTime::createFromFormat('h:i A', $validated['time'])->format('H:i');
+        $result = $this->timeSlotService->storeTimeSlot($validatedData, $this->clinicId, $validatedData['doctor_id']);
 
-        foreach ($validated['days'] ?? [] as $day) {
-
-            try {
-                TimeSlot::create([
-                    'id' => Str::uuid(),
-                    'slot_time' => $validated['time'],
-                    'day_of_week' => $day,
-                    'doctor_id' => $request->doctor_id,
-                    'clinic_id' => $this->clinicId,
-                ]);
-            } catch (QueryException $e) {
-
-                if ($e->getCode() == 23000) { // 23000 is the SQLSTATE code for integrity constraint violations
-                    $daysOfWeek = Carbon::getDays();
-                    $dayName = $daysOfWeek[$day] ?? 'Unknown Day';
-                    return back()->withErrors([
-                        'time' => "The time slot {$validated['time']} already exists for $dayName.",
-                    ]);
-                }
-                throw $e;
-            }
+        if (!$result['success']) {
+            return back()->withErrors(['time' => $result['message']]);
         }
 
         return back()->with('success', 'Time slot added succesfully');
