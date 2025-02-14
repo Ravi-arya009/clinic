@@ -247,13 +247,42 @@ add necessary columns in patients migration also update the patient edit in doct
 fix appointment page.
     remove patient's information (age, bloodgroup etc) or add into db. remove session ends in 00min
 
-make medicine controller global.
-appointment controller can be global(think)
-
-
-
 #refractor
 -make time slot card partial and use it in admin and doctor's panel
 -cascade delete everywhere throughout the project.
 - while fetching appointments for patient on using appointment service, there should be other relationships such as doctors and cliinics etc. fix that.
+- use toaster to display messages and errors where ui doesn't accomodate error places. use same components technique just like the error.
+    -can also use swal.
+-Connect controllers with their respective services as you go.
+- make an error handler modal. take modal code from doctor/add_timeslots pge.
+- make add medicine ui good then implement it in doctor's panel.
+
+
+####current task ####
+
+
+find a way to associate new patient with admin or doctor.
+    If the patient is new, he/she doesn't have any apointments by default and isn't associated with any clinic.
+    find a way to overcome this when creating new patient using admin or doctor's panel.
+
+make components for select 2. just pass data and everything works. even if conditions and select etc.
+    #Start from here
+    use UserService's storeUser function as a reference/template for all other functions.
+        -modify all the functions. start from super admin clinic creation and move forward.
+        -user request rules for all the methods.
+        -Finish all the panels, include all the features necessary.
+        - invoice and perscription creation will happen at last.
+
+#start from there. super admin panel is done. add cities, states etc functionalities later.
+#now start with admin panel create user. fix the roles config file it should fetch everything from the db and cahce it.
+    #fix the places where the role is getting the used. see if the new changes are causing any new problems.
+    # now the patient is a totaly differnt entitiy from the users so it won't be associated with them. there are controllers that are using
+    roles (switch/ if etc) remove the patient roles from there.
+    all the clinics user will be cerated from the user controller and are sent to ther users table and all ther patients will be created in different
+    controllers and will be sent to the patient table.
+
+    think about the users and patient storage problem. research a little.
+
+### start from here ###
+-config role is not working. test it, if it works then fine otherwise create a service class from claude and implement it. use caching. then start from the above section.
 

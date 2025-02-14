@@ -1,26 +1,29 @@
-@php
-    $pageTitle = 'Patient Profile';
-@endphp
-@extends('doctor.layouts.main')
-@section('title', $pageTitle)
-@section('breadcrum-title', $pageTitle)
+@extends('admin.layouts.main')
+
+@section('title', 'User Profile')
+
+@section('breadcrum-title', 'User Profile')
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', $pageTitle)
+@section('breadcrum-link-two', 'User Profile')
 
 @section('content')
 
-    <x-page-header :pageContentTitle="$pageTitle" />
+
+    <div class="dashboard-header">
+        <h3>Profile Settings</h3>
+    </div>
 
     <div class="setting-title">
         <h5>Profile</h5>
     </div>
 
-    <form action="{{ route('doctor.patient.update', $patient->id) }}" method="POST">
+    <form action="{{ route('admin.patient.update', $user->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="setting-card">
             <div class="change-avatar img-upload">
                 <div class="profile-img">
+                    {{-- <i class="fa-solid fa-file-image"></i> --}}
                     <img src="{{ asset('img/doctors-dashboard/profile-01.jpg') }}">
                 </div>
                 <div class="upload-img">
@@ -36,6 +39,8 @@
                 </div>
             </div>
         </div>
-        @include('doctor.partials.user_card')
+        @include('admin.partials.user_card')
     </form>
+
+    </div>
 @endsection

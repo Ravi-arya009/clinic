@@ -184,7 +184,6 @@
             searching: true,
             dom: 'rt<"bottom"ip>',
             dom: 'rt<"bottom d-flex justify-content-end pt-4"p>',
-            ordering: false
 
         });
 

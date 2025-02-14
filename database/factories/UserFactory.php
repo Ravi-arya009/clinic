@@ -39,7 +39,7 @@ class UserFactory extends Factory
             'area' => fake()->city,
             'address' => fake()->address,
             'pincode' => fake()->numerify('######'),
-            'role' => 2,
+            'role' => config('role.doctor'),
             'clinic_id' => Clinic::inRandomOrder()->first()->id,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

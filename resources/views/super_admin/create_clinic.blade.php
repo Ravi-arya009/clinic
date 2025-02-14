@@ -14,4 +14,5 @@
 
     @include('super_admin.partials.clinic_form', ['action' => route('super_admin.clinic.store')])
 
+    <x-sweet-alert />
 @endsection

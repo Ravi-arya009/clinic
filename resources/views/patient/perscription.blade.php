@@ -1,15 +1,15 @@
 @extends('patient.layouts.main')
 
-@section('title', 'Appointments')
+@section('title', 'Perscriptions')
 
-@section('breadcrum-title', 'Appointments')
+@section('breadcrum-title', 'Perscriptions')
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', 'Appointments')
+@section('breadcrum-link-two', 'Perscriptions')
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
 @section('content')
-    <x-page-header pageContentTitle="Appointments" :search="true" />
+    <x-page-header pageContentTitle="Perscriptions" :search="true" />
 
     <table class="my-datatable table-hover">
         <thead>
@@ -22,7 +22,7 @@
             </tr>
         </thead>
 
-        @foreach ($appointments as $appointment)
+        {{-- @foreach ($appointments as $appointment)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
                     <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
@@ -54,7 +54,7 @@
                     <a href="{{ route('patient.appointment.show', ['appointmentId' => $appointment->id]) }}" class="start-link">View</a>
                 </td>
             </tr>
-        @endforeach
+        @endforeach --}}
     </table>
 
 @endsection

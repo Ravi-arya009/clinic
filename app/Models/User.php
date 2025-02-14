@@ -42,6 +42,7 @@ class User extends Authenticatable
     public $incrementing = false;
     protected $casts = [
         'id' => 'string',
+        'role' => 'string',
     ];
     //custom code to accomodate uuid
 

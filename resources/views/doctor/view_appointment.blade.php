@@ -1,11 +1,12 @@
+@php
+    $pageTitle = 'Appointments Details';
+@endphp
 @extends('doctor.layouts.main')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
-@section('title', 'Appointments Details')
-
-@section('breadcrum-title', 'Appointments Details')
+@section('title', $pageTitle)
+@section('breadcrum-title', $pageTitle)
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', 'Appointments Details')
+@section('breadcrum-link-two', $pageTitle)
 
 @push('stylesheets')
     <link rel="stylesheet" href={{ asset('plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css') }}>
@@ -13,11 +14,7 @@
 
 @section('content')
     <!-- Page Content -->
-    <div class="dashboard-header">
-        <div class="header-back">
-            <h3>Appointment Details</h3>
-        </div>
-    </div>
+    <x-page-header :pageContentTitle="$pageTitle" />
     <div class="appointment-details-wrap">
         <!-- Appointment Detail Card -->
         <div class="appointment-wrap appointment-detail-card">
@@ -34,7 +31,6 @@
                                     <li><i class="fa-solid fa-envelope"></i>{{ optional($appointment->patient)->email ?? 'N/A' }}</li>
                                     <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
                                     <li><i class="fas fa-map-marker-alt"></i>{{ $appointment->patient->address }}</li>
-                                    {{-- make address dynamic --}}
                                 </ul>
                             </div>
                         </div>
@@ -92,7 +88,6 @@
             </ul>
         </div>
         <!-- /Appointment Detail Card -->
-
         <div class="create-appointment-details">
             <h5 class="head-text">Appointment Details</h5>
             <div class="create-details-card">
@@ -297,15 +292,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                        <x-Alert />
                         <div class="col-md-12">
                             <div class="form-set-button">
                                 <button class="btn btn-light" type="button">Cancel</button>

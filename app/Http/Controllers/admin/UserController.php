@@ -5,22 +5,26 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Doctor;
+use App\Models\Patient;
 use App\Models\Qualification;
+use App\Models\Role;
 use App\Models\Speciality;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    protected $clinicId;
+    protected $clinicId, $userService;
 
-    public function __construct()
+    public function __construct(UserService $userService)
     {
         $this->clinicId = Session::get('current_clinic')['id'];
+        $this->userService = $userService;
     }
 
     public function index($clinicSlug, $roleId = null)
@@ -51,47 +55,32 @@ class UserController extends Controller
 
     public function store(Request $request, $clinicSlug)
     {
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|digits_between:10,13|unique:users,phone',
-            'role' => 'required|in:1,2,3,4',
-            'whatsapp' => 'nullable|digits_between:10,13|unique:users,whatsapp',
+            'phone' => 'required|digits_between:10,13|unique:' . ($request->role == config('role.patient') ? 'patients' : 'users') . ',phone',
+            'whatsapp' => 'required|digits_between:10,13|unique:' . ($request->role == config('role.patient') ? 'patients' : 'users') . ',whatsapp',
             'email' => 'nullable|email',
             'gender' => 'nullable|digits_between:1,2',
             'state' => 'nullable|exists:states,id',
             'city' => 'nullable|exists:cities,id',
             'area' => 'nullable|string|max:255',
+            'pincode' => 'nullable|digits_between:5,10',
+            'address' => 'nullable|string|max:500',
             'speciality' => $request->role == config('role.doctor') ? 'required|exists:specialities,id' : 'sometimes',
             'qualification' => $request->role == config('role.doctor') ? 'required|exists:qualifications,id' : 'sometimes',
             'consultation_fee' => $request->role == config('role.doctor') ? 'required|numeric' : 'sometimes',
-        ]);
-        $user = User::create([
-            'id' => Str::uuid(),
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'password' => Hash::make('ravi'),
-            'whatsapp' => $request->whatsapp,
-            'email' => $request->email,
-            'gender' => $request->gender,
-            'role' => $request->role,
-            'state_id' => $request->state,
-            'city_id' => $request->city,
-            'area' => $request->area,
-            'pincode' => $request->pincode,
-            'address' => $request->address,
-            'clinic_id' => Session::get('current_clinic')['id']
+            'role' => 'required|in:' . implode(',', config('role')),
+
         ]);
 
-        if ($request->role == config('role.doctor')) {
-            Doctor::create([
-                'user_id' => $user->id,
-                'speciality_id' => $request->speciality,
-                'qualification_id' => $request->qualification,
-                'consultation_fee' => $request->consultation_fee
-            ]);
+        $response = $this->userService->storeUser($validatedData);
+
+        if (!$response['success']) {
+            return back()->withInput()->with(['error' => $response['message']]);
+        } else {
+            return redirect()->route('admin.user.show', ['userId' => $response['data']->id, 'roleId' => $response['data']->role])->with('success', $response['message']);
         }
-
-        return redirect()->route('admin.user.show', ['userId' => $user->id, 'roleId' => $request->role])->with('success', 'User registered successfully!');
     }
 
     public function show(Request $request, $clinicSlug, $userId)
@@ -143,5 +132,46 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'User updated successfully!');
+    }
+
+    public function createPatient()
+    {
+        $cities = City::where('status', 1)->orderBy('name', 'asc')->get();
+        $states = State::where('status', 1)->orderBy('name', 'asc')->get();
+        return view('admin.create_patient', compact('cities', 'states'));
+    }
+
+    public function storePatient(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|digits_between:10,13|unique:' . 'patients' . ',phone',
+            'whatsapp' => 'required|digits_between:10,13|unique:' . 'patients' . ',whatsapp',
+            'email' => 'nullable|email',
+            'gender' => 'nullable|digits_between:1,2',
+            'state' => 'nullable|exists:states,id',
+            'city' => 'nullable|exists:cities,id',
+            'area' => 'nullable|string|max:255',
+            'pincode' => 'nullable|digits_between:5,10',
+            'address' => 'nullable|string|max:500',
+            'speciality' => $request->role == config('role.doctor') ? 'required|exists:specialities,id' : 'sometimes',
+            'qualification' => $request->role == config('role.doctor') ? 'required|exists:qualifications,id' : 'sometimes',
+            'consultation_fee' => $request->role == config('role.doctor') ? 'required|numeric' : 'sometimes',
+        ]);
+
+        $response = $this->userService->storePatient($validatedData);
+        if (!$response['success']) {
+            return back()->withInput()->with(['error' => $response['message']]);
+        } else {
+            return redirect()->route('admin.patient.show', ['patientId' => $response['data']->id])->with('success', $response['message']);
+        }
+    }
+
+    public function showPatient(Request $request, $clinicSlug, $patientId)
+    {
+        $user = Patient::where('id', $patientId)->firstOrFail();
+        $cities = City::where('status', 1)->orderBy('name', 'asc')->get();
+        $states = State::where('status', 1)->orderBy('name', 'asc')->get();
+        return view('admin.view_user', compact('user', 'cities', 'states'));
     }
 }

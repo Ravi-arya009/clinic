@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone', length: 13)->unique();
             $table->string('whatsapp', length: 13)->unique()->nullable();
             $table->integer('gender')->nullable(); //1 for male, 2 for female
-            $table->integer('role');
+            $table->uuid('role_id');
             $table->uuid('clinic_id');
             $table->uuid('state_id')->nullable();
             $table->uuid('city_id')->nullable();

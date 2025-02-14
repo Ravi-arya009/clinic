@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
+
         SuperAdmin::create([
             'id' => Str::uuid(),
             'name' => 'Ravi Arya',
@@ -27,34 +27,34 @@ class DatabaseSeeder extends Seeder
             'whatsapp' => '8181000621',
             'email' => 'ravi.arya009@gmail.com',
             'password' => Hash::make('ravi'),
-            'gender' => 1
-        ]);
-       
-        Role::create([
-            'role_name' => 'admin',
-            'role_id' => Str::uuid()
-        ]);
-        Role::create([
-            'role_name' => 'doctor',
-            'role_id' => Str::uuid()
-        ]);
-        Role::create([
-            'role_name' => 'staff',
-            'role_id' => Str::uuid()
-        ]);
-        Role::create([
-            'role_name' => 'patient',
-            'role_id' => Str::uuid()
+            'gender' => 1,
         ]);
 
-        $this->call(QualificationSeeder::class);
+        // Role::create([
+        //     'role_name' => 'admin',
+        //     'role_id' => Str::uuid()
+        // ]);
+        // Role::create([
+        //     'role_name' => 'doctor',
+        //     'role_id' => Str::uuid()
+        // ]);
+        // Role::create([
+        //     'role_name' => 'staff',
+        //     'role_id' => Str::uuid()
+        // ]);
+
+        $this->call(RoleSeeder::class);
         $this->call(StateSeeder::class);
         $this->call(CitySeeder::class);
         $this->call(SpecialitySeeder::class);
-        $this->call(ClinicSeeder::class);
-        $this->call(DoctorSeeder::class);
-        $this->call(FirstClinicDoctorsSeeder::class);
+        $this->call(QualificationSeeder::class);
         $this->call(MedicineMasterSeeder::class);
+
+
+        // $this->call(ClinicSeeder::class);
+        // $this->call(DoctorSeeder::class);
+        // $this->call(FirstClinicDoctorsSeeder::class);
+
 
         // User::factory(25)->create()
 

@@ -1,10 +1,11 @@
+@php
+    $pageTitle = 'Dashboard';
+@endphp
 @extends('doctor.layouts.main')
-
-@section('title', 'Dashboard')
-
-@section('breadcrum-title', 'Dashboard')
+@section('title', $pageTitle)
+@section('breadcrum-title', $pageTitle)
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', 'Dashboard')
+@section('breadcrum-link-two', $pageTitle)
 
 @section('content')
     <h2>Welcome to the Dashboard</h2>

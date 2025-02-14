@@ -63034,42 +63034,6 @@ ul li {
     overflow-y: auto;
 }
 
-/* .result-item {
-    padding: 10px;
-    font-size: 14px;
-    color: #333;
-    cursor: pointer;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.result-item:last-child {
-    border-bottom: none;
-}
-
-.result-item:hover {
-    background-color: #f8f8f8;
-}
-
-#search-results{
-    display: none;
-} */
-
-
-/* Styles for the search results container */
-/* .search-results {
-    display: none;
-    position: absolute;
-    z-index: 1000;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    margin-top: 5px;
-    max-width: 400px;
-    max-height: 300px;
-    overflow-y: auto;
-} */
 
 /* Styles for each result section */
 .result-section {
@@ -63204,3 +63168,16 @@ div.dt-container .dt-paging .dt-paging-button.disabled:active {
 }
 
 /* Datatable Custom Css */
+
+.swal-bullet-list {
+    list-style-type: disc !important;
+    text-align: left !important;
+    margin: 10px 0 !important;
+    padding-left: 20px !important;
+}
+
+.swal-bullet-list li {
+    list-style-type: disc !important;
+    display: list-item !important;
+    padding-top: 6px !important;
+}

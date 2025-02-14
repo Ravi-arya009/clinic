@@ -34,20 +34,40 @@
                         <span>Clinic List</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-clock"></i>
-                        <span>Specialties & Services</span>
+
+                <hr>
+
+                <li class="">
+                    <a href="">
+                        <i class="fa-solid fa-mountain-city"></i>
+                        <span>States</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="">
+                        <i class="fa-solid fa-city"></i>
+                        <span>Cities</span>
                     </a>
                 </li>
 
                 <li>
+                    <a href="#">
+                        <i class="fa-solid fa-book-medical"></i>
+                        <span>Specialties</span>
+                    </a>
+                </li>
+
+                <hr>
+
+                <li>
                     <a href="{{route('super_admin.logout')}}">
-                        <i class="fa-solid fa-calendar-check"></i>
+                        <i class="fa-solid fa-right-from-bracket"></i>
                         <span>Logout</span>
                     </a>
                 </li>
             </ul>
         </nav>
     </div>
+
 </div>

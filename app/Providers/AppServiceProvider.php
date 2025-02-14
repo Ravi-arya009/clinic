@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
+use App\Services\BootService;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
-
-
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,10 +27,14 @@ class AppServiceProvider extends ServiceProvider
     {
         // Register a callback to be executed before URL generation
         // Adds clinic slug to routes
+
         URL::defaults([
             'clinicSlug' => $this->getClinicSlug()
         ]);
 
+        //remove this clinicSllug to(Refactor it)
+        $bootService = new BootService();
+        $bootService->fetchUserRoles();
     }
 
     // Function to check if we're on a subdomain

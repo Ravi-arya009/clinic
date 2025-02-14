@@ -13,11 +13,8 @@
 
 @section('content')
     <!-- Page Content -->
-    <div class="dashboard-header">
-        <div class="header-back">
-            <h3>Appointment Details</h3>
-        </div>
-    </div>
+    <x-page-header pageContentTitle="Appointment Details"/>
+
     <div class="appointment-details-wrap">
 
         <!-- Appointment Detail Card -->

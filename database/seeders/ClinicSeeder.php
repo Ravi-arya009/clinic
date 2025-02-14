@@ -22,14 +22,14 @@ class ClinicSeeder extends Seeder
     public function run(): void
     {
         Clinic::factory(25)->afterCreating(function (Clinic $clinic) {
-            User::factory()->create([
-                'id' => Str::uuid(),
-                'name' => fake()->name(),
-                'phone' => fake()->unique()->numerify('##########'),
-                'role' => config('role.admin'),
-                'clinic_id' => $clinic->id,
-                'password' => Hash::make('ravi'),
-            ]);
+            // User::factory()->create([
+            //     'id' => Str::uuid(),
+            //     'name' => fake()->name(),
+            //     'phone' => fake()->unique()->numerify('##########'),
+            //     'role' => '5bae8dc5-6997-40f3-8299-6ff0e36817fb',
+            //     'clinic_id' => $clinic->id,
+            //     'password' => Hash::make('ravi'),
+            // ]);
         })->create();
     }
 }

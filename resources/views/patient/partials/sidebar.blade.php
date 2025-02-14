@@ -24,7 +24,14 @@
                 <li class="{{ request()->routeIs('patient.appointments.index') ? 'active' : '' }}">
                     <a href="{{route('patient.appointments.index')}}">
                         <i class="fa-solid fa-calendar-days"></i>
-                        <span>My Appointments</span>
+                        <span>Upcoming Appointments</span>
+                    </a>
+                </li>
+
+                <li class="{{ request()->routeIs('patient.appointments.history') ? 'active' : '' }}">
+                    <a href="{{route('patient.appointments.history')}}">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span>Appointment History</span>
                     </a>
                 </li>
 
