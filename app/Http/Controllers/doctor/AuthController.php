@@ -30,7 +30,7 @@ class AuthController extends Controller
             'password' => 'required|min:4',
         ]);
         //checking if user role is doctor and belongs to clinic he's trying to log in into.
-        $user = User::where('phone', $request->phone)->where('clinic_id', $this->clinicId)->where('role', config('role.doctor'))->first();
+        $user = User::where('phone', $request->phone)->where('clinic_id', $this->clinicId)->where('role_id', config('role.doctor'))->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             return back()->withErrors(['login' => 'Incorrect Phone or Password']);
         }

@@ -36,10 +36,9 @@ class UserFactory extends Factory
             'gender' => fake()->numberBetween(1, 2),
             'state_id' => State::inRandomOrder()->first()->id, // Fetching a random state
             'city_id' => City::inRandomOrder()->first()->id, // Fetching a random city
-            'area' => fake()->city,
             'address' => fake()->address,
             'pincode' => fake()->numerify('######'),
-            'role' => 2,
+            'role_id' => config('role.doctor'),
             'clinic_id' => Clinic::inRandomOrder()->first()->id,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

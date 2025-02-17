@@ -85,7 +85,6 @@
                         <!-- /Profile Sidebar -->
 
                     </div>
-
                     <div class="col-lg-8 col-xl-9">
                         {{-- always start the content section with a row --}}
                         @yield('content')

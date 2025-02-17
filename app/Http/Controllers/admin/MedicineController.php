@@ -4,22 +4,24 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\MedicineMaster;
+use App\Services\MedicineService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
 class MedicineController extends Controller
 {
-    protected $clinicId;
+    protected $clinicId, $medicineService;
 
-    public function __construct()
+    public function __construct(MedicineService $medicineService)
     {
+        $this->medicineService = $medicineService;
         $this->clinicId = Session::get('current_clinic')['id'];
     }
 
     public function index()
     {
-        $medicines = MedicineMaster::where('clinic_id', $this->clinicId)->orderBy('created_at','Desc')->get();
+        $medicines = $this->medicineService->getClinicMedicines($this->clinicId);
         return view('admin.medicines', compact('medicines'));
     }
 
@@ -34,11 +36,9 @@ class MedicineController extends Controller
                     ->where('clinic_id', $this->clinicId)
             ],
         ]);
-        $medicineMAster = MedicineMaster::create([
-            'name' => ucfirst($validatedData['medicineName']),
-            'clinic_id' => $this->clinicId
-        ]);
-        return $medicineMAster;
+
+        $response = $this->medicineService->storeMedicine($validatedData, $this->clinicId);
+        return $response;
     }
 
     public function update(Request $request, $clinicSlug, $medicineId)
@@ -53,13 +53,8 @@ class MedicineController extends Controller
                     ->ignore($medicineId)
             ],
         ]);
-        $medicine = MedicineMaster::where('id', $medicineId)
-            ->where('clinic_id', $this->clinicId)
-            ->firstOrFail();
 
-        $medicine->name = $validatedData['name'];
-        $medicine->save();
-
-        return 'saved';
+        $response = $this->medicineService->updateMedicine($medicineId, $validatedData['name'], $this->clinicId);
+        return $response;
     }
 }

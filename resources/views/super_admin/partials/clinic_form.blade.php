@@ -19,7 +19,6 @@
                     <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', $clinic->slug ?? '') }}" required>
                 </div>
             </div>
-
             <div class="col-lg-6 col-md-6">
                 <div class="form-wrap">
                     <label class="col-form-label">State</label>
@@ -113,26 +112,6 @@
         </div>
     </div>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    {{-- @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif --}}
-
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
     <div class="modal-btn text-end">
         <button type="submit" class="btn btn-primary prime-btn">Save Changes</button>
     </div>

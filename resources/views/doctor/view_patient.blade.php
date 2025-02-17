@@ -1,17 +1,15 @@
+@php
+    $pageTitle = 'Patient Profile';
+@endphp
 @extends('doctor.layouts.main')
-
-@section('title', 'Patient Profile')
-
-@section('breadcrum-title', 'Patient Profile')
+@section('title', $pageTitle)
+@section('breadcrum-title', $pageTitle)
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', 'Patient Profile')
+@section('breadcrum-link-two', $pageTitle)
 
 @section('content')
 
-
-    <div class="dashboard-header">
-        <h3>Patient Profile</h3>
-    </div>
+    <x-page-header :pageContentTitle="$pageTitle" />
 
     <div class="setting-title">
         <h5>Profile</h5>
@@ -40,6 +38,4 @@
         </div>
         @include('doctor.partials.user_card')
     </form>
-
-    </div>
 @endsection

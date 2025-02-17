@@ -247,13 +247,89 @@ add necessary columns in patients migration also update the patient edit in doct
 fix appointment page.
     remove patient's information (age, bloodgroup etc) or add into db. remove session ends in 00min
 
-make medicine controller global.
-appointment controller can be global(think)
-
-
-
 #refractor
 -make time slot card partial and use it in admin and doctor's panel
 -cascade delete everywhere throughout the project.
 - while fetching appointments for patient on using appointment service, there should be other relationships such as doctors and cliinics etc. fix that.
+- use toaster to display messages and errors where ui doesn't accomodate error places. use same components technique just like the error.
+    -can also use swal.
+-Connect controllers with their respective services as you go.
+- make an error handler modal. take modal code from doctor/add_timeslots pge.
+- make add medicine ui good then implement it in doctor's panel.
 
+
+####current task ####
+
+
+find a way to associate new patient with admin or doctor.
+    If the patient is new, he/she doesn't have any apointments by default and isn't associated with any clinic.
+    find a way to overcome this when creating new patient using admin or doctor's panel.
+
+make components for select 2. just pass data and everything works. even if conditions and select etc.
+    #Start from here
+    use UserService's storeUser function as a reference/template for all other functions.
+        -modify all the functions. start from super admin clinic creation and move forward.
+        -user request rules for all the methods.
+        -Finish all the panels, include all the features necessary.
+        - invoice and perscription creation will happen at last.
+
+#start from there. super admin panel is done. add cities, states etc functionalities later.
+#now start with admin panel create user. fix the roles config file it should fetch everything from the db and cahce it.
+    #fix the places where the role is getting the used. see if the new changes are causing any new problems.
+    # now the patient is a totaly differnt entitiy from the users so it won't be associated with them. there are controllers that are using
+    roles (switch/ if etc) remove the patient roles from there.
+    all the clinics user will be cerated from the user controller and are sent to ther users table and all ther patients will be created in different
+    controllers and will be sent to the patient table.
+
+    think about the users and patient storage problem. research a little.
+
+    handle what would happen after a patient is created from the admin panel.
+    if an admin is creating a patient from the clinic then the pateitnt should have a temporary appointment booked. currently the time slots don't allow it. fix it.
+
+
+cache config roles
+
+#today's task
+Start from create user and then index and then view and then update (check everything related to roles and everything).
+-think about users and patients table.
+-make the whole super admin work.
+    -create service classes
+-make the whole admin work.
+    -create service classes
+not saving the experience for the doctor anywhere. fix it.
+
+#now. see all the features are working on admin panel. then convert them to service classes. also setup request classes.
+    -if user is doctor then at store and update method doctor update/create function will also be called.
+
+
+create a separate view for patient creation and updation.
+
+walk in patient have possibly a solution. look into the recent chats of the claude.
+
+
+#start from here.
+-Decide the fields of all the users.
+    -super admin (no need for super admin profile, for now a username and password is enough)
+    -admin (##1) (low priority)
+    -doctor (##2)
+        -doctor profile (3)
+    patient (##4)
+
+    First write the fields some where.
+    Find out common fields.
+    See if unommon fields can be grouped inside simple condition checks.
+    See if some sort of template can be made.
+    If solution looks complex then simply make multiple views.
+
+    Make constollers and service classes method accordingly.
+
+    then clean bloats from views(as, it becomes easy when fields are decided.)
+
+
+    -do the same for clinics
+    -do the same for appointments
+    -do the same for time slots
+    -
+
+
+review whole note for further plan.

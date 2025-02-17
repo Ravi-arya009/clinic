@@ -1,11 +1,12 @@
+@php
+    $pageTitle = 'Available Timings';
+@endphp
 @extends('doctor.layouts.main')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
-@section('title', 'Available Timings')
-
-@section('breadcrum-title', 'Available Timings')
+@section('title', $pageTitle)
+@section('breadcrum-title', $pageTitle)
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', 'Available Timings')
+@section('breadcrum-link-two', $pageTitle)
 
 @push('scripts')
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
@@ -13,9 +14,7 @@
 
 @section('content')
 
-    <div class="dashboard-header">
-        <h3>Available Timings</h3>
-    </div>
+    <x-page-header :pageContentTitle="$pageTitle" />
 
     <x-Alert />
 
@@ -86,8 +85,6 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 
 @section('modal')
@@ -193,7 +190,6 @@
         </div>
     </div>
     <!-- /Remove Slots -->
-
 
     {{-- success/ error modal --}}
     <div class="modal fade info-modal" id="alert_modal">

@@ -13,7 +13,7 @@ class WebsiteController extends Controller
     {
         $clinics = Clinic::with('speciality', 'city')->limit(10)->get();
         $cities = City::all();
-        $doctors = User::with('doctorProfile.speciality', 'city')->where('role', config('role.doctor'))->limit(10)->get();
+        $doctors = User::with('doctorProfile.speciality', 'city')->where('role_id', config('role.doctor'))->limit(10)->get();
         $this->doctorTransformer($doctors);
         $specialities = Speciality::where('status', 1)->limit(10)->get();
 

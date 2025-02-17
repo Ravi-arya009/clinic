@@ -14,4 +14,6 @@
 
     @include('super_admin.partials.clinic_form', ['action' => route('super_admin.clinic.update', ['clinicId'=>$clinic->id])])
 
+    <x-sweet-alert />
+
 @endsection

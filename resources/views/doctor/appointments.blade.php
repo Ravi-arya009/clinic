@@ -1,29 +1,19 @@
+@php
+    $pageTitle = 'Appointments';
+@endphp
 @extends('doctor.layouts.main')
-
-@section('title', 'Appointments')
-
-@section('breadcrum-title', 'Appointments')
+@section('title', $pageTitle)
+@section('breadcrum-title', $pageTitle)
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', 'Appointments')
+@section('breadcrum-link-two', $pageTitle)
+
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
+
 @section('content')
 
-    <div class="dashboard-header">
-        <h3>Appointments</h3>
-        <ul class="header-list-btns">
-            <li>
-                <div class="input-block dash-search-input">
-                    <input type="text" class="form-control customSearch" placeholder="Search">
-                    <span class="search-icon">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <i class="fa-solid fa-xmark hide" style="cursor: pointer;"></i>
-                    </span>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <x-page-header :pageContentTitle="$pageTitle" :search="true" />
 
     <table class="my-datatable table-hover">
         <thead>
@@ -64,14 +54,13 @@
                     </ul>
                 </td>
                 <td class="appointment-start">
-                    <a href="{{route('doctor.appointment.show',['appointmentId' => $appointment->id])}}" class="start-link">View</a>
+                    <a href="{{ route('doctor.appointment.show', ['appointmentId' => $appointment->id]) }}" class="start-link">View</a>
                 </td>
             </tr>
         @endforeach
     </table>
 
 @endsection
-
 
 @push('scripts')
     <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>

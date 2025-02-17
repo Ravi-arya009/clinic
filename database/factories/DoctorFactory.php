@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Qualification;
 use App\Models\Speciality;
 use App\Models\User;
+use App\Services\RoleService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,15 +13,20 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DoctorFactory extends Factory
 {
+
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
+
+
     public function definition()
     {
+        $roleService = app(RoleService::class);
+
         $user = User::factory()->create([
-            'role' => config('role.doctor'),
+            'role_id' => $roleService->fetchRoleIdByName('doctor'),
         ]);
 
         return [

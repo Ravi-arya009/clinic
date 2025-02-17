@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('experience')->nullable();
             $table->uuid('speciality_id')->nullable();
-            $table->foreign('speciality_id')->references('id')->on('specialities');
+            $table->foreign('speciality_id')->references('id')->on('specialities')->onDelete('cascade');
             $table->uuid('qualification_id')->nullable();
-            $table->foreign('qualification_id')->references('id')->on('qualifications');
-            $table->string('consultation_fee')->nullable();
+            $table->foreign('qualification_id')->references('id')->on('qualifications')->onDelete('cascade');
+            $table->string('consultation_fee');
             $table->text('bio')->nullable();
             $table->timestamps();
         });

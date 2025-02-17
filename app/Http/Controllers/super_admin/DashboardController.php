@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $clinics = Clinic::with('city')->limit(7)->orderBy('created_at', 'desc')->get();
         $totalClinics = Clinic::count();
         $totalPatients = Patient::count();
-        $totalDoctors = User::where('role', config('role.doctor'))->count();
+        $totalDoctors = User::where('role_id', config('role.doctor'))->count();
         return view('super_admin.dashboard', compact('clinics', 'totalClinics', 'totalDoctors','totalPatients'));
     }
 }

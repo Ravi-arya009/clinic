@@ -27,7 +27,7 @@ class User extends Authenticatable
         'email',
         'gender',
         'password',
-        'role',
+        'role_id',
         'clinic_id',
         'state_id',
         'city_id',
@@ -42,6 +42,7 @@ class User extends Authenticatable
     public $incrementing = false;
     protected $casts = [
         'id' => 'string',
+        'role_id' => 'string',
     ];
     //custom code to accomodate uuid
 

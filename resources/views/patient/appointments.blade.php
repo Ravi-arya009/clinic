@@ -9,21 +9,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
 @section('content')
-
-    <div class="dashboard-header">
-        <h3>Appointments</h3>
-        <ul class="header-list-btns">
-            <li>
-                <div class="input-block dash-search-input">
-                    <input type="text" class="form-control customSearch" placeholder="Search">
-                    <span class="search-icon">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <i class="fa-solid fa-xmark hide" style="cursor: pointer;"></i>
-                    </span>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <x-page-header pageContentTitle="Appointments" :search="true" />
 
     <table class="my-datatable table-hover">
         <thead>
@@ -65,7 +51,7 @@
                     </ul>
                 </td>
                 <td class="appointment-start">
-                    <a href="{{route('patient.appointment.show',['appointmentId' => $appointment->id])}}" class="start-link">View</a>
+                    <a href="{{ route('patient.appointment.show', ['appointmentId' => $appointment->id]) }}" class="start-link">View</a>
                 </td>
             </tr>
         @endforeach
