@@ -16,29 +16,28 @@ class CitySeeder extends Seeder
     public function run()
     {
         $cities = [
-            ['name' => 'Lucknow', 'status' => 1],
-            ['name' => 'Ayodhya', 'status' => 1],
-            ['name' => 'Delhi', 'status' => 1],
-            ['name' => 'Mumbai', 'status' => 1],
-            ['name' => 'Bengaluru', 'status' => 1],
-            ['name' => 'Hyderabad', 'status' => 1],
-            ['name' => 'Ahmedabad', 'status' => 1],
-            ['name' => 'Chennai', 'status' => 1],
-            ['name' => 'Kolkata', 'status' => 1],
-            ['name' => 'Pune', 'status' => 1],
-            ['name' => 'Jaipur', 'status' => 1],
-            ['name' => 'Chandigarh', 'status' => 1],
-            ['name' => 'Bhopal', 'status' => 1],
-            ['name' => 'Indore', 'status' => 1],
-            ['name' => 'Patna', 'status' => 1],
+            'Lucknow',
+            'Ayodhya',
+            'Delhi',
+            'Mumbai',
+            'Bengaluru',
+            'Hyderabad',
+            'Ahmedabad',
+            'Chennai',
+            'Kolkata',
+            'Pune',
+            'Jaipur',
+            'Chandigarh',
+            'Bhopal',
+            'Indore',
+            'Patna',
         ];
 
         foreach ($cities as $city) {
             City::create([
                 'id' => Str::uuid(),
-                'name' => $city['name'],
+                'name' => $city,
                 'state_id' => 1,
-                'status' => $city['status'],
             ]);
         }
     }

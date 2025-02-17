@@ -8,9 +8,8 @@ use App\Models\Doctor;
 use App\Models\Qualification;
 use App\Models\Speciality;
 use App\Models\State;
-use App\Models\TimeSlot;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Services\RoleService;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -24,6 +23,14 @@ class FirstClinicDoctorsSeeder extends Seeder
      * This is a temporary seeder created to fill dummy clinic, doctor and timeslot.
      * This will not make in production.
      */
+
+    protected $roleService;
+
+    public function __construct(RoleService $roleService)
+    {
+        $this->roleService = $roleService;
+    }
+
     public function run(): void
     {
 
@@ -39,10 +46,9 @@ class FirstClinicDoctorsSeeder extends Seeder
                 'gender' => fake()->numberBetween(1, 2),
                 'state_id' => State::inRandomOrder()->first()->id,
                 'city_id' => City::inRandomOrder()->first()->id,
-                'area' => fake()->city,
                 'address' => fake()->address,
                 'pincode' => fake()->numerify('######'),
-                'role' => 2,
+                'role_id' =>  $this->roleService->fetchRoleIdByName('doctor'),
                 'clinic_id' => $clinic->id,
                 'email_verified_at' => now(),
                 'password' => Hash::make('ravi'),
@@ -57,16 +63,6 @@ class FirstClinicDoctorsSeeder extends Seeder
                 'consultation_fee' => fake()->numberBetween(100, 1000),
                 'bio' => fake()->paragraph,
             ]);
-
-            // for ($j = 0; $j < 10; $j++) {
-            //     TimeSlot::create([
-            //         'id' => Str::uuid(),
-            //         'doctor_id' => $user->id,
-            //         'clinic_id' => $clinic->id,
-            //         'slot_time' => fake()->dateTimeBetween('09:00', '21:00')->format('H:i'),
-            //         'day_of_week' => fake()->randomElement([1, 2, 3, 4, 5, 6, 7]),
-            //     ]);
-            // }
         }
     }
 }

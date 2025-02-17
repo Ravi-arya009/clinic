@@ -283,6 +283,53 @@ make components for select 2. just pass data and everything works. even if condi
 
     think about the users and patient storage problem. research a little.
 
-### start from here ###
--config role is not working. test it, if it works then fine otherwise create a service class from claude and implement it. use caching. then start from the above section.
+    handle what would happen after a patient is created from the admin panel.
+    if an admin is creating a patient from the clinic then the pateitnt should have a temporary appointment booked. currently the time slots don't allow it. fix it.
 
+
+cache config roles
+
+#today's task
+Start from create user and then index and then view and then update (check everything related to roles and everything).
+-think about users and patients table.
+-make the whole super admin work.
+    -create service classes
+-make the whole admin work.
+    -create service classes
+not saving the experience for the doctor anywhere. fix it.
+
+#now. see all the features are working on admin panel. then convert them to service classes. also setup request classes.
+    -if user is doctor then at store and update method doctor update/create function will also be called.
+
+
+create a separate view for patient creation and updation.
+
+walk in patient have possibly a solution. look into the recent chats of the claude.
+
+
+#start from here.
+-Decide the fields of all the users.
+    -super admin (no need for super admin profile, for now a username and password is enough)
+    -admin (##1) (low priority)
+    -doctor (##2)
+        -doctor profile (3)
+    patient (##4)
+
+    First write the fields some where.
+    Find out common fields.
+    See if unommon fields can be grouped inside simple condition checks.
+    See if some sort of template can be made.
+    If solution looks complex then simply make multiple views.
+
+    Make constollers and service classes method accordingly.
+
+    then clean bloats from views(as, it becomes easy when fields are decided.)
+
+
+    -do the same for clinics
+    -do the same for appointments
+    -do the same for time slots
+    -
+
+
+review whole note for further plan.

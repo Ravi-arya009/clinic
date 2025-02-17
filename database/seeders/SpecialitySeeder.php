@@ -16,12 +16,12 @@ class SpecialitySeeder extends Seeder
     public function run()
     {
         $specialities = [
-            ['name' => 'Cardiology', 'image' => 'specialities-01.svg', 'status' => 1],
-            ['name' => 'Neurology', 'image' => 'specialities-02.svg', 'status' => 1],
-            ['name' => 'Urology', 'image' => 'specialities-03.svg', 'status' => 1],
-            ['name' => 'Orthopedic', 'image' => 'specialities-04.svg', 'status' => 1],
-            ['name' => 'Dentist', 'image' => 'specialities-05.svg', 'status' => 1],
-            ['name' => 'Ophthalmology', 'image' => 'specialities-06.svg', 'status' => 1],
+            ['name' => 'Cardiology', 'image' => 'specialities-01.svg'],
+            ['name' => 'Neurology', 'image' => 'specialities-02.svg'],
+            ['name' => 'Urology', 'image' => 'specialities-03.svg'],
+            ['name' => 'Orthopedic', 'image' => 'specialities-04.svg'],
+            ['name' => 'Dentist', 'image' => 'specialities-05.svg'],
+            ['name' => 'Ophthalmology', 'image' => 'specialities-06.svg'],
         ];
 
         foreach ($specialities as $speciality) {
@@ -29,7 +29,6 @@ class SpecialitySeeder extends Seeder
                 'id' => Str::uuid(),
                 'name' => $speciality['name'],
                 'image' => $speciality['image'],
-                'status' => $speciality['status'],
             ]);
         }
     }

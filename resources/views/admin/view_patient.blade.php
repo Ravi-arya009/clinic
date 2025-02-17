@@ -17,7 +17,7 @@
         <h5>Profile</h5>
     </div>
 
-    <form action="{{ route('admin.patient.update', $user->id) }}" method="POST">
+    <form action="{{ route('admin.patient.create', $user->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="setting-card">
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        @include('admin.partials.user_card')
+        @include('admin.partials.user_card', ['type' => 'patient'])
     </form>
 
     </div>

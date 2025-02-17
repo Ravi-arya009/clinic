@@ -26,8 +26,7 @@
     <script>
         $(document).ready(function() {
             $(".doctor-infofmation-card").hide();
-
-            if ($("#role").val() == 2) {
+            if ($("#role").val() == '{{ config('role.doctor') }}') {
                 $(".doctor-infofmation-card").show();
             }
             $('#role').on('change', function() {

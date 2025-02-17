@@ -35,7 +35,7 @@
                     <select name="role" id="role" class="form-control" required>
                         <option value="">Select Role</option>
                         @foreach (config('role') as $roleName => $roleId)
-                            <option value="{{ $roleId }}" {{ old('role', $user->role ?? '') == $roleId ? 'selected' : '' }}>{{ ucfirst($roleName) }}</option>
+                            <option value="{{ $roleId }}" {{ old('role', $user->role_id ?? '') == $roleId ? 'selected' : '' }}>{{ ucfirst($roleName) }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -106,6 +106,7 @@
 
     </div>
 </div>
+
 
 @if ($showDoctorFields ?? false)
     <div class="setting-title doctor-infofmation-card">

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\City;
+use App\Models\Qualification;
 use App\Models\Speciality;
 use App\Models\State;
 
@@ -43,6 +44,18 @@ class DataRepositoryService
     {
         try {
             return Speciality::where('status', 1)->orderBy('name', 'asc')->get();
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'error' => 'Unable to fetch specialities'
+            ];
+        }
+    }
+
+    public function getAllqualifications()
+    {
+        try {
+            return Qualification::orderBy('name', 'asc')->get();
         } catch (\Exception $e) {
             return [
                 'success' => false,

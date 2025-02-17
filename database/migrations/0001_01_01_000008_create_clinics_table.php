@@ -19,11 +19,13 @@ return new class extends Migration
             $table->string('contact_person')->nullable();
             $table->string('contact_person_phone', length: 13)->unique()->nullable();
             $table->uuid('state_id')->nullable();
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('set null');
             $table->uuid('city_id')->nullable();
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
             $table->string('area')->nullable();
             $table->string('address')->nullable();
             $table->uuid('speciality_id')->nullable();
-            $table->foreign('speciality_id')->references('id')->on('specialities');
+            $table->foreign('speciality_id')->references('id')->on('specialities')->onDelete('set null');
             $table->string('super_admin')->nullable(); //nullable for now. it stores which superadmin created the clinic.
             $table->timestamps();
         });

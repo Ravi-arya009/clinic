@@ -10,14 +10,14 @@ class Role extends Model
     use HasUuids;
 
     protected $fillable = [
-        'role_id',
-        'role_name',
+        'id',
+        'name',
     ];
 
 
-    protected $primaryKey = 'role_id';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $casts = [
-        'role_id' => 'string',
+        'id' => 'string',
     ];
 }

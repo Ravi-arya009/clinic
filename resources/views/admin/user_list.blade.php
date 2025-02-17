@@ -67,12 +67,12 @@
                 <td class="mail-info-patient">
                     <ul>
                         <li>
-                            <span class="badge badge-green status-badge">{{ ucfirst(array_search($user->role, config('role'))) }}</span>
+                            <span class="badge badge-green status-badge">{{ ucfirst(array_search($user->role_id, config('role'))) }}</span>
                         </li>
                     </ul>
                 </td>
                 <td class="appointment-start">
-                    <a href="{{ route('admin.user.show', ['userId' => $user, 'roleId' => $user->role]) }}" class="start-link">Edit</a>
+                    <a href="{{ route('admin.user.show', ['userId' => $user, 'roleId' => $user->role_id]) }}" class="start-link">Edit</a>
                 </td>
             </tr>
         @endforeach

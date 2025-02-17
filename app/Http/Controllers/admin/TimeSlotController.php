@@ -25,7 +25,7 @@ class TimeSlotController extends Controller
 
     public function index($clinicSlug, $doctorId = null)
     {
-        $doctors = User::where('role', config('role.' . 'doctor'))->where('clinic_id', $this->clinicId)->get();
+        $doctors = User::where('role_id', config('role.' . 'doctor'))->where('clinic_id', $this->clinicId)->get();
 
         if ($doctorId) {
             $timeSlots = $this->timeSlotService->getDoctorAvailableTimeSlots($doctorId);

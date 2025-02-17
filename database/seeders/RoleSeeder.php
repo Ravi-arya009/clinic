@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -15,18 +14,18 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Role::create([
-            'role_id' => Str::uuid(),
-            'role_name' => 'admin',
+            'id' => Str::uuid(),
+            'name' => 'admin',
         ]);
 
         Role::create([
-            'role_id' => Str::uuid(),
-            'role_name' => 'doctor',
+            'id' => Str::uuid(),
+            'name' => 'doctor',
         ]);
 
         Role::create([
-            'role_id' => Str::uuid(),
-            'role_name' => 'staff',
+            'id' => Str::uuid(),
+            'name' => 'staff',
         ]);
     }
 }

@@ -19,7 +19,7 @@ class UserService
      */
     public function __construct()
     {
-        // $this->clinicId = Session::get('current_clinic')['id'];
+        $this->clinicId = Session::get('current_clinic')['id'];
     }
 
     public function storeClinicAdmin($name, $phone, $clinicId)
@@ -30,7 +30,7 @@ class UserService
                 'name' => $name,
                 'phone' => $phone,
                 'password' => Hash::make('ravi'),
-                'role' => config()->get('role.admin'),
+                'role_id' => config('role.admin'),
                 'clinic_id' => $clinicId
             ]);
         } catch (\Exception $e) {
@@ -60,7 +60,7 @@ class UserService
                 'whatsapp' => $data['whatsapp'],
                 'email' => $data['email'],
                 'gender' => $data['gender'],
-                'role' => $data['role'],
+                'role_id' => $data['role'],
                 'state_id' => $data['state'],
                 'city_id' => $data['city'],
                 'area' => $data['area'],
@@ -70,83 +70,41 @@ class UserService
                 'password' => Hash::make('ravi'),
             ]);
 
+            if ($user->role_id == config('role.doctor')) {
+                $this->storeDoctorProfile($data, $user->id);
+            }
             return [
                 'success' => true,
                 'message' => 'User created successfully',
                 'data' => $user
             ];
         } catch (\Exception $e) {
-            // return [
-            //     'success' => false,
-            //     'message' => 'Something went wrong while creating user'
-            // ];
-            throw $e;
+            return [
+                'success' => false,
+                'message' => 'Something went wrong while creating user'
+            ];
         }
     }
 
-    public function storeDoctor($data)
+    public function storeDoctorProfile($data, $userId)
     {
-        DB::beginTransaction();
-
         try {
-            $doctor = User::create([
-                'id' => Str::uuid(),
-                'name' => $data['name'],
-                'phone' => $data['phone'],
-                'whatsapp' => $data['whatsapp'],
-                'email' => $data['email'],
-                'gender' => $data['gender'],
-                'role' => $data['role'],
-                'state_id' => $data['state'],
-                'city_id' => $data['city'],
-                'area' => $data['area'],
-                'pincode' => $data['pincode'],
-                'address' => $data['address'],
-                'clinic_id' => $this->clinicId,
-                'password' => Hash::make('ravi'),
-            ]);
-
-            if (!$doctor) {
-                return [
-                    'success' => false,
-                    'message' => 'Failed to create doctor'
-                ];
-            }
-
             $doctorProfile = Doctor::create([
-                'user_id' => $doctor->id,
+                'user_id' => $userId,
                 'speciality_id' => $data['speciality'],
                 'qualification_id' => $data['qualification'],
                 'consultation_fee' => $data['consultation_fee']
             ]);
 
-            if (!$doctorProfile) {
-                DB::rollBack();
-                return [
-                    'success' => false,
-                    'message' => 'Failed to create doctor doctor'
-                ];
-            }
-
-            DB::commit();
             return [
                 'success' => true,
-                'message' => 'Doctor created successfully',
-                'data' => $doctor
-            ];
-        } catch (\Illuminate\Database\QueryException $e) {
-            DB::rollBack();
-            Log::error('Database error while creating user: ' . $e->getMessage());
-            return [
-                'success' => false,
-                'message' => 'Something went wrong while creating doctor'
+                'message' => 'Doctor profile created successfully',
+                'data' => $doctorProfile
             ];
         } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error while creating user: ' . $e->getMessage());
             return [
                 'success' => false,
-                'message' => 'Something went wrong while creating doctor'
+                'message' => 'Something went wrong while doctor profile'
             ];
         }
     }
@@ -166,33 +124,51 @@ class UserService
                 'area' => $data['area'],
                 'pincode' => $data['pincode'],
                 'gender' => $data['gender'],
-                'clinic_id' => $this->clinicId,
                 'password' => Hash::make('ravi'),
             ]);
-
-            if (!$patient) {
-                return [
-                    'success' => false,
-                    'message' => 'Failed to create patient'
-                ];
-            }
 
             return [
                 'success' => true,
                 'message' => 'Patient created successfully',
                 'data' => $patient
             ];
-        } catch (\Illuminate\Database\QueryException $e) {
-            Log::error('Database error while creating patient: ' . $e->getMessage());
+        } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Something went wrong while creating patient'
+                'message' => 'Something went wrong while creating Patient'
+            ];
+        }
+    }
+
+    public function getUsersByClinicId($clinicId)
+    {
+        try {
+            $users = User::orderBy('created_at', 'asc')->where('clinic_id', $clinicId)->get();
+            return $users;
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Something went wrong while fetching users'
+            ];
+        }
+    }
+
+    public function getUsersByClinicIdAndRoleId($clinicId, $roleId)
+    {
+        try {
+            $users = User::where('role_id', $roleId)
+                ->where('clinic_id', $clinicId)
+                ->orderBy('created_at', 'asc')
+                ->get();
+            return [
+                'success' => true,
+                'message' => 'Users fetched successfully',
+                'data' => $users
             ];
         } catch (\Exception $e) {
-            Log::error('Error while creating patient: ' . $e->getMessage());
             return [
                 'success' => false,
-                'message' => 'Something went wrong while creating patient'
+                'message' => 'Something went wrong while fetching users'
             ];
         }
     }

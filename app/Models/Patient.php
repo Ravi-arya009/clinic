@@ -18,6 +18,11 @@ class Patient extends Authenticatable
         'email',
         'gender',
         'password',
+        'state_id',
+        'city_id',
+        'address',
+        'area',
+        'pincode',
     ];
 
     //custom code to accomodate uuid

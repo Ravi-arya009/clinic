@@ -15,10 +15,24 @@ class BootService
     public function fetchUserRoles()
     {
         try {
-            $roles = Role::pluck('role_id', 'role_name')->toArray();
+            $roles = Role::pluck('id', 'name')->toArray();
             Config::set('role', $roles);
         } catch (\Exception $e) {
             Config::set('role', []);
+        }
+    }
+
+    public function initializeRolesConfig(){
+        // for future uses.
+    }
+
+    public function fetchRoleIdByName($name)
+    {
+        try {
+            $roleId = Role::where('name', $name)->value('id');
+            return $roleId;
+        } catch (\Exception $e) {
+            return null;
         }
     }
 }

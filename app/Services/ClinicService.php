@@ -65,6 +65,7 @@ class ClinicService
                 'clinicId' => $clinic->id
             ];
         } catch (\Throwable $e) {
+            throw $e;
             DB::rollBack();
             return [
                 'success' => false,
@@ -103,7 +104,6 @@ class ClinicService
                 'message' => 'Clinic registered successfully!'
             ];
         } catch (\Throwable $e) {
-            dd($e);
             return [
                 'success' => false,
                 'message' => 'Something Went wrong'

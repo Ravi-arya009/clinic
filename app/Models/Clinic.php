@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Clinic extends Model
+class
+Clinic extends Model
 {
     use HasFactory, HasUuids;
 
@@ -38,7 +39,7 @@ class Clinic extends Model
 
     public function admin()
     {
-        return $this->hasOne(User::class, 'clinic_id', 'id')->where('role', config('role.admin'))->select('id', 'name', 'phone', 'clinic_id');
+        return $this->hasOne(User::class, 'clinic_id', 'id')->where('role_id', config('role.admin'))->select('id', 'name', 'phone', 'clinic_id');
     }
     public function speciality()
     {

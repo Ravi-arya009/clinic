@@ -32,7 +32,7 @@ class SearchController extends Controller
 
         $doctors = User::select('id', 'name')
             ->where('name', 'like', "%{$searchString}%")
-            ->where('role', config('role.doctor'))
+            ->where('role_id', config('role.doctor'))
             ->when($searchCity, function ($query, $searchCity) {
                 return $query->where('city_id', $searchCity);
             })->limit(5)->get();
@@ -53,7 +53,7 @@ class SearchController extends Controller
 
         $doctors = User::with('doctorProfile.speciality',)->select('id', 'name', 'area', 'city_id', 'profile_image')
             ->where('name', 'like', "%{$searchString}%")
-            ->where('role', config('role.doctor'))
+            ->where('role_id', config('role.doctor'))
             ->when($searchCity, function ($query, $searchCity) {
                 return $query->where('city_id', $searchCity);
             })->limit(5)->get();
@@ -65,7 +65,7 @@ class SearchController extends Controller
     }
     public function searchDoctor()
     {
-        $doctors = User::where('role', config('role.doctor'))
+        $doctors = User::where('role_id', config('role.doctor'))
             ->with(['city', 'doctorProfile.speciality'])
             ->limit(10)
             ->get();
