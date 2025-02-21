@@ -8,18 +8,18 @@
 
 @section('content')
 
-
     <div class="dashboard-header">
         <h3>Create User</h3>
     </div>
-
 
     <form action="{{ route('admin.user.store') }}" method="POST">
         @csrf
         @include('admin.partials.user_card')
     </form>
 
-    </div>
+    <x-sweet-alert />
+
+
 @endsection
 
 @push('scripts')

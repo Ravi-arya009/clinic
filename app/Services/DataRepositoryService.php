@@ -12,14 +12,13 @@ class DataRepositoryService
 
     public function __construct()
     {
-        //
-
+        //cache everything on this service to minimize db calls
     }
 
     public function getAllCities()
     {
         try {
-            return City::where('status', 1)->orderBy('name', 'asc')->get();
+            return City::where('is_active', 1)->orderBy('name', 'asc')->get();
         } catch (\Exception $e) {
             return [
                 'success' => false,
@@ -31,7 +30,7 @@ class DataRepositoryService
     public function getAllStates()
     {
         try {
-            return State::where('status', 1)->orderBy('name', 'asc')->get();
+            return State::where('is_active', 1)->orderBy('name', 'asc')->get();
         } catch (\Exception $e) {
             return [
                 'success' => false,
@@ -43,7 +42,7 @@ class DataRepositoryService
     public function getAllSpecialities()
     {
         try {
-            return Speciality::where('status', 1)->orderBy('name', 'asc')->get();
+            return Speciality::where('is_active', 1)->orderBy('name', 'asc')->get();
         } catch (\Exception $e) {
             return [
                 'success' => false,

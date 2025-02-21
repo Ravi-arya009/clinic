@@ -29,8 +29,8 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Location</th>
-                <th>Contact Person</th>
+                <th>City</th>
+                <th>Contact</th>
                 <th>
                     <select class="role-column-filter">
                         <option value="">All Roles</option>
@@ -43,36 +43,35 @@
             </tr>
         </thead>
 
-        @foreach ($users as $user)
+        @foreach ($clinicUsers as $clinicUser)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
                     <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
                     <div class="patient-info">
                         <p>#Apt0001</p>
-                        <h6>{{ $user->name }}</h6>
+                        <h6>{{ $clinicUser->user->name }}</h6>
                     </div>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{ isset($user->area) ? ucfirst($user->area) : 'N/A' }}</li>
-                        <li>{{ isset($user->city->name) ? ucfirst($user->city->name) : 'N/A' }}</li>
+                        <li>{{ isset($clinicUser->user->city->name) ? ucfirst($clinicUser->user->city->name) : 'N/A' }}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li><i class="fa-solid fa-phone"></i>{{ $user->phone }}</li>
-                        <li><i class="fa-solid fa-brands fa-whatsapp"></i>{{ $user->whatsapp ?? 'N/A' }}</li>
+                        <li><i class="fa-solid fa-phone"></i>{{ $clinicUser->user->phone }}</li>
+                        <li><i class="fa-solid fa-brands fa-whatsapp"></i>{{ $clinicUser->user->whatsapp ?? 'N/A' }}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
                         <li>
-                            <span class="badge badge-green status-badge">{{ ucfirst(array_search($user->role_id, config('role'))) }}</span>
+                            <span class="badge badge-green status-badge">{{ ucfirst(array_search($clinicUser->role_id, config('role'))) }}</span>
                         </li>
                     </ul>
                 </td>
                 <td class="appointment-start">
-                    <a href="{{ route('admin.user.show', ['userId' => $user, 'roleId' => $user->role_id]) }}" class="start-link">Edit</a>
+                    <a href="{{ route('admin.user.show', ['userId' => $clinicUser->user_id, 'roleId' => $clinicUser->role_id]) }}" class="start-link">Edit</a>
                 </td>
             </tr>
         @endforeach
@@ -95,7 +94,6 @@
                 sortable: false
             }]
         });
-
 
         $('.role-column-filter').on('change', function() {
             table.column(3).search($(this).val()).draw();

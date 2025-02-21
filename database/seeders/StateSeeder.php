@@ -8,11 +8,6 @@ use App\Models\State;
 
 class StateSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $states = [
@@ -47,7 +42,7 @@ class StateSeeder extends Seeder
         ];
 
         foreach ($states as $state) {
-            State::create([
+            State::firstOrCreate([
                 'id' => Str::uuid(),
                 'name' => $state,
             ]);

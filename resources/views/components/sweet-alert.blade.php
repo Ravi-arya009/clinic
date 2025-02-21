@@ -15,7 +15,7 @@
             const alerts = {
                 'error': {
                     title: 'Error!',
-                    messages: {!! $errors->any() ? json_encode($errors->all()) : 'null' !!}
+                    messages: {!! $errors->any() ? json_encode($errors->all()) : (session('error') ? json_encode(session('error')) : 'null') !!}
                 },
                 'success': {
                     title: 'Success!',

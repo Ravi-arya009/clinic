@@ -22,7 +22,6 @@ class UpdateClinicRequest extends FormRequest
     public function rules(): array
     {
         $clinicId = $this->clinicId;
-        $adminId = $this->admin_id;
 
         return [
             'name' => 'required|string|max:255',
@@ -33,17 +32,20 @@ class UpdateClinicRequest extends FormRequest
                 'unique:clinics,slug,' . $clinicId, // Ensures uniqueness while updating
                 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', // extra slug specific rules
             ],
-            'city' => 'exists:cities,id',
-            'state' => 'exists:states,id',
-            'address' => 'nullable',
-            'speciality' => 'exists:specialities,id',
-            'area' => 'nullable|string|max:255',
             'phone' => 'nullable|digits_between:10,13|unique:clinics,phone,' . $clinicId,
+            'whatsapp' => 'nullable|digits_between:10,13|unique:clinics,whatsapp,' . $clinicId,
+            'email' => 'nullable|email',
+            'state' => 'nullable|exists:states,id',
+            'city' => 'nullable|exists:cities,id',
+            'address' => 'nullable|string',
+            'pincode' => 'nullable|string|max:8',
+            'area' => 'nullable|string|max:255',
+            'speciality' => 'nullable|exists:specialities,id',
             'contact_person' => 'nullable|string|max:255',
-            'contact_person_phone' => 'nullable|digits_between:10,13|unique:clinics,contact_person_phone,' . $clinicId,
-            'admin_id' => 'required|exists:users,id',
-            'admin_name' => 'required|string|max:255',
-            'admin_phone' => 'required|digits_between:10,13|unique:users,phone,' . $adminId,
+            'contact_person_phone' => 'nullable|digits_between:10,13',
+            'contact_person_whatsapp' => 'nullable|digits_between:10,13',
+            'contact_person_email' => 'nullable|email',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
         ];
     }
 }

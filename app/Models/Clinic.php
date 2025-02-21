@@ -23,24 +23,28 @@ Clinic extends Model
         'name',
         'slug',
         'phone',
+        'whatsapp',
+        'email',
         'contact_person',
         'contact_person_phone',
-        'admin_name',
-        'admin_phone',
-        'admin_password',
-        'super_admin',
+        'contact_person_whatsapp',
         'state_id',
         'city_id',
-        'area',
         'address',
-        'speciality_id'
+        'pincode',
+        'area',
+        'speciality_id',
+        'logo',
+        'super_admin',
 
     ];
 
-    public function admin()
+    public function admins()
     {
-        return $this->hasOne(User::class, 'clinic_id', 'id')->where('role_id', config('role.admin'))->select('id', 'name', 'phone', 'clinic_id');
+        return $this->belongsToMany(User::class, 'clinic_users')
+        ->where('clinic_users.role_id', config('role.admin'));
     }
+
     public function speciality()
     {
         return $this->belongsTo(Speciality::class, 'speciality_id', 'id')->select('id', 'name', 'image');

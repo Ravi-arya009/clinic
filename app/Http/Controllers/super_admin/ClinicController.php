@@ -44,7 +44,7 @@ class ClinicController extends Controller
 
     public function show($clinicId)
     {
-        $clinic = $this->clinicService->getClinicById($clinicId, ['admin']);
+        $clinic = $this->clinicService->getClinicById($clinicId, ['admins']);
         $cities = $this->dataRepositoryService->getAllCities();
         $states = $this->dataRepositoryService->getAllStates();
         $specialities = $this->dataRepositoryService->getAllSpecialities();
@@ -54,7 +54,7 @@ class ClinicController extends Controller
     public function update(UpdateClinicRequest $request, $clinicId)
     {
         $validatedData = $request->validated();
-        $this->clinicService->updateClinic($clinicId, $validatedData);
-        return redirect()->back()->with('success', 'Clinic updated successfully!');
+        $response = $this->clinicService->updateClinic($clinicId, $validatedData);
+        return $response['success'] ? back()->with('success', $response['message']) : back()->withInput()->with('error', $response['message']);
     }
 }

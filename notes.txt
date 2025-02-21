@@ -333,3 +333,80 @@ walk in patient have possibly a solution. look into the recent chats of the clau
 
 
 review whole note for further plan.
+
+
+
+######
+clinic information
+Contact information
+    -phone
+    -email
+    -whatsapp
+    -contact person
+    -contact persons phone
+
+Admin
+    -Name
+    -Phone
+
+
+since clinic's admin is a user now. we can call a partial to create admin since it needs basic user details only. call this partial everhwhere else. (do today)
+    -for now, only storing name, phone and password. once the parital is made can also include the same on the clinic's creation page.
+    -need to take care of validation. user's validation will be applied, instead of calling createClinicAdmin, can simple call create use inside.
+
+
+###start from here ###
+
+-fix view clinic on super admin.
+    -show admins of a clinic in table (since there can be multiple admins now).
+
+-fix clinic admin login
+    -think if can use middleware
+    -see below
+
+fix all the authentication. since the db structure is changed now, see if same auth can be used for all the users.
+make the auth and middlewares universal so this can be used for multiple user type.
+
+#####
+
+
+
+##flow
+##Super admin
+-fresh migration shows total doctors,patients and clinics cout 1.
+-make upload image system.
+-make view/update admin on super admin view clinic page
+-if findorfail fails in service classes then we're getting view errors saying attempt to read properties on array. find a way to fix that.
+    -this problem will exist throughout the whole application.
+    #how to reproduce this error?
+        -view any clinic by clinic index and change the clinic id in the url to something.
+-Can add more fields while adding clinic admin.(low priority)
+
+
+#Admin
+-make upload image system.
+After creating a doctor then view user doesn't show doctor profile fields automatically.
+
+
+-move forward with user creation, updation, index.
+    -user request for validation just like in the clinic
+    -use x-alert error component (modal based error success showing)
+    -see create_users.blade for comment.
+    -make functions in user service
+    -there should be universal way of sending errors and success.
+        -which can be catched in x-alert like componet easily.
+
+
+#start from here
+user is getting created on admin panel. including doctors.
+
+    -convert the controller to service class.
+    -validations to request class.
+    -proper try catch block and error throwing with edge cases.
+    -check proper errors.
+    -use x alert
+        -remove default error if x alert is used.
+    -use universal messages (think and research)
+        - make reusable function if possible
+    -throw error from service clases and catch in the controller. There's no need to create new error messages
+    in controller, makes the code redundant.

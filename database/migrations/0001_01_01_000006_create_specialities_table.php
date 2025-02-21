@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->unique();
             $table->string('image')->nullable();
-            $table->integer('status')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

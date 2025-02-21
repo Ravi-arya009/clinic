@@ -1,7 +1,5 @@
 @extends('super_admin.layouts.main')
-
 @section('title', 'Create Clinic')
-
 @section('breadcrum-title', 'Create Clinic')
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', 'Create Clinic')

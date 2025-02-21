@@ -26,13 +26,12 @@ class User extends Authenticatable
         'whatsapp',
         'email',
         'gender',
+        'dob',
         'password',
-        'role_id',
         'clinic_id',
         'state_id',
         'city_id',
         'address',
-        'area',
         'pincode'
     ];
 
@@ -42,7 +41,6 @@ class User extends Authenticatable
     public $incrementing = false;
     protected $casts = [
         'id' => 'string',
-        'role_id' => 'string',
     ];
     //custom code to accomodate uuid
 
@@ -84,9 +82,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(City::class, 'city_id', 'id')->select('id', 'name');
     }
-    public function clinic()
-    {
-        return $this->belongsTo(Clinic::class, 'clinic_id', 'id');
-    }
-
 }

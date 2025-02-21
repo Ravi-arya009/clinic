@@ -51,7 +51,7 @@
                     <div class="table-responsive">
                         <table class="table dashboard-table appoint-table">
                             <tbody>
-                                @foreach ($clinics as $clinic)
+                                {{-- @foreach ($clinics as $clinic)
                                     <tr>
                                         <td>
                                             <div class="patient-info-profile">
@@ -86,7 +86,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>

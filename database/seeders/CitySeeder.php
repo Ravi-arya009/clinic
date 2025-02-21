@@ -7,12 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class CitySeeder extends Seeder
-
 {
-    /**
-     * Run the database seeds.
-     *
-     */
     public function run()
     {
         $cities = [
@@ -34,7 +29,7 @@ class CitySeeder extends Seeder
         ];
 
         foreach ($cities as $city) {
-            City::create([
+            City::firstOrCreate([
                 'id' => Str::uuid(),
                 'name' => $city,
                 'state_id' => 1,
