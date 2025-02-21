@@ -8,11 +8,6 @@ use Illuminate\Support\Str;
 
 class SpecialitySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $specialities = [

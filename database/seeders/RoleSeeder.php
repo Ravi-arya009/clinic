@@ -8,24 +8,15 @@ use Illuminate\Support\Str;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Role::create([
-            'id' => Str::uuid(),
-            'name' => 'admin',
-        ]);
+        $roles = ['admin', 'doctor', 'staff'];
 
-        Role::create([
-            'id' => Str::uuid(),
-            'name' => 'doctor',
-        ]);
-
-        Role::create([
-            'id' => Str::uuid(),
-            'name' => 'staff',
-        ]);
+        foreach ($roles as $role) {
+            Role::firstOrCreate([
+                'id' => Str::uuid(),
+                'name' => $role,
+            ]);
+        }
     }
 }

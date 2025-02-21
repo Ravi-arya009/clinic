@@ -38,11 +38,11 @@ Route::prefix('super_admin')->group(
         Route::middleware('IsLoggedIn:super_admin')->group(function () {
             Route::get('/', [DashboardController::class, 'dashboard'])->name('super_admin.index');
             Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('super_admin.dashboard');
-            Route::get('clinic/index', [ClinicController::class, 'index'])->name('super_admin.clinic.index');
             Route::get('clinic/create', [ClinicController::class, 'create'])->name('super_admin.clinic.create');
             Route::post('clinic/store', [ClinicController::class, 'store'])->name('super_admin.clinic.store');
             Route::get('clinic/view/{clinicId}', [ClinicController::class, 'show'])->name('super_admin.clinic.show');
             Route::post('clinic/update/{clinicId}', [ClinicController::class, 'update'])->name('super_admin.clinic.update');
+            Route::get('clinic/index', [ClinicController::class, 'index'])->name('super_admin.clinic.index');
             Route::get('logout', [Super_adminAuthController::class, 'logout'])->name('super_admin.logout');
         });
     }
@@ -60,11 +60,11 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
         Route::middleware('IsLoggedIn:admin')->group(function () {
             Route::get('/', [AdminDashboardController::class, 'dashboard'])->name('admin.index');
             Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
-            Route::get('users/{role_id?}', [UserController::class, 'index'])->name('admin.user.index');
             Route::get('user/create', [UserController::class, 'create'])->name('admin.user.create');
             Route::post('user/store', [UserController::class, 'store'])->name('admin.user.store');
             Route::get('user/{userId}', [UserController::class, 'show'])->name('admin.user.show');
             Route::put('user/{userId}', [UserController::class, 'update'])->name('admin.user.update');
+            Route::get('users/{role_id?}', [UserController::class, 'index'])->name('admin.user.index');
             Route::get('time_slots/{doctor_id?}', [TimeSlotController::class, 'index'])->name('admin.time_slots.index');
             Route::post('time_slots', [TimeSlotController::class, 'store'])->name('admin.time_slots.store');
             Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'delete'])->name('admin.slot.delete');

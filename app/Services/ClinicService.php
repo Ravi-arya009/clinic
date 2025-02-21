@@ -3,15 +3,15 @@
 namespace App\Services;
 
 use App\Models\Clinic;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PhpParser\Node\Expr\Throw_;
 
 class ClinicService
 {
-    /**
-     * Create a new class instance.
-     */
     protected $userService;
+
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
@@ -36,8 +36,6 @@ class ClinicService
 
     public function storeClinic($data)
     {
-        /* Both clinic and admin transaction should succeed or both should fail,
-        hence a try catch block with db transaction. */
         DB::beginTransaction();
 
         try {
@@ -46,16 +44,25 @@ class ClinicService
                 'name' => $data['name'],
                 'slug' => $data['slug'],
                 'phone' => $data['phone'],
-                'contact_person' => $data['contact_person'],
-                'contact_person_phone' => $data['contact_person_phone'],
+                'whatsapp' => $data['whatsapp'],
+                'email' => $data['email'],
                 'state_id' => $data['state'],
                 'city_id' => $data['city'],
                 'address' => $data['address'],
+                'pincode' => $data['pincode'],
                 'area' => $data['area'],
                 'speciality_id' => $data['speciality'],
+                'contact_person' => $data['contact_person'],
+                'contact_person_phone' => $data['contact_person_phone'],
+                'contact_person_whatsapp' => $data['contact_person_whatsapp'],
             ]);
 
-            $this->userService->storeClinicAdmin($data['admin_name'], $data['admin_phone'], $clinic->id);
+            $user = $this->userService->storeClinicAdmin($data['admin_name'], $data['admin_phone']);
+            $assignedAdmin = $this->userService->assignClinicRoleToUser($user->id, $clinic->id, config('role.admin'));
+
+            if (!$assignedAdmin['success']) {
+                throw new \Exception('Admin role assignment failed');
+            }
 
             DB::commit();
 
@@ -65,48 +72,44 @@ class ClinicService
                 'clinicId' => $clinic->id
             ];
         } catch (\Throwable $e) {
-            throw $e;
             DB::rollBack();
             return [
                 'success' => false,
-                'message' => 'Something Went wrong'
+                'message' => 'Something went wrong while registering clinic'
             ];
         }
     }
 
     public function updateClinic($clinicId, $data)
     {
-        /* Both clinic and admin transaction should succeed or both should fail,
-        hence a try catch block with db transaction. */
-        DB::beginTransaction();
-
         try {
             $clinic = Clinic::findorFail($clinicId);
-            $clinic->name = $data['name'];
-            $clinic->slug = $data['slug'];
-            $clinic->phone = $data['phone'];
-            $clinic->contact_person = $data['contact_person'];
-            $clinic->contact_person_phone = $data['contact_person_phone'];
-            $clinic->state_id = $data['state'];
-            $clinic->city_id = $data['city'];
-            $clinic->address = $data['address'];
-            $clinic->area = $data['area'];
-            $clinic->speciality_id = $data['speciality'];
-            $clinic->save();
 
-            //updating clinic admin
-            $this->userService->updateClinicAdmin($data['admin_id'], $data['admin_name'], $data['admin_phone']);
-
-            DB::commit();
+            $clinic->update([
+                'name' => $data['name'],
+                'slug' => $data['slug'],
+                'phone' => $data['phone'],
+                'whatsapp' => $data['whatsapp'],
+                'email' => $data['email'],
+                'state_id' => $data['state'],
+                'city_id' => $data['city'],
+                'address' => $data['address'],
+                'pincode' => $data['pincode'],
+                'area' => $data['area'],
+                'speciality_id' => $data['speciality'],
+                'contact_person' => $data['contact_person'],
+                'contact_person_phone' => $data['contact_person_phone'],
+                'contact_person_whatsapp' => $data['contact_person_whatsapp']
+            ]);
 
             return [
                 'success' => true,
-                'message' => 'Clinic registered successfully!'
+                'message' => 'Clinic updated successfully!'
             ];
         } catch (\Throwable $e) {
             return [
                 'success' => false,
-                'message' => 'Something Went wrong'
+                'message' => 'Something went wrong while updating clinic'
             ];
         }
     }

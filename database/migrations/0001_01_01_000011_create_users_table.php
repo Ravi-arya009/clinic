@@ -18,17 +18,14 @@ return new class extends Migration
             $table->string('whatsapp', length: 13)->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->integer('gender')->nullable(); //1 for male, 2 for female
+            $table->date('dob')->nullable();
             $table->uuid('state_id')->nullable();
             $table->foreign('state_id')->references('id')->on('states')->onDelete(null);
             $table->uuid('city_id')->nullable();
             $table->foreign('city_id')->references('id')->on('cities')->onDelete(null);
-            $table->string('pincode')->nullable();
             $table->string('address')->nullable();
+            $table->string('pincode')->nullable();
             $table->string('profile_image')->nullable();
-            $table->uuid('role_id');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->uuid('clinic_id');
-            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

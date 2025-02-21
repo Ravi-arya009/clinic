@@ -1,0 +1,45 @@
+Flow
+
+#Super admins username and password is give, he logs in.
+
+-A migration with auth. (see later)
+
+-Can create clinics
+-Create an admin while creating clinic
+    -create user
+    -create clinic,role,user table association
+
+-can see clinic list, can update them.
+-can mark them inactive.
+
+-Manage DataRepository (cities, states, roles etc.)
+
+
+#Admin
+
+-Can create users (doctors, admins, staff).
+    -make an entry in users table.
+        -if user is doctor, make an entry in doctors_profile table. Use foreign key to link with users table.
+
+    -Can update clinic.
+
+#Doctor
+
+-Can manage time slots. (Timeslots module will need to be made as globa, since it can be used by receptionist, admin, doctor itself, depending upon the size of the clinic.)
+-Can See, manage, and update Appointments.
+    -Can attend to it
+        -Add fields.
+        -Add medications. **if needed, rename the variables to make the code readable. Polish the frontend and make it reusable.
+        -Add Lab tests. **if needed, rename the variables to make the code readable. Polish the frontend and make it reusable.
+        -Perscription is generated.
+        -A medical history is generated. (after base is working)
+        -Can view previous appointments of the patient. (after base application is working, (simple, filter by date))
+-Can create patient.
+    -make the whole entry in a separate patients table.
+    -create an appointment.
+        -it should be little different than a regular appointment that patient makes from the frontent.
+        -This appointment is walkin appointment and do not necessary have a fix slot. (can make a flag somewhere, ask claude)
+    -Do the whole appointment attend flow
+
+#Patient
+
