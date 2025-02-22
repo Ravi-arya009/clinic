@@ -373,14 +373,16 @@ make the auth and middlewares universal so this can be used for multiple user ty
 
 ##flow
 ##Super admin
--fresh migration shows total doctors,patients and clinics cout 1.
--make upload image system.
--make view/update admin on super admin view clinic page
--if findorfail fails in service classes then we're getting view errors saying attempt to read properties on array. find a way to fix that.
+-fresh migration shows total doctors,patients and clinics cout 1. (It's dummy data, nothing to worry)
+-make upload image system. (already done, need to implement it on all the panels)
+-make view/update admin on super admin view clinic page (low priority)
+
+-if findorfail fails in service classes then we're getting view errors saying attempt to read properties on array. find a way to fix that. (fixed, now shoing not found page)
     -this problem will exist throughout the whole application.
     #how to reproduce this error?
         -view any clinic by clinic index and change the clinic id in the url to something.
 -Can add more fields while adding clinic admin.(low priority)
+- stats, city, specialities can use medicine masters layout partials, logic etc. write once used many.
 
 
 #Admin
@@ -410,3 +412,10 @@ user is getting created on admin panel. including doctors.
         - make reusable function if possible
     -throw error from service clases and catch in the controller. There's no need to create new error messages
     in controller, makes the code redundant.
+
+
+#####
+image upload for user is happening. the ui is broken, check it.
+implement the image upload on the clinic.
+
+User module needs organization. do it. make it universal and robust.

@@ -32,6 +32,7 @@ class StoreUserRequest extends FormRequest
             'city' => 'nullable|exists:cities,id',
             'address' => 'nullable|string|max:500',
             'pincode' => 'nullable|digits_between:5,10',
+            'profile_picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'role' => 'required|in:' . implode(',', config('role')),
             //nedd a image validation for profile picture (later, when implementing it)
             'speciality' => $this->role == config('role.doctor') ? 'required|exists:specialities,id' : 'sometimes',
