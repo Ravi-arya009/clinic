@@ -2,20 +2,26 @@
     @csrf
     <div class="setting-card">
         <div class="change-avatar img-upload">
-            <div class="profile-img">
-                <i class="fa-solid fa-file-image"></i>
-            </div>
-            <div class="upload-img">
-                <h5>Clinic Logo</h5>
-                <div class="imgs-load d-flex align-items-center">
-                    <div class="change-photo">
-                        Upload New
-                        <input type="file" class="upload">
-                    </div>
-                    <a href="#" class="upload-remove">Remove</a>
-                </div>
-            </div>
-        </div>
+         <div class="profile-img">
+             @if (isset($clinic))
+                 <img src="{{ asset('storage/profile_images/' . $clinic->profile_image) }}" alt="Profile Picture">
+             @else
+                 <i class="fa-solid fa-file-image"></i>
+             @endif
+         </div>
+         <div class="upload-img">
+             <h5>Profile Picture</h5>
+             <div class="imgs-load d-flex align-items-center">
+                 <div class="change-photo">
+                     Upload New
+                     <input type="file" name="profile_picture" class="upload">
+
+                 </div>
+                 <a href="#" class="upload-remove">Remove</a>
+             </div>
+         </div>
+     </div>
+
     </div>
     <div class="setting-title">
         <h5>Clinic Information</h5>

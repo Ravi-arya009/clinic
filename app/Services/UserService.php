@@ -103,6 +103,17 @@ class UserService
                 ];
             }
 
+            // Handle Profile image file upload and storage
+            if (isset($data['profile_picture'])) {
+                $profilePicture = $data['profile_picture'];
+                $newFileName = $user->id . '.' . $profilePicture->getClientOriginalExtension();
+                $profilePicture->storeAs('profile_images', $newFileName, 'public');
+
+                // making DB entry for profile picture
+                $user->profile_image = $newFileName;
+                $user->save();
+            }
+
             if ($data['role'] == config('role.doctor')) {
                 $doctorProfileResponse = $this->storeDoctorProfile($data, $user->id);
                 if ($doctorProfileResponse['success'] == false) {

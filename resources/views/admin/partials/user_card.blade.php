@@ -1,14 +1,25 @@
  <div class="setting-card">
      <div class="change-avatar img-upload">
          <div class="profile-img">
-             <i class="fa-solid fa-file-image"></i>
+             <div class="profile-img">
+                 @if (isset($user))
+                     @if (isset($user->profile_image))
+                         <img src="{{ asset('storage/profile_images/' . $user->profile_image) }}" alt="Profile Picture">
+                     @else
+                         <img src="{{ asset('img/default-profile-picture.webp') }}" alt="Default Profile Picture">
+                     @endif
+                 @else
+                     <i class="fa-solid fa-file-image"></i>
+                 @endif
+             </div>
          </div>
          <div class="upload-img">
              <h5>Profile Picture</h5>
              <div class="imgs-load d-flex align-items-center">
                  <div class="change-photo">
                      Upload New
-                     <input type="file" class="upload">
+                     <input type="file" name="profile_picture" class="upload">
+
                  </div>
                  <a href="#" class="upload-remove">Remove</a>
              </div>
@@ -68,7 +79,7 @@
                      <select name="role" id="role" class="form-control" required>
                          <option value="">Select Role</option>
                          @foreach (config('role') as $roleName => $roleId)
-                             <option value="{{ $roleId }}" {{ old('role', $userRoleId ?? '') == $roleId ? 'selected' : '' }}>{{ ucfirst($roleName) }}</option>
+                             <option value="{{ $roleId }}" {{ old('userRoleId', $userRoleId ?? '') == $roleId ? 'selected' : '' }}>{{ ucfirst($roleName) }}</option>
                          @endforeach
                      </select>
                  </div>
@@ -177,3 +188,4 @@
  <div class="modal-btn text-end">
      <button type="submit" class="btn btn-primary prime-btn">Save Changes</button>
  </div>
+
