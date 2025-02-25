@@ -17,7 +17,7 @@
         <h5>Profile</h5>
     </div>
 
-    <form action="{{ route('admin.user.update', [$user->id, $userRoleId]) }}" method="POST">
+    <form action="{{ route('admin.user.update', [$user->id]) }}" method="POST">
         @csrf
         @method('PUT')
         @include('admin.partials.user_card')

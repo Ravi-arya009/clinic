@@ -20,8 +20,14 @@ class ClinicService
     public function getAllClinics()
     {
         $response = Clinic::orderBy('created_at', 'asc')->get();
+
+        if (!$response) {
+            return null;
+        }
+
         return $response;
     }
+
 
     public function getClinicById($clinicId, $with = [])
     {
@@ -29,6 +35,27 @@ class ClinicService
 
         if (!empty($with)) {
             $response->load($with);
+        }
+
+        return $response;
+    }
+
+    public function getRecentClinics()
+    {
+        $response = Clinic::with('city')->limit(7)->orderBy('created_at', 'desc')->get();
+
+        if (!$response) {
+            return null;
+        }
+
+        return $response;
+    }
+
+    public function getClinicCount(){
+        $response = Clinic::count();
+
+        if (!$response) {
+            return 0;
         }
 
         return $response;

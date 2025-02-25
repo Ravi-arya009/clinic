@@ -372,20 +372,37 @@ make the auth and middlewares universal so this can be used for multiple user ty
 
 
 ##flow
-##Super admin
--fresh migration shows total doctors,patients and clinics cout 1. (It's dummy data, nothing to worry)
--make upload image system. (already done, need to implement it on all the panels)
+
+########################
+
+#### Error Handling ####
+    #how to do this
+        -Make the whole project, make Contrller s and proper service classes. Throw errors anyway you want and handle anyway you want. just make sure youre handling errors properly and there're no security concerns or bugs.
+        -When the project is done a pattern will emerge for erros.
+        -Simple make heloper functions that are global and call then when needed. keep everythign in these functions and abstract everything. makes the clean more readable and maintainable.
+
+#### Ajax JQuery ####
+    -Follow same method as error handling
+
+########################
+
+
+
+##Super admin##
+-Everything works perfectly.
+-Only Low priority tasks are left.
+
 -make view/update admin on super admin view clinic page (low priority)
+    -Can add more fields while adding clinic admin.(low priority)
 
--if findorfail fails in service classes then we're getting view errors saying attempt to read properties on array. find a way to fix that. (fixed, now shoing not found page)
-    -this problem will exist throughout the whole application.
-    #how to reproduce this error?
-        -view any clinic by clinic index and change the clinic id in the url to something.
--Can add more fields while adding clinic admin.(low priority)
-- stats, city, specialities can use medicine masters layout partials, logic etc. write once used many.
+- states, city, specialities can use seeder for input, skipping the cruds for these. (very low priotiry)
+    - states, city, specialities can use medicine masters layout partials, logic etc. write once used many.
+
+- fix upload image system ui. (very low priority)
+    -will get automatically fixed when i fix it for other panels. just copy it
 
 
-#Admin
+##Admin##
 -make upload image system.
 After creating a doctor then view user doesn't show doctor profile fields automatically.
 
@@ -419,3 +436,29 @@ image upload for user is happening. the ui is broken, check it.
 implement the image upload on the clinic.
 
 User module needs organization. do it. make it universal and robust.
+
+
+### Extra ###
+    -Review clinic slung manager middleware. it might cause problems when the clinic session is not set. think again and fix any edge cases that are found.
+
+
+#start from here#
+-user is getting created, now wokring on user updation and fetching the roles from cllinicuser by making
+a realtionship.
+-after this work on index page.
+- after that make request classes.
+-after that, convert everything to services class.
+
+
+##Roadmap
+
+
+.what do do
+    start from super admin.
+        -make necessary changes in
+            -Migrations
+            -Models
+            -controllers.
+            -create service classes.
+
+    cCheck all the features and functionslities.

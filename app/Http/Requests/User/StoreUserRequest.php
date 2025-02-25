@@ -21,7 +21,7 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|string|max:255',
             'phone' => 'required|digits_between:10,13|unique:users,phone',
             'whatsapp' => 'required|digits_between:10,13|unique:users,whatsapp',
@@ -34,10 +34,27 @@ class StoreUserRequest extends FormRequest
             'pincode' => 'nullable|digits_between:5,10',
             'profile_picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'role' => 'required|in:' . implode(',', config('role')),
-            //nedd a image validation for profile picture (later, when implementing it)
-            'speciality' => $this->role == config('role.doctor') ? 'required|exists:specialities,id' : 'sometimes',
-            'qualification' => $this->role == config('role.doctor') ? 'required|exists:qualifications,id' : 'sometimes',
-            'consultation_fee' => $this->role == config('role.doctor') ? 'required|numeric' : 'sometimes',
+        ];
+
+        return $this->getRoleSpecificRules($rules);
+    }
+
+    private function getRoleSpecificRules(array $rules): array
+    {
+        switch ($this->input('role')) {
+            case config('role.doctor'):
+                return array_merge($rules, $this->getDoctorRules());
+            default:
+                return $rules;
+        }
+    }
+
+    private function getDoctorRules(): array
+    {
+        return [
+            'speciality' => 'required|exists:specialities,id',
+            'qualification' => 'required|exists:qualifications,id',
+            'consultation_fee' => 'required|numeric',
         ];
     }
 }

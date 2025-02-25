@@ -39,7 +39,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-xl-8 d-flex">
             <div class="dashboard-card w-100">
                 <div class="dashboard-card-head">
@@ -51,7 +50,14 @@
                     <div class="table-responsive">
                         <table class="table dashboard-table appoint-table">
                             <tbody>
-                                {{-- @foreach ($clinics as $clinic)
+                                @if (count($recentClinics) == 0)
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            No Clinics Found
+                                        </td>
+                                    </tr>
+                                @endif
+                                @foreach ($recentClinics as $clinic)
                                     <tr>
                                         <td>
                                             <div class="patient-info-profile">
@@ -63,7 +69,6 @@
                                                     <span>{{ $clinic->city->name }}, {{ $clinic->area }}</span>
                                                 </div>
                                             </div>
-
                                         </td>
                                         <td>
                                             <div class="appointment-date-created">
@@ -82,16 +87,15 @@
                                         <td>
                                             <div class="apponiment-actions d-flex align-items-center">
                                                 <a href="#" class="text-info-icon me-2"><i class="fa-solid fa-eye"></i></a>
-                                                <a href="{{route('super_admin.clinic.show', ['clinicId' => $clinic->id])}}" class="text-success-icon"><i class="fa-solid fa-arrow-right"></i></a>
+                                                <a href="{{ route('super_admin.clinic.show', ['clinicId' => $clinic->id]) }}" class="text-success-icon"><i class="fa-solid fa-arrow-right"></i></a>
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
