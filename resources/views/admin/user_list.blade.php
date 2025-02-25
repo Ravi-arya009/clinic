@@ -71,7 +71,7 @@
                     </ul>
                 </td>
                 <td class="appointment-start">
-                    <a href="{{ route('admin.user.show', ['userId' => $clinicUser->user_id, 'roleId' => $clinicUser->role_id]) }}" class="start-link">Edit</a>
+                    <a href="{{ route('admin.user.show', ['userId' => $clinicUser->user_id]) }}" class="start-link">Edit</a>
                 </td>
             </tr>
         @endforeach

@@ -51,7 +51,7 @@ class DataRepositoryService
         }
     }
 
-    public function getAllqualifications()
+    public function getAllQualifications()
     {
         try {
             return Qualification::orderBy('name', 'asc')->get();

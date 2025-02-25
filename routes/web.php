@@ -27,7 +27,6 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
-
 #### Super Admin ####
 Route::prefix('super_admin')->group(
     function () {

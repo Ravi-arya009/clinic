@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call(QualificationSeeder::class);
         $this->createTestClinic();
 
-        // $this->call(QualificationSeeder::class);
         // $this->call(ClinicSeeder::class);
         // $this->call(MedicineMasterSeeder::class);
         // $this->call(DoctorSeeder::class);
@@ -35,7 +34,7 @@ class DatabaseSeeder extends Seeder
     }
 
 
-    public function createTestClinic()
+    protected function createTestClinic()
     {
         $testClinic =  Clinic::create([
             'id' => fake()->uuid,

@@ -37,7 +37,7 @@ class UserController extends Controller
     {
         $cities = $this->dataRepositoryService->getAllCities();
         $states = $this->dataRepositoryService->getAllStates();
-        $qualifications = $this->dataRepositoryService->getAllqualifications();
+        $qualifications = $this->dataRepositoryService->getAllQualifications();
         $specialities = $this->dataRepositoryService->getAllSpecialities();
         $showDoctorFields = True;
         return view('admin.create_user', compact('cities', 'states', 'qualifications', 'specialities', 'showDoctorFields'));
@@ -58,24 +58,24 @@ class UserController extends Controller
 
     public function show(Request $request, $clinicSlug, $userId)
     {
-        $userRoleId = $request->roleId;
-
         $showDoctorFields = false;
         // check if belongs to clinic. can make a helper function in user servie isClinicUser().
         //use userService
-        $user = User::where('id', $userId)->firstOrFail();
+        $user = User::with('clinicRole')->where('id', $userId)->firstOrFail();
 
-        if ($userRoleId === config('role.doctor')) {
+        //using first because currently there;s only one role per user. when the roles per user increase loops will be used.`
+        $user->clinicRole = $user->clinicRole->first();
+        if ($user->clinicRole->role_id === config('role.doctor')) {
             $user->load('doctorProfile', 'doctorProfile.speciality', 'doctorProfile.qualification');
-            $qualifications = Qualification::orderBy('name', 'asc')->get();
-            $specialities = Speciality::orderBy('name', 'asc')->get();
+            $qualifications = $this->dataRepositoryService->getAllQualifications();
+            $specialities = $this->dataRepositoryService->getAllSpecialities();
             $showDoctorFields = true;
         }
 
         $cities = $this->dataRepositoryService->getAllCities();
         $states = $this->dataRepositoryService->getAllStates();
 
-        return view('admin.view_user', compact('user', 'cities', 'states', 'showDoctorFields','userRoleId') + ($showDoctorFields ? compact('qualifications', 'specialities') : []));
+        return view('admin.view_user', compact('user', 'cities', 'states', 'showDoctorFields') + ($showDoctorFields ? compact('qualifications', 'specialities') : []));
     }
 
     public function update(Request $request, $clinicSlug, $userId)
@@ -95,8 +95,7 @@ class UserController extends Controller
         $user->pincode = $request->pincode;
 
         $user->save();
-        if($userRoleId==config('role.doctor'))
-        {
+        if ($userRoleId == config('role.doctor')) {
             dd('doctor');
         }
 
