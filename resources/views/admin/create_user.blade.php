@@ -19,7 +19,6 @@
 
     <x-sweet-alert />
 
-
 @endsection
 
 @push('scripts')
@@ -39,6 +38,7 @@
         })
 
 
+        //Image Preview while profile update
         const uploadInput = document.querySelector('.upload');
         const previewContainer = document.querySelector('.profile-img');
 
@@ -66,9 +66,7 @@
 <style>
     .profile-img {
         width: 100px;
-        /* adjust to your desired width */
         height: 100px;
-        /* adjust to your desired height */
         border-radius: 50%;
         overflow: hidden;
     }

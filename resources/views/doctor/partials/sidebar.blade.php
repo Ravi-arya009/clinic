@@ -21,22 +21,30 @@
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs('doctor.patient.index','doctor.patient.show') ? 'active' : '' }}">
+                <li class="{{ request()->routeIs('doctor.patient.create') ? 'active' : '' }}">
+                    <a href="{{route('doctor.patient.create')}}">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span>Create Patient</span>
+                    </a>
+                </li>
+
+
+                <li class="{{ request()->routeIs('doctor.patient.index', 'doctor.patient.show') ? 'active' : '' }}">
                     <a href="{{ route('doctor.patient.index') }}">
                         <i class="fa-solid fa-user-injured"></i>
                         <span>My Patients</span>
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs('doctor.appointments.index','doctor.appointment.show') ? 'active' : '' }}">
-                    <a href="{{route('doctor.appointments.index')}}">
+                <li class="{{ request()->routeIs('doctor.appointments.index', 'doctor.appointment.show') ? 'active' : '' }}">
+                    <a href="{{ route('doctor.appointments.index') }}">
                         <i class="fa-solid fa-calendar-days"></i>
                         <span>Upcoming Appointments</span>
                     </a>
                 </li>
 
                 <li class="{{ request()->routeIs('doctor.appointments.history') ? 'active' : '' }}">
-                    <a href="{{route('doctor.appointments.history')}}">
+                    <a href="{{ route('doctor.appointments.history') }}">
                         <i class="fa-regular fa-calendar"></i>
                         <span>Appointment History</span>
                     </a>
@@ -44,7 +52,7 @@
 
 
                 <li class="{{ request()->routeIs('doctor.time_slots.index') ? 'active' : '' }}">
-                    <a href="{{route('doctor.time_slots.index')}}">
+                    <a href="{{ route('doctor.time_slots.index') }}">
                         <i class="fa-solid fa-calendar-day"></i>
                         <span>Time Slots</span>
                     </a>

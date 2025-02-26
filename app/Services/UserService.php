@@ -18,7 +18,7 @@ class UserService
 
     public function __construct()
     {
-        //turning it off, because service classes should work as apis. and apis do not have theri own data. also clinic id is not a function of user instead it's a separate entity.
+        //turning it off, because service classes should work as apis. and apis do not have their own data. also clinic id is not a function of user instead it's a separate entity.
         // so need to provide clinic id from the controller itself. remove this line completely in future.
         // $this->clinicId = Session::get('current_clinic')['id'];
     }
@@ -116,6 +116,7 @@ class UserService
 
             if ($data['role'] == config('role.doctor')) {
                 $doctorProfileResponse = $this->storeDoctorProfile($data, $user->id);
+                $user['doctorProfile'] = $doctorProfileResponse['data'];
                 if ($doctorProfileResponse['success'] == false) {
                     DB::rollBack();
                     return [
@@ -126,6 +127,7 @@ class UserService
             }
 
             $clinicUserResponse = $this->assignClinicRoleToUser($user->id, $clinicId, $data['role']);
+            $user['clinicUser'] = $clinicUserResponse['data'];
 
             if ($clinicUserResponse['success'] == false) {
                 DB::rollBack();
@@ -148,6 +150,8 @@ class UserService
             ];
         }
     }
+
+
 
     public function storeDoctorProfile($data, $userId)
     {
@@ -212,15 +216,16 @@ class UserService
 
     public function getUsersByClinicId($clinicId)
     {
-        try {
-            $users = User::orderBy('created_at', 'asc')->where('clinic_id', $clinicId)->get();
-            return $users;
-        } catch (\Exception $e) {
+
+        $response = ClinicUser::with('user')->where('clinic_id', $clinicId)->get();
+
+        if (!$response) {
             return [
                 'success' => false,
-                'message' => 'Something went wrong while fetching users'
+                'message' => 'No Users Found'
             ];
         }
+        return $response;
     }
 
     public function getUsersByClinicIdAndRoleId($clinicId, $roleId)
@@ -249,6 +254,79 @@ class UserService
             'user_id' => $userId,
             'role_id' => $roleId
         ]);
+    }
+
+    public function updateUser($userId, $data)
+    {
+        try {
+            $user = User::findOrFail($userId);
+
+            if (!$user) {
+                return [
+                    'success' => false,
+                    'message' => 'User not found'
+                ];
+            }
+
+            $user->name = $data['name'];
+            $user->phone = $data['phone'];
+            $user->whatsapp = $data['whatsapp'];
+            $user->email = $data['email'];
+            $user->gender = $data['gender'];
+            $user->dob = $data['dob'];
+            $user->state_id = $data['state'];
+            $user->city_id = $data['city'];
+            $user->address = $data['address'];
+            $user->pincode = $data['pincode'];
+
+            $user->save();
+
+            if ($data['role'] == config('role.doctor')) {
+                $doctor = Doctor::where('user_id', $userId)->first();
+                $doctor->speciality_id = $data['speciality'];
+                $doctor->qualification_id = $data['qualification'];
+                $doctor->consultation_fee = $data['consultation_fee'];
+                $doctor->save();
+            }
+
+            return [
+                'success' => true,
+                'message' => 'User updated successfully'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Something went wrong while updating user'
+            ];
+        }
+    }
+
+    public function getDoctorsByClinicId($clinicId)
+    {
+        $doctors = ClinicUser::with('user')->where('clinic_id', $clinicId)->where('role_id', config('role.doctor'))->get();
+        if (!$doctors) {
+            return [
+                'success' => false,
+                'message' => 'No Doctors Found'
+            ];
+        }
+        return $doctors;
+    }
+
+    public function getClinicUserById($userId)
+    {
+        $user = User::where('id', $userId)->with('clinicRole')->firstOrFail();
+        //in future, when there're multiple role for the same user, we  need to pick this from ClinicUser instead of the User model. It also validates that a the user belongs to the same clinic automatically.
+        //using first because currently there's only one role per user. when the roles per user increase loops will be used.`
+        if (!$user) {
+            return [
+                'success' => false,
+                'message' => 'No Users Found'
+            ];
+        }
+        $user->setRelation('clinicRole', $user->clinicRole->first());
+
+        return $user;
     }
 }
 

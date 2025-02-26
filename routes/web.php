@@ -63,7 +63,7 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::post('user/store', [UserController::class, 'store'])->name('admin.user.store');
             Route::get('user/{userId}', [UserController::class, 'show'])->name('admin.user.show');
             Route::put('user/{userId}', [UserController::class, 'update'])->name('admin.user.update');
-            Route::get('users/{role_id?}', [UserController::class, 'index'])->name('admin.user.index');
+            Route::get('users', [UserController::class, 'index'])->name('admin.user.index');
             Route::get('time_slots/{doctor_id?}', [TimeSlotController::class, 'index'])->name('admin.time_slots.index');
             Route::post('time_slots', [TimeSlotController::class, 'store'])->name('admin.time_slots.store');
             Route::post('delete_slot/{slot_id?}', [TimeSlotController::class, 'delete'])->name('admin.slot.delete');
@@ -93,9 +93,6 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
         Route::middleware('IsLoggedIn:doctor')->group(function () {
             Route::get('/', [DoctorDashboardController::class, 'dashboard'])->name('doctor.index');
             Route::get('dashboard', [DoctorDashboardController::class, 'dashboard'])->name('doctor.dashboard');
-            Route::get('patients', [PatientController::class, 'index'])->name('doctor.patient.index');
-            Route::get('patient/{patientId}', [PatientController::class, 'show'])->name('doctor.patient.show');
-            Route::put('patient/{patientId}', [PatientController::class, 'update'])->name('doctor.patient.update');
             Route::get('appointments', [DoctorAppointmentController::class, 'upcomingAppointments'])->name('doctor.appointments.index');
             Route::get('/appointment/{appointmentId}', [DoctorAppointmentController::class, 'show'])->name('doctor.appointment.show');
             Route::post('/appointment_details/store', [DoctorAppointmentController::class, 'store'])->name('doctor.appointment_details.store');
@@ -104,6 +101,13 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::post('time_slots', [DoctorTimeSlotController::class, 'store'])->name('doctor.time_slots.store');
             Route::post('delete_slot/{slot_id?}', [DoctorTimeSlotController::class, 'delete'])->name('doctor.slot.delete');
             Route::get('/logout', [DoctorAuthController::class, 'logout'])->name('doctor.logout');
+
+            Route::get('/patient/create', [PatientController::class, 'create'])->name('doctor.patient.create');
+            Route::post('patient/store', [PatientController::class, 'store'])->name('doctor.patient.store');
+            Route::get('patient/{patientId}', [PatientController::class, 'show'])->name('doctor.patient.show');
+            Route::put('patient/{patientId}', [PatientController::class, 'update'])->name('doctor.patient.update');
+            Route::get('patients', [PatientController::class, 'index'])->name('doctor.patient.index');
+
         });
     });
 });

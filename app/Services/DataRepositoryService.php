@@ -51,6 +51,18 @@ class DataRepositoryService
         }
     }
 
+    public function getTopSpecialities()
+    {
+        try {
+            return Speciality::where('is_active', 1)->limit(10)->orderBy('name', 'asc')->get();
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'error' => 'Unable to fetch specialities'
+            ];
+        }
+    }
+
     public function getAllQualifications()
     {
         try {

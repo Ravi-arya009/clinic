@@ -223,7 +223,7 @@
                 </div>
             </div>
             <div class="owl-carousel our-doctors owl-theme aos" data-aos="fade-up">
-                @foreach ($doctors as $doctor)
+                {{-- @foreach ($doctors as $doctor)
                     <div class="item">
                         <div class="our-doctors-card">
                             <div class="doctors-header">
@@ -264,7 +264,7 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @endforeach --}}
             </div>
             <div class="specialities-btn aos pt-3" data-aos="fade-up">
                 <a href="{{ route('search.doctor') }}" class="btn">

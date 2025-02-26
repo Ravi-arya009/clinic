@@ -17,12 +17,13 @@ class Patient extends Authenticatable
         'whatsapp',
         'email',
         'gender',
-        'password',
+        'dob',
         'state_id',
         'city_id',
         'address',
-        'area',
         'pincode',
+        'profile_image',
+        'password',
     ];
 
     //custom code to accomodate uuid
