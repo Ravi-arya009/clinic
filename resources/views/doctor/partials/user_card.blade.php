@@ -1,3 +1,30 @@
+<div class="setting-card">
+    <div class="change-avatar img-upload">
+        <div class="profile-img">
+            <div class="profile-img">
+                @if (isset($user))
+                    @if (isset($user->profile_image))
+                        <img src="{{ asset('storage/profile_images/' . $user->profile_image) }}" alt="Profile Picture">
+                    @else
+                        <img src="{{ asset('img/default-profile-picture.webp') }}" alt="Default Profile Picture">
+                    @endif
+                @else
+                    <i class="fa-solid fa-file-image"></i>
+                @endif
+            </div>
+        </div>
+        <div class="upload-img">
+            <h5>Profile Picture</h5>
+            <div class="imgs-load d-flex align-items-center">
+                <div class="change-photo">
+                    Upload New
+                    <input type="file" name="profile_picture" class="upload">
+                </div>
+                <a href="#" class="upload-remove">Remove</a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="setting-title">
     <h5>User Information</h5>
 </div>
@@ -39,6 +66,12 @@
                 </select>
             </div>
         </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="form-wrap">
+                <label class="col-form-label">Date Of Birth</label>
+                <input type="date" name="dob" class="form-control" value="{{ old('dob', $patient->dob ?? '') }}">
+            </div>
+        </div>
     </div>
 </div>
 <div class="setting-title">
@@ -69,7 +102,12 @@
                 </select>
             </div>
         </div>
-
+        <div class="col-lg-6 col-md-6">
+            <div class="form-wrap">
+                <label class="col-form-label">Address</label>
+                <textarea name="address" id="address" class="form-control">{{ old('address', $patient->address ?? '') }}</textarea>
+            </div>
+        </div>
         <div class="col-lg-6 col-md
                 <div class="col-lg-6 col-md-6">
             <div class="form-wrap">
@@ -77,21 +115,6 @@
                 <input type="text" name="pincode" id="pincode" class="form-control" value="{{ old('pincode', $patient->pincode ?? '') }}">
             </div>
         </div>
-
-        <div class="col-lg-6 col-md-6">
-            <div class="form-wrap">
-                <label class="col-form-label">Area</label>
-                <input type="text" name="area" id="area" class="form-control" value="{{ old('area', $patient->area ?? '') }}">
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6">
-            <div class="form-wrap">
-                <label class="col-form-label">Address</label>
-                <textarea name="address" id="address" class="form-control">{{ old('address', $patient->address ?? '') }}</textarea>
-            </div>
-        </div>
-
     </div>
 </div>
 

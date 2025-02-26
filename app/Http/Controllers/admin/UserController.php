@@ -4,14 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\City;
-use App\Models\ClinicUser;
 use App\Models\Patient;
-use App\Models\Qualification;
-use App\Models\Speciality;
 use App\Models\State;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Services\DataRepositoryService;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Session;
@@ -27,26 +24,24 @@ class UserController extends Controller
         $this->dataRepositoryService = $dataRepositoryService;
     }
 
-    public function index($clinicSlug, $roleId = null)
+    public function index($clinicSlug)
     {
-        $clinicUsers = ClinicUser::with('user')->where('clinic_id', $this->clinicId)->get();
+        $clinicUsers = $this->userService->getUsersByClinicId($this->clinicId);
         return view('admin.user_list', compact('clinicUsers'));
     }
 
     public function create()
     {
-        $cities = $this->dataRepositoryService->getAllCities();
         $states = $this->dataRepositoryService->getAllStates();
+        $cities = $this->dataRepositoryService->getAllCities();
         $qualifications = $this->dataRepositoryService->getAllQualifications();
         $specialities = $this->dataRepositoryService->getAllSpecialities();
-        $showDoctorFields = True;
-        return view('admin.create_user', compact('cities', 'states', 'qualifications', 'specialities', 'showDoctorFields'));
+        return view('admin.create_user', compact('states', 'cities', 'qualifications', 'specialities'));
     }
 
     public function store(StoreUserRequest $request, $clinicSlug)
     {
         $validatedData = $request->validated();
-
         $response = $this->userService->storeUser($validatedData, $this->clinicId);
 
         if (!$response['success']) {
@@ -58,48 +53,32 @@ class UserController extends Controller
 
     public function show(Request $request, $clinicSlug, $userId)
     {
-        $showDoctorFields = false;
-        // check if belongs to clinic. can make a helper function in user servie isClinicUser().
-        //use userService
-        $user = User::with('clinicRole')->where('id', $userId)->firstOrFail();
+        $user = $this->userService->getClinicUserById($userId);
 
-        //using first because currently there;s only one role per user. when the roles per user increase loops will be used.`
-        $user->clinicRole = $user->clinicRole->first();
         if ($user->clinicRole->role_id === config('role.doctor')) {
             $user->load('doctorProfile', 'doctorProfile.speciality', 'doctorProfile.qualification');
             $qualifications = $this->dataRepositoryService->getAllQualifications();
             $specialities = $this->dataRepositoryService->getAllSpecialities();
-            $showDoctorFields = true;
         }
 
         $cities = $this->dataRepositoryService->getAllCities();
         $states = $this->dataRepositoryService->getAllStates();
 
-        return view('admin.view_user', compact('user', 'cities', 'states', 'showDoctorFields') + ($showDoctorFields ? compact('qualifications', 'specialities') : []));
+        return view(
+            'admin.view_user',
+            compact('user', 'cities', 'states') + ($user->clinicRole->role_id === config('role.doctor') ? compact('qualifications', 'specialities') : [])
+        );
     }
 
-    public function update(Request $request, $clinicSlug, $userId)
+    public function update(UpdateUserRequest $request, $clinicSlug, $userId)
     {
-        $userRoleId = $request->userRoleId;
-        $user = User::where('id', $userId)->firstOrFail();
+        $validatedData = $request->validated();
+        $response = $this->userService->updateUser($userId, $validatedData);
 
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->whatsapp = $request->whatsapp;
-        $user->email = $request->email;
-        $user->gender = $request->gender;
-        $user->dob = $request->dob;
-        $user->state_id = $request->state;
-        $user->city_id = $request->city;
-        $user->address = $request->address;
-        $user->pincode = $request->pincode;
-
-        $user->save();
-        if ($userRoleId == config('role.doctor')) {
-            dd('doctor');
+        if ($response['success'] == false) {
+            return redirect()->back()->with('error', $response['message']);
         }
-
-        return redirect()->back()->with('success', 'User updated successfully!');
+        return redirect()->back()->with('success', $response['message']);
     }
 
     public function createPatient()

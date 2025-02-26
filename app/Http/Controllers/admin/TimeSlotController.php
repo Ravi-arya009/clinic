@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClinicUser;
+use App\Models\Doctor;
 use App\Models\TimeSlot;
 use App\Models\User;
 use App\Services\TimeSlotService;
+use App\Services\UserService;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Str;
@@ -15,17 +18,18 @@ use Illuminate\Support\Facades\Session;
 
 class TimeSlotController extends Controller
 {
-    protected $clinicId, $timeSlotService;
+    protected $clinicId, $userService, $timeSlotService;
 
-    public function __construct(TimeSlotService $timeSlotService)
+    public function __construct(UserService $userService, TimeSlotService $timeSlotService)
     {
+        $this->userService = $userService;
         $this->timeSlotService = $timeSlotService;
         $this->clinicId = Session::get('current_clinic')['id'];
     }
 
     public function index($clinicSlug, $doctorId = null)
     {
-        $doctors = User::where('role_id', config('role.' . 'doctor'))->where('clinic_id', $this->clinicId)->get();
+        $doctors = $this->userService->getDoctorsByClinicId($this->clinicId);
 
         if ($doctorId) {
             $timeSlots = $this->timeSlotService->getDoctorAvailableTimeSlots($doctorId);

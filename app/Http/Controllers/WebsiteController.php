@@ -6,16 +6,32 @@ use App\Models\City;
 use App\Models\Clinic;
 use App\Models\Speciality;
 use App\Models\User;
+use App\Services\ClinicService;
+use App\Services\DataRepositoryService;
+use App\Services\DoctorService;
 
 class WebsiteController extends Controller
 {
+    protected $clinicService, $doctorService, $dataRepositoryService;
+    public function __construct(
+        ClinicService $clinicService,
+        DoctorService $doctorService,
+        DataRepositoryService $dataRepositoryService
+        )
+    {
+        $this->clinicService = $clinicService;
+        $this->doctorService = $doctorService;
+        $this->dataRepositoryService = $dataRepositoryService;
+
+    }
     public function index()
     {
-        $clinics = Clinic::with('speciality', 'city')->limit(10)->get();
-        $cities = City::all();
-        $doctors = User::with('doctorProfile.speciality', 'city')->where('role_id', config('role.doctor'))->limit(10)->get();
-        $this->doctorTransformer($doctors);
-        $specialities = Speciality::where('status', 1)->limit(10)->get();
+        $clinics = $this->clinicService->getTopClinics();
+        $cities = $this->dataRepositoryService->getAllCities();
+        // $doctors = User::with('doctorProfile.speciality', 'city')->where('role_id', config('role.doctor'))->limit(10)->get();
+        $doctors = $this->doctorService->getTopDoctors();
+        // $this->doctorTransformer($doctors);
+        $specialities = $this->dataRepositoryService->getTopSpecialities();
 
         return view('guest.index', compact('clinics', 'cities', 'doctors', 'specialities'));
     }

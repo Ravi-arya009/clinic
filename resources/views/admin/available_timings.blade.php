@@ -27,8 +27,8 @@
                     <select class="select select2_dropdown" id="doctor_dropdown">
                         <option selected>Select Doctor</option>
                         @foreach ($doctors as $doctor)
-                            <option value="{{ $doctor->id }}" data-url="{{ route('admin.time_slots.index', $doctor->id) }}" {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
-                                {{ $doctor->name }}</option>
+                            <option value="{{ $doctor->user->id }}" data-url="{{ route('admin.time_slots.index', $doctor->user->id) }}" {{ request('doctor_id') == $doctor->user->id ? 'selected' : '' }}>
+                                {{ $doctor->user->name }}</option>
                         @endforeach
                     </select>
                 </div>

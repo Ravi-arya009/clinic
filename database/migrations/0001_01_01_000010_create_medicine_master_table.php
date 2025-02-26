@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('medicine_masters', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->string('composition')->nullable();
             $table->uuid('clinic_id');
             $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
-            $table->boolean('status')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->unique(['name', 'clinic_id'], 'unique_medicine_per_clinic');
         });

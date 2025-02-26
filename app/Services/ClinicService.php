@@ -28,6 +28,17 @@ class ClinicService
         return $response;
     }
 
+    public function getTopClinics()
+    {
+        $response = Clinic::with('speciality', 'city')->limit(10)->get();
+
+        if (!$response) {
+            return null;
+        }
+
+        return $response;
+    }
+
 
     public function getClinicById($clinicId, $with = [])
     {
@@ -51,7 +62,8 @@ class ClinicService
         return $response;
     }
 
-    public function getClinicCount(){
+    public function getClinicCount()
+    {
         $response = Clinic::count();
 
         if (!$response) {

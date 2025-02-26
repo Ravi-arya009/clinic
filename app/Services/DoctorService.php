@@ -22,4 +22,15 @@ class DoctorService
 
         return $response;
     }
+
+    public function getTopDoctors()
+    {
+        $response = Doctor::with('user')->limit(10)->get();
+
+        if (!$response) {
+            return null;
+        }
+
+        return $response;
+    }
 }

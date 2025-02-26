@@ -247,6 +247,11 @@ add necessary columns in patients migration also update the patient edit in doct
 fix appointment page.
     remove patient's information (age, bloodgroup etc) or add into db. remove session ends in 00min
 
+while storing medicines. compositions can also be stored. it's options.
+    -can be seached using composition.
+        for eg paracetamol gives the result zenflox, dolo etc.
+        composition should be dropdown, it makes the tasks easier.
+
 #refractor
 -make time slot card partial and use it in admin and doctor's panel
 -cascade delete everywhere throughout the project.
@@ -386,7 +391,7 @@ make the auth and middlewares universal so this can be used for multiple user ty
 
 ########################
 
-
+can make a component for the errors we call on the view pages (if error->any(). if('success') etc.)
 
 ##Super admin##
 -Everything works perfectly.
@@ -404,8 +409,7 @@ make the auth and middlewares universal so this can be used for multiple user ty
 
 ##Admin##
 -make upload image system.
-After creating a doctor then view user doesn't show doctor profile fields automatically.
-
+-Make use of x alert(swal)
 
 -move forward with user creation, updation, index.
     -user request for validation just like in the clinic
@@ -434,31 +438,23 @@ user is getting created on admin panel. including doctors.
 #####
 image upload for user is happening. the ui is broken, check it.
 implement the image upload on the clinic.
-
-User module needs organization. do it. make it universal and robust.
-
+####
 
 ### Extra ###
     -Review clinic slung manager middleware. it might cause problems when the clinic session is not set. think again and fix any edge cases that are found.
 
 
-#start from here#
--user is getting created, now wokring on user updation and fetching the roles from cllinicuser by making
-a realtionship.
--after this work on index page.
-- after that make request classes.
--after that, convert everything to services class.
+** need to create a role checking middleware or helper function and it'll run automatically before doing a task that needs roles and permissions.
 
+**user module is complete.
+    -Send proper errors from service class.
+    -Use x-alert
 
-##Roadmap
+#now
+-Create Patient
+    -Use the user card is possible
+    -make create, index, update,
 
-
-.what do do
-    start from super admin.
-        -make necessary changes in
-            -Migrations
-            -Models
-            -controllers.
-            -create service classes.
-
-    cCheck all the features and functionslities.
+#start from here
+make index (dependency, need to make appointments first since the doctor's patients are coming form the apointmetns)
+make show recent doctors on app's landing later because it needs change in the structure of user.

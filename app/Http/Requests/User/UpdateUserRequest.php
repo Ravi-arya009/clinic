@@ -11,7 +11,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|string|max:255',
             'phone' => 'required|digits_between:10,13|unique:users,phone,' . $this->userId,
             'whatsapp' => 'nullable|digits_between:10,13|unique:users,whatsapp,' . $this->userId,
@@ -33,6 +33,26 @@ class UpdateUserRequest extends FormRequest
             'address' => 'nullable|string|max:500',
             'pincode' => 'nullable|digits_between:5,10',
             'role' => 'required|in:' . implode(',', config('role')),
+        ];
+        return $this->getRoleSpecificRules($rules);
+    }
+
+    private function getRoleSpecificRules(array $rules): array
+    {
+        switch ($this->input('role')) {
+            case config('role.doctor'):
+                return array_merge($rules, $this->getDoctorRules());
+            default:
+                return $rules;
+        }
+    }
+
+    private function getDoctorRules(): array
+    {
+        return [
+            'speciality' => 'required|exists:specialities,id',
+            'qualification' => 'required|exists:qualifications,id',
+            'consultation_fee' => 'required|numeric',
         ];
     }
 }

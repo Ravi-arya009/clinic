@@ -35,4 +35,7 @@ class Doctor extends Model
     {
         return $this->belongsTo(Qualification::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
