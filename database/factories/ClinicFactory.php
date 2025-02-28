@@ -23,9 +23,9 @@ class ClinicFactory extends Factory
             'id' => fake()->uuid,
             'name' => fake()->company,
             'slug' => fake()->slug,
-            'phone' => fake()->unique()->numerify('##########'),
+            'phone' => fake()->unique()->numerify('98########'),
             'contact_person' => fake()->name,
-            'contact_person_phone' => fake()->unique()->numerify('##########'),
+            'contact_person_phone' => fake()->unique()->numerify('98########'),
             'address' => fake()->address,
             'area' => fake()->city,
             'speciality_id' => Speciality::inRandomOrder()->first()->id, // Fetching a random speciality

@@ -17,15 +17,24 @@ class Doctor extends Model
     ];
     //custom code to accomodate uuid
 
+    protected $fillable = ['user_id', 'experience', 'speciality_id', 'qualification_id', 'experience', 'consultation_fee', 'bio'];
 
-    protected $fillable = [
-        'user_id',
-        'experience',
-        'speciality_id',
-        'qualification_id',
-        'consultation_fee',
-        'bio'
-    ];
+    protected $forwardToUser = ['id', 'name', 'phone', 'whatsapp', 'email', 'gender', 'dob', 'password', 'clinic_id', 'state', 'city', 'address', 'pincode', 'timeSlots'];
+
+
+    public function __get($key)
+    {
+        // First check if the attribute exists on the Doctor model
+        $value = parent::__get($key);
+
+        // If the attribute doesn't exist on Doctor but user is loaded
+        if ($value === null && $this->relationLoaded('user') && $this->user) {
+            // Return the attribute from the user model
+            return $this->user->{$key};
+        }
+
+        return $value;
+    }
 
     public function speciality()
     {
@@ -35,7 +44,17 @@ class Doctor extends Model
     {
         return $this->belongsTo(Qualification::class);
     }
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+    public function timeSlots()
+    {
+        return $this->hasMany(TimeSlot::class, 'doctor_id')->orderBy('day_of_week')->orderBy('slot_time');
+    }
+
+    public function clinics()
+    {
+        return $this->hasMany(ClinicUser::class, 'user_id', 'user_id');
     }
 }

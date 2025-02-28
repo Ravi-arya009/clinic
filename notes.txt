@@ -1,77 +1,20 @@
--see and set roles during login
--protect routes, apply gaurds
-
-###admin
--login
--match roles and then send to dashboard.
 
 -to do (finds)
 -load roles from db and store them in cache on app boot. flush cache at role create/update
-create_users.blade.php
-    make role dropdown dynamic so newly added roles can be fetched automatically
-make roles dynamic in authcontroller in store() function while validating
--user_list.blade.php role column is using role array from config. this might cause process overload. look into this.
--role is not working for /admin/dashboard somehow, check it.
 -set default title in main layout (low priority).
 -clean main layout of bloats, keywords, tags, descriptions etc.
--add profile picture column in db
--remove bloats from user card in admin's user list page.
--filter by not working on admin's user list page.
--load only 9 users and then add load more functionality.
 -add constant for gender somewhere, preferrebaly all the constants in a single file.
--add dob column
 -add href links on whatsapp and phone
-- make create user, view/edit user with same partials. so that errors and success messages can be displayed at the same page.
-- remove bloats such as scripts and stylesheets from footer and header. push only needed ones to the views. saves load time.
-- add appointment fees somewhere.
 - setup ajax for everything in admin panel. Make some universal template/partial/solution to make code less redundant and easily managable.
-- change classes name for different pages. for instance, appointment list template is used in clinic list. everywhere the css classes are
-according to appointments. change them to clinics otherwise it'll cause confusion in future.
 -(superadmin)add an option to make a clinic inactive, also need to add status column in migration.
-- need to setup pagination or load more option where required. write once use many
 - fetch admin's details on view clinic page on superadmin panel (use model relationships)
 - while deleting a lot from js ajax we need to send the post request to the sub domain route instead of the old route.
     -solution: store the prefix route somewhere so that it can be accessed globally.(think about this,
     this technique will be used in all the ajax call in future)
 -check the animation and css of see all clinics button on index page.
 -on main index page, select2 is disabled for now because it's css is clashing with other css and breaking the ui.
-- use datatables where can be instead of panel's list ui. datatables inbuilt searching and sorting.
-make sure to use ajax for searching, filters etc to fetch data from the backend asynchronously.
-
-#current task
-    #patient
-        -add clinic logo in db and view.
-        -next available
-        -clinic reviews
-        -add map location on clinic and then patients can know how much farther the clinic is from their location.(extra feature)
-
--fix clinic slider on app's index page . Problem arising because of the class used and triggered by js.
-    -solution: isolate that class, change name etc.
-
--make a clinic's profile page just like doctor's profile page.
-    -Decide what to display on doctor's profile (copy from practo).
-    -Decide what to display on clinic's profile (copy from practo).
-    -can change doctor profile 1 or 2 depending upon the content to display on page.
-    -add city in users/doctor's  migration and then fetch the search results by city too.
 -see all doctors button have wrong vertical spacing on doctors caraousel.
--check header and footer. push scripts and css only on the pages needed.
 
--add media queries for time slots on doctor profile.
-
--can start with current date and day name(fetch both from system). then loop through date/days and fetch time slots for respective
-day number via timeSlots collection already fetched from db. no need to store, order, or track anything.
-once this is done, frontend logic can be taken care of. if frontend becomes complex then create partials to include.
-
-
-
-###############
-Start with app's landing page and cover till patient's appointment.
--check for any imporovements, ui, bugs, partials, layout etc.
--note them down.
--make an action plan.
--make jira.
--start working.
-######
 
 #App's index page
 
@@ -83,102 +26,45 @@ Start with app's landing page and cover till patient's appointment.
         -when clicked on single Speciality send to search page with results. //later (search page)
         -need to make a search page with partials that can display both clinics and doctors with see all. (search page)
     -Book our best clinic
-        -book now will send to.
         -need to create a section where doctors for respective clinic can be shown. //later (search page)
-        -check that cards are showing right infromation and properly fetching from the db.
-    -Book our best doctors
-        -view profile will send to profile
-        -Book now will send to doctor's profile with time slots section focused.
-        -check that cards are showing right infromation and properly fetching from the db. (need to create new doctor table with extra columns)
-
     -Navbar
             -Apply links on menus. //later
             -make a button for doctor/clinic registration right beside the login/signup(maybe later) //later
     -2nd section
             -keep it like this only. ask later for changes or links etc.
-    -footer
-        -for now do nohting.
-        -Ask for content later.
-
-    -bugs
-        -when going to doctor, an error is generated saying undefined key. fix that. onlyl anand kumar's profile is working.
-    -Misc
-        -check each view and see they should be extending layouts, using partials properly.
-        -check that all the views are using only css and scripts they need. use push.
-        -fix doctor and clinic profile
-            -only keep content that is required.
-            -add any other content that is missing.
-        appointment flow.
-            -fix payment page's ui
-            -fix booking succes pages content.
-            -fix links.
-        fix routes
-        fix controllers and functions
 
 
--fix the uis for doctor and clinic profile, fix the time slot's card's ui
 -think about the search page and filters. can clinic and doctor search be combined?
     -make the filter/search page and also include the filter/search parameters.
--add logo in clinics and doctors.
-    -if image is not set then show some default image.
+
 -book appointment overlay is not covering the navbar. fix it.
 -timeslot is a function of doctor, not user. fix that everywhere. (update: user is doctor because of role column, all doctors are users but all users are not doctors)
--services and pricing section is not dynamic on the doctor's profile
--after patient logs in send to home
--use intended route where necessary.(while booking,)
+
 -layouts and partials are not getting included in register and login page. fix that.
--while registering patients while booking appointment, an extra parameter $source can be sent. by default it should be null.
-    if $source is null return views and shits else return $patient.
-- use sessions to store needed values temporarily while booking appointment.
 
-use validated['name'] instead of $request->name. research.
-
--fix show clinic page. also fetch all the doctors associated with that clinic.
 ####checking flow/routewise. reviewing code while organizing them.
 - if timeslot is booked, don't show it.
 -fix register/login pages. include layout and partials.
--fix the user dropdown when user is loggen in. show options logout, dashboard, my appointments etc.
 
 -start with clinic admin backend and check everything
--fetch appointments.
--order appointments by date and time. do it via datatables.
--apply datatables where necessary. make it in such a way that it doesn't break the current ui.
-    -solution: make custom table with css that resembels the current ui and then apply datatables to it (without css maybe).
 
 -add address in patients table and include it on the view appointment page.
-
-#current
-    - see what details can doctor fill.
-    - save it to the backend.
-        -make tables if required.
-    -see what else can be loaded on the screen(patient's data etc) (later, very low priority).
-        -if not loading anything else the clean bloats.
-- fetch appointments on the basis of status.
-once the appointment details are filled the status changes and it is removed from the appointments automatically.
 
 -appointment details should be create or update instead of just create.
 -add press enter to upate medicine. this feature is working while adding the medicine.
     -refactor jquery code for medicines.
     -make a universal jquery library for ajax,
--add medicine is not working. easy but bt task. do with clear mind.
-- build a partial for the medication section on napointment details page.
-    -makes the store/update exceptions smooth
+
 -delete medicatins funciton.
--see if autosave type of feature can be implemented on the appointment booking page.
-- there should be a unique rule in the apointment medications migration too. fix that.
 - apointment details should be insert or update instead of just insert.
-- test the appointment details page once.
 
 -global auth and middleware is working, setup to all the users.
-
 
 #### Super Admin ####
 
 #Things left
     -Profile settings not working
     -Specialities and services featue is not implementd
-    -Not added datatables on the clinic list page.
-        -search, filters, sortings, etc will be handled by datatables only.
     -Quick view option is not setup on recent clinics widget on dashboard.
 
 #### Admin ####
@@ -186,36 +72,21 @@ once the appointment details are filled the status changes and it is removed fro
 -create user.
 -on guest doctor profile send data using sessions or something else. do not use get in a href. and use validation for qualificaion,speciality and other nullable columns.
 
-#Later
--fix create/update clinic/user form ui(cards in card).
--see if filters can too be added to datatables on search page.
-
 app logo, name, etc should come from a single place throughout the whole app.
 check why clinicSlug is a compulsory parameter in some functions.
-rename role column to role_id in users table.
 
 
 #### flow ###
--fix appointment details store method. we have new working code but it's shit. combine it with old code, refractor it and make it clean and concise.
--quick view button on clinic list is not working. show modal with clinic info on button click.
 
 -on appointment details page new medicine's row is fetched from the page's Dom itself. save it in a js variable and render that on add new click button.
 -currently if the medicine row is left blank an integrity constraint error for not nullable column is thrown. if the row is deleted, it works fine.
 -in medicine section when a medicine is added then the edit action button doesn't work because the whole section is rendered dynamically via js, fix that.
 
--check all the pages and their respective routes and attach middlewares to it.
-
-#datatables
-
 #next
 -remove bloats from appointments page. (use datatables then remove)
 generate perscription dynamically after the appointment ends.
 
--remove bloats from doctor's page
 -fix view clinic page on guest (when testing guest/patient).
--in future fill clinic admin details from super admin panel while creating clinics.
-
--naming convention of the routes should be as per laravel standards. Review all the routes once a panel is done with review and changes.
 
 -change patient's contact information on appointments list. currently it's showing contact person's info.
     -it'll happen after gues user is able to add multiple patients to their account.
@@ -229,8 +100,7 @@ alternate/patient's phone number (otp,call will be recieved on this). with check
  od bd tds,sos (doctor's medicine)
 sos medicine (take when required)
 make medicine ui seamless (after meal)
-turn on laborato
-ry test (ask rahul sir)
+turn on laboratory test (ask rahul sir)
 follow up mein calendar lagao which shows sundays marked with red.
 doctor's perscription has a qr that sends to website. (show text login to see medical details/history etc.)
 #bug
@@ -245,7 +115,7 @@ admin can not edit patient type user because patients are getting saved in a dif
 add necessary columns in patients migration also update the patient edit in doctor's panel .
 
 fix appointment page.
-    remove patient's information (age, bloodgroup etc) or add into db. remove session ends in 00min
+    remove patient's information (age, bloodgroup etc) or add into db.
 
 while storing medicines. compositions can also be stored. it's options.
     -can be seached using composition.
@@ -254,12 +124,10 @@ while storing medicines. compositions can also be stored. it's options.
 
 #refractor
 -make time slot card partial and use it in admin and doctor's panel
--cascade delete everywhere throughout the project.
+
 - while fetching appointments for patient on using appointment service, there should be other relationships such as doctors and cliinics etc. fix that.
-- use toaster to display messages and errors where ui doesn't accomodate error places. use same components technique just like the error.
-    -can also use swal.
+
 -Connect controllers with their respective services as you go.
-- make an error handler modal. take modal code from doctor/add_timeslots pge.
 - make add medicine ui good then implement it in doctor's panel.
 
 
@@ -270,111 +138,21 @@ find a way to associate new patient with admin or doctor.
     If the patient is new, he/she doesn't have any apointments by default and isn't associated with any clinic.
     find a way to overcome this when creating new patient using admin or doctor's panel.
 
-make components for select 2. just pass data and everything works. even if conditions and select etc.
-    #Start from here
-    use UserService's storeUser function as a reference/template for all other functions.
-        -modify all the functions. start from super admin clinic creation and move forward.
-        -user request rules for all the methods.
-        -Finish all the panels, include all the features necessary.
-        - invoice and perscription creation will happen at last.
-
-#start from there. super admin panel is done. add cities, states etc functionalities later.
-#now start with admin panel create user. fix the roles config file it should fetch everything from the db and cahce it.
-    #fix the places where the role is getting the used. see if the new changes are causing any new problems.
-    # now the patient is a totaly differnt entitiy from the users so it won't be associated with them. there are controllers that are using
-    roles (switch/ if etc) remove the patient roles from there.
-    all the clinics user will be cerated from the user controller and are sent to ther users table and all ther patients will be created in different
-    controllers and will be sent to the patient table.
-
-    think about the users and patient storage problem. research a little.
-
-    handle what would happen after a patient is created from the admin panel.
-    if an admin is creating a patient from the clinic then the pateitnt should have a temporary appointment booked. currently the time slots don't allow it. fix it.
-
-
-cache config roles
-
-#today's task
-Start from create user and then index and then view and then update (check everything related to roles and everything).
--think about users and patients table.
--make the whole super admin work.
-    -create service classes
--make the whole admin work.
-    -create service classes
-not saving the experience for the doctor anywhere. fix it.
-
-#now. see all the features are working on admin panel. then convert them to service classes. also setup request classes.
-    -if user is doctor then at store and update method doctor update/create function will also be called.
-
-
-create a separate view for patient creation and updation.
 
 walk in patient have possibly a solution. look into the recent chats of the claude.
 
 
-#start from here.
--Decide the fields of all the users.
-    -super admin (no need for super admin profile, for now a username and password is enough)
-    -admin (##1) (low priority)
-    -doctor (##2)
-        -doctor profile (3)
-    patient (##4)
-
-    First write the fields some where.
-    Find out common fields.
-    See if unommon fields can be grouped inside simple condition checks.
-    See if some sort of template can be made.
-    If solution looks complex then simply make multiple views.
-
-    Make constollers and service classes method accordingly.
-
-    then clean bloats from views(as, it becomes easy when fields are decided.)
-
-
-    -do the same for clinics
-    -do the same for appointments
-    -do the same for time slots
-    -
-
-
-review whole note for further plan.
-
-
-
-######
-clinic information
-Contact information
-    -phone
-    -email
-    -whatsapp
-    -contact person
-    -contact persons phone
-
-Admin
-    -Name
-    -Phone
-
-
-since clinic's admin is a user now. we can call a partial to create admin since it needs basic user details only. call this partial everhwhere else. (do today)
+since clinic's admin is a user now. we can call a partial to create admin since it needs basic user details only. call this partial everhwhere else.
     -for now, only storing name, phone and password. once the parital is made can also include the same on the clinic's creation page.
     -need to take care of validation. user's validation will be applied, instead of calling createClinicAdmin, can simple call create use inside.
 
 
 ###start from here ###
 
--fix view clinic on super admin.
-    -show admins of a clinic in table (since there can be multiple admins now).
 
--fix clinic admin login
-    -think if can use middleware
-    -see below
 
 fix all the authentication. since the db structure is changed now, see if same auth can be used for all the users.
 make the auth and middlewares universal so this can be used for multiple user type.
-
-#####
-
-
 
 ##flow
 
@@ -399,6 +177,7 @@ can make a component for the errors we call on the view pages (if error->any(). 
 
 -make view/update admin on super admin view clinic page (low priority)
     -Can add more fields while adding clinic admin.(low priority)
+    -show admins of a clinic in table (since there can be multiple admins now).
 
 - states, city, specialities can use seeder for input, skipping the cruds for these. (very low priotiry)
     - states, city, specialities can use medicine masters layout partials, logic etc. write once used many.
@@ -407,24 +186,9 @@ can make a component for the errors we call on the view pages (if error->any(). 
     -will get automatically fixed when i fix it for other panels. just copy it
 
 
-##Admin##
--make upload image system.
--Make use of x alert(swal)
-
--move forward with user creation, updation, index.
-    -user request for validation just like in the clinic
-    -use x-alert error component (modal based error success showing)
-    -see create_users.blade for comment.
-    -make functions in user service
-    -there should be universal way of sending errors and success.
-        -which can be catched in x-alert like componet easily.
-
-
 #start from here
 user is getting created on admin panel. including doctors.
 
-    -convert the controller to service class.
-    -validations to request class.
     -proper try catch block and error throwing with edge cases.
     -check proper errors.
     -use x alert
@@ -457,4 +221,67 @@ implement the image upload on the clinic.
 
 #start from here
 make index (dependency, need to make appointments first since the doctor's patients are coming form the apointmetns)
-make show recent doctors on app's landing later because it needs change in the structure of user.
+
+
+
+#start from here.
+
+Review doctor from apps landing
+    -include time slots correctly.
+
+review the appointment flow and make it robutst.
+    -check patient's auth and middlewares.
+    -doctor can start/manage the apointment.
+        -remove unnceccesary blaots and fix the ui of appointment page.
+        -check for missing or extra fields.
+    -generate dummy perscription and invoice.
+
+
+need to make the height of the uploaded images(profile pics and logos) universal/standard so that it doesn't breaks ui.
+-spply strcit css rules if needed (max height,width)
+
+-need to work on timeslots module, need to handle the past slots showing on the frontend. take care of it on the backend itself. past slots shouldn't make to the frontend.
+-if slot is filled, it should not show on the backend.
+
+#patient
+-create service classes
+-create request classes
+-need to create dependants for patients. and things will be changed everywhere patient is referenced.
+- if the patient is already login then disable the patient information while booking the appointment.
+
+#apointment
+-clean appointment page. remove bloats.
+-decide what to show on this page.
+-patient history etc.
+
+
+### observation ###
+fix clinic admin's dashboard widgets.
+use inbuilt modals, the one that comes when deleting the time slots. they're sick.
+remove delete all button on time slot page.
+make profile image update option on user update pages.
+create my profile page (user can manage their own profile)
+on doctor's profile if whatsapp, email etc not available show N/a or -.
+    do this on clinics page too and everwhere else needed.
+after patient books appointment view appointment button not working.
+    also can make ui of this page better.
+patients should be able to go to the dashboard from landing page's navbar
+in appointment controller's store method check weather auth is necessary once if a middleware is protecting this route already.
+
+booking page: for now focus is on the backend. Tweak frontend afterwards.
+need to review and change a lot of code.
+need to include age somewhere in the appointment because doctors need it.
+can include whatsapp for patient while creating the appointment.
+#
+Ask Rahul sir to download the new template. Don't sweat on the frontend too much.
+
+### start from here ###
+appointment is getting stored with dependents with proper validation. they're also being fetched on appointment list page.
+
+-fix the view appointment page's ui. remove unneccesary bloats, include missing fields. include dependents.
+-Now appointment history will be related to dependent_id instead of patient_id. think about it.
+
+-create walk-in patient appointment feature
+-dependant spelling mistake accross the project.
+    -replace all at once.
+finish the appointments with dependents. make presentable, don't get caught up in anything. finish everything today only.

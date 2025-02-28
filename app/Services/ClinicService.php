@@ -43,7 +43,6 @@ class ClinicService
     public function getClinicById($clinicId, $with = [])
     {
         $response = Clinic::findorFail($clinicId);
-
         if (!empty($with)) {
             $response->load($with);
         }

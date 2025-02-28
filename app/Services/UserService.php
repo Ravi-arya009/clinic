@@ -160,6 +160,7 @@ class UserService
                 'user_id' => $userId,
                 'speciality_id' => $data['speciality'],
                 'qualification_id' => $data['qualification'],
+                'experience' => $data['experience'],
                 'consultation_fee' => $data['consultation_fee']
             ]);
 
@@ -285,6 +286,7 @@ class UserService
                 $doctor = Doctor::where('user_id', $userId)->first();
                 $doctor->speciality_id = $data['speciality'];
                 $doctor->qualification_id = $data['qualification'];
+                $doctor->experience = $data['experience'];
                 $doctor->consultation_fee = $data['consultation_fee'];
                 $doctor->save();
             }

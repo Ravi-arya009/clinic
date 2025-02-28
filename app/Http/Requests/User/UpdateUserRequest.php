@@ -52,6 +52,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'speciality' => 'required|exists:specialities,id',
             'qualification' => 'required|exists:qualifications,id',
+            'experience' => 'nullable|numeric',
             'consultation_fee' => 'required|numeric',
         ];
     }

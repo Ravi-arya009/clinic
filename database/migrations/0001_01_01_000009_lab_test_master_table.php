@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lab_test_masters', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->boolean('status')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
