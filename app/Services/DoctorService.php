@@ -25,10 +25,23 @@ class DoctorService
 
     public function getTopDoctors()
     {
-        $response = Doctor::with('user')->limit(10)->get();
+        $response = Doctor::with('user', 'user.city')->limit(10)->get();
 
         if (!$response) {
             return null;
+        }
+
+        return $response;
+    }
+
+    public function getDoctorById($doctorId)
+    {
+        $response = Doctor::with('user', 'clinics', 'speciality', 'qualification', 'timeSlots')->findOrFail($doctorId);
+        if (!$response) {
+            return [
+                'success' => false,
+                'message' => 'Doctor Not found'
+            ];
         }
 
         return $response;

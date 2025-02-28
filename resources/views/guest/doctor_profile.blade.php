@@ -1,5 +1,5 @@
 @extends('guest.layouts.main')
-@section('title', 'Doccure')
+@section('title', 'Doctor Profile')
 
 @section('content')
     <div class="content">
@@ -10,17 +10,16 @@
                     <div class="doctor-widget doctor-profile-two">
                         <div class="doc-info-left">
                             <div class="doctor-img">
-                                <img src={{ asset('img/doctors/doc-profile-02.jpg') }} class="img-fluid" alt="User Image">
+                                <img src="{{ $doctor->profile_image ? asset('img/doctors/' . $doctor->profile_image) : asset('img/default-profile-picture.webp') }}" alt="Doctor Image" class="img-fluid">
                             </div>
                             <div class="doc-info-cont">
-                                <span class="badge doc-avail-badge"><i class="fa-solid fa-circle"></i>Available </span>
                                 <h4 class="doc-name">
                                     {{ $doctor->name }}
                                     <img src={{ asset('img/icons/badge-check.svg') }} alt="Img">
                                     <span class="badge doctor-role-badge"><i class="fa-solid fa-circle"></i>{{ isset($doctor->speciality) ? $doctor->speciality->name : '-' }}</span>
                                 </h4>
                                 <p>Qualification : {{ isset($doctor->qualification->name) ? $doctor->qualification->name : '-' }}</p>
-                                <p class="address-detail"><span class="loc-icon"><i class="feather-map-pin"></i></span>{{ $doctor->address }}</p>
+                                <p>Gender : {{ $doctor->gender == 1 ? 'Male' : 'Female' }}</p>
                                 <p>
                                 <div class="rating">
                                     <i class="fas fa-star filled"></i>
@@ -29,9 +28,26 @@
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
                                     <span>(5.0)</span>
-                                    <a href="#review" class="d-inline-block average-rating text-info">150 Reviews</a>
+                                    <a href="#review" class="d-inline-block average-rating text-info">29 Reviews</a>
                                 </div>
                                 </p>
+                            </div>
+
+                            <div class="doc-info-right">
+                                <ul class="doctors-activities">
+                                    <li>
+                                        <div class="hospital-info">
+                                            <span class="list-icon"><i class="fa-solid fa-location-dot"></i></i></span>
+                                            <p>{{ $doctor->address }}</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="hospital-info">
+                                            <span class="list-icon"><i class="fa-solid fa-envelope"></i></span>
+                                            <p>{{ $doctor->email }}</p>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -44,10 +60,6 @@
                             <li>
                                 <span class="bg-dark-blue"><img src={{ asset('img/icons/bullseye.svg') }} alt="Img"></span>
                                 In Practice for {{ $doctor->doctorProfile->experience }} Years
-                            </li>
-                            <li>
-                                <span class="bg-green"><img src={{ asset('img/icons/bookmark-star.svg') }} alt="Img"></span>
-                                15+ Awards
                             </li>
                         </ul>
                         <div class="bottom-book-btn">
@@ -64,44 +76,15 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="doctors-detailed-info">
-                        <ul class="information-title-list">
-                            <li class="active">
-                                <a href="#doc_bio">Doctor Bio</a>
-                            </li>
-
-
-                            <li>
-                                <a href="#services">Services</a>
-                            </li>
-                            <li>
-                                <a href="#clinic">Clinics</a>
-                            </li>
-                            <li>
-                                <a href="#bussiness_hour">Business Hours</a>
-                            </li>
-                            <li>
-                                <a href="#review">Review</a>
-                            </li>
-                        </ul>
                         <div class="doc-information-main">
                             <div class="doc-information-details bio-detail" id="doc_bio">
                                 <div class="detail-title">
                                     <h4>Doctor Bio</h4>
                                 </div>
-                                <p>“{{ $doctor->doctorProfile->bio }}”</p>
-                            </div>
-                            <div class="doc-information-details" id="services">
-                                <div class="detail-title">
-                                    <h4>Services & Pricing</h4>
+                                <div class="doc-review-card">
+                                    <p>"{{ $doctor->doctorProfile->bio }}"</p>
                                 </div>
-                                <ul class="special-links">
-                                    <li><a href="#">Orthopedic Consultation <span>$52</span></a></li>
-                                    <li><a href="#">Delivery Blocks <span>$24</span></a></li>
-                                    <li><a href="#">Ultrasound Injection <span>$31</span></a></li>
-                                    <li><a href="#">Tooth Bleaching <span>$20</span></a></li>
-                                    <li><a href="#">Tooth Bleaching <span>$15</span></a></li>
-                                    <li><a href="#">Cosmetic <span>$10</span></a></li>
-                                </ul>
+
                             </div>
 
                             <div class="doc-information-details" id="clinic">
@@ -110,90 +93,36 @@
                                 </div>
                                 <div class="clinic-loc">
                                     <div class="row align-items-center">
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-2">
                                             <div class="clinic-info">
-                                                <div class="clinic-img"><img src={{ asset('img/clinic/clinic-11.jpg') }} alt="Img"></div>
-                                                <div class="detail-clinic">
-                                                    <h5>{{ $doctor->clinic->name }}</h5>
-                                                    <p><i class="feather-map-pin pe-2"></i>{{ $doctor->clinic->address }}</p>
-                                                </div>
+                                                <img src={{ asset('img/clinic/clinic-11.jpg') }} alt="Img" class="img-fluid">
                                             </div>
-                                            <div class="d-flex align-items-center avail-time-slot">
-                                                <div class="availability-date">
-                                                    <div class="book-date">
-                                                        <h6>Monday</h6>
-                                                        <span>07:00 AM - 09:00 PM</span>
-                                                    </div>
-                                                </div>
-                                                <div class="availability-date">
-                                                    <div class="book-date">
-                                                        <h6>Tuesday</h6>
-                                                        <span>07:00 AM - 09:00 PM</span>
-                                                    </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div class="clinic-info">
+                                                <div class="detail-clinic ms-3">
+                                                    <h5>{{ $doctor->clinic->name }}</h5>
+                                                    <p class="mt-2"><span class="fw-bold text-info">Phone:</span> {{ $doctor->clinic->phone }}</p>
+                                                    <p class="mt-2"><span class="fw-bold text-info">WhatsApp:</span> {{ $doctor->clinic->whatsapp }}</p>
+                                                    <p class="mt-2"><span class="fw-bold text-info">Email:</span> {{ $doctor->clinic->email }}</p>
+                                                    <p class="mt-2"><span class="fw-bold text-info">Address:</span> {{ $doctor->clinic->address }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-5">
                                             <div class="contact-map d-flex">
-                                                <iframe
-                                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.7301009561315!2d-76.13077892422932!3d36.82498697224007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89bae976cfe9f8af%3A0xa61eac05156fbdb9!2sBeachStreet%20USA!5e0!3m2!1sen!2sin!4v1669777904208!5m2!1sen!2sin"
-                                                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                                <iframe src="https://www.google.com/maps?q={{ $doctor->clinic->address }}&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                                </iframe>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="doc-information-details" id="bussiness_hour">
-                                <div class="detail-title">
-                                    <h4>Business Hours</h4>
-                                </div>
-                                <div class="hours-business">
-                                    <ul>
-                                        <li>
-                                            <div class="today-hours">
-                                                <h6>Today</h6>
-                                                <span>5 Feb 2024</span>
-                                            </div>
-                                            <div class="availed">
-                                                <span class="badge doc-avail-badge"><i class="fa-solid fa-circle"></i>Available </span>
-                                                <p>07:00 AM - 09:00 PM</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <h6>Monday</h6>
-                                            <p>07:00 AM - 09:00 PM</p>
-                                        </li>
-                                        <li>
-                                            <h6>Tuesday</h6>
-                                            <p>07:00 AM - 09:00 PM</p>
-                                        </li>
-                                        <li>
-                                            <h6>Wednesday</h6>
-                                            <p>07:00 AM - 09:00 PM</p>
-                                        </li>
-                                        <li>
-                                            <h6>Thursday</h6>
-                                            <p>07:00 AM - 09:00 PM</p>
-                                        </li>
-                                        <li>
-                                            <h6>Friday</h6>
-                                            <p>07:00 AM - 09:00 PM</p>
-                                        </li>
-                                        <li>
-                                            <h6>Saturday</h6>
-                                            <p>07:00 AM - 09:00 PM</p>
-                                        </li>
-                                        <li>
-                                            <h6>Sunday</h6>
-                                            <p>07:00 AM - 09:00 PM</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+
                             <div class="doc-information-details" id="review">
                                 <div class="detail-title">
-                                    <h4>Reviews (200)</h4>
+                                    <h4>Reviews (29)</h4>
                                 </div>
                                 <div class="doc-review-card">
                                     <div class="user-info-review">
@@ -324,7 +253,6 @@
                                     @if (!empty($doctor->slotsByDate))
                                         @foreach ($doctor->slotsByDate as $date => $timeSlot)
                                             <li id="date-{{ $loop->iteration }}" class="{{ $loop->first ? 'active' : '' }}">
-
                                                 <h4>{{ date('M d', strtotime($date)) }}</h4>
                                                 <p>{{ $timeSlot->dayName }}</p>
                                             </li>
@@ -336,17 +264,20 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    {{-- {{dd($doctor)}} --}}
+                                    @php
+                                        $currentDate = date('Y-m-d');
+                                        $currentTime = date('H:i:s');
+                                    @endphp
+
                                     @foreach ($doctor->slotsByDate as $date => $timeSlots)
                                         <div class="time-slot time-slot-blk" id="slot-for-day-{{ $loop->iteration }}">
-                                            <h4>Morning</h4>
                                             <div class="time-slot-list">
                                                 <ul>
                                                     @foreach ($timeSlots as $slot)
                                                         <li>
                                                             <a class="timing"
                                                                 href="{{ route('appointment.create', [
-                                                                    'clinic_id' => $doctor->clinic_id,
+                                                                    'clinic_id' => $doctor->clinics->first()->clinic_id,
                                                                     'doctor_id' => $doctor->id,
                                                                     'doctor_name' => $doctor->name,
                                                                     'doctor_address' => $doctor->address,

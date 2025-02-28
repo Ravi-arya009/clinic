@@ -50,7 +50,7 @@ class MedicineMasterSeeder extends Seeder
                     'id' => Str::uuid(),
                     'name' => $medicine,
                     'clinic_id' => $clinic->id,
-                    'status' => 1,
+                    'is_active' => 1,
                 ]);
             }
         }

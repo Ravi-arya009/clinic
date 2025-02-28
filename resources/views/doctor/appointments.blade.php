@@ -18,9 +18,8 @@
     <table class="my-datatable table-hover">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Date</th>
                 <th>Contact Person</th>
+                <th>Date / Time</th>
                 <th>Patient</th>
                 <th>Action</th>
             </tr>
@@ -31,9 +30,12 @@
                 <td class="patinet-information">
                     <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
                     <div class="patient-info">
-                        <p>#Apt0001</p>
                         <h6>{{ ucwords($appointment->patient->name) }}</h6>
+                        <ul>
+                            <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
+                        </ul>
                     </div>
+
                 </td>
                 <td class="mail-info-patient">
                     <ul>
@@ -43,14 +45,13 @@
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>
-                        <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
-                    </ul>
-                </td>
-                <td class="mail-info-patient">
-                    <ul>
-                        <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>
-                        <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
+                        @if ($appointment->dependent_id)
+                            <li>{{ optional($appointment->dependent)->name ?? 'N/A' }} <span class="badge badge-info table-badge">Family</span></li>
+                            <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
+                        @else
+                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }} <span class="badge badge-green table-badge">Self</span></li>
+                            <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
+                        @endif
                     </ul>
                 </td>
                 <td class="appointment-start">

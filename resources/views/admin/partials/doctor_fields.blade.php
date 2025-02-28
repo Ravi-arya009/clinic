@@ -27,6 +27,12 @@
         </div>
         <div class="col-lg-6 col-md-6">
             <div class="form-wrap">
+                <label class="col-form-label">Experience <span class="fw-light text-info">(In Years)</span></label>
+                <input type="text" name="experience" id="experience" class="form-control" value="{{ old('experience', $user->doctorProfile->experience ?? '') }}">
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="form-wrap">
                 <label class="col-form-label">Consultaion Fee</label>
                 <input type="text" name="consultation_fee" id="consultation_fee" class="form-control" value="{{ old('consultation_fee', $user->doctorProfile->consultation_fee ?? '') }}">
             </div>

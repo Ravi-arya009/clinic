@@ -223,13 +223,13 @@
                 </div>
             </div>
             <div class="owl-carousel our-doctors owl-theme aos" data-aos="fade-up">
-                {{-- @foreach ($doctors as $doctor)
+                @foreach ($doctors as $doctor)
                     <div class="item">
                         <div class="our-doctors-card">
                             <div class="doctors-header">
-                                <img src={{ asset('img/doctors/doctor-' . str_pad(rand(1, 12), 2, '0', STR_PAD_LEFT) . '.jpg') }} alt="Ruby Perrin" class="img-fluid">
+                                <img src="{{ $doctor->profile_image ? asset('img/doctors/'.$doctor->profile_image) : asset('img/default-profile-picture.webp') }}" alt="Ruby Perrin" class="img-fluid">
                                 <div class="img-overlay">
-                                    <span>₹{{ $doctor->doctorProfile->consultation_fee }}</span>
+                                    <span>₹{{ $doctor->consultation_fee }}</span>
                                 </div>
                             </div>
                             <div class="doctors-body">
@@ -241,7 +241,7 @@
                                 </p>
 
                                 <div class="location d-flex">
-                                    <p><i class="fas fa-map-marker-alt"></i> {{ $doctor->area }}, {{ $doctor->city->name }}</p>
+                                    <p><i class="fas fa-map-marker-alt"></i> {{ $doctor->city->name }}</p>
                                 </div>
                                 <div class="rating my-border pt-2">
                                     <i class="fas fa-star filled"></i>
@@ -264,7 +264,7 @@
                             </div>
                         </div>
                     </div>
-                @endforeach --}}
+                @endforeach
             </div>
             <div class="specialities-btn aos pt-3" data-aos="fade-up">
                 <a href="{{ route('search.doctor') }}" class="btn">

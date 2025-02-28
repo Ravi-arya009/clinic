@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
 use App\Models\Clinic;
-use App\Models\Speciality;
+use App\Models\Doctor;
 use App\Models\User;
 use App\Services\ClinicService;
 use App\Services\DataRepositoryService;
@@ -17,38 +16,27 @@ class WebsiteController extends Controller
         ClinicService $clinicService,
         DoctorService $doctorService,
         DataRepositoryService $dataRepositoryService
-        )
-    {
+    ) {
         $this->clinicService = $clinicService;
         $this->doctorService = $doctorService;
         $this->dataRepositoryService = $dataRepositoryService;
-
     }
     public function index()
     {
-        $clinics = $this->clinicService->getTopClinics();
         $cities = $this->dataRepositoryService->getAllCities();
-        // $doctors = User::with('doctorProfile.speciality', 'city')->where('role_id', config('role.doctor'))->limit(10)->get();
-        $doctors = $this->doctorService->getTopDoctors();
-        // $this->doctorTransformer($doctors);
         $specialities = $this->dataRepositoryService->getTopSpecialities();
-
+        $clinics = $this->clinicService->getTopClinics();
+        $doctors = $this->doctorService->getTopDoctors();
         return view('guest.index', compact('clinics', 'cities', 'doctors', 'specialities'));
     }
 
     public function ShowDoctorProfile($doctorId)
     {
-        $doctor = User::with(
-            'timeSlots',
-            'doctorProfile',
-            'doctorProfile.speciality',
-            'doctorProfile.qualification',
-            'clinic'
-        )->findOrFail($doctorId);
-
+        $doctor = $this->doctorService->getDoctorById($doctorId);
+        //currently fetching only 1 clinic, in future, a single doctor can be associated with multiple clinics. Remove first() in that case and loop on frontend.
+        $doctor->clinic = $this->clinicService->getClinicById($doctor->clinics->first()->clinic_id);
         $doctor->timeSlots = $doctor->timeSlots->groupBy('day_of_week');
         $doctor->slotsByDate = $this->makeDateWiseSlots($doctor); //creating day wise time slots
-        $this->doctorTransformer($doctor); //transforming doctor collection for easy navigation
         return view('guest.doctor_profile', compact('doctor'));
     }
 
@@ -58,6 +46,7 @@ class WebsiteController extends Controller
         return view('guest.clinic_profile', compact('clinic'));
     }
 
+    //creates timeslots by date for n number of future days.
     protected function makeDateWiseSlots($doctor)
     {
         if (!$doctor->timeSlots->isEmpty()) {

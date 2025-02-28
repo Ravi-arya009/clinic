@@ -70,7 +70,6 @@ class User extends Authenticatable
     public function timeSlots()
     {
         return $this->hasMany(TimeSlot::class, 'doctor_id')->orderBy('day_of_week')->orderBy('slot_time');
-
     }
 
     public function doctorProfile()

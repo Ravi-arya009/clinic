@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         //remove this clinicSllug to(Refactor it)
         $bootService = new BootService();
         $bootService->fetchUserRoles();
+
     }
 
     // Function to check if we're on a subdomain

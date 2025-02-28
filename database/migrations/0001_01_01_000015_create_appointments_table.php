@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('patient_id');
+            $table->uuid('dependent_id')->nullable()->foreign()->references('id')->on('dependents')->onDelete('cascade');
             $table->uuid('doctor_id');
             $table->uuid('clinic_id');
             $table->uuid('time_slot_id');

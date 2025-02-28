@@ -39,7 +39,7 @@ class AppointmentService
 
     public function getUpcomingDoctorAppointments($doctorId, $clinicId)
     {
-        $response = Appointment::where('clinic_id', $clinicId)->where('doctor_id', $doctorId)->where('status', 0)->with('patient', 'timeSlot')->get();
+        $response = Appointment::where('clinic_id', $clinicId)->where('doctor_id', $doctorId)->where('status', 0)->with('patient', 'dependent', 'timeSlot')->get();
         return $response;
     }
 

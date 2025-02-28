@@ -50,9 +50,6 @@
                     <div class="detail-badge-info">
                         <span class="badge bg-yellow">Upcoming</span>
                     </div>
-                    <div class="consult-fees">
-                        <h6>Consultation Fees : $200</h6>
-                    </div>
                     <ul>
                         <li>
                             <a href="#"><i class="fa-solid fa-comments"></i></a>
