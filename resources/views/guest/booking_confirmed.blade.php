@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="success-btn">
-                        <a href="javascript:void(0);" class="btn btn-primary prime-btn">
+                        <a href="{{route('patient.appointment.show',$appointmentId)}}" class="btn btn-primary prime-btn">
                             View Appointment
                         </a>
                     </div>

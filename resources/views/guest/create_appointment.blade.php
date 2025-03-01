@@ -22,29 +22,53 @@
                     <form action="{{ route('appointment.store') }}" method="POST">
                         @csrf
                         <input type="hidden" value="{{ json_encode($bookingData) }}" name="bookingData">
-                        <input type="hidden" name="booking_type" id="booking_type" value="myself">
+                        <input type="hidden" name="booking_for" id="booking_for" value="1">
 
-                        <div class="card">
+                        <div class="card shadow-sm">
                             <div class="card-header">
                                 <h4 class="card-title">Contact Information <small class="text-danger">(This contact will be used for all the further contacts)</small></h4>
                             </div>
                             <div class="card-body">
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="mb-3 card-label">
-                                        <label class="mb-2">Name</label>
-                                        <input type="text" class="form-control" name="name" id="name" value="{{ $loggedInUser ? $loggedInUser->name : old('name') }}" required>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="mb-3 card-label">
+                                            <label class="mb-2">Name</label>
+                                            <input type="text" class="form-control" name="name" id="name" value="{{ $loggedInUser ? $loggedInUser->name : old('name') }}" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="mb-3 card-label">
-                                        <label class="mb-2">Phone <small class="text-danger">(OTP will be sent on this)</small></label>
-                                        <input type="phone" class="form-control" name="phone" id="phone" value="{{ $loggedInUser ? $loggedInUser->phone : old('phone') }}" required>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="mb-3 card-label">
+                                            <label class="mb-2">Phone <small class="text-danger">(OTP will be sent on this)</small></label>
+                                            <input type="phone" class="form-control" name="phone" id="phone" value="{{ $loggedInUser ? $loggedInUser->phone : old('phone') }}" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="mb-3 card-label">
-                                        <label class="mb-2">Email</label>
-                                        <input class="form-control" type="email" id="email" name="email" value="{{ $loggedInUser ? $loggedInUser->email ?? old('email') : old('email') }}">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="mb-3 card-label">
+                                            <label class="mb-2">WhatsApp</label>
+                                            <input type="text" class="form-control" name="whatsapp" id="whatsapp" value="{{ old('whatsapp') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="mb-3 card-label">
+                                            <label class="mb-2">Email</label>
+                                            <input class="form-control" type="email" id="email" name="email" value="{{ $loggedInUser ? $loggedInUser->email ?? old('email') : old('email') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="mb-3 card-label">
+                                            <label class="mb-2">Date Of Birth</label>
+                                            <input type="date" name="dob" class="form-control" value="{{ $loggedInUser ? $loggedInUser->dob ?? old('dob') : old('dob') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="mb-3 card-label">
+                                            <label class="mb-2">Gender</label>
+                                            <select name="gender" id="gender" class="form-control">
+                                                <option value="">Select</option>
+                                                <option value="1" {{ old('gender') }}>Male</option>
+                                                <option value="2" {{ old('gender') }}>Female</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <!--Password -->
@@ -71,7 +95,80 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card  shadow-sm">
+                            <div class="card-header">
+                                <h4 class="card-title">Booking For</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
+                                    <li class="nav-item"><a class="nav-link active" href="#myself" data-bs-toggle="tab">Myself</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#someone_else" data-bs-toggle="tab">Someone else</a></li>
+                                </ul>
+                                <div class="tab-content">
+
+                                    <div class="tab-pane show active" id="myself"></div>
+
+                                    <div class="tab-pane" id="someone_else">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="mb-3 card-label">
+                                                    <label class="mb-2">Name</label>
+                                                    <input type="text" class="form-control" name="dependent_name" id="dependent_name" value="{{ old('dependent_name') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="mb-3 card-label">
+                                                    <label class="mb-2">Phone</label>
+                                                    <input type="text" class="form-control" name="dependent_phone" id="dependent_phone" value="{{ old('dependent_phone') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="mb-3 card-label">
+                                                    <label class="mb-2">WhatsApp</label>
+                                                    <input type="text" class="form-control" name="dependent_whatsapp" id="dependent_whatsapp" value="{{ old('dependent_whatsapp') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="mb-3 card-label">
+                                                    <label class="mb-2">Email</label>
+                                                    <input type="text" class="form-control" name="dependent_email" id="dependent_email" value="{{ old('dependent_email') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="mb-3 card-label">
+                                                    <label class="mb-2">Date Of Birth</label>
+                                                    <input type="date" name="dependent_dob" class="form-control" value="{{ old('dependent_dob') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="mb-3 card-label">
+                                                    <label class="mb-2">Gender</label>
+                                                    <select name="dependent_gender" id="dependent_gender" class="form-control">
+                                                        <option value="">Select</option>
+                                                        <option value="1" {{ old('dependent_gender') }}>Male</option>
+                                                        <option value="2" {{ old('dependent_gender') }}>Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="mb-3 card-label">
+                                                    <label class="mb-2">Relation</label>
+                                                    <select name="dependent_relation" id="dependent_relation" class="form-control">
+                                                        <option value="">Select</option>
+                                                        @foreach (config('relations') as $key => $relation)
+                                                            <option value="{{ $key }}" {{ old('dependent_relation') == $key ? 'selected' : '' }}>{{ $relation }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card  shadow-sm">
                             <div class="card-header">
                                 <h4 class="card-title">Payment Method</h4>
                             </div>
@@ -94,61 +191,6 @@
                                             <input type="radio" name="payment_method" value="3">
                                             <span class="checkmark"></span> Part payment
                                         </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Booking For</h4>
-                            </div>
-                            <div class="card-body">
-                                <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
-                                    <li class="nav-item"><a class="nav-link active" href="#myself" data-bs-toggle="tab">Myself</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#someone_else" data-bs-toggle="tab">Someone else</a></li>
-                                </ul>
-                                <div class="tab-content">
-
-                                    <div class="tab-pane show active" id="myself">
-                                        This appointment is for me.
-                                    </div>
-
-                                    <div class="tab-pane" id="someone_else">
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="mb-3 card-label">
-                                                <label class="mb-2">Name</label>
-                                                <input type="text" class="form-control" name="dependent_name" id="dependent_name" value="{{ old('dependent_name') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="mb-3 card-label">
-                                                <label class="mb-2">Phone</label>
-                                                <input type="text" class="form-control" name="dependent_phone" id="dependent_phone" value="{{ old('dependent_phone') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="mb-3 card-label">
-                                                <label class="mb-2">WhatsApp</label>
-                                                <input type="text" class="form-control" name="dependent_whatsapp" id="dependent_whatsapp" value="{{ old('dependent_whatsapp') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="mb-3 card-label">
-                                                <label class="mb-2">Email</label>
-                                                <input type="text" class="form-control" name="dependent_email" id="dependent_email" value="{{ old('dependent_email') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="mb-3 card-label">
-                                                <label class="mb-2">Gender</label>
-                                                <select name="dependent_gender" id="dependent_gender" class="form-control">
-                                                    <option value="">Select</option>
-                                                    <option value="1" {{ old('dependent_gender') }}>Male</option>
-                                                    <option value="2" {{ old('dependent_gender') }}>Female</option>
-                                                </select>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -253,9 +295,9 @@
         $(function() {
             $('.nav-link').on('click', function() {
                 if ($(this).attr('href') === '#myself') {
-                    $('#booking_type').val('myself');
+                    $('#booking_for').val('1');
                 } else {
-                    $('#booking_type').val('someone_else');
+                    $('#booking_for').val('2');
                 }
             });
         });

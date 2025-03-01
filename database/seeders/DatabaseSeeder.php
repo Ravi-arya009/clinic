@@ -10,6 +10,7 @@ use App\Models\Qualification;
 use App\Models\Speciality;
 use App\Models\State;
 use App\Models\SuperAdmin;
+use App\Models\TimeSlot;
 use App\Models\User;
 use Faker\Provider\ar_EG\Address;
 use Faker\Provider\ar_JO\Address as Ar_JOAddress;
@@ -80,6 +81,15 @@ class DatabaseSeeder extends Seeder
             'speciality_id' => Speciality::inRandomOrder()->first()->id,
             'qualification_id' => Qualification::inRandomOrder()->first()->id,
         ]);
+
+        for ($i = 1; $i <= 7; $i++) {
+            TimeSlot::create([
+                'doctor_id' => $doctor->id,
+                'clinic_id' => $clinicId,
+                'slot_time' => '09:00:00',
+                'day_of_week' => $i,
+            ]);
+        }
     }
 
     public function createUser($name, $phone)

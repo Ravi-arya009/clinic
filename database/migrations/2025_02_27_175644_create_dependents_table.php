@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('dependents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('patient_id')->foreign()->references('id')->on('patients')->onDelete('cascade');
+            $table->string('relation')->nullable();
             $table->string('name');
             $table->string('phone', length: 13)->unique();
             $table->string('whatsapp', length: 13)->unique()->nullable();

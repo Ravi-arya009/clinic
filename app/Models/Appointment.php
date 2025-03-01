@@ -22,11 +22,12 @@ class Appointment extends Model
         'clinic_id',
         'time_slot_id',
         'appointment_date',
+        'booking_for',
         'payment_method'
     ];
 
     public function patient(){
-        return $this->belongsTo(Patient::class)->select('id','name','phone','email','address','gender');
+        return $this->belongsTo(Patient::class)->select('id','name','phone','email','address','gender', 'state_id', 'city_id');
     }
 
     public function doctor()
@@ -36,7 +37,7 @@ class Appointment extends Model
 
     public function clinic()
     {
-        return $this->belongsTo(Clinic::class)->select('id','name', 'address');
+        return $this->belongsTo(Clinic::class)->select('id','name', 'address','phone');
     }
 
     public function timeSlot()

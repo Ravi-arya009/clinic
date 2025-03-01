@@ -1,3 +1,4 @@
+{{-- {{dd($appointments)}} --}}
 @extends('patient.layouts.main')
 
 @section('title', 'Appointments')
@@ -11,12 +12,12 @@
 @section('content')
     <x-page-header pageContentTitle="Appointments" :search="true" />
 
-    <table class="my-datatable table-hover">
+    <table class="my-datatable table-hover table-responsive">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Appointment Date</th>
+                <th>Doctor / Clinic</th>
                 <th>Contact</th>
+                <th>Appointment Date</th>
                 <th>Patient</th>
                 <th>Action</th>
             </tr>
@@ -34,20 +35,25 @@
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</li>
+                        <li><i class="fa-solid fa-user-doctor"></i>{{ optional($appointment->doctor)->phone ?? 'N/A' }}</li>
+                        <li><i class="fa-solid fa-house-chimney-medical"></i>{{ optional($appointment->clinic)->phone ?? 'N/A' }}</li>
+                    </ul>
+                </td>
+                <td class="mail-info-patient">
+                    <ul>
+                        <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y', strtotime($appointment->appointment_date)) }}</li>
                         <li><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li><i class="fa-solid fa-user-doctor"></i>{{ optional($appointment->doctor)->phone ?? 'N/A' }}</li>
-                        <li><i class="fa-solid fa-house-chimney-medical"></i>{{ optional($appointment->doctor)->phone ?? 'N/A' }}</li>
-                    </ul>
-                </td>
-                <td class="mail-info-patient">
-                    <ul>
-                        <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>
-                        <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
+                        @if ($appointment->dependent_id)
+                            <li>{{ optional($appointment->dependent)->name ?? 'N/A' }} <span class="badge badge-green table-badge ms-2">Self</span></li>
+                            <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
+                        @else
+                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }}<span class="badge badge-info table-badge display-inline ms-2">Family</span></li>
+                            <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
+                        @endif
                     </ul>
                 </td>
                 <td class="appointment-start">

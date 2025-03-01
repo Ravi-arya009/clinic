@@ -6,6 +6,7 @@ use App\Http\Requests\Appointment\StoreAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Dependent;
 use App\Models\Patient;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,36 +79,42 @@ class AppointmentController extends Controller
     public function store(StoreAppointmentRequest $request)
     {
         $bookingData = json_decode($request->bookingData);
+        $validatedData = $request->validated();
 
         if (auth()->guard('patients')->check()) {
             $patient_id = Auth::guard('patients')->id();
         } else {
-            $validatedData = $request->validated();
             $patient = Patient::create([
                 'id' => Str::uuid(),
                 'name' => $validatedData['name'],
                 'phone' => $validatedData['phone'],
-                'email' => $validatedData['email'],
-                'password' => Hash::make($request->password),
+                'whatsapp' => $validatedData['whatsapp'] ?? null,
+                'email' => $validatedData['email'] ?? null,
+                'dob' => $validatedData['dob'] ?? null,
+                'gender' => $validatedData['gender'] ?? null,
+                'password' => Hash::make($validatedData['password']),
             ]);
             $patient_id = $patient->id;
             Auth::guard('patients')->login($patient);
         }
 
-        if ($request->booking_type == 'someone_else') {
+        if ($request->booking_for == '2') {
             $dependent = Dependent::create([
                 'id' => Str::uuid(),
                 'patient_id' => $patient_id,
-                'name' => $request->dependent_name,
-                'phone' => $request->dependent_phone,
-                'dependent_whatsapp' => $request->dependent_whatsapp,
-                'email' => $request->dependent_email,
-                'dependent_gender' => $request->dependent_gender,
+                'relation' =>
+                $validatedData['dependent_relation'],
+                'name' => $validatedData['dependent_name'],
+                'phone' => $validatedData['dependent_phone'],
+                'whatsapp' => $validatedData['dependent_whatsapp'] ?? null,
+                'email' => $validatedData['dependent_email'] ?? null,
+                'dob' => $validatedData['dependent_dob'] ?? null,
+                'gender' => $validatedData['dependent_gender'] ?? null,
             ]);
             $dependent_id = $dependent->id;
         }
 
-        Appointment::create([
+        $appointment = Appointment::create([
             'id' => Str::uuid(),
             'patient_id' => $patient_id,
             'dependent_id' => $dependent_id ?? null,
@@ -115,11 +122,14 @@ class AppointmentController extends Controller
             'clinic_id' => $bookingData->clinic_id,
             'time_slot_id' => $bookingData->slot_id,
             'appointment_date' => $bookingData->appointment_date,
+            'booking_for' => $request->booking_for,
             'payment_method' => $request->payment_method
         ]);
+        $appointmentId = $appointment->id;
 
         $appointment_date = $bookingData->appointment_date;
         $slot_id = $bookingData->slot_id;
-        return view('guest.booking_confirmed', compact('bookingData', 'appointment_date', 'slot_id'));
+
+        return view('guest.booking_confirmed', compact('bookingData', 'appointment_date', 'slot_id', 'appointmentId'));
     }
 }
