@@ -12,6 +12,7 @@ class Dependent extends Model
     protected $fillable = [
         'id',
         'patient_id',
+        'relation',
         'name',
         'phone',
         'whatsapp',

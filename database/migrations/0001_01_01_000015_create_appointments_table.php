@@ -19,6 +19,7 @@ return new class extends Migration
             $table->uuid('clinic_id');
             $table->uuid('time_slot_id');
             $table->date('appointment_date');
+            $table->tinyInteger('booking_for')->nullable(); //self, someone else
             $table->tinyInteger('appointment_type')->nullable(); //online, offline
             $table->tinyInteger('payment_method'); //online, offline
             $table->tinyInteger('status')->default(0); //pending, confirmed, cancelled etc.

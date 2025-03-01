@@ -38,6 +38,7 @@ class AppointmentController extends Controller
         $appointment = $this->appointmentService->getAppointmentById($request->appointmentId);
         $medicines = $this->medicineService->getClinicMedicines($this->clinicId);
         $laboratoryTests = $this->labTestService->getAllTests();
+        // dd($appointment);
         return view('doctor.view_appointment', compact('appointment', 'medicines', 'laboratoryTests'));
     }
 

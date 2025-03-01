@@ -23,12 +23,22 @@ class StoreAppointmentRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|string|max:255',
-            'phone' => 'required|digits_between:10,13|unique:patients,phone',
-            'email' => 'email',
-            'password' => 'required|min:4|confirmed',
+            'email' => 'nullable|email',
+            'dob' => 'nullable|date',
+            'gender' => 'nullable|digits_between:1,2',
         ];
 
-        if ($this->input('booking_type') == 'someone_else') {
+        if (auth()->guard('patients')->check()) {
+            $patientId = auth()->guard('patients')->id();
+            $rules['phone'] = "required|digits_between:10,13|unique:patients,phone,{$patientId}";
+            $rules['whatsapp'] = "nullable|digits_between:10,13|unique:patients,whatsapp,{$patientId}";
+        } else {
+            $rules['phone'] = 'required|digits_between:10,13|unique:patients,phone';
+            $rules['whatsapp'] = 'nullable|digits_between:10,13|unique:patients,whatsapp';
+            $rules['password'] = 'required|min:4|confirmed';
+        }
+
+        if ($this->input('booking_for') == '2') {
             $rules = array_merge($rules, $this->getDependentRules($rules));
         }
 
@@ -40,9 +50,11 @@ class StoreAppointmentRequest extends FormRequest
         return [
             'dependent_name' => 'required|string|max:255',
             'dependent_phone' => 'required|digits_between:10,13|unique:dependents,phone',
-            'dependent_whatsapp' => 'required|digits_between:10,13|unique:dependents,whatsapp',
+            'dependent_whatsapp' => 'digits_between:10,13|unique:dependents,whatsapp',
             'dependent_email' => 'email',
-            'dependent_gender' => 'required|digits_between:1,2',
+            'dependent_dob' => 'date',
+            'dependent_gender' => 'digits_between:1,2',
+            'dependent_relation' => 'required|in:' . implode(',', array_keys(config('relations'))),
         ];
     }
 }

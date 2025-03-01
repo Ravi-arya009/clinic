@@ -41,4 +41,14 @@ class Patient extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id')->select('id', 'name');
+    }
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state_id', 'id')->select('id', 'name');
+    }
+
 }

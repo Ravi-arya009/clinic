@@ -19,8 +19,9 @@
         <thead>
             <tr>
                 <th>Contact Person</th>
-                <th>Date / Time</th>
+                <th>Booked For</th>
                 <th>Patient</th>
+                <th>Date / Time</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -39,19 +40,28 @@
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</li>
-                        <li><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</li>
+                        @if ($appointment->dependent_id)
+                            <li><span class="badge badge-info table-badge">Family</span></li>
+                        @else
+                            <li><span class="badge badge-green table-badge">Self</span></li>
+                        @endif
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
                         @if ($appointment->dependent_id)
-                            <li>{{ optional($appointment->dependent)->name ?? 'N/A' }} <span class="badge badge-info table-badge">Family</span></li>
+                            <li>{{ optional($appointment->dependent)->name ?? 'N/A' }}</li>
                             <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
                         @else
-                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }} <span class="badge badge-green table-badge">Self</span></li>
+                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>
                             <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
                         @endif
+                    </ul>
+                </td>
+                <td class="mail-info-patient">
+                    <ul>
+                        <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</li>
+                        <li><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</li>
                     </ul>
                 </td>
                 <td class="appointment-start">

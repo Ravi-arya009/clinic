@@ -275,13 +275,26 @@ can include whatsapp for patient while creating the appointment.
 #
 Ask Rahul sir to download the new template. Don't sweat on the frontend too much.
 
+
+
+
 ### start from here ###
-appointment is getting stored with dependents with proper validation. they're also being fetched on appointment list page.
 
 -fix the view appointment page's ui. remove unneccesary bloats, include missing fields. include dependents.
+
 -Now appointment history will be related to dependent_id instead of patient_id. think about it.
 
+-need to change the patient's view appointment page.
 -create walk-in patient appointment feature
 -dependant spelling mistake accross the project.
     -replace all at once.
-finish the appointments with dependents. make presentable, don't get caught up in anything. finish everything today only.
+-there's no relation column in dependants table
+
+-make number of visits feature along with the history feature.
+
+
+
+##next
+my patients in doctor's panel should include dependents too
+#fix urgently
+

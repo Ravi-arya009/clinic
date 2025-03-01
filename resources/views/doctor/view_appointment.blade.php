@@ -17,6 +17,9 @@
     <x-page-header :pageContentTitle="$pageTitle" />
     <div class="appointment-details-wrap">
         <!-- Appointment Detail Card -->
+        <h4 class="fw-bold mb-3">
+            {{ $appointment->dependent_id == null ? 'Patient Information' : 'Contact Information' }}
+        </h4>
         <div class="appointment-wrap appointment-detail-card">
             <ul>
                 <li>
@@ -24,13 +27,13 @@
                         <a href="patient-profile.html">
                             <img src={{ asset('img/doctors-dashboard/profile-02.jpg') }} alt="User Image">
                         </a>
-                        <div class="patient-info">
-                            <h6><a href="patient-profile.html">{{ ucwords($appointment->patient->name) }}</a></h6>
+                        <div class="patient-info text-black">
+                            <span class="fw-bold">Contact Person:</span> {{ ucwords($appointment->patient->name) }}
                             <div class="mail-info-patient">
                                 <ul>
+                                    <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone ?? 'N/A' }}</li>
+                                    <li><i class="fa-solid fa-brands fa-whatsapp"></i>{{ $appointment->patient->phone ?? 'N/A' }}</li>
                                     <li><i class="fa-solid fa-envelope"></i>{{ optional($appointment->patient)->email ?? 'N/A' }}</li>
-                                    <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
-                                    <li><i class="fas fa-map-marker-alt"></i>{{ $appointment->patient->address }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -39,25 +42,18 @@
                 <li class="appointment-info">
                     <div class="mail-info-patient">
                         <ul>
-                            <li><i class="fa-solid fa-calendar-days"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</li>
-                            <li><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</li>
+                            <li><span class="fw-bold">State:</span> {{ $appointment->patient->state->name ?? 'N/A' }}</li>
+                            <li><span class="fw-bold">City:</span> {{ $appointment->patient->city->name ?? 'N/A' }}</li>
+                            <li><span class="fw-bold">Address:</span> {{ $appointment->patient->address ?? 'N/A' }}</li>
                         </ul>
                     </div>
                 </li>
 
-                {{-- remove all this. maybe can add weather it's new patient or re visiting. --}}
+                {{-- change status according to the appointment  status --}}
                 <li class="appointment-action">
                     <div class="detail-badge-info">
-                        <span class="badge bg-yellow">Upcoming</span>
+                        <span class="badge bg-yellow">Pending</span>
                     </div>
-                    <ul>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-xmark"></i></a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <ul class="detail-card-bottom-info">
@@ -66,69 +62,67 @@
                     <span>{{ date('d M Y', strtotime($appointment->appointment_date)) }} - {{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</span>
                 </li>
                 <li>
-                    <h6>Clinic Location</h6>
-                    <span>Adrian’s Dentistry</span>
+                    <h6>Booking Type</h6>
+                    <span>Online</span>
                 </li>
                 <li>
-                    <h6>Location</h6>
-                    <span>Newyork, United States</span>
+                    <h6>Payment Method</h6>
+                    <span>Online</span>
                 </li>
                 <li>
-                    <h6>Visit Type</h6>
-                    <span>General</span>
+                    <h6>No of Visits</h6>
+                    <span>0</span>
                 </li>
                 <li>
                     <div class="start-btn">
-                        <a href="#" class="btn btn-secondary">Inprogress</a>
+                        <a href="#" class="btn btn-secondary">History</a>
                     </div>
                 </li>
             </ul>
         </div>
+
+
+        {{-- dependants information --}}
+        @if ($appointment->dependent_id != null)
+            <h4 class="fw-bold mb-3">Patient Information</h4>
+            <div class="appointment-wrap appointment-detail-card">
+                <ul>
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Name:</span> {{ $appointment->dependent->name }}</li>
+                                <li><span class="fw-bold">Age:</span> {{ $appointment->dependent->dob ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Gender:</span> {{ $appointment->dependent->gender == 1 ? 'Male' : ($appointment->dependent->gender == 2 ? 'Female' : 'N/A') }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Phone:</span> {{ $appointment->dependent->phone ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">WhatsApp:</span> {{ $appointment->dependent->whatsapp ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Email:</span> {{ $appointment->dependent->email ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Relation:</span> {{ config('relations.' . $appointment->dependent->relation) ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        @endif
+
+
         <!-- /Appointment Detail Card -->
         <div class="create-appointment-details">
-            <h5 class="head-text">Appointment Details</h5>
+            <h5 class="head-text">Perscription</h5>
             <div class="create-details-card">
-                <div class="create-details-card-head">
-                    <div class="card-title-text">
-                        <h5>Patient Information</h5>
-                    </div>
-                    <div class="patient-info-box">
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <ul class="info-list">
-                                    <li>Age</li>
-                                    <li>
-                                        <h6>28 Years</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <ul class="info-list">
-                                    <li>Gender</li>
-                                    <li>
-                                        <h6>{{ !empty($appointment->patient->gender) ? ($appointment->patient->gender == 1 ? 'Male' : ($appointment->patient->gender == 2 ? 'Female' : '-')) : '-' }}</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <ul class="info-list">
-                                    <li>Blood Group</li>
-                                    <li>
-                                        <h6>O+ve</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <ul class="info-list">
-                                    <li>No of Visit</li>
-                                    <li>
-                                        <h6>0</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="create-details-card-body">
                     <form action="{{ route('doctor.appointment_details.store') }}" method="POST">
                         @csrf
