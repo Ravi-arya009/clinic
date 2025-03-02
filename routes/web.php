@@ -16,7 +16,7 @@ use App\Http\Controllers\doctor\AuthController as DoctorAuthController;
 use App\Http\Controllers\doctor\PatientController;
 use App\Http\Controllers\doctor\TimeSlotController as DoctorTimeSlotController;
 use App\Http\Controllers\patient\AppointmentController as PatientAppointmentController;
-use App\Http\Controllers\patient\DependentController;
+use App\Http\Controllers\patient\dependantController;
 use App\Http\Controllers\patient\InvoiceController;
 use App\Http\Controllers\patient\PerscriptionController;
 use App\Http\Controllers\SearchController;
@@ -28,7 +28,7 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
-#### Super Admin ####
+##### Super Admin #####
 Route::prefix('super_admin')->group(
     function () {
         Route::middleware('RedirectIfAuthenticated:super_admin')->group(function () {
@@ -47,6 +47,7 @@ Route::prefix('super_admin')->group(
         });
     }
 );
+##### /Super Admin #####
 
 #### Admin ####
 Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
@@ -108,7 +109,6 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::get('patient/{patientId}', [PatientController::class, 'show'])->name('doctor.patient.show');
             Route::put('patient/{patientId}', [PatientController::class, 'update'])->name('doctor.patient.update');
             Route::get('patients', [PatientController::class, 'index'])->name('doctor.patient.index');
-
         });
     });
 });
@@ -121,7 +121,7 @@ Route::prefix('patient')->group(function () {
         Route::get('appointments', [PatientAppointmentController::class, 'index'])->name('patient.appointments.index');
         Route::get('appointment/{appointmentId}', [PatientAppointmentController::class, 'show'])->name('patient.appointment.show');
         Route::get('appointments/history', [PatientAppointmentController::class, 'appointmentHistory'])->name('patient.appointments.history');
-        Route::get('family_members', [DependentController::class, 'index'])->name('patient.family.index');
+        Route::get('family_members', [dependantController::class, 'index'])->name('patient.family.index');
         Route::get('invoices', [InvoiceController::class, 'index'])->name('patient.invoices.index');
         Route::get('perscription', [PerscriptionController::class, 'index'])->name('patient.perscription.index');
         Route::get('doctors', [PatientDashboardController::class, 'dashboard'])->name('patient.doctors.index');

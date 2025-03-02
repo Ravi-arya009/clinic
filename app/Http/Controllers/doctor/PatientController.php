@@ -9,22 +9,30 @@ use App\Models\Appointment;
 use App\Models\City;
 use App\Models\Patient;
 use App\Models\State;
-use App\Models\User;
+use App\Services\AppointmentService;
 use App\Services\DataRepositoryService;
 use App\Services\PatientService;
+use App\Services\TimeSlotService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PatientController extends Controller
 {
 
-    protected $dataRepositoryService, $patientService;
+    protected $dataRepositoryService, $patientService, $timeSlotService, $appointmentService, $clinicId;
 
     public function __construct(
         DataRepositoryService $dataRepositoryService,
-        PatientService $patientService
+        PatientService $patientService,
+        TimeSlotService $timeSlotService,
+        AppointmentService $appointmentService
+
     ) {
+        $this->clinicId = Session::get('current_clinic')['id'];
         $this->dataRepositoryService = $dataRepositoryService;
         $this->patientService = $patientService;
+        $this->timeSlotService = $timeSlotService;
+        $this->appointmentService = $appointmentService;
     }
     public function index()
     {
@@ -64,7 +72,14 @@ class PatientController extends Controller
         if (!$response['success']) {
             return back()->withInput()->with(['error' => $response['message']]);
         } else {
-            return redirect()->route('doctor.patient.show', ['patientId' => $response['data']->id])->with('success', $response['message']);
+            $patient = $response['data'];
+            $response = $this->timeSlotService->storeWalkInTimeSlot($this->clinicId, auth()->guard('doctor')->user()->id);
+            $timeSlot = $response['data'];
+            $response = $this->appointmentService->createWalkInAppointment($patient->id, auth()->guard('doctor')->user()->id, $this->clinicId, $timeSlot->id);
+            if ($response) {
+                $appointmentId = $response->id;
+                return redirect()->route('doctor.appointment.show', ['appointmentId' => $appointmentId])->with('success', 'Appointment Created Successfully');
+            }
         }
     }
 

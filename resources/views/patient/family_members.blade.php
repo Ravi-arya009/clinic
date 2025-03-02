@@ -21,21 +21,21 @@
             </tr>
         </thead>
 
-        @foreach ($dependents as $dependent)
+        @foreach ($dependants as $dependant)
             <tr class="table-appointment-wrap">
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{$dependent->name}}</li>
+                        <li>{{$dependant->name}}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{$dependent->phone}}</li>
+                        <li>{{$dependant->phone}}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{$dependent->relation ?? 'N/A'}}</li>
+                        <li>{{ config('relations.' . $dependant->relation) ?? 'N/A' }}</li>
                     </ul>
                 </td>
                 <td class="appointment-start">

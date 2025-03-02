@@ -39,22 +39,22 @@ class StoreAppointmentRequest extends FormRequest
         }
 
         if ($this->input('booking_for') == '2') {
-            $rules = array_merge($rules, $this->getDependentRules($rules));
+            $rules = array_merge($rules, $this->getdependantRules($rules));
         }
 
         return $rules;
     }
 
-    private function getDependentRules(array $rules): array
+    private function getdependantRules(array $rules): array
     {
         return [
-            'dependent_name' => 'required|string|max:255',
-            'dependent_phone' => 'required|digits_between:10,13|unique:dependents,phone',
-            'dependent_whatsapp' => 'digits_between:10,13|unique:dependents,whatsapp',
-            'dependent_email' => 'email',
-            'dependent_dob' => 'date',
-            'dependent_gender' => 'digits_between:1,2',
-            'dependent_relation' => 'required|in:' . implode(',', array_keys(config('relations'))),
+            'dependant_name' => 'required|string|max:255',
+            'dependant_phone' => 'required|digits_between:10,13|unique:dependants,phone',
+            'dependant_whatsapp' => 'digits_between:10,13|unique:dependants,whatsapp',
+            'dependant_email' => 'email',
+            'dependant_dob' => 'date',
+            'dependant_gender' => 'digits_between:1,2',
+            'dependant_relation' => 'required|in:' . implode(',', array_keys(config('relations'))),
         ];
     }
 }

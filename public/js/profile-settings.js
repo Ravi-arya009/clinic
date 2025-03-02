@@ -6,9 +6,9 @@ Version      : 1.0
 
 (function($) {
     "use strict";
-	
+
 	// Pricing Options Show
-	
+
 	$('#pricing_select input[name="rating_option"]').on('click', function() {
 		if ($(this).val() == 'price_free') {
 			$('#custom_price_cont').hide();
@@ -19,16 +19,16 @@ Version      : 1.0
 		else {
 		}
 	});
-	
+
 	// Education Add More
-	
+
     $(".education-info").on('click','.trash', function () {
 		$(this).closest('.education-cont').remove();
 		return false;
     });
 
     $(".add-education").on('click', function () {
-		
+
 		var educationcontent = '<div class="row education-cont">' +
 			'<div class="col-12 col-md-10 col-lg-11">' +
 				'<div class="row">' +
@@ -54,20 +54,20 @@ Version      : 1.0
 			'</div>' +
 			'<div class="col-12 col-md-2 col-lg-1"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
 		'</div>';
-		
+
         $(".education-info").append(educationcontent);
         return false;
     });
-	
+
 	// Experience Add More
-	
+
     $(".experience-info").on('click','.trash', function () {
 		$(this).closest('.experience-cont').remove();
 		return false;
     });
 
     $(".add-experience").on('click', function () {
-		
+
 		var experiencecontent = '<div class="row experience-cont">' +
 			'<div class="col-12 col-md-10 col-lg-11">' +
 				'<div class="row">' +
@@ -99,13 +99,13 @@ Version      : 1.0
 			'</div>' +
 			'<div class="col-12 col-md-2 col-lg-1"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
 		'</div>';
-		
+
         $(".experience-info").append(experiencecontent);
         return false;
     });
-	
+
 	// Awards Add More
-	
+
     $(".awards-info").on('click','.trash', function () {
 		$(this).closest('.awards-cont').remove();
 		return false;
@@ -131,13 +131,13 @@ Version      : 1.0
 				'<a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>' +
 			'</div>' +
 		'</div>';
-		
+
         $(".awards-info").append(regcontent);
         return false;
     });
-	
+
 	// Membership Add More
-	
+
     $(".membership-info").on('click','.trash', function () {
 		$(this).closest('.membership-cont').remove();
 		return false;
@@ -157,13 +157,13 @@ Version      : 1.0
 				'<a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>' +
 			'</div>' +
 		'</div>';
-		
+
         $(".membership-info").append(membershipcontent);
         return false;
     });
-	
+
 	// Registration Add More
-	
+
     $(".registrations-info").on('click','.trash', function () {
 		$(this).closest('.reg-cont').remove();
 		return false;
@@ -189,13 +189,13 @@ Version      : 1.0
 				'<a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>' +
 			'</div>' +
 		'</div>';
-		
+
         $(".registrations-info").append(regcontent);
         return false;
     });
 
     // Billing Add More
-	
+
     $(".add-billing-info").on('click','.trash', function () {
 		$(this).closest('.bill-cont').remove();
 		return false;
@@ -223,13 +223,13 @@ Version      : 1.0
 				'</div>' +
 			'</div>' +
 		'</div>';
-		
+
         $(".add-billing-info").append(billcontent);
         return false;
     });
 
     // Prescripe Add More
-	
+
     $(".add-prescripe-info").on('click','.trash', function () {
 		$(this).closest('.prescripe-cont').remove();
 		return false;
@@ -289,7 +289,7 @@ Version      : 1.0
 				'</div>' +
 			'</div>' +
 		'</div>';
-		
+
         $(".add-prescripe-info").append(prescontent);
 
         if ($('.select').length > 0) {
@@ -303,7 +303,7 @@ Version      : 1.0
     });
 
     // Prescripe Add More
-	
+
     $(".add-prescripe-info").on('click','.trash', function () {
 		$(this).closest('.prescripe-cont').remove();
 		return false;
@@ -363,7 +363,7 @@ Version      : 1.0
 				'</div>' +
 			'</div>' +
 		'</div>';
-		
+
         $(".add-prescripe-info").append(prescontent);
 
         if ($('.select').length > 0) {
@@ -377,7 +377,7 @@ Version      : 1.0
     });
 
     // Add Speciality
-	
+
     $(".add-service-info").on('click','.trash', function () {
 		$(this).closest('.service-cont').remove();
 		return false;
@@ -400,7 +400,7 @@ Version      : 1.0
 											'<option>Neurology</option>' +
 											'<option>Urology</option>' +
 										'</select>' +
-									'</div>	' +												
+									'</div>	' +
 								'</div>' +
 							'</div>' +
 							'<div class="row service-cont">' +
@@ -412,13 +412,13 @@ Version      : 1.0
 											'<option>Surgery</option>' +
 											'<option>General Checkup</option>' +
 										'</select>' +
-									'</div>	' +												
+									'</div>	' +
 								'</div>' +
 								'<div class="col-md-2">' +
 									'<div class="form-wrap">' +
 										'<label class="col-form-label">Price ($) <span class="text-danger">*</span></label>' +
 										'<input type="text" class="form-control" placeholder="454">' +
-									'</div>' +													
+									'</div>' +
 								'</div>' +
 								'<div class="col-md-7">' +
 									'<div class="d-flex align-items-center">' +
@@ -429,8 +429,8 @@ Version      : 1.0
 										'<div class="form-wrap ms-2">' +
 											'<label class="col-form-label d-block">&nbsp;</label>' +
 											'<a href="#" class="trash-icon trash">Delete</a>' +
-										'</div>' +												
-									'</div>' +													
+										'</div>' +
+									'</div>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
@@ -441,7 +441,7 @@ Version      : 1.0
 				'</div>' +
 			'</div>' +
 		'</div>';
-		
+
         $('.accordions').append(servcontent);
 
         if ($('.select').length > 0) {
@@ -455,7 +455,7 @@ Version      : 1.0
     });
 
     // Service Add More
-	
+
     $(".add-service-info").on('click','.trash', function () {
 		$(this).closest('.service-cont').remove();
 		return false;
@@ -472,13 +472,13 @@ Version      : 1.0
 							'<option>Surgery</option>' +
 							'<option>General Checkup</option>' +
 						'</select>' +
-					'</div>' +													
+					'</div>' +
 				'</div>' +
 				'<div class="col-md-2">' +
 					'<div class="form-wrap">' +
 						'<label class="col-form-label">Price ($) <span class="text-danger">*</span></label>' +
 						'<input type="text" class="form-control" placeholder="454">' +
-					'</div>' +													
+					'</div>' +
 				'</div>' +
 				'<div class="col-md-7">' +
 					'<div class="d-flex align-items-center">' +
@@ -489,11 +489,11 @@ Version      : 1.0
 						'<div class="form-wrap ms-2">' +
 							'<label class="col-form-label d-block">&nbsp;</label>' +
 							'<a href="#" class="trash-icon trash">Delete</a>' +
-						'</div>' +										
-					'</div>' +													
-				'</div>' +	
+						'</div>' +
+					'</div>' +
+				'</div>' +
 			'</div>';
-		
+
         $(this).closest(".add-service-info").find('.add-info').append(servcontent);
 
         if ($('.select').length > 0) {
@@ -507,7 +507,7 @@ Version      : 1.0
     });
 
      // Add Membership
-	
+
     $(".membership-infos").on('click','.trash', function () {
 		$(this).closest('.membership-content').remove();
 		return false;
@@ -527,21 +527,21 @@ Version      : 1.0
 												'<div class="form-wrap w-100">' +
 													'<label class="col-form-label">About Membership</label>' +
 													'<input type="text" class="form-control">' +
-												'</div>' +										
+												'</div>' +
 												'<div class="form-wrap ms-2">' +
 													'<label class="col-form-label d-block">&nbsp;</label>' +
 													'<a href="javascript:void(0);" class="trash-icon trash">Delete</a>' +
-												'</div>' +												
-											'</div>' +			
+												'</div>' +
+											'</div>' +
 										'</div>' +
 									'</div>';
-		
+
         $(".membership-infos").append(membershipcontent);
         return false;
     });
 
     // Add Experience
-	
+
     $(".experience-infos").on('click','.trash', function () {
 		$(this).closest('.experience-content').remove();
 		return false;
@@ -567,7 +567,7 @@ Version      : 1.0
 													'<h5>Hospital Logo</h5>' +
 													'<div class="imgs-load d-flex align-items-center">' +
 														'<div class="change-photo">' +
-															'Upload New' + 
+															'Upload New' +
 															'<input type="file" class="upload">' +
 														'</div>' +
 														'<a href="#" class="upload-remove">Remove</a>' +
@@ -575,31 +575,31 @@ Version      : 1.0
 													'<p class="form-text">Your Image should Below 4 MB, Accepted format jpg,png,svg</p>' +
 												'</div>' +
 											'</div>' +
-										'</div>' +	
+										'</div>' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Title</label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Hospital <span class="text-danger">*</span></label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Year of Experience <span class="text-danger">*</span></label>' +
 											'<input type="text" class="form-control">' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Location <span class="text-danger">*</span></label>' +
 											'<input type="text" class="form-control">' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-md-6">' +
 										'<div class="form-wrap">' +
@@ -608,13 +608,13 @@ Version      : 1.0
 												'<option>Full Time</option>' +
 												'<option>Part Time</option>' +
 											'</select>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-lg-12">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Job Description <span class="text-danger">*</span></label>' +
 											'<textarea class="form-control" rows="3"></textarea>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
@@ -623,7 +623,7 @@ Version      : 1.0
 												'<input type="text" class="form-control datetimepicker">' +
 												'<span class="icon"><i class="fa-regular fa-calendar-days"></i></span>' +
 											'</div>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
@@ -632,7 +632,7 @@ Version      : 1.0
 												'<input type="text" class="form-control datetimepicker">' +
 												'<span class="icon"><i class="fa-regular fa-calendar-days"></i></span>' +
 											'</div>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
@@ -642,7 +642,7 @@ Version      : 1.0
 		   											'<input class="form-check-input" type="checkbox"> I Currently Working Here' +
 		   										'</label>' +
 		   									'</div>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
@@ -653,7 +653,7 @@ Version      : 1.0
 					'</div>' +
 				'</div>' +
 			'</div>';
-		
+
         $(".experience-infos").append(membershipcontent);
          if ($('.select').length > 0) {
 			$('.select').select2({
@@ -677,7 +677,7 @@ Version      : 1.0
     });
 
 	// Add Experience
-	
+
     $(".education-infos").on('click','.trash', function () {
 		$(this).closest('.education-content').remove();
 		return false;
@@ -703,7 +703,7 @@ Version      : 1.0
 													'<h5> Logo</h5>' +
 													'<div class="imgs-load d-flex align-items-center">' +
 														'<div class="change-photo">' +
-															'Upload New' + 
+															'Upload New' +
 															'<input type="file" class="upload">' +
 														'</div>' +
 														'<a href="#" class="upload-remove">Remove</a>' +
@@ -711,19 +711,19 @@ Version      : 1.0
 													'<p class="form-text">Your Image should Below 4 MB, Accepted format jpg,png,svg</p>' +
 												'</div>' +
 											'</div>' +
-										'</div>' +	
+										'</div>' +
 									'</div>' +
 									'<div class="col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Name of the institution</label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 									'<div class="col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Course</label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
@@ -732,7 +732,7 @@ Version      : 1.0
 												'<input type="text" class="form-control datetimepicker">' +
 												'<span class="icon"><i class="fa-regular fa-calendar-days"></i></span>' +
 											'</div>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
@@ -741,19 +741,19 @@ Version      : 1.0
 												'<input type="text" class="form-control datetimepicker">' +
 												'<span class="icon"><i class="fa-regular fa-calendar-days"></i></span>' +
 											'</div>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-lg-4 col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">No of Years <span class="text-danger">*</span></label>' +
 											'<input type="text" class="form-control">' +
-										'</div>' +													
-									'</div>' +	
+										'</div>' +
+									'</div>' +
 									'<div class="col-lg-12">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Job Description <span class="text-danger">*</span></label>' +
 											'<textarea class="form-control" rows="3"></textarea>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
@@ -764,7 +764,7 @@ Version      : 1.0
 					'</div>' +
 				'</div>' +
 			'</div>';
-		
+
         $(".education-infos").append(membershipcontent);
 		if ($('.datetimepicker').length > 0) {
 			$('.datetimepicker').datetimepicker({
@@ -782,7 +782,7 @@ Version      : 1.0
     });
 
     // Add Experience
-	
+
     $(".awrad-infos").on('click','.trash', function () {
 		$(this).closest('.awrad-content').remove();
 		return false;
@@ -802,7 +802,7 @@ Version      : 1.0
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Award Name</label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 									'<div class="col-md-6">' +
 										'<div class="form-wrap">' +
@@ -811,13 +811,13 @@ Version      : 1.0
 												'<input type="text" class="form-control datetimepicker">' +
 												'<span class="icon"><i class="fa-regular fa-calendar-days"></i></span>' +
 											'</div>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 									'<div class="col-lg-12">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Job Description <span class="text-danger">*</span></label>' +
 											'<textarea class="form-control" rows="3"></textarea>' +
-										'</div>' +													
+										'</div>' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
@@ -828,7 +828,7 @@ Version      : 1.0
 					'</div>' +
 				'</div>' +
 			'</div>';
-		
+
         $(".awrad-infos").append(membershipcontent);
 		if ($('.datetimepicker').length > 0) {
 			$('.datetimepicker').datetimepicker({
@@ -847,7 +847,7 @@ Version      : 1.0
 
 
     // Add Insurance
-	
+
     $(".insurance-infos").on('click','.trash', function () {
 		$(this).closest('.insurance-content').remove();
 		return false;
@@ -873,7 +873,7 @@ Version      : 1.0
 													'<h5> Logo</h5>' +
 													'<div class="imgs-load d-flex align-items-center">' +
 														'<div class="change-photo">' +
-															'Upload New' + 
+															'Upload New' +
 															'<input type="file" class="upload">' +
 														'</div>' +
 														'<a href="#" class="upload-remove">Remove</a>' +
@@ -881,11 +881,11 @@ Version      : 1.0
 													'<p class="form-text">Your Image should Below 4 MB, Accepted format jpg,png,svg</p>' +
 												'</div>' +
 											'</div>' +
-										'</div>' +	
+										'</div>' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Insurance Name</label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
@@ -896,14 +896,14 @@ Version      : 1.0
 					'</div>' +
 				'</div>' +
 			'</div>';
-		
+
         $(".insurance-infos").append(membershipcontent);
 
         return false;
     });
 
     // Add Clinic
-	
+
     $(".clinic-infos").on('click','.trash', function () {
 		$(this).closest('.clinic-content').remove();
 		return false;
@@ -929,7 +929,7 @@ Version      : 1.0
 													'<h5>Logo</h5>' +
 													'<div class="imgs-load d-flex align-items-center">' +
 														'<div class="change-photo">' +
-															'Upload New' + 
+															'Upload New' +
 															'<input type="file" class="upload">' +
 														'</div>' +
 														'<a href="#" class="upload-remove">Remove</a>' +
@@ -937,25 +937,25 @@ Version      : 1.0
 													'<p class="form-text">Your Image should Below 4 MB, Accepted format jpg,png,svg</p>' +
 												'</div>' +
 											'</div>' +
-										'</div>' +	
-									'</div>' +	
+										'</div>' +
+									'</div>' +
 									'<div class="col-md-12">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Clinic Name</label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 									'<div class="col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Location</label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 									'<div class="col-md-6">' +
 										'<div class="form-wrap">' +
 											'<label class="col-form-label">Addrerss</label>' +
 											'<input type="text" class="form-control">' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 									'<div class="col-md-12">' +
 										'<div class="form-wrap">' +
@@ -974,7 +974,7 @@ Version      : 1.0
 													'<a href="javascript:void(0);">Remove</a>' +
 												'</div>' +
 											'</div>' +
-										'</div>	' +												
+										'</div>	' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
@@ -985,14 +985,14 @@ Version      : 1.0
 					'</div>' +
 				'</div>' +
 			'</div>';
-		
+
         $(".clinic-infos").append(membershipcontent);
 
         return false;
     });
 
 
-   if ($('.dependent-status').length > 0) {
+   if ($('.dependant-status').length > 0) {
    		$(document).ready(function() {
 
 	   		$('.check').change(function() {
@@ -1003,5 +1003,5 @@ Version      : 1.0
 			});
   		});
    }
-	
+
 })(jQuery);

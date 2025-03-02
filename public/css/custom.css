@@ -62808,7 +62808,7 @@ ul li {
     color: #ffffff;
 }
 
-.dependent-wrap {
+.dependant-wrap {
     border: 1px solid #E2E8F0;
     box-shadow: 0px 7.5px 17.5px 0px rgba(0, 0, 0, 0.0509803922);
     border-radius: 10px;
@@ -62823,11 +62823,11 @@ ul li {
     flex-wrap: wrap;
 }
 
-.dependent-wrap:last-child {
+.dependant-wrap:last-child {
     margin-bottom: 0;
 }
 
-.dependent-wrap .dependent-info {
+.dependant-wrap .dependant-info {
     display: flex;
     display: -webkit-flex;
     align-items: center;
@@ -62836,28 +62836,28 @@ ul li {
     flex-wrap: wrap;
 }
 
-.dependent-wrap .patinet-information {
+.dependant-wrap .patinet-information {
     min-width: 350px;
     margin-bottom: 5px;
 }
 
 @media (max-width: 575.98px) {
-    .dependent-wrap .patinet-information {
+    .dependant-wrap .patinet-information {
         min-width: auto;
     }
 }
 
-.dependent-wrap .patinet-information img {
+.dependant-wrap .patinet-information img {
     width: 60px;
     height: 60px;
 }
 
-.dependent-wrap .patient-info {
+.dependant-wrap .patient-info {
     font-weight: 600;
     margin-bottom: 5px;
 }
 
-.dependent-wrap .patient-info ul li {
+.dependant-wrap .patient-info ul li {
     font-size: 14px;
     font-weight: normal;
     color: #334155;
@@ -62867,7 +62867,7 @@ ul li {
     display: inline-block;
 }
 
-.dependent-wrap .patient-info ul li::before {
+.dependant-wrap .patient-info ul li::before {
     content: "\f111";
     display: block;
     font-family: "FontAwesome";
@@ -62881,43 +62881,43 @@ ul li {
     color: #0E82FD;
 }
 
-.dependent-wrap .patient-info ul li:last-child {
+.dependant-wrap .patient-info ul li:last-child {
     margin: 0;
     padding: 0;
 }
 
-.dependent-wrap .patient-info ul li:last-child::before {
+.dependant-wrap .patient-info ul li:last-child::before {
     content: none;
 }
 
-.dependent-wrap .patient-info ul li+li {
+.dependant-wrap .patient-info ul li+li {
     margin-top: 0;
 }
 
-.dependent-wrap .blood-info {
+.dependant-wrap .blood-info {
     margin-bottom: 10px;
 }
 
-.dependent-wrap .blood-info p {
+.dependant-wrap .blood-info p {
     font-size: 14px;
     font-weight: normal;
     color: #334155;
     margin-bottom: 5px;
 }
 
-.dependent-wrap .blood-info h6 {
+.dependant-wrap .blood-info h6 {
     font-weight: 600;
     margin-bottom: 0;
 }
 
-.dependent-wrap .dependent-status {
+.dependant-wrap .dependant-status {
     display: flex;
     display: -webkit-flex;
     align-items: center;
     -webkit-align-items: center;
 }
 
-.dependent-wrap .dependent-status .status-toggle {
+.dependant-wrap .dependant-status .status-toggle {
     margin-right: 23px;
     margin-bottom: 10px;
     display: flex;
@@ -62926,32 +62926,32 @@ ul li {
     -webkit-align-items: center;
 }
 
-.dependent-wrap .dependent-status .status-toggle .checktoggle {
+.dependant-wrap .dependant-status .status-toggle .checktoggle {
     width: 28px;
     height: 15px;
     margin: 0 5px;
 }
 
-.dependent-wrap .dependent-status .status-toggle .checktoggle::after {
+.dependant-wrap .dependant-status .status-toggle .checktoggle::after {
     width: 12px;
     height: 12px;
 }
 
-.dependent-wrap .dependent-status .status-toggle .check:checked+.checktoggle+.active {
+.dependant-wrap .dependant-status .status-toggle .check:checked+.checktoggle+.active {
     color: #0F172A;
 }
 
-.dependent-wrap .dependent-status .status-toggle span {
+.dependant-wrap .dependant-status .status-toggle span {
     font-weight: normal;
     color: #64748B;
     font-size: 14px;
 }
 
-.dependent-wrap .dependent-status .status-toggle.checked .deactive {
+.dependant-wrap .dependant-status .status-toggle.checked .deactive {
     color: #0F172A;
 }
 
-.dependent-wrap .dependent-status .edit-icon {
+.dependant-wrap .dependant-status .edit-icon {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -62962,21 +62962,21 @@ ul li {
     margin-bottom: 10px;
 }
 
-.dependent-wrap .dependent-status .edit-icon:hover {
+.dependant-wrap .dependant-status .edit-icon:hover {
     background: #0E82FD;
     color: #ffffff;
 }
 
-.add-dependent .img-upload .profile-img {
+.add-dependant .img-upload .profile-img {
     width: 80px;
     height: 80px;
 }
 
-.add-dependent .img-upload .upload-img h5 {
+.add-dependant .img-upload .upload-img h5 {
     margin-bottom: 10px;
 }
 
-.add-dependent .img-upload .upload-img .imgs-load {
+.add-dependant .img-upload .upload-img .imgs-load {
     margin-bottom: 0;
 }
 

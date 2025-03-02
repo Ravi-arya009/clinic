@@ -3434,7 +3434,7 @@
       }); // Modifiers have the ability to execute arbitrary code before the first
       // update cycle runs. They will be executed in the same order as the update
       // cycle. This is useful when a modifier adds some persistent data that
-      // other modifiers need to use, but the modifier is run after the dependent
+      // other modifiers need to use, but the modifier is run after the dependant
       // one.
 
       function runModifierEffects() {

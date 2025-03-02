@@ -17,12 +17,13 @@ class Appointment extends Model
     protected $fillable = [
         'id',
         'patient_id',
-        'dependent_id',
+        'dependant_id',
         'doctor_id',
         'clinic_id',
         'time_slot_id',
         'appointment_date',
         'booking_for',
+        'appointment_type',
         'payment_method'
     ];
 
@@ -56,8 +57,8 @@ class Appointment extends Model
     {
         return $this->hasMany(AppointmentLabTest::class);
     }
-    public function dependent()
+    public function dependant()
     {
-        return $this->belongsTo(Dependent::class);
+        return $this->belongsTo(dependant::class);
     }
 }

@@ -69,6 +69,32 @@ class TimeSlotService
         ];
     }
 
+
+    public function storeWalkInTimeSlot($clinicId, $doctorId)
+    {
+        try {
+            $response = TimeSlot::create([
+                'id' => Str::uuid(),
+                'slot_time' => now()->format('H:i:s'),
+                'day_of_week' => date('w'),
+                'doctor_id' => $doctorId,
+                'clinic_id' => $clinicId,
+                'slot_type' => 2
+            ]);
+        } catch (QueryException $e) {
+            throw $e;
+            return [
+                'success' => false,
+                'message' => "Something went wrong while creating walkin time slot",
+            ];
+        }
+        return [
+            'success' => true,
+            'message' => 'Time slots created successfully',
+            'data' => $response
+        ];
+    }
+
     public function deleteTimeSlot($slotId)
     {
         try {

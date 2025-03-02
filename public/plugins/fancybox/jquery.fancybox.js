@@ -5399,7 +5399,7 @@
             return "\uFFFD";
           }
 
-          // Control characters and (dependent upon position) numbers get escaped as code points
+          // Control characters and (dependant upon position) numbers get escaped as code points
           return ch.slice(0, -1) + "\\" + ch.charCodeAt(ch.length - 1).toString(16) + " ";
         }
 
