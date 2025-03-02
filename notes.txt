@@ -277,24 +277,102 @@ Ask Rahul sir to download the new template. Don't sweat on the frontend too much
 
 
 
-
 ### start from here ###
 
--fix the view appointment page's ui. remove unneccesary bloats, include missing fields. include dependents.
-
--Now appointment history will be related to dependent_id instead of patient_id. think about it.
-
--need to change the patient's view appointment page.
--create walk-in patient appointment feature
--dependant spelling mistake accross the project.
-    -replace all at once.
--there's no relation column in dependants table
+-Now appointment history will be related to dependant_id instead of patient_id. think about it.
 
 -make number of visits feature along with the history feature.
 
+-need to change the patient's view appointment page.
 
 
 ##next
-my patients in doctor's panel should include dependents too
+my patients in doctor's panel should include dependants too
+
 #fix urgently
+
+-need to fix the time slot fetch everywhere. include slot_type = 1
+
+
+#start from here
+-look register first page for more.
+-create walk-in patient appointment feature
+    -don't get cauth in there's solution in claude or somewhere, look it up.
+        -if not found the solution, then think and create one.
+
+patient is getting created, time slot is getting created, now make apointment.
+    use proper service classes.
+
+
+### Sunday ###
+-Define the scope of project.
+-use service classes.
+-proper organized controllers, models, service classes, Views, routes, middlewares, auth.
+    -try to make a lot of universals and globals.
+
+-complete invoice and prescription generation with working implementaion in software.
+
+-Start with doctor and patient panel first. (done)
+    -implement the required functionalities. (done)
+    -test it and tweak to include edge cases. (start with basics, request, validation, controller standards, errors etc and everything should be fine)
+    -try to make globals such as service classes, partials etc. (same as above, follow it and patterns will emerge automatically)
+
+-Go to first point and start definine the scope of project.
+
+
+
+@@@ patient's list table structure on doctor panel @@@
+-patients name (can be dependant name)
+-contact person's name and contact (phone/whatsapp)
+
+Add specialities, states, cities etc by using data tables add option.
+    -make an ajax call to add entity if success add row on frontend.
+    -add button any where and on click trigger everything.
+
+make quick view modal for clinics and anywhere else needed
+    -remove current eye anchor link to this and give the clinic's link inside the modal.
+
+-option to make the data repository like states, medicines etc. inactive(global thing)
+    -change the column name to is_active.
+
+
+#fix now
+make header images dynamic after the superadmin and admin logs in
+
+
+#process
+-Check Routes
+    -proper naming conventions according to laravel standards.
+    -Include middlewares if needed.
+        -check middleware atleat once.
+    -sending to proper functions with right naming standars and conventiosn.
+
+-check controllers
+    -have proper naming conventions
+    -are local or global as required.
+    -correct naming convenstions and standards of functions.
+    -maximize the use of service classes.
+    -Are retriving values from sessions if required.
+        -move these items into data repository service.
+
+-check migration for any changes (is_active, names, _id names, anything else).
+-check models for fillables, uuids etc.
+
+-Check Service Clasees.
+    -Using proper naming conventions and standards.
+    -take care of singulars and plurals.
+    -Consistend parameter's naming conventions.
+    -checking all the edge cases
+    -storing the errors properly.
+        -user related errors at one place.
+        -developer related errors at other place.
+        *to ensure that user is not getting any developer related error messages.
+Check Views
+    -Proper, Standard, and Consistence.
+        -use push, stack etc in right way.
+        -scripts related to that page should be on that page only.
+            -can group multiple scripts into smaller chunks in the future
+        -check for redundant elements that can be converted into partials or even layout.
+            -lot of data repository tables can be made less redundant.
+            -other tables such as lists, appointments, user etc can be made more global.
 

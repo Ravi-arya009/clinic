@@ -9,9 +9,11 @@
                         <span></span>
                     </span>
                 </a>
-                <a href="{{route('super_admin.dashboard')}}" class="navbar-brand logo">
+                <!-- Brand Logo -->
+                <a href="{{ route('super_admin.dashboard') }}" class="navbar-brand logo">
                     <img src={{ asset('img/logo.png') }} class="img-fluid" alt="Logo">
                 </a>
+                <!-- /Brand Logo -->
             </div>
             @auth('super_admin')
                 <ul class="nav header-navbar-rht">

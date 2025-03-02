@@ -20,6 +20,7 @@
             <tr>
                 <th>Contact Person</th>
                 <th>Booked For</th>
+                <th>Appointment type</th>
                 <th>Patient</th>
                 <th>Date / Time</th>
                 <th>Action</th>
@@ -40,17 +41,26 @@
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        @if ($appointment->dependent_id)
+                        @if ($appointment->dependant_id)
                             <li><span class="badge badge-info table-badge">Family</span></li>
                         @else
                             <li><span class="badge badge-green table-badge">Self</span></li>
                         @endif
                     </ul>
                 </td>
+                 <td class="mail-info-patient">
+                    <ul>
+                        @if ($appointment->appointment_type == 1)
+                            <li><span class="badge badge-info table-badge">Online</span></li>
+                        @else
+                            <li><span class="badge badge-green table-badge">Walk-in</span></li>
+                        @endif
+                    </ul>
+                </td>
                 <td class="mail-info-patient">
                     <ul>
-                        @if ($appointment->dependent_id)
-                            <li>{{ optional($appointment->dependent)->name ?? 'N/A' }}</li>
+                        @if ($appointment->dependant_id)
+                            <li>{{ optional($appointment->dependant)->name ?? 'N/A' }}</li>
                             <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
                         @else
                             <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>

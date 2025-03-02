@@ -1,4 +1,4 @@
-.dependent-wrap {
+.dependant-wrap {
 	border: 1px solid $__honeydew_color;
 	box-shadow: 0px 7.5px 17.5px 0px #0000000D;
 	border-radius: 10px;
@@ -13,7 +13,7 @@
 	&:last-child {
 		margin-bottom: 0;
 	}
-	.dependent-info {
+	.dependant-info {
 		display: flex;
 		display: -webkit-flex;
 		align-items:center;
@@ -23,7 +23,7 @@
 	}
 	.patinet-information {
 		min-width: 350px;
-		margin-bottom: 5px;	
+		margin-bottom: 5px;
 		@include respond-below(custom575) {
 			min-width: auto;
 		}
@@ -66,7 +66,7 @@
 	}
 	.blood-info {
 		margin-bottom: 10px;
-		p {			
+		p {
 			font-size: $__font__size__14;
 			font-weight: $__normal;
 			color: $__black__ash;
@@ -77,7 +77,7 @@
 			margin-bottom: 0;
 		}
 	}
-	.dependent-status {
+	.dependant-status {
 		display: flex;
 		display: -webkit-flex;
 		align-items:center;
@@ -104,7 +104,7 @@
 		        	    & + .active {
 		        	    	color: $__black__shade;
 		            	}
-		         	}	
+		         	}
 		         }
 		    }
 			span {
@@ -116,9 +116,9 @@
 				.deactive {
 					color: $__black__shade;
 				}
-				
+
 			}
-			
+
 		}
 		.edit-icon {
 			width: 30px;
@@ -136,7 +136,7 @@
 		}
 	}
 }
-.add-dependent {
+.add-dependant {
 	.img-upload {
 		.profile-img {
 			width: 80px;

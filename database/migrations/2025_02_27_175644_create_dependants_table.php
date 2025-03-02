@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dependents', function (Blueprint $table) {
+        Schema::create('dependants', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('patient_id')->foreign()->references('id')->on('patients')->onDelete('cascade');
             $table->string('relation')->nullable();
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dependents');
+        Schema::dropIfExists('dependants');
     }
 };

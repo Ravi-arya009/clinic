@@ -23,8 +23,8 @@ class StorePatientRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'phone' => 'required|digits_between:10,13|unique:users,phone',
-            'whatsapp' => 'required|digits_between:10,13|unique:users,whatsapp',
+            'phone' => 'required|digits_between:10,13|unique:patients,phone',
+            'whatsapp' => 'nullable|digits_between:10,13|unique:patients,whatsapp',
             'email' => 'nullable|email',
             'gender' => 'nullable|digits_between:1,2',
             'dob' => 'nullable|date',

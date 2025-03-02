@@ -18,7 +18,7 @@
     <div class="appointment-details-wrap">
         <!-- Appointment Detail Card -->
         <h4 class="fw-bold mb-3">
-            {{ $appointment->dependent_id == null ? 'Patient Information' : 'Contact Information' }}
+            {{ $appointment->dependant_id == null ? 'Patient Information' : 'Contact Information' }}
         </h4>
         <div class="appointment-wrap appointment-detail-card">
             <ul>
@@ -83,16 +83,16 @@
 
 
         {{-- dependants information --}}
-        @if ($appointment->dependent_id != null)
+        @if ($appointment->dependant_id != null)
             <h4 class="fw-bold mb-3">Patient Information</h4>
             <div class="appointment-wrap appointment-detail-card">
                 <ul>
                     <li class="appointment-info">
                         <div class="mail-info-patient">
                             <ul>
-                                <li><span class="fw-bold">Name:</span> {{ $appointment->dependent->name }}</li>
-                                <li><span class="fw-bold">Age:</span> {{ $appointment->dependent->dob ?? 'N/A' }}</li>
-                                <li><span class="fw-bold">Gender:</span> {{ $appointment->dependent->gender == 1 ? 'Male' : ($appointment->dependent->gender == 2 ? 'Female' : 'N/A') }}</li>
+                                <li><span class="fw-bold">Name:</span> {{ $appointment->dependant->name }}</li>
+                                <li><span class="fw-bold">Age:</span> {{ $appointment->dependant->dob ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Gender:</span> {{ $appointment->dependant->gender == 1 ? 'Male' : ($appointment->dependant->gender == 2 ? 'Female' : 'N/A') }}</li>
                             </ul>
                         </div>
                     </li>
@@ -100,9 +100,9 @@
                     <li class="appointment-info">
                         <div class="mail-info-patient">
                             <ul>
-                                <li><span class="fw-bold">Phone:</span> {{ $appointment->dependent->phone ?? 'N/A' }}</li>
-                                <li><span class="fw-bold">WhatsApp:</span> {{ $appointment->dependent->whatsapp ?? 'N/A' }}</li>
-                                <li><span class="fw-bold">Email:</span> {{ $appointment->dependent->email ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Phone:</span> {{ $appointment->dependant->phone ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">WhatsApp:</span> {{ $appointment->dependant->whatsapp ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Email:</span> {{ $appointment->dependant->email ?? 'N/A' }}</li>
                             </ul>
                         </div>
                     </li>
@@ -110,7 +110,7 @@
                     <li class="appointment-info">
                         <div class="mail-info-patient">
                             <ul>
-                                <li><span class="fw-bold">Relation:</span> {{ config('relations.' . $appointment->dependent->relation) ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Relation:</span> {{ config('relations.' . $appointment->dependant->relation) ?? 'N/A' }}</li>
                             </ul>
                         </div>
                     </li>

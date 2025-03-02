@@ -27,7 +27,7 @@ class AppointmentService
 
     public function getPatientAppointments($patientId)
     {
-        $response = Appointment::where('patient_id', $patientId)->where('status', 0)->with('patient', 'doctor','dependent','clinic')->get();
+        $response = Appointment::where('patient_id', $patientId)->where('status', 0)->with('patient', 'doctor','dependant','clinic')->get();
         return $response;
     }
 
@@ -39,7 +39,7 @@ class AppointmentService
 
     public function getUpcomingDoctorAppointments($doctorId, $clinicId)
     {
-        $response = Appointment::where('clinic_id', $clinicId)->where('doctor_id', $doctorId)->where('status', 0)->with('patient', 'dependent', 'timeSlot')->get();
+        $response = Appointment::where('clinic_id', $clinicId)->where('doctor_id', $doctorId)->where('status', 0)->with('patient', 'dependant', 'timeSlot')->get();
         return $response;
     }
 
@@ -56,7 +56,7 @@ class AppointmentService
     }
 
     public function getAppointmentById($appointmentId){
-        $response = Appointment::with('patient', 'patient.city', 'patient.state', 'dependent', 'timeSlot', 'appointmentDetails', 'medications', 'labTests')->where('id', $appointmentId)->first();
+        $response = Appointment::with('patient', 'patient.city', 'patient.state', 'dependant', 'timeSlot', 'appointmentDetails', 'medications', 'labTests')->where('id', $appointmentId)->first();
         return $response;
     }
 
@@ -149,5 +149,22 @@ class AppointmentService
                 'message' => 'An error occurred while saving the prescription.'
             ];
         }
+    }
+
+    public function createWalkInAppointment($patientId, $doctorId, $clinicId, $timeSlotId)
+    {
+        $appointment = Appointment::create([
+            'id' => Str::uuid(),
+            'patient_id' => $patientId,
+            'doctor_id' => $doctorId,
+            'clinic_id' => $clinicId,
+            'time_slot_id' => $timeSlotId,
+            'appointment_date' => now()->format('Y-m-d'),
+            'booking_for' => 1,
+            'appointment_type' => 2, // Walk-in
+            'payment_method' => 1,
+        ]);
+
+        return $appointment;
     }
 }

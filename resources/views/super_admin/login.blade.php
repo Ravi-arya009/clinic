@@ -49,8 +49,7 @@
         <!-- Page Content -->
         <div class="login-content-info">
             <div class="container">
-
-                <!-- Login Email -->
+                <!-- Email -->
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-6">
                         <div class="account-content">
@@ -98,8 +97,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Login Email -->
-
+                <!-- /Email -->
             </div>
         </div>
         <!-- /Page Content -->
@@ -108,7 +106,6 @@
         <div class="mouse-cursor cursor-outer"></div>
         <div class="mouse-cursor cursor-inner"></div>
         <!-- /Cursor -->
-
     </div>
     <!-- /Main Wrapper -->
 

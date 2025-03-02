@@ -1251,13 +1251,13 @@
 									<div class="accordion-item">
 										<h2 class="accordion-header" id="headingFive">
 											<a href="javascript:void(0);" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-												Can I book appointments for family members or dependents?
+												Can I book appointments for family members or dependants?
 											</a>
 										</h2>
 										<div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faq-details">
 											<div class="accordion-body">
 												<div class="accordion-content">
-													<p>Yes, in many cases, you can book appointments for family members or dependents. However, you may need to provide their personal information and consent to do so.</p>
+													<p>Yes, in many cases, you can book appointments for family members or dependants. However, you may need to provide their personal information and consent to do so.</p>
 												</div>
 											</div>
 										</div>

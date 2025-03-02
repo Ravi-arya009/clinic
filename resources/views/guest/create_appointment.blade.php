@@ -113,40 +113,40 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="mb-3 card-label">
                                                     <label class="mb-2">Name</label>
-                                                    <input type="text" class="form-control" name="dependent_name" id="dependent_name" value="{{ old('dependent_name') }}">
+                                                    <input type="text" class="form-control" name="dependant_name" id="dependant_name" value="{{ old('dependant_name') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="mb-3 card-label">
                                                     <label class="mb-2">Phone</label>
-                                                    <input type="text" class="form-control" name="dependent_phone" id="dependent_phone" value="{{ old('dependent_phone') }}">
+                                                    <input type="text" class="form-control" name="dependant_phone" id="dependant_phone" value="{{ old('dependant_phone') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="mb-3 card-label">
                                                     <label class="mb-2">WhatsApp</label>
-                                                    <input type="text" class="form-control" name="dependent_whatsapp" id="dependent_whatsapp" value="{{ old('dependent_whatsapp') }}">
+                                                    <input type="text" class="form-control" name="dependant_whatsapp" id="dependant_whatsapp" value="{{ old('dependant_whatsapp') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="mb-3 card-label">
                                                     <label class="mb-2">Email</label>
-                                                    <input type="text" class="form-control" name="dependent_email" id="dependent_email" value="{{ old('dependent_email') }}">
+                                                    <input type="text" class="form-control" name="dependant_email" id="dependant_email" value="{{ old('dependant_email') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="mb-3 card-label">
                                                     <label class="mb-2">Date Of Birth</label>
-                                                    <input type="date" name="dependent_dob" class="form-control" value="{{ old('dependent_dob') }}">
+                                                    <input type="date" name="dependant_dob" class="form-control" value="{{ old('dependant_dob') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="mb-3 card-label">
                                                     <label class="mb-2">Gender</label>
-                                                    <select name="dependent_gender" id="dependent_gender" class="form-control">
+                                                    <select name="dependant_gender" id="dependant_gender" class="form-control">
                                                         <option value="">Select</option>
-                                                        <option value="1" {{ old('dependent_gender') }}>Male</option>
-                                                        <option value="2" {{ old('dependent_gender') }}>Female</option>
+                                                        <option value="1" {{ old('dependant_gender') }}>Male</option>
+                                                        <option value="2" {{ old('dependant_gender') }}>Female</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -154,10 +154,10 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="mb-3 card-label">
                                                     <label class="mb-2">Relation</label>
-                                                    <select name="dependent_relation" id="dependent_relation" class="form-control">
+                                                    <select name="dependant_relation" id="dependant_relation" class="form-control">
                                                         <option value="">Select</option>
                                                         @foreach (config('relations') as $key => $relation)
-                                                            <option value="{{ $key }}" {{ old('dependent_relation') == $key ? 'selected' : '' }}>{{ $relation }}</option>
+                                                            <option value="{{ $key }}" {{ old('dependant_relation') == $key ? 'selected' : '' }}>{{ $relation }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

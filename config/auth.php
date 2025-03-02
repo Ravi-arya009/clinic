@@ -40,18 +40,18 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        'super_admin' => [
+            'driver' => 'session',
+            'provider' => 'super_admins',
+            'login_route' => 'super_admin.login',
+            'index_route' => 'super_admin.dashboard',
+            // 'isClinicUser' => false,
+        ],
         'patients' => [
             'driver' => 'session',
             'provider' => 'patients',
             'login_route' => 'patient.login',
             'index_route' => 'patient.dashboard'
-        ],
-        'super_admin' => [
-            'driver' => 'session',
-            'provider' => 'super_admins',
-            'login_route' => 'super_admin.login',
-            'index_route' => 'super_admin.dashboard'
         ],
         'admin' => [
             'driver' => 'session',

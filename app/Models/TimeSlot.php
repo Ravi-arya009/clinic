@@ -15,6 +15,7 @@ class TimeSlot extends Model
         'clinic_id',
         'slot_time',
         'day_of_week',
+        'slot_type',
         'status',
     ];
 
