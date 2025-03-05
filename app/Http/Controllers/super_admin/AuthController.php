@@ -3,29 +3,35 @@
 namespace App\Http\Controllers\super_admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\AuthenticateRequest;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    protected $Authservice;
+
+    public function __construct(
+        AuthService $Authservice
+    ) {
+        $this->Authservice = $Authservice;
+    }
+
     public function login()
     {
         return view('super_admin.login');
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(AuthenticateRequest $request)
     {
-        $credentials = $request->validate([
-            'phone' => 'required|digits_between:10,13',
-            'password' => 'required|min:4',
-        ]);
+        $validatedData = $request->validated();
+        $response = $this->Authservice->authenticate($validatedData, 'super_admin');
 
-        if (Auth::guard('super_admin')->attempt($credentials)) {
-            $request->session()->regenerate();
-            $indexRoute = config('auth.guards.super_admin.index_route');
-            return redirect()->route($indexRoute);
+        if ($response['status'] == 1) {
+            return redirect()->route($response['redirect_route']);
         } else {
-            return back()->withErrors(['login' => 'Incorrect Phone or Password']);
+            return back()->with(['error' => $response['message']]);
         }
     }
 

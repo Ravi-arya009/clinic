@@ -93,6 +93,7 @@
                                         </div>
                                     @endif
                                 </form>
+                                <x-Alert />
                             </div>
                         </div>
                     </div>
@@ -100,6 +101,7 @@
                 <!-- /Email -->
             </div>
         </div>
+
         <!-- /Page Content -->
 
         <!-- Cursor -->
@@ -120,6 +122,8 @@
 
     <!-- Custom JS -->
     <script src={{ asset('js/script.js') }}></script>
+
+<x-sweetAlert />
 
 </body>
 

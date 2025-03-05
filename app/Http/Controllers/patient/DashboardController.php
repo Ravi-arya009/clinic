@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\patient;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Clinic;
 use App\Services\AppointmentService;
 use Illuminate\Http\Request;
@@ -19,7 +20,10 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $currentUser = Auth::guard('patients')->user();
-        return view('patient.dashboard', compact('currentUser'));
+        $totalPatientCount = Appointment::where('patient_id', $currentUser->id)->distinct('patient_id')->count();
+        $totalDoctorAppointmentCount = Appointment::where('patient_id', $currentUser->id)->count();
+        $upcomingAppointments = Appointment::where('patient_id', $currentUser->id)->with('patient', 'timeSlot')->orderBy('appointment_date', 'desc')->limit(7)->get();
+        return view('patient.dashboard', compact('currentUser', 'upcomingAppointments', 'totalDoctorAppointmentCount', 'totalPatientCount'));
     }
 
     public function home()
@@ -39,5 +43,3 @@ class DashboardController extends Controller
         return view('patient.view_clinic', ['clinic' => $clinic]);
     }
 }
-
-

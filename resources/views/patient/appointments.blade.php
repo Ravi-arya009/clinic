@@ -48,10 +48,10 @@
                 <td class="mail-info-patient">
                     <ul>
                         @if ($appointment->dependant_id)
-                            <li>{{ optional($appointment->dependant)->name ?? 'N/A' }} <span class="badge badge-info table-badge display-inline ms-2">Family</span>
+                            <li>{{ optional($appointment->dependant)->name ?? 'N/A' }} <span class="badge  badge-green table-badge display-inline ms-2">Family</span>
                             <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
                         @else
-                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }} <span class="badge badge-green table-badge ms-2">Self</span></li>
+                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }} <span class="badge badge-info table-badge ms-2">Self</span></li>
                             <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }} </li>
                         @endif
                     </ul>

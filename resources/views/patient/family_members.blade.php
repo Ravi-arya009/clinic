@@ -25,12 +25,12 @@
             <tr class="table-appointment-wrap">
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{$dependant->name}}</li>
+                        <li>{{ $dependant->name }}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{$dependant->phone}}</li>
+                        <li>{{ $dependant->phone }}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">

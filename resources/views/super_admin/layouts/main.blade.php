@@ -3,21 +3,21 @@
 
 <head>
     <meta charset="utf-8">
-    <title>@yield('title', 'Clinic')</title>
+    <title>@yield('title', 'Doccure - Healthcare Made Simple')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
-    <meta name="keywords" content="practo clone, doccure, doctor appointment, Practo clone html template, doctor booking template">
-    <meta name="author" content="Practo Clone HTML Template - Doctor Booking Template">
+    <meta name="description" content="Doccure provides a seamless healthcare experience with features to schedule appointments with top specialists, access virtual consultations, and manage your medical records all in one place.">
+    <meta name="keywords" content="doctor appointment, medical booking, telemedicine, healthcare platform, find doctors, online consultation, medical records, patient portal, specialist consultation">
+    <meta name="author" content="Doccure Healthcare Solutions">
     <meta property="og:url" content="https://doccure.dreamstechnologies.com/html/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Doctors Appointment HTML Website Templates | Doccure">
-    <meta property="og:description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+    <meta property="og:title" content="Doccure - Your Complete Healthcare Solution">
+    <meta property="og:description" content="Connect with leading healthcare providers, schedule appointments, access telemedicine services, and manage your medical records through Doccure's comprehensive healthcare platform.">
     <meta property="og:image" content={{ asset('img/preview-banner.jpg') }}>
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="https://doccure.dreamstechnologies.com/html/">
     <meta property="twitter:url" content="https://doccure.dreamstechnologies.com/html/">
-    <meta name="twitter:title" content="Doctors Appointment HTML Website Templates | Doccure">
-    <meta name="twitter:description" content="The responsive professional Doccure template offers many features, like scheduling appointments with  top doctors, clinics, and hospitals via voice, video call & chat.">
+    <meta name="twitter:title" content="Doccure - Modern Healthcare at Your Fingertips">
+    <meta name="twitter:description" content="Experience healthcare reimagined with Doccure's innovative platform offering appointment scheduling, video consultations, prescription management, and personalized care from top medical professionals.">
     <meta name="twitter:image" content={{ asset('img/preview-banner.jpg') }}>
 
     <link href={{ asset('img/favicon.png') }} rel="icon"> <!-- Favicons -->
@@ -25,7 +25,6 @@
     <link rel="stylesheet" href={{ asset('plugins/fontawesome/css/fontawesome.min.css') }}> <!-- Fontawesome CSS -->
     <link rel="stylesheet" href={{ asset('plugins/fontawesome/css/all.min.css') }}> <!-- Fontawesome CSS -->
     <link rel="stylesheet" href={{ asset('css/feather.css') }}> <!-- Feathericon CSS -->
-    <link rel="stylesheet" href={{ asset('plugins/select2/css/select2.min.css') }}> <!-- Select2 CSS -->
     @stack('stylesheets') <!-- Inject stylesheets -->
     <link rel="stylesheet" href={{ asset('css/custom.css') }}> <!-- Main CSS -->
 </head>
@@ -76,10 +75,6 @@
     <script src={{ asset('js/bootstrap.bundle.min.js') }}></script> <!-- Bootstrap Core JS -->
     <script src={{ asset('plugins/theia-sticky-sidebar/ResizeSensor.js') }}></script> <!-- Sticky Sidebar JS -->
     <script src={{ asset('plugins/theia-sticky-sidebar/theia-sticky-sidebar.js') }}></script> <!-- Sticky Sidebar JS -->
-    <script src={{ asset('plugins/select2/js/select2.min.js') }}></script> <!-- Select2 JS -->
-    <script src={{ asset('plugins/apex/apexcharts.min.js') }}></script> <!-- Apexchart JS -->
-    <script src={{ asset('plugins/apex/chart-data.js') }}></script> <!-- Apexchart JS -->
-    <script src={{ asset('js/circle-progress.min.js') }}></script> <!-- Circle Progress JS -->
     @stack('scripts') <!-- Inject Scripts -->
     <script src={{ asset('js/script.js') }}></script> <!-- Custom JS -->
 </body>

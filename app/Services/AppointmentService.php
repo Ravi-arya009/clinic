@@ -27,7 +27,7 @@ class AppointmentService
 
     public function getPatientAppointments($patientId)
     {
-        $response = Appointment::where('patient_id', $patientId)->where('status', 0)->with('patient', 'doctor','dependant','clinic')->get();
+        $response = Appointment::where('patient_id', $patientId)->where('status', 0)->with('patient', 'doctor', 'dependant', 'clinic')->get();
         return $response;
     }
 
@@ -55,8 +55,15 @@ class AppointmentService
         return $response;
     }
 
-    public function getAppointmentById($appointmentId){
-        $response = Appointment::with('patient', 'patient.city', 'patient.state', 'dependant', 'timeSlot', 'appointmentDetails', 'medications', 'labTests')->where('id', $appointmentId)->first();
+    public function getAppointmentById($appointmentId)
+    {
+        $response = Appointment::with('clinic', 'doctor', 'patient', 'patient.city', 'patient.state', 'dependant', 'timeSlot', 'appointmentDetails', 'medications', 'labTests')->where('id', $appointmentId)->first();
+        return $response;
+    }
+
+    public function getPatientAppointmentById($appointmentId)
+    {
+        $response = Appointment::with('clinic', 'doctor', 'doctor.doctorProfile.qualification', 'patient', 'patient.city', 'patient.state', 'dependant', 'timeSlot', 'appointmentDetails', 'medications', 'labTests')->where('id', $appointmentId)->first();
         return $response;
     }
 

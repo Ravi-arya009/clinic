@@ -35,13 +35,6 @@
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs('admin.patient.create') ? 'active' : '' }}">
-                    <a href="{{ route('admin.patient.create') }}">
-                        <i class="fa-solid fa-user-plus"></i>
-                        <span>Create Patient</span>
-                    </a>
-                </li>
-
                 <li class="{{ request()->routeIs('admin.time_slots.index') ? 'active' : '' }}">
                     <a href="{{ route('admin.time_slots.index') }}">
                         <i class="fa-solid fa-calendar-day"></i>

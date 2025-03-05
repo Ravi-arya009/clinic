@@ -19,8 +19,7 @@
         <thead>
             <tr>
                 <th>Contact Person</th>
-                <th>Booked For</th>
-                <th>Appointment type</th>
+                <th>Type</th>
                 <th>Patient</th>
                 <th>Date / Time</th>
                 <th>Action</th>
@@ -30,7 +29,11 @@
         @foreach ($appointments as $appointment)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
-                    <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
+                    @if ($appointment->patient->profile_image == null)
+                        <img src="{{ asset('img/bg/ring-1.png') }}" alt="User Image">
+                    @else
+                        <img src="{{ asset('storage/profile_images/' . $appointment->patient->profile_image) }}" alt="User Image">
+                    @endif
                     <div class="patient-info">
                         <h6>{{ ucwords($appointment->patient->name) }}</h6>
                         <ul>
@@ -41,30 +44,21 @@
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        @if ($appointment->dependant_id)
-                            <li><span class="badge badge-info table-badge">Family</span></li>
-                        @else
-                            <li><span class="badge badge-green table-badge">Self</span></li>
-                        @endif
-                    </ul>
-                </td>
-                 <td class="mail-info-patient">
-                    <ul>
-                        @if ($appointment->appointment_type == 1)
-                            <li><span class="badge badge-info table-badge">Online</span></li>
-                        @else
+                        @if ($appointment->appointment_type == 2)
                             <li><span class="badge badge-green table-badge">Walk-in</span></li>
+                        @else
+                            <li><span class="badge badge-info table-badge">Online</span></li>
                         @endif
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
                         @if ($appointment->dependant_id)
-                            <li>{{ optional($appointment->dependant)->name ?? 'N/A' }}</li>
+                            <li>{{ optional($appointment->dependant)->name ?? 'N/A' }} <span class="badge  badge-green table-badge display-inline ms-2">Family</span>
                             <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
                         @else
-                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>
-                            <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
+                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }} <span class="badge badge-info table-badge ms-2">Self</span></li>
+                            <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }} </li>
                         @endif
                     </ul>
                 </td>

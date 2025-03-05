@@ -54,20 +54,6 @@
                     </a>
                 </li>
 
-                {{-- send to clinic search page --}}
-                <li class="{{ request()->routeIs('patient.clinics') ? 'active' : '' }}">
-                    <a href="{{route('patient.clinics')}}">
-                        <i class="fa-solid fa-house-chimney-medical"></i>
-                        <span>Clinics</span>
-                    </a>
-                </li>
-                {{-- send to doctor search page --}}
-                <li class="{{ request()->routeIs('patient.doctors.index') ? 'active' : '' }}">
-                    <a href="{{route('patient.doctors.index')}}">
-                        <i class="fa-solid fa-user-doctor"></i>
-                        <span>Doctors</span>
-                    </a>
-                </li>
                 <li class="{{ request()->routeIs('patient.logout') ? 'active' : '' }}">
                     <a href="{{route('patient.logout')}}">
                         <i class="fa-solid fa-right-from-bracket"></i>

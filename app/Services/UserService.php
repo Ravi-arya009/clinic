@@ -76,7 +76,6 @@ class UserService
         }
     }
 
-
     public function storeUser($data, $clinicId)
     {
         DB::beginTransaction();
@@ -108,8 +107,6 @@ class UserService
                 $profilePicture = $data['profile_picture'];
                 $newFileName = $user->id . '.' . $profilePicture->getClientOriginalExtension();
                 $profilePicture->storeAs('profile_images', $newFileName, 'public');
-
-                // making DB entry for profile picture
                 $user->profile_image = $newFileName;
                 $user->save();
             }
@@ -151,8 +148,6 @@ class UserService
         }
     }
 
-
-
     public function storeDoctorProfile($data, $userId)
     {
         try {
@@ -161,7 +156,8 @@ class UserService
                 'speciality_id' => $data['speciality'],
                 'qualification_id' => $data['qualification'],
                 'experience' => $data['experience'],
-                'consultation_fee' => $data['consultation_fee']
+                'consultation_fee' => $data['consultation_fee'],
+                'bio' => $data['bio']
             ]);
 
             if (!$doctorProfile) {
@@ -282,12 +278,21 @@ class UserService
 
             $user->save();
 
+            if (isset($data['profile_picture'])) {
+                $profilePicture = $data['profile_picture'];
+                $newFileName = $user->id . '.' . $profilePicture->getClientOriginalExtension();
+                $profilePicture->storeAs('profile_images', $newFileName, 'public');
+                $user->profile_image = $newFileName;
+                $user->save();
+            }
+
             if ($data['role'] == config('role.doctor')) {
                 $doctor = Doctor::where('user_id', $userId)->first();
                 $doctor->speciality_id = $data['speciality'];
                 $doctor->qualification_id = $data['qualification'];
                 $doctor->experience = $data['experience'];
                 $doctor->consultation_fee = $data['consultation_fee'];
+                $doctor->bio = $data['bio'];
                 $doctor->save();
             }
 
@@ -329,6 +334,23 @@ class UserService
         $user->setRelation('clinicRole', $user->clinicRole->first());
 
         return $user;
+    }
+
+    public function getTotalCliniUserCount($clinicId)
+    {
+        $response = ClinicUser::where('clinic_id', $clinicId)->count();
+        return $response;
+    }
+
+    public function getClinicDoctorCount($clinicId)
+    {
+        $response = ClinicUser::where('clinic_id', $clinicId)->where('role_id', config('role.doctor'))->count();
+
+        if (!$response) {
+            return 0;
+        }
+
+        return $response;
     }
 }
 

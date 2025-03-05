@@ -12,7 +12,7 @@
         <h3>Create Patient</h3>
     </div>
 
-    <form action="{{ route('doctor.patient.store') }}" method="POST">
+    <form action="{{ route('doctor.patient.store') }}" enctype="multipart/form-data" method="POST">
         @csrf
         @include('doctor.partials.user_card')
     </form>

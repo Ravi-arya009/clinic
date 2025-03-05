@@ -8,6 +8,7 @@ use App\Http\Requests\Clinic\UpdateClinicRequest;
 use App\Services\DataRepositoryService;
 use App\Services\ClinicService;
 
+
 class ClinicController extends Controller
 {
     protected $clinicService, $userService, $dataRepositoryService;

@@ -129,6 +129,7 @@ Route::prefix('patient')->group(function () {
         Route::get('clinic/{clinicId}', [PatientDashboardController::class, 'show'])->name('patient.clinic.show');
         Route::get('logout', [PatientAuthController::class, 'logout'])->name('patient.logout');
         Route::get('temp', [PatientDashboardController::class, 'temp'])->name('patient.temp');
+        Route::post('/download-prescription-pdf', [PatientAppointmentController::class, 'downloadPrescriptionPdf'])->name('download.prescription.pdf');
     });
 
     Route::middleware('RedirectIfAuthenticated:patients')->group(function () {
@@ -149,6 +150,8 @@ Route::get('/search/clinic', [SearchController::class, 'searchClinic'])->name('s
 Route::get('/search/all', [SearchController::class, 'all'])->name('search.all');
 Route::get('/appointment/create', [AppointmentController::class, 'create'])->name('appointment.create');
 Route::post('/appointment/store', [AppointmentController::class, 'store'])->name('appointment.store');
+
+Route::post('/download-prescription-pdf', [AppointmentController::class, 'downloadPrescriptionPdf'])->name('prescription.download');
 
 
 

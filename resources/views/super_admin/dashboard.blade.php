@@ -62,7 +62,12 @@
                                         <td>
                                             <div class="patient-info-profile">
                                                 <span class="table-avatar">
-                                                    <i class="fa-solid fa-house-chimney-medical text-info fs-3"></i>
+                                                    {{-- <i class="fa-solid fa-house-chimney-medical text-info fs-3"></i> --}}
+                                                    @if ($clinic->logo == null)
+                                                        <img src="{{ asset('img/bg/ring-2.png') }}" alt="User Image">
+                                                    @else
+                                                        <img src="{{ asset('storage/clinic_logos/' . $clinic->logo) }}" alt="User Image">
+                                                    @endif
                                                 </span>
                                                 <div class="patient-name-info">
                                                     <h5>{{ $clinic->name }}</h5>

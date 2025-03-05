@@ -80,4 +80,10 @@ class AppointmentController extends Controller
 
         return view('guest.booking_confirmed', compact('bookingData', 'appointment_date', 'slot_id', 'appointmentId'));
     }
+
+    public function downloadPrescriptionPdf(Request $request)
+    {
+        $appointment = json_decode($request->appointment_value);
+        return view('global.prescription', compact('appointment'));
+    }
 }

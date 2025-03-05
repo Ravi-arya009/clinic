@@ -60,12 +60,12 @@
 
 
 
-                <li class="{{ request()->routeIs('#') ? 'active' : '' }}">
+                {{-- <li class="{{ request()->routeIs('#') ? 'active' : '' }}">
                     <a href="#">
                         <i class="fa-duotone fa-solid fa-capsules"></i>
                         <span>Medicines</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
     </div>

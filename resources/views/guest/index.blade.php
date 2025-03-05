@@ -163,7 +163,12 @@
                     <div class="item">
                         <div class="our-doctors-card">
                             <div class="doctors-header">
-                                <img src={{ asset('img/doctors/doctor-' . str_pad(rand(1, 12), 2, '0', STR_PAD_LEFT) . '.jpg') }} alt="Ruby Perrin" class="img-fluid">
+                                {{-- <img src={{ asset('img/doctors/doctor-' . str_pad(rand(1, 12), 2, '0', STR_PAD_LEFT) . '.jpg') }} alt="Ruby Perrin" class="img-fluid"> --}}
+                                @if ($clinic->logo == null)
+                                    <img src="{{ asset('img/bg/ring-2.png') }}" alt="Clinic Logo" class="img-fluid">
+                                @else
+                                    <img src="{{ asset('storage/clinic_logos/' . $clinic->logo) }}" alt="Clinic Logo" class="img-fluid">
+                                @endif
 
                             </div>
                             <div class="doctors-body">
@@ -227,7 +232,7 @@
                     <div class="item">
                         <div class="our-doctors-card">
                             <div class="doctors-header">
-                                <img src="{{ $doctor->profile_image ? asset('img/doctors/'.$doctor->profile_image) : asset('img/default-profile-picture.webp') }}" alt="Ruby Perrin" class="img-fluid">
+                                <img src="{{ $doctor->profile_image ? asset('/storage/profile_images/' . $doctor->profile_image) : asset('img/default-profile-picture.webp') }}" alt="Profile Image" class="img-fluid">
                                 <div class="img-overlay">
                                     <span>₹{{ $doctor->consultation_fee }}</span>
                                 </div>
