@@ -1,26 +1,35 @@
-<form action="{{ $action }}" method="POST">
+
+{{-- {{dd($clinic)}} --}}
+<form action="{{ $action }}" enctype="multipart/form-data" method="POST">
     @csrf
     <div class="setting-card">
+        {{-- image upload --}}
         <div class="change-avatar img-upload">
-         <div class="profile-img">
-             @if (isset($clinic))
-                 <img src="{{ asset('storage/profile_images/' . $clinic->profile_image) }}" alt="Profile Picture">
-             @else
-                 <i class="fa-solid fa-file-image"></i>
-             @endif
-         </div>
-         <div class="upload-img">
-             <h5>Profile Picture</h5>
-             <div class="imgs-load d-flex align-items-center">
-                 <div class="change-photo">
-                     Upload New
-                     <input type="file" name="profile_picture" class="upload">
-
-                 </div>
-                 <a href="#" class="upload-remove">Remove</a>
-             </div>
-         </div>
-     </div>
+            <div class="profile-img">
+                <div class="clinic-logo">
+                    @if (isset($clinic->logo))
+                        @if (isset($clinic->logo))
+                            <img src="{{ asset('storage/clinic_logos/' . $clinic->logo) }}" alt="Clinic Logo">
+                            {{-- <img src="{{ asset('storage/profile_images/' . $user->profile_image) }}" alt="Profile Picture"> --}}
+                        @else
+                            <img src="{{ asset('img/default-profile-picture.webp') }}" alt="Default Clinic Logo">
+                        @endif
+                    @else
+                        <i class="fa-solid fa-file-image"></i>
+                    @endif
+                </div>
+            </div>
+            <div class="upload-img">
+                <h5>Clinic Logo</h5>
+                <div class="imgs-load d-flex align-items-center">
+                    <div class="change-photo">
+                        Upload New
+                        <input type="file" name="logo" class="upload">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- /image upload --}}
 
     </div>
     <div class="setting-title">

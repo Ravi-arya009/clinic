@@ -12,5 +12,32 @@
 
     @include('super_admin.partials.clinic_form', ['action' => route('super_admin.clinic.store')])
 
-    <x-sweet-alert />
+    <x-Alert />
 @endsection
+
+@push('scripts')
+    <script>
+        //Image Preview while profile update
+        const uploadInput = document.querySelector('.upload');
+        const previewContainer = document.querySelector('.profile-img');
+
+        uploadInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                const imageData = event.target.result;
+                const image = document.createElement('img');
+                image.src = imageData;
+                image.style.width = '100%';
+                image.style.height = '100%';
+                image.style.objectFit = 'cover';
+
+                previewContainer.innerHTML = '';
+                previewContainer.appendChild(image);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+@endpush

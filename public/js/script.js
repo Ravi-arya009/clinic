@@ -3895,7 +3895,7 @@ Version      : 1.3
         });
     }
 
-    $(".select2_dropdown").select2();
+    // $(".select2_dropdown").select2();
 
     $("#doctor_dropdown").on("select2:select", function (e) {
         var selectedOption = $(this).find(":selected");
@@ -4005,7 +4005,7 @@ Version      : 1.3
                 }
             },
             error: function (xhr, status, error) {
-                console.log("error");
+                console.log("error", status, xhr);
             },
         });
     });

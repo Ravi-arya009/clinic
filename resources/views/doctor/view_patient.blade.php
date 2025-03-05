@@ -11,7 +11,7 @@
 
     <x-page-header :pageContentTitle="$pageTitle" />
 
-    <form action="#" method="POST">
+    <form action="{{route('doctor.patient.update', ['patientId'=>$patient->id])}}" enctype="multipart/form-data" method="POST">
         @csrf
         @method('PUT')
         @include('doctor.partials.user_card')

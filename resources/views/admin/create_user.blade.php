@@ -17,7 +17,7 @@
         @include('admin.partials.user_card')
     </form>
 
-    <x-sweet-alert />
+    <x-Alert />
 
 @endsection
 

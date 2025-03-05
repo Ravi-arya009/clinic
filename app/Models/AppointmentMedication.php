@@ -22,4 +22,9 @@ class AppointmentMedication extends Model
         'duration',
         'instructions'
     ];
+
+    public function medicine()
+    {
+        return $this->belongsTo(MedicineMaster::class, 'medicine_id');
+    }
 }

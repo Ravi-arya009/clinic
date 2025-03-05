@@ -20,7 +20,6 @@
                     Upload New
                     <input type="file" name="profile_picture" class="upload">
                 </div>
-                <a href="#" class="upload-remove">Remove</a>
             </div>
         </div>
     </div>

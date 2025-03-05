@@ -55,6 +55,7 @@ class StoreUserRequest extends FormRequest
             'speciality' => 'required|exists:specialities,id',
             'qualification' => 'required|exists:qualifications,id',
             'experience' => 'nullable|numeric',
+            'bio' => 'nullable|string',
             'consultation_fee' => 'required|numeric',
         ];
     }

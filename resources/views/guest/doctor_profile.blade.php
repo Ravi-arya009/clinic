@@ -10,7 +10,8 @@
                     <div class="doctor-widget doctor-profile-two">
                         <div class="doc-info-left">
                             <div class="doctor-img">
-                                <img src="{{ $doctor->profile_image ? asset('img/doctors/' . $doctor->profile_image) : asset('img/default-profile-picture.webp') }}" alt="Doctor Image" class="img-fluid">
+                                {{-- <img src="{{ $doctor->profile_image ? asset('img/doctors/' . $doctor->profile_image) : asset('img/default-profile-picture.webp') }}" alt="Doctor Image" class="img-fluid"> --}}
+                                <img src="{{ $doctor->profile_image ? asset('/storage/profile_images/'.$doctor->profile_image) : asset('img/default-profile-picture.webp') }}" alt="Profile Image" class="img-fluid">
                             </div>
                             <div class="doc-info-cont">
                                 <h4 class="doc-name">
@@ -96,6 +97,7 @@
                                         <div class="col-lg-2">
                                             <div class="clinic-info">
                                                 <img src={{ asset('img/clinic/clinic-11.jpg') }} alt="Img" class="img-fluid">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-5">

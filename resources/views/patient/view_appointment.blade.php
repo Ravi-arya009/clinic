@@ -1,3 +1,4 @@
+{{-- {{ dd($appointment) }} --}}
 @extends('patient.layouts.main')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -13,70 +14,259 @@
 
 @section('content')
     <!-- Page Content -->
-    <x-page-header pageContentTitle="Appointment Details"/>
-
+    <x-page-header pageContentTitle="Appointment Details" />
     <div class="appointment-details-wrap">
-
+        <h4 class="fw-bold mb-3">
+            Booking Details
+        </h4>
         <!-- Appointment Detail Card -->
         <div class="appointment-wrap appointment-detail-card">
             <ul>
                 <li>
                     <div class="patinet-information">
                         <a href="#">
-                            <img src={{ asset('img/doctors-dashboard/doctor-profile-img.jpg') }} alt="User Image">
+                            @if ($appointment->doctor->profile_image == null)
+                                <img src="{{ asset('img/bg/ring-1.png') }}" alt="User Image">
+                            @else
+                                <img src="{{ asset('storage/profile_images/' . $appointment->doctor->profile_image) }}" alt="User Image">
+                            @endif
+
                         </a>
                         <div class="patient-info">
-                            <h6><a href="#">{{$appointment->doctor->name}} </a></h6>
+                            <h6><a href="#">Doctor Name: {{ $appointment->doctor->name }} </a></h6>
                             <div class="mail-info-patient">
                                 <ul>
-                                    <li><i class="fa-solid fa-envelope"></i>{{ optional($appointment->doctor)->email ?? 'N/A' }}</li>
-                                    <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->doctor)->phone ?? 'N/A' }}</li>
-                                    <li><i class="fas fa-map-marker-alt"></i>-</li>
-                                    {{-- make address dynamic --}}
+                                    <li><i class="fa-solid fa-phone"></i>{{ $appointment->doctor->phone ?? 'N/A' }}</li>
+                                    <li><i class="fa-solid fa-brands fa-whatsapp"></i>{{ $appointment->doctor->whatsapp ?? 'N/A' }}</li>
+                                    <li><i class="fa-solid fa-envelope"></i>{{ $appointment->doctor->email ?? 'N/A' }}</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </li>
-                <li class="appointment-info">
-                    <div class="mail-info-patient">
-                        <ul>
-                            <li><i class="fa-solid fa-calendar-days"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</li>
-                            <li><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</li>
-                        </ul>
+                <li>
+                    <div class="patinet-information">
+                        <div class="patient-info">
+                            <h6><a href="#">Clinic Name: {{ $appointment->clinic->name }} </a></h6>
+                            <div class="mail-info-patient">
+                                <ul>
+                                    <li><i class="fa-solid fa-phone"></i>{{ $appointment->clinic->phone ?? 'N/A' }}</li>
+                                    <li><i class="fa-solid fa-brands fa-whatsapp"></i>{{ $appointment->clinic->whatsapp ?? 'N/A' }}</li>
+                                    <li><i class="fa-solid fa-envelope"></i>{{ $appointment->clinic->email ?? 'N/A' }}</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </li>
-                <li class="appointment-action">
-                    <div class="detail-badge-info">
-                        <span class="badge bg-green">Completed</span>
+                <li>
+                    <div class="patinet-information">
+                        <ul>
+                            <li>
+                                <div class="patient-info">
+                                    <div class="detail-badge-info">
+                                        @switch($appointment->status)
+                                            @case(0)
+                                                <span class="badge bg-yellow">Pending</span>
+                                            @break
+
+                                            @case(1)
+                                                <span class="badge bg-green">Completed</span>
+                                            @break
+
+                                            @default
+                                                <span class="badge bg-yellow">Pending</span>
+                                        @endswitch
+                                        @if ($appointment->status == 0)
+                                        @elseif ($appointment->status == 1)
+                                        @endif
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-primary prime-btn  mb-2" data-bs-toggle="modal" data-bs-target="#end_session">Cancel Appointment</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-primary prime-btn" data-bs-toggle="modal" data-bs-target="#end_session">Reschedule Appointment</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="consult-fees">
-                        <h6>Consultation Fees : $200</h6>
-                    </div>
-                    <ul>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <ul class="detail-card-bottom-info">
                 <li>
-                    <h6>Clinic</h6>
-                    <span>{{$appointment->clinic->name}}</span>
+                    <h6>Appointment Date & Time</h6>
+                    <span>{{ date('d M Y', strtotime($appointment->appointment_date)) }} - {{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</span>
                 </li>
                 <li>
-                    <h6>Clinic Address</h6>
-                    <span>{{$appointment->clinic->address}}</span>
+                    <h6>Booking Type</h6>
+                    <span>Online</span>
                 </li>
-                <li class="detail-badge-info">
-                    <a href="#view_prescription" data-bs-toggle="modal" class="btn btn-primary prime-btn me-3">Download Prescription</a>
-                    <a href="#" class="btn reschedule-btn btn-primary-border">Reschedule Appointment</a>
+                <li>
+                    <h6>Payment Method</h6>
+                    <span>Online</span>
+                </li>
+                <li>
+                    <h6>No of Visits</h6>
+                    <span>0</span>
+                </li>
+                <li>
+                    <div class="start-btn">
+                        <a href="#" class="btn btn-secondary">History</a>
+                    </div>
                 </li>
             </ul>
         </div>
         <!-- /Appointment Detail Card -->
+        <h4 class="fw-bold mb-3">Patient Information</h4>
+        @if ($appointment->dependant_id != null)
+            <div class="appointment-wrap appointment-detail-card">
+                <ul>
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Name:</span> {{ $appointment->dependant->name }}</li>
+                                <li><span class="fw-bold">Age:</span> {{ $appointment->dependant->dob ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Gender:</span> {{ $appointment->dependant->gender == 1 ? 'Male' : ($appointment->dependant->gender == 2 ? 'Female' : 'N/A') }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Phone:</span> {{ $appointment->dependant->phone ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">WhatsApp:</span> {{ $appointment->dependant->whatsapp ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Email:</span> {{ $appointment->dependant->email ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Relation:</span> {{ config('relations.' . $appointment->dependant->relation) ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        @else
+            <div class="appointment-wrap appointment-detail-card">
+                <ul>
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Name:</span> {{ $appointment->patient->name }}</li>
+                                <li><span class="fw-bold">Age:</span> {{ $appointment->patient->dob ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Gender:</span> {{ $appointment->patient->gender == 1 ? 'Male' : ($appointment->patient->gender == 2 ? 'Female' : 'N/A') }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Phone:</span> {{ $appointment->patient->phone ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">WhatsApp:</span> {{ $appointment->patient->whatsapp ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Email:</span> {{ $appointment->patient->email ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Relation:</span> {{ 'Self' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        @endif
+
+        <!-- /Appointment Detail Card -->
+        @if ($appointment->status == 1)
+            <div class="create-appointment-details">
+                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#view_prescription" class="btn btn-primary prime-btn float-end">View Prescription</a>
+                <h5 class="head-text">Perscription</h5>
+                <div class="create-details-card">
+                    <div class="create-details-card-body">
+                        <div class="start-appointment-set mb-3">
+                            <div class="form-bg-title">
+                                <h5>Clinical Notes</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="text-dark ms-2">
+                                        {{ $appointment->appointmentDetails->notes }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="start-appointment-set mb-3">
+                            <div class="form-bg-title">
+                                <h5>Medications</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table-hover table-responsive table-dark w-100 mx-2">
+                                        <thead class="bg-dark">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Dosage</th>
+                                                <th>Duration</th>
+                                                <th>Instructions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-dark">
+                                            @foreach ($appointment->medications as $medication)
+                                                <tr class="table-appointment-wrap">
+                                                    <td>{{ $medication->medicine->name }}</td>
+                                                    <td>{{ $medication->dosage }}</td>
+                                                    <td>{{ $medication->duration }}</td>
+                                                    <td>{{ $medication->instructions }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="start-appointment-set mb-3">
+                            <div class="form-bg-title">
+                                <h5>Laboratory Tests</h5>
+                            </div>
+                            <div class="row meditation-row">
+                                @foreach ($appointment->labTests as $appointmentLabTest)
+                                    <div class="col-md-12" id="lab-test-row">
+                                        <div class="d-flex flex-wrap medication-wrap align-items-center">
+                                            <p class="ms-2">{{ $loop->index + 1 }}. {{ $appointmentLabTest->id }}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="start-appointment-set mb-3">
+                            <div class="form-bg-title">
+                                <h5>Advice</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="text-dark ms-2">
+                                        {{ $appointment->appointmentDetails->advice }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <x-Alert />
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
+
+
 @endsection
 @section('modal')
     <!-- Appointment End Modal -->
@@ -115,186 +305,10 @@
                     </button>
                 </div>
                 <div class="modal-body pb-0">
-                    <div class="prescribe-download">
-                        <h5>21 Mar 2024</h5>
-                        <ul>
-                            <li><a href="javascript:void(0);" class="print-link"><i class="fa-solid fa-print"></i></a></li>
-                            <li><a href="#" class="btn btn-primary prime-btn">Download</a></li>
-                        </ul>
-                    </div>
-                    <div class="view-prescribe-details">
-                        <div class="hospital-addr">
-                            <div class="invoice-logo">
-                                <img src={{ asset('img/logo.png') }} alt="logo">
-                            </div>
-                            <h5>16, Wardlow, Buxton, Derbyshire, SK17 8RW. Phone : 01298 872268 </h5>
-                            <p>Monday to Sunday - 09:30am to 12:00pm</p>
-                        </div>
+                    <span id="prescription">
+                        @include('global.prescription')
 
-                        <!-- Invoice Item -->
-                        <div class="invoice-item">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="invoice-info">
-                                        <h6 class="customer-text">Dr Edalin Hendry</h6>
-                                        <p>BDS, MDS - Oral & Maxillofacial Surgery</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="invoice-info2">
-                                        <p><span>Date : </span>25 Jan 2024, 07:00</p>
-                                        <p><span>Appointment Type : </span>Video</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="patient-id">
-                                        <h6>Patient Details</h6>
-                                        <div class="patient-det">
-                                            <h6>Kelly Joseph</h6>
-                                            <ul>
-                                                <li>28Y / Male</li>
-                                                <li>Blood : O+ve</li>
-                                                <li>Patient / Consult ID : OP1245654 / C243546566 </li>
-                                                <li>Type : Outpatient</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Invoice Item -->
-
-                        <div class="appointment-notes">
-                            <h3>Appointment Note</h3>
-                        </div>
-                        <div class="appoint-wrap">
-                            <h5>Vitals</h5>
-                            <ul>
-                                <li><span>Pulse : </span> 64 Bpm</li>
-                                <li><span>Systolic BP : </span>100mmHg</li>
-                                <li><span>Diastolic : </span>60mmHg</li>
-                                <li><span>Spo2 : </span>100%</li>
-                                <li><span>BSA : </span>1.68</li>
-                                <li><span>Height : </span>159 cm</li>
-                                <li><span>Weight : </span>64 Kg</li>
-                                <li><span>Patient Direct from : </span>Walk in / OPD</li>
-                                <li><span>Body Mass Index : </span>25.16 BMI</li>
-                                <li><span>Allergies : </span>Pain near left chest, Pelvic salinity</li>
-                            </ul>
-                        </div>
-                        <div class="appoint-wrap">
-                            <h5>Previous Medical History</h5>
-                            <p>The patient has a history of type 2 diabetes mellitus diagnosed in 2018, well-controlled on metformin. Additionally, the patient underwent appendectomy in 2020 without postoperative complications.</p>
-                        </div>
-                        <div class="appoint-wrap">
-                            <h5>Clinical Notes</h5>
-                            <p>The patient presents with a 3-day history of worsening cough and fever, peaking at 38.5°C, noted for decreased appetite. Physical examination reveals bilateral wheezing and crackles on lung auscultation, suggestive of a respiratory infection.</p>
-                        </div>
-                        <div class="appoint-wrap">
-                            <h5>Complaint</h5>
-                            <p>An account of the present illness, which includes the circumstances surrounding the onset of recent health changes and the chronology of subsequent events that have led the patient to seek medi</p>
-                        </div>
-                        <div class="appoint-wrap">
-                            <h5>Medications</h5>
-                            <p>The patient has a history of type 2 diabetes mellitus diagnosed in 2018, well-controlled on metformin. Additionally, the patient underwent appendectomy in 2020 without postoperative complications.</p>
-                        </div>
-                        <div class="appoint-wrap">
-                            <h5>Advice</h5>
-                            <p>An account of the present illness, which includes the circumstances surrounding the onset of recent health changes and the chronology of subsequent events that have led the patient to seek medicine</p>
-                        </div>
-                        <div class="appoint-wrap">
-                            <h5>Lab Tests</h5>
-                            <p class="mb-0">1. Liver Function Tests (LFTs)</p>
-                            <p>2. Hemoglobin A1c (HbA1c)</p>
-                        </div>
-                        <div class="appoint-wrap">
-                            <h5>Follow Up</h5>
-                            <p class="mb-0">After 3 Months in empty Stomach</p>
-                            <p>Lab test for Glucose Level</p>
-                        </div>
-
-
-                        <!-- Invoice Item -->
-                        <div class="invoice-item invoice-table-wrap">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table-responsive inv-table">
-                                        <table class="invoice-table table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>SNO</th>
-                                                    <th>Medecine Name</th>
-                                                    <th>Dosage</th>
-                                                    <th>Frequency</th>
-                                                    <th>Duration</th>
-                                                    <th>Timings</th>
-                                                    <th>Instruction</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Ecosprin 75MG [Asprin 75 MG Oral Tab]</td>
-                                                    <td>75 mg <span>Oral Tab</span></td>
-                                                    <td>1-0-0-1</td>
-                                                    <td>1 month</td>
-                                                    <td>Before Meal</td>
-                                                    <td>Take in alternate das, with hot water</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Alexer 90MG Tab</td>
-                                                    <td>90 mg <span>Oral Tab</span></td>
-                                                    <td>1-0-0-1</td>
-                                                    <td>1 month</td>
-                                                    <td>Before Meal</td>
-                                                    <td>Take in alternate das, with hot water</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Ramistar XL2.5</td>
-                                                    <td>60 mg <span>Oral Tab</span></td>
-                                                    <td>1-0-0-0</td>
-                                                    <td>1 month</td>
-                                                    <td>After Meal</td>
-                                                    <td>Take in alternate das, with hot water</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Metscore</td>
-                                                    <td>90 mg <span>Oral Tab</span></td>
-                                                    <td>1-0-0-1</td>
-                                                    <td>1 month</td>
-                                                    <td>After Meal</td>
-                                                    <td>Take in alternate das, with hot water</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Invoice Item -->
-
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <div class="scan-wrap">
-                                    <h6>Scan to download report</h6>
-                                    <img src={{ asset('img/scan.png') }} alt="scan">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="prescriber-info">
-                                    <h6>Dr. Edalin Hendry</h6>
-                                    <p>Dept of Cardiology</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <ul class="nav inv-paginate justify-content-center">
-                            <li>Page 01 of 02</li>
-                        </ul>
-                    </div>
+                    </span>
                 </div>
             </div>
         </div>
@@ -304,4 +318,38 @@
 
 @push('scripts')
     <script src={{ asset('plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js') }}></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#downloadPdfBtn').click(function() {
+                var modalContent = $('#view_prescription .modal-body').html();
+
+                $.ajax({
+                    url: '{{ route('prescription.download') }}',
+                    method: 'POST',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        html_content: modalContent,
+                        appointment: "{{ json_encode($appointment) }}",
+                    },
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        var url = window.URL.createObjectURL(new Blob([data]));
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'prescription.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error downloading PDF:', error);
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

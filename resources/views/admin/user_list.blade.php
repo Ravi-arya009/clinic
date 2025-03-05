@@ -46,7 +46,7 @@
         @foreach ($clinicUsers as $clinicUser)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
-                    <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
+                    <img src="{{ $clinicUser->user->profile_image ? asset('/storage/profile_images/' . $clinicUser->user->profile_image) : asset('img/profile-01.jpg') }}" alt="Profile Image" style="width: 50px; height:50px">
                     <div class="patient-info">
                         <p>#Apt0001</p>
                         <h6>{{ $clinicUser->user->name }}</h6>

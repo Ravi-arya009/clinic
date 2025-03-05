@@ -37,5 +37,11 @@
                 <input type="text" name="consultation_fee" id="consultation_fee" class="form-control" value="{{ old('consultation_fee', $user->doctorProfile->consultation_fee ?? '') }}">
             </div>
         </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="form-wrap">
+                <label class="col-form-label">Bio</label>
+                <textarea name="bio" id="bio" class="form-control">{{ old('consultation_fee', $user->doctorProfile->bio ?? '') }}</textarea>
+            </div>
+        </div>
     </div>
 </div>

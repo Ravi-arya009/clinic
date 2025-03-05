@@ -4,8 +4,10 @@ namespace App\Http\Controllers\patient;
 
 use App\Http\Controllers\Controller;
 use App\Services\AppointmentService;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class AppointmentController extends Controller
 {
@@ -23,8 +25,9 @@ class AppointmentController extends Controller
         return view('patient.appointments', compact('appointments'));
     }
 
-    public function show($appointmentId){
-        $appointment = $this->appointmentService->getAppointmentById($appointmentId);
+    public function show($appointmentId)
+    {
+        $appointment = $this->appointmentService->getPatientAppointmentById($appointmentId);
         return view('patient.view_appointment', compact('appointment'));
     }
 
@@ -33,4 +36,5 @@ class AppointmentController extends Controller
         $appointments = $this->appointmentService->getHistoricalPatientAppointments($this->patientId);
         return view('patient.appointments', compact('appointments'));
     }
+
 }

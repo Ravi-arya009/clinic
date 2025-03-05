@@ -30,12 +30,15 @@ class SearchController extends Controller
             })->limit(5)
             ->get();
 
-        $doctors = User::select('id', 'name')
-            ->where('name', 'like', "%{$searchString}%")
-            ->where('role_id', config('role.doctor'))
+        $doctors = User::select('users.id', 'users.name')
+            ->join('clinic_users', 'users.id', '=', 'clinic_users.user_id')
+            ->where('users.name', 'like', "%{$searchString}%")
+            ->where('clinic_users.role_id', config('role.doctor'))
             ->when($searchCity, function ($query, $searchCity) {
-                return $query->where('city_id', $searchCity);
-            })->limit(5)->get();
+                return $query->where('users.city_id', $searchCity);
+            })
+            ->limit(5)
+            ->get();
 
         return compact(['clinics', 'doctors']);
     }

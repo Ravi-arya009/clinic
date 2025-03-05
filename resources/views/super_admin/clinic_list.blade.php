@@ -40,7 +40,12 @@
         @foreach ($clinics as $clinic)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
-                    <img src="{{ asset('img/bg/ring-2.png') }}" alt="User Image">
+                    @if ($clinic->logo == null)
+                        <img src="{{ asset('img/bg/ring-2.png') }}" alt="User Image">
+                    @else
+                        <img src="{{ asset('storage/clinic_logos/' . $clinic->logo) }}" alt="User Image">
+                    @endif
+
                     <div class="patient-info">
                         <h6>{{ $clinic->name }}</h6>
                     </div>

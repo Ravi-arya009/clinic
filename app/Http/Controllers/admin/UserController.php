@@ -27,6 +27,7 @@ class UserController extends Controller
     public function index($clinicSlug)
     {
         $clinicUsers = $this->userService->getUsersByClinicId($this->clinicId);
+        // dd($clinicUsers);
         return view('admin.user_list', compact('clinicUsers'));
     }
 
@@ -73,6 +74,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $clinicSlug, $userId)
     {
         $validatedData = $request->validated();
+        // dd($validatedData);
         $response = $this->userService->updateUser($userId, $validatedData);
 
         if ($response['success'] == false) {

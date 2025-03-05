@@ -32,6 +32,7 @@ class UpdatePatientRequest extends FormRequest
             'city' => 'nullable|exists:cities,id',
             'address' => 'nullable|string|max:500',
             'pincode' => 'nullable|digits_between:5,10',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

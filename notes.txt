@@ -338,8 +338,11 @@ make quick view modal for clinics and anywhere else needed
 
 #fix now
 make header images dynamic after the superadmin and admin logs in
-
-
+make success and error alert use default modals
+login pages of super admin and admin are not global, return back to this.
+fill appointment type 1/2 while creating appointments.
+calculate age and show age at place of dob in appointments
+History system (use default modals)
 #process
 -Check Routes
     -proper naming conventions according to laravel standards.
@@ -376,3 +379,116 @@ Check Views
             -lot of data repository tables can be made less redundant.
             -other tables such as lists, appointments, user etc can be made more global.
 
+
+#start from here
+on patients view appointment page make another card for patient information
+make yet another card that'll display details of the perscription. The base layout would be same just instead of input fields there would be display elements
+    -in this card make an button to download the prescription.
+
+walking appointment is happening make the necessary ui changes where needed.
+make prescription and invoice feature.
+make logo and images feature.
+
+histroy button on view appointment should be conditioned according to the appointment count.
+
+labtest's name is not fetching on the patient's panel fix it today.
+fix the ui of medicines table on the patients view appointment page.
+fix the dashboard for admin, doctor and patient's panel
+on user list page in admin. fetch original progfile image, if not available then show a default image.
+remove medicines options from the doctor panels sidebar.
+also remove unnceccesary items from the admin sidebar
+doctor's profile image is not getting fetched on the app frontend.
+    -it's not getting fetched on the doctor's profile too.
+    -fix it here and everywhere.
+
+add bio field in the cerate and update doctor in the admin panel while creating the users.
+
+
+while creating appointments on doctor panel there are mutliple buttons at button`
+    -submit, cancel, save and end appointment. keep only the required once.
+
+-change patients image in upcoming apointments at admin dashboard.
+
+#start from here.
+-make presctiptions and invoice. make them downloadable.
+-see above list too. fix necessary things such as logos, profile pictures etc.
+
+
+-need to give css height according to the dummy images provided in the doccure template.
+    -create classes
+
+
+#today
+-perscription
+    -create another view with a route. (Done)
+        -include that in modal. (Done)
+        -download button will call this route. (not working for some reason, do it later)
+-Invoice
+    -Decide when it gets activated.
+    -when and what to show.
+    *How and payment will be done and who'll do it.
+-Misc. (currently working)
+    -Start From super admin panel and go through all the processes and panels. Including website and patient.
+        -fix anything that's broken.
+            -Dashboard panels.
+            -sidebar items(only necessary items should be kept).
+        -Add any missing fields or text.
+        -check for proper titles.
+
+#Currently working
+
+        refresh and check
+        -make sure images are being fetched on views correctly(doctor/clinic profile. create/view user and clinic. on the app's landing etc.)
+
+        -super admin
+            only data repository features are left. everything else is working.
+
+        ##admin
+        -Everything is working.
+
+        #doctor
+        -everything is working.
+
+        #patient
+            -make prescriptions
+            -make invoices
+            -make family members sidebar option
+            -show historical visits.
+
+dependents should aslo be shown to the my patient list of doctor. (not needed, contact person and patient both are being displayed.
+-instead of submit on appointment page on doctor, do something that would open the modal of save and end appointment on the update page)
+-make unique ids for users clinics etc to show on the view (maybe)
+
+#start from here.
+users and clinics are getting fetched on the app's landing.
+user profile images is working on admins panel. continue. with other features and then with doctor panenl
+
+#Next (mayb)
+create a datatable that can add the rows and use it everywehre (in data repository and family dependants).
+
+##Ask
+-who will confirm the pending appointments
+-who will oversee the payments
+    -staff, receptionist panel will do.
+
+Nedd a staff panel
+
+
+### Where to start ###
+
+#start from the begining
+    -check migrations.
+    -models with proper fillables
+        -proper and optimized relations.
+        -service classes (separation of concerns)
+        -controllers functions and ther names
+        -routes according to proper naming conventions.
+    -create glbals.
+        -select 2
+        -datatables
+        -sweet alert
+        - partials
+            -image upload sections
+            -cards
+            -tables
+            -lists

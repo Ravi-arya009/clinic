@@ -40,7 +40,7 @@
             @if (auth()->guard('patients')->check())
                 <ul class="nav header-navbar-rht">
                     <li class="register-btn">
-                        <a href="#" class="btn btn-primary log-btn"><span class="px-3">Hi, {{ ucfirst(auth()->guard('patients')->user()->name) }}</span></a>
+                        <a href="{{route('patient.dashboard')}}" class="btn btn-primary log-btn"><span class="px-3">Hi, {{ ucfirst(auth()->guard('patients')->user()->name) }}</span></a>
                     </li>
                     <li class="register-btn">
                         <a href="{{route('patient.logout')}}" class="btn btn-primary log-btn"><span class="px-3">Logout</span></a>

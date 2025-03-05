@@ -49,6 +49,14 @@ class PatientService
                     'message' => 'Something went wrong while creating Patient'
                 ];
             }
+
+            if (isset($data['profile_picture'])) {
+                $profilePicture = $data['profile_picture'];
+                $newFileName = $patient->id . '.' . $profilePicture->getClientOriginalExtension();
+                $profilePicture->storeAs('profile_images', $newFileName, 'public');
+                $patient->profile_image = $newFileName;
+                $patient->save();
+            }
             return [
                 'success' => true,
                 'message' => 'Patient created successfully',
@@ -86,6 +94,14 @@ class PatientService
             $patient->address = $data['address'];
             $patient->pincode = $data['pincode'];
             $patient->save();
+
+            if (isset($data['profile_picture'])) {
+                $profilePicture = $data['profile_picture'];
+                $newFileName = $patient->id . '.' . $profilePicture->getClientOriginalExtension();
+                $profilePicture->storeAs('profile_images', $newFileName, 'public');
+                $patient->profile_image = $newFileName;
+                $patient->save();
+            }
 
             return [
                 'success' => true,

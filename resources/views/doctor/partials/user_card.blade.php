@@ -2,9 +2,9 @@
     <div class="change-avatar img-upload">
         <div class="profile-img">
             <div class="profile-img">
-                @if (isset($user))
-                    @if (isset($user->profile_image))
-                        <img src="{{ asset('storage/profile_images/' . $user->profile_image) }}" alt="Profile Picture">
+                @if (isset($patient))
+                    @if (isset($patient->profile_image))
+                        <img src="{{ asset('storage/profile_images/' . $patient->profile_image) }}" alt="Profile Picture">
                     @else
                         <img src="{{ asset('img/default-profile-picture.webp') }}" alt="Default Profile Picture">
                     @endif
@@ -20,7 +20,6 @@
                     Upload New
                     <input type="file" name="profile_picture" class="upload">
                 </div>
-                <a href="#" class="upload-remove">Remove</a>
             </div>
         </div>
     </div>
@@ -138,3 +137,46 @@
 <div class="modal-btn text-end">
     <button type="submit" class="btn btn-primary prime-btn">Save Changes</button>
 </div>
+
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $(".doctor-infofmation-card").hide();
+            if ($("#role").val() == '{{ config('role.doctor') }}') {
+                $(".doctor-infofmation-card").show();
+            }
+            $('#role').on('change', function() {
+                if ($(this).val() === '{{ config('role.doctor') }}') {
+                    $(".doctor-infofmation-card").show();
+                } else {
+                    $(".doctor-infofmation-card").hide();
+                }
+            });
+        })
+
+
+        //Image Preview while profile update
+        const uploadInput = document.querySelector('.upload');
+        const previewContainer = document.querySelector('.profile-img');
+
+        uploadInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                const imageData = event.target.result;
+                const image = document.createElement('img');
+                image.src = imageData;
+                image.style.width = '100%';
+                image.style.height = '100%';
+                image.style.objectFit = 'cover';
+
+                previewContainer.innerHTML = '';
+                previewContainer.appendChild(image);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+@endpush

@@ -16,16 +16,21 @@
     <!-- Page Content -->
     <x-page-header :pageContentTitle="$pageTitle" />
     <div class="appointment-details-wrap">
-        <!-- Appointment Detail Card -->
         <h4 class="fw-bold mb-3">
-            {{ $appointment->dependant_id == null ? 'Patient Information' : 'Contact Information' }}
+            Booking Details
         </h4>
+        <!-- Appointment Detail Card -->
         <div class="appointment-wrap appointment-detail-card">
             <ul>
                 <li>
                     <div class="patinet-information">
-                        <a href="patient-profile.html">
-                            <img src={{ asset('img/doctors-dashboard/profile-02.jpg') }} alt="User Image">
+                        <a href="{{route('doctor.patient.show', ['patientId'=>$appointment->patient->id])}}">
+                            @if ($appointment->patient->profile_image == null)
+                                <img src="{{ asset('img/bg/ring-1.png') }}" alt="User Image">
+                            @else
+                                <img src="{{ asset('storage/profile_images/' . $appointment->patient->profile_image) }}" alt="User Image">
+                            @endif
+
                         </a>
                         <div class="patient-info text-black">
                             <span class="fw-bold">Contact Person:</span> {{ ucwords($appointment->patient->name) }}
@@ -52,7 +57,21 @@
                 {{-- change status according to the appointment  status --}}
                 <li class="appointment-action">
                     <div class="detail-badge-info">
-                        <span class="badge bg-yellow">Pending</span>
+                        @switch($appointment->status)
+                            @case(0)
+                                <span class="badge bg-yellow">Pending</span>
+                            @break
+
+                            @case(1)
+                                <span class="badge bg-green">Completed</span>
+                            @break
+
+                            @default
+                                <span class="badge bg-yellow">Pending</span>
+                        @endswitch
+                        @if ($appointment->status == 0)
+                        @elseif ($appointment->status == 1)
+                        @endif
                     </div>
                 </li>
             </ul>
@@ -80,11 +99,10 @@
                 </li>
             </ul>
         </div>
-
-
+        <!-- /Appointment Detail Card -->
         {{-- dependants information --}}
+        <h4 class="fw-bold mb-3">Patient Information</h4>
         @if ($appointment->dependant_id != null)
-            <h4 class="fw-bold mb-3">Patient Information</h4>
             <div class="appointment-wrap appointment-detail-card">
                 <ul>
                     <li class="appointment-info">
@@ -116,9 +134,39 @@
                     </li>
                 </ul>
             </div>
+        @else
+            <div class="appointment-wrap appointment-detail-card">
+                <ul>
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Name:</span> {{ $appointment->patient->name }}</li>
+                                <li><span class="fw-bold">Age:</span> {{ $appointment->patient->dob ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Gender:</span> {{ $appointment->patient->gender == 1 ? 'Male' : ($appointment->patient->gender == 2 ? 'Female' : 'N/A') }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Phone:</span> {{ $appointment->patient->phone ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">WhatsApp:</span> {{ $appointment->patient->whatsapp ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Email:</span> {{ $appointment->patient->email ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Relation:</span> {{ 'Self' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         @endif
-
-
         <!-- /Appointment Detail Card -->
         <div class="create-appointment-details">
             <h5 class="head-text">Perscription</h5>

@@ -28,7 +28,11 @@
         @foreach ($patients as $patient)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
-                    <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
+                    @if ($patient->profile_image == null)
+                        <img src="{{ asset('img/bg/ring-1.png') }}" alt="User Image">
+                    @else
+                        <img src="{{ asset('storage/profile_images/' . $patient->profile_image) }}" alt="User Image">
+                    @endif
                     <div class="patient-info">
                         <p>#Apt0001</p>
                         <h6>{{ $patient->name }}</h6>

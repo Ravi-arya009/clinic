@@ -95,6 +95,15 @@ class ClinicService
                 'contact_person_whatsapp' => $data['contact_person_whatsapp'],
             ]);
 
+            //storing clinic logo
+            if (isset($data['logo'])) {
+                $clinicLogo = $data['logo'];
+                $newFileName = $clinic->id . '.' . $clinicLogo->getClientOriginalExtension();
+                $clinicLogo->storeAs('clinic_logos', $newFileName, 'public');
+                $clinic->logo = $newFileName;
+                $clinic ->save();
+            }
+
             $user = $this->userService->storeClinicAdmin($data['admin_name'], $data['admin_phone']);
             $assignedAdmin = $this->userService->assignClinicRoleToUser($user->id, $clinic->id, config('role.admin'));
 
@@ -139,6 +148,14 @@ class ClinicService
                 'contact_person_phone' => $data['contact_person_phone'],
                 'contact_person_whatsapp' => $data['contact_person_whatsapp']
             ]);
+
+            if (isset($data['logo'])) {
+                $clinicLogo = $data['logo'];
+                $newFileName = $clinic->id . '.' . $clinicLogo->getClientOriginalExtension();
+                $clinicLogo->storeAs('clinic_logos', $newFileName, 'public');
+                $clinic->logo = $newFileName;
+                $clinic->save();
+            }
 
             return [
                 'success' => true,
