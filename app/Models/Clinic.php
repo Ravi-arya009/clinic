@@ -42,15 +42,22 @@ Clinic extends Model
     public function admins()
     {
         return $this->belongsToMany(User::class, 'clinic_users')
-        ->where('clinic_users.role_id', config('role.admin'));
+            ->where('clinic_users.role_id', config('role.admin'));
     }
 
     public function speciality()
     {
         return $this->belongsTo(Speciality::class, 'speciality_id', 'id')->select('id', 'name', 'image');
     }
+
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'id')->select('id', 'name');
+    }
+
+    public function WorkingHours()
+    {
+        return $this->hasMany(ClinicWorkingHour::class);
+
     }
 }

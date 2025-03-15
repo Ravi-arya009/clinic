@@ -39,7 +39,12 @@
         @foreach ($appointments as $appointment)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
-                    <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
+                    {{-- <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image"> --}}
+                    @if (isset($appointment->patient->profile_image))
+                        <img src="{{ asset('storage/profile_images/' . $appointment->patient->profile_image) }}" alt="User Image" class="profile_picture">
+                    @else
+                        <img src="{{ asset('img/default-profile-picture.webp') }}" alt="User Image" class="profile_picture">
+                    @endif
                     <div class="patient-info">
                         <p>#Apt0001</p>
                         <h6>{{ ucwords($appointment->patient->name) }}</h6>
@@ -64,7 +69,7 @@
                     </ul>
                 </td>
                 <td class="appointment-start">
-                    <a href="{{route('admin.appointment.show',['appointmentId' => $appointment->id])}}" class="start-link">View</a>
+                    <a href="{{ route('admin.appointment.show', ['appointmentId' => $appointment->id]) }}" class="start-link">View</a>
                 </td>
             </tr>
         @endforeach

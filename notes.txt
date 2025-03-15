@@ -48,8 +48,6 @@
 
 -start with clinic admin backend and check everything
 
--add address in patients table and include it on the view appointment page.
-
 -appointment details should be create or update instead of just create.
 -add press enter to upate medicine. this feature is working while adding the medicine.
     -refactor jquery code for medicines.
@@ -69,7 +67,6 @@
 
 #### Admin ####
 
--create user.
 -on guest doctor profile send data using sessions or something else. do not use get in a href. and use validation for qualificaion,speciality and other nullable columns.
 
 app logo, name, etc should come from a single place throughout the whole app.
@@ -82,25 +79,15 @@ check why clinicSlug is a compulsory parameter in some functions.
 -currently if the medicine row is left blank an integrity constraint error for not nullable column is thrown. if the row is deleted, it works fine.
 -in medicine section when a medicine is added then the edit action button doesn't work because the whole section is rendered dynamically via js, fix that.
 
-#next
--remove bloats from appointments page. (use datatables then remove)
-generate perscription dynamically after the appointment ends.
-
 -fix view clinic page on guest (when testing guest/patient).
 
--change patient's contact information on appointments list. currently it's showing contact person's info.
-    -it'll happen after gues user is able to add multiple patients to their account.
-
 -medicine's list datable is not loading medicine name automatically when updating the medicine second time.
-#######naveen sir's changes####
 
-fetch doctor's list randomly.
-alternate/patient's phone number (otp,call will be recieved on this). with checkmarks.
-    patient's account can add multiple pateint's on their own account. (max 5)
+#######naveen sir's changes####
+patient's account can add multiple pateint's on their own account. (max 5)
  od bd tds,sos (doctor's medicine)
 sos medicine (take when required)
 make medicine ui seamless (after meal)
-turn on laboratory test (ask rahul sir)
 follow up mein calendar lagao which shows sundays marked with red.
 doctor's perscription has a qr that sends to website. (show text login to see medical details/history etc.)
 #bug
@@ -113,9 +100,6 @@ put common partials, layouts, views, and controllers in a single global place. (
 admin can not edit patient type user because patients are getting saved in a different table than user(just a theory, check it.).
 
 add necessary columns in patients migration also update the patient edit in doctor's panel .
-
-fix appointment page.
-    remove patient's information (age, bloodgroup etc) or add into db.
 
 while storing medicines. compositions can also be stored. it's options.
     -can be seached using composition.
@@ -134,21 +118,12 @@ while storing medicines. compositions can also be stored. it's options.
 ####current task ####
 
 
-find a way to associate new patient with admin or doctor.
-    If the patient is new, he/she doesn't have any apointments by default and isn't associated with any clinic.
-    find a way to overcome this when creating new patient using admin or doctor's panel.
-
-
-walk in patient have possibly a solution. look into the recent chats of the claude.
-
-
 since clinic's admin is a user now. we can call a partial to create admin since it needs basic user details only. call this partial everhwhere else.
     -for now, only storing name, phone and password. once the parital is made can also include the same on the clinic's creation page.
     -need to take care of validation. user's validation will be applied, instead of calling createClinicAdmin, can simple call create use inside.
 
 
 ###start from here ###
-
 
 
 fix all the authentication. since the db structure is changed now, see if same auth can be used for all the users.
@@ -169,8 +144,6 @@ make the auth and middlewares universal so this can be used for multiple user ty
 
 ########################
 
-can make a component for the errors we call on the view pages (if error->any(). if('success') etc.)
-
 ##Super admin##
 -Everything works perfectly.
 -Only Low priority tasks are left.
@@ -181,10 +154,6 @@ can make a component for the errors we call on the view pages (if error->any(). 
 
 - states, city, specialities can use seeder for input, skipping the cruds for these. (very low priotiry)
     - states, city, specialities can use medicine masters layout partials, logic etc. write once used many.
-
-- fix upload image system ui. (very low priority)
-    -will get automatically fixed when i fix it for other panels. just copy it
-
 
 #start from here
 user is getting created on admin panel. including doctors.
@@ -199,13 +168,8 @@ user is getting created on admin panel. including doctors.
     in controller, makes the code redundant.
 
 
-#####
-image upload for user is happening. the ui is broken, check it.
-implement the image upload on the clinic.
-####
-
 ### Extra ###
-    -Review clinic slung manager middleware. it might cause problems when the clinic session is not set. think again and fix any edge cases that are found.
+    -Review clinic slug manager middleware. it might cause problems when the clinic session is not set. think again and fix any edge cases that are found.
 
 
 ** need to create a role checking middleware or helper function and it'll run automatically before doing a task that needs roles and permissions.
@@ -214,52 +178,20 @@ implement the image upload on the clinic.
     -Send proper errors from service class.
     -Use x-alert
 
-#now
--Create Patient
-    -Use the user card is possible
-    -make create, index, update,
-
-#start from here
-make index (dependency, need to make appointments first since the doctor's patients are coming form the apointmetns)
-
-
-
-#start from here.
-
-Review doctor from apps landing
-    -include time slots correctly.
-
-review the appointment flow and make it robutst.
-    -check patient's auth and middlewares.
-    -doctor can start/manage the apointment.
-        -remove unnceccesary blaots and fix the ui of appointment page.
-        -check for missing or extra fields.
-    -generate dummy perscription and invoice.
-
 
 need to make the height of the uploaded images(profile pics and logos) universal/standard so that it doesn't breaks ui.
--spply strcit css rules if needed (max height,width)
+-apply strcit css rules if needed (max height,width)
 
 -need to work on timeslots module, need to handle the past slots showing on the frontend. take care of it on the backend itself. past slots shouldn't make to the frontend.
 -if slot is filled, it should not show on the backend.
 
-#patient
--create service classes
--create request classes
--need to create dependants for patients. and things will be changed everywhere patient is referenced.
-- if the patient is already login then disable the patient information while booking the appointment.
 
 #apointment
--clean appointment page. remove bloats.
--decide what to show on this page.
 -patient history etc.
 
-
 ### observation ###
-fix clinic admin's dashboard widgets.
 use inbuilt modals, the one that comes when deleting the time slots. they're sick.
 remove delete all button on time slot page.
-make profile image update option on user update pages.
 create my profile page (user can manage their own profile)
 on doctor's profile if whatsapp, email etc not available show N/a or -.
     do this on clinics page too and everwhere else needed.
@@ -267,15 +199,6 @@ after patient books appointment view appointment button not working.
     also can make ui of this page better.
 patients should be able to go to the dashboard from landing page's navbar
 in appointment controller's store method check weather auth is necessary once if a middleware is protecting this route already.
-
-booking page: for now focus is on the backend. Tweak frontend afterwards.
-need to review and change a lot of code.
-need to include age somewhere in the appointment because doctors need it.
-can include whatsapp for patient while creating the appointment.
-#
-Ask Rahul sir to download the new template. Don't sweat on the frontend too much.
-
-
 
 ### start from here ###
 
@@ -296,34 +219,7 @@ my patients in doctor's panel should include dependants too
 
 #start from here
 -look register first page for more.
--create walk-in patient appointment feature
-    -don't get cauth in there's solution in claude or somewhere, look it up.
-        -if not found the solution, then think and create one.
 
-patient is getting created, time slot is getting created, now make apointment.
-    use proper service classes.
-
-
-### Sunday ###
--Define the scope of project.
--use service classes.
--proper organized controllers, models, service classes, Views, routes, middlewares, auth.
-    -try to make a lot of universals and globals.
-
--complete invoice and prescription generation with working implementaion in software.
-
--Start with doctor and patient panel first. (done)
-    -implement the required functionalities. (done)
-    -test it and tweak to include edge cases. (start with basics, request, validation, controller standards, errors etc and everything should be fine)
-    -try to make globals such as service classes, partials etc. (same as above, follow it and patterns will emerge automatically)
-
--Go to first point and start definine the scope of project.
-
-
-
-@@@ patient's list table structure on doctor panel @@@
--patients name (can be dependant name)
--contact person's name and contact (phone/whatsapp)
 
 Add specialities, states, cities etc by using data tables add option.
     -make an ajax call to add entity if success add row on frontend.
@@ -338,7 +234,6 @@ make quick view modal for clinics and anywhere else needed
 
 #fix now
 make header images dynamic after the superadmin and admin logs in
-make success and error alert use default modals
 login pages of super admin and admin are not global, return back to this.
 fill appointment type 1/2 while creating appointments.
 calculate age and show age at place of dob in appointments
@@ -381,25 +276,16 @@ Check Views
 
 
 #start from here
-on patients view appointment page make another card for patient information
-make yet another card that'll display details of the perscription. The base layout would be same just instead of input fields there would be display elements
-    -in this card make an button to download the prescription.
 
-walking appointment is happening make the necessary ui changes where needed.
-make prescription and invoice feature.
-make logo and images feature.
+make invoice feature.
 
 histroy button on view appointment should be conditioned according to the appointment count.
 
 labtest's name is not fetching on the patient's panel fix it today.
 fix the ui of medicines table on the patients view appointment page.
-fix the dashboard for admin, doctor and patient's panel
 on user list page in admin. fetch original progfile image, if not available then show a default image.
 remove medicines options from the doctor panels sidebar.
 also remove unnceccesary items from the admin sidebar
-doctor's profile image is not getting fetched on the app frontend.
-    -it's not getting fetched on the doctor's profile too.
-    -fix it here and everywhere.
 
 add bio field in the cerate and update doctor in the admin panel while creating the users.
 
@@ -408,11 +294,6 @@ while creating appointments on doctor panel there are mutliple buttons at button
     -submit, cancel, save and end appointment. keep only the required once.
 
 -change patients image in upcoming apointments at admin dashboard.
-
-#start from here.
--make presctiptions and invoice. make them downloadable.
--see above list too. fix necessary things such as logos, profile pictures etc.
-
 
 -need to give css height according to the dummy images provided in the doccure template.
     -create classes
@@ -437,9 +318,6 @@ while creating appointments on doctor panel there are mutliple buttons at button
 
 #Currently working
 
-        refresh and check
-        -make sure images are being fetched on views correctly(doctor/clinic profile. create/view user and clinic. on the app's landing etc.)
-
         -super admin
             only data repository features are left. everything else is working.
 
@@ -450,20 +328,15 @@ while creating appointments on doctor panel there are mutliple buttons at button
         -everything is working.
 
         #patient
-            -make prescriptions
             -make invoices
-            -make family members sidebar option
             -show historical visits.
 
 dependents should aslo be shown to the my patient list of doctor. (not needed, contact person and patient both are being displayed.
 -instead of submit on appointment page on doctor, do something that would open the modal of save and end appointment on the update page)
 -make unique ids for users clinics etc to show on the view (maybe)
 
-#start from here.
-users and clinics are getting fetched on the app's landing.
-user profile images is working on admins panel. continue. with other features and then with doctor panenl
 
-#Next (mayb)
+#Next (maybe)
 create a datatable that can add the rows and use it everywehre (in data repository and family dependants).
 
 ##Ask
@@ -483,6 +356,7 @@ Nedd a staff panel
         -service classes (separation of concerns)
         -controllers functions and ther names
         -routes according to proper naming conventions.
+        -proper request classes.
     -create glbals.
         -select 2
         -datatables
@@ -492,3 +366,50 @@ Nedd a staff panel
             -cards
             -tables
             -lists
+
+
+-Review scope of ajax jquery, can it be standard and global without any major changes.
+-think about highlighting the failed validation fields using jquery too.
+
+
+let's build an ajax jquery library
+
+
+#play with new docuure template
+
+
+can create global base panel templates too. just pass the auth user and everything works. need to take care of just sidebar partial.
+
+
+##############
+adding family members on patents.
+    -update family member (done)
+    -relation name is coming from a config file. need a way to render this content. (fix)
+# create and update ajax is working fine. next step is to refactor the code and make small functions to make it more global.
+
+
+-fix the images size problem for profile pictures. (bug)
+
+- might need to change the add patient on doctor's panel (might need to add dependant there with primary contact information)
+
+#Finish everything related to appointments by 12/03
+    -that includes selecting dependants while making walkin appointments. (done)
+    -Check thoroughly that everything is presentable and working (meeting with Naveen sir on 13/03)
+
+    #problems
+        -
+
+-clinic admin should be able to manage clinic available hours.
+-payment method and booking type is automatically getting filled on appointment when doctor creates it.
+-remove save and end appointment and cancel button from appointment's page on doctor's panel.
+-calculate age of patient on appointment's page.
+-fetch correct profile picture of users on the sidebar and navbar.
+
+-getting error while adding family members on patient's panel.
+    there's a clash happening because of the similar route name addDependant and addDependant ajax.
+
+-no of visits
+#next
+-check the app and look for problems in process/flow.
+
+

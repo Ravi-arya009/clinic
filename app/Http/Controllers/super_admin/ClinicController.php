@@ -5,9 +5,10 @@ namespace App\Http\Controllers\super_admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Clinic\StoreClinicRequest;
 use App\Http\Requests\Clinic\UpdateClinicRequest;
+use App\Models\ClinicWorkingHour;
 use App\Services\DataRepositoryService;
 use App\Services\ClinicService;
-
+use DateTime;
 
 class ClinicController extends Controller
 {
@@ -39,17 +40,36 @@ class ClinicController extends Controller
     public function store(StoreClinicRequest $request)
     {
         $validatedData = $request->validated();
+        $clinic_working_hours =  json_decode($validatedData['clinic_working_hours']);
         $response = $this->clinicService->storeClinic($validatedData);
-        return $response['success'] ? redirect()->route('super_admin.clinic.show', $response['clinicId'])->with('success', $response['message']) : back()->withInput()->with('error', $response['message']);
+        $this->clinicService->storeClinicWorkingHours($response['clinicId'], $clinic_working_hours);
+
+        $response = $response['success'] ? [
+            'success' => true,
+            'message' => $response['message'],
+            'redirectRoute' => route('super_admin.clinic.show', $response['clinicId']),
+        ] : [
+            'success' => false,
+            'message' => $response['message'],
+            'error' => $response['message'],
+        ];
+        session()->flash('success', $response['message']);
+        return response()->json($response);
     }
 
     public function show($clinicId)
     {
-        $clinic = $this->clinicService->getClinicById($clinicId, ['admins']);
+        $clinic = $this->clinicService->getClinicById($clinicId, ['admins', 'WorkingHours']);
+        // $ClinicWorkingHours = $clinic->WorkingHours->groupBy('day', 'shift');
+        $ClinicWorkingHours = $clinic->WorkingHours->groupBy('day')->map(function ($dayGroup) {
+            return $dayGroup->groupBy('shift');
+        });
+        // $ClinicWorkingHours = $clinic->WorkingHours->groupBy('day', 'shift');
+        // dd($ClinicWorkingHours);
         $cities = $this->dataRepositoryService->getAllCities();
         $states = $this->dataRepositoryService->getAllStates();
         $specialities = $this->dataRepositoryService->getAllSpecialities();
-        return view('super_admin.view_clinic', compact('clinic', 'cities', 'states', 'specialities'));
+        return view('super_admin.view_clinic', compact('clinic', 'cities', 'states', 'specialities', 'ClinicWorkingHours'));
     }
 
     public function update(UpdateClinicRequest $request, $clinicId)

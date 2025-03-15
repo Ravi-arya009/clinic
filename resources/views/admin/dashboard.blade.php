@@ -35,19 +35,24 @@
             <div class="dashboard-card w-100">
                 <div class="dashboard-card-head">
                     <div class="header-title">
-                        <h5>Appointment</h5>
+                        <h5>Recent Appointments</h5>
                     </div>
                 </div>
                 <div class="dashboard-card-body">
                     <div class="table-responsive">
                         <table class="table dashboard-table appoint-table">
                             <tbody>
+                                {{-- {{dd($upcomingAppointments)}} --}}
                                 @foreach ($upcomingAppointments as $appointment)
                                     <tr>
                                         <td>
                                             <div class="patient-info-profile">
                                                 <a href="appointments.html" class="table-avatar">
-                                                    <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="Img">
+                                                    @if (isset($appointment->patient->profile_image))
+                                                        <img src="{{ asset('storage/profile_images/' . $appointment->patient->profile_image) }}" alt="Profile Picture">
+                                                    @else
+                                                        <img src="{{ asset('img/default-profile-picture.webp') }}" alt="Default Profile Picture">
+                                                    @endif
                                                 </a>
                                                 <div class="patient-name-info">
                                                     <span>#Apt0001</span>
@@ -59,7 +64,15 @@
                                         <td>
                                             <div class="appointment-date-created">
                                                 <h6>{{ date('d M Y', strtotime($appointment->appointment_date)) }}, {{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</h6>
-                                                <span class="badge table-badge">General</span>
+                                                <span class="badge table-badge">
+                                                    @if ($appointment->appointment_type == 2)
+                                                        Walk-in
+                                                    @else
+                                                        Online
+                                                    @endif
+
+
+                                                </span>
                                             </div>
                                         </td>
                                         <td>

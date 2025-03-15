@@ -19,6 +19,8 @@ use App\Http\Controllers\patient\AppointmentController as PatientAppointmentCont
 use App\Http\Controllers\patient\dependantController;
 use App\Http\Controllers\patient\InvoiceController;
 use App\Http\Controllers\patient\PerscriptionController;
+use App\Http\Controllers\receptionist\AuthController as ReceptionistAuthController;
+use App\Http\Controllers\receptionist\DashboardController as ReceptionistDashboardController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\super_admin\AuthController as Super_adminAuthController;
 use App\Http\Controllers\super_admin\ClinicController;
@@ -80,6 +82,9 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::get('patient/create', [UserController::class, 'createPatient'])->name('admin.patient.create');
             Route::post('patient/store', [UserController::class, 'storePatient'])->name('admin.patient.store');
             Route::get('patient/{patientId}', [UserController::class, 'showPatient'])->name('admin.patient.show');
+
+            Route::get('profile', [AdminDashboardController::class, 'showProfile'])->name('admin.profile.show');
+            Route::post('profile', [AdminDashboardController::class, 'updateProfile'])->name('admin.profile.update');
         });
     });
 });
@@ -109,7 +114,36 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::get('patient/{patientId}', [PatientController::class, 'show'])->name('doctor.patient.show');
             Route::put('patient/{patientId}', [PatientController::class, 'update'])->name('doctor.patient.update');
             Route::get('patients', [PatientController::class, 'index'])->name('doctor.patient.index');
+            Route::get('profile', [DoctorDashboardController::class, 'showProfile'])->name('doctor.profile.show');
+            Route::post('profile', [DoctorDashboardController::class, 'updateProfile'])->name('doctor.profile.update');
+
         });
+    });
+});
+
+Route::get('patientPhoneNumberCheck', [PatientController::class, 'patientPhoneNumberCheck'])->name('patientPhoneNumberCheck');
+Route::post('addDependant', [dependantController::class, 'addDependant'])->name('addDependant');
+Route::post('updateDependant', [dependantController::class, 'updateDependant'])->name('updateDependant');
+Route::post('deleteDependant', [dependantController::class, 'deleteDependant'])->name('deleteDependant');
+Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
+Route::post('addDependant', [PatientController::class, 'addDependant'])->name('ajax.addDependant');
+
+
+
+#### Receptionist ####
+Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
+    Route::prefix('receptionist')->group(function () {
+        Route::middleware('RedirectIfAuthenticated:receptionist')->group(function () {
+            Route::get('/login', [ReceptionistAuthController::class, 'login'])->name('receptionist.login');
+            Route::post('/login', [ReceptionistAuthController::class, 'authenticate'])->name('receptionist.authenticate');
+        });
+
+        Route::middleware('IsLoggedIn:receptionist')->group(function () {
+            Route::get('/', [ReceptionistDashboardController::class, 'dashboard'])->name('receptionist.index');
+            Route::get('/dashboard', [ReceptionistDashboardController::class, 'dashboard'])->name('receptionist.dashboard');
+            Route::get('/logout', [ReceptionistAuthController::class, 'logout'])->name('receptionist.logout');
+        });
+
     });
 });
 
@@ -130,6 +164,9 @@ Route::prefix('patient')->group(function () {
         Route::get('logout', [PatientAuthController::class, 'logout'])->name('patient.logout');
         Route::get('temp', [PatientDashboardController::class, 'temp'])->name('patient.temp');
         Route::post('/download-prescription-pdf', [PatientAppointmentController::class, 'downloadPrescriptionPdf'])->name('download.prescription.pdf');
+
+        Route::get('profile', [PatientDashboardController::class, 'showProfile'])->name('patient.profile.show');
+        Route::post('profile', [PatientDashboardController::class, 'updateProfile'])->name('patient.profile.update');
     });
 
     Route::middleware('RedirectIfAuthenticated:patients')->group(function () {

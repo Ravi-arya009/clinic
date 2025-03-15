@@ -1,10 +1,10 @@
 <div class="setting-card">
     <div class="change-avatar img-upload">
         <div class="profile-img">
-            <div class="clinic-logo">
-                @if (isset($user))
-                    @if (isset($user->profile_image))
-                        <img src="{{ asset('storage/profile_images/' . $user->profile_image) }}" alt="Profile Picture">
+            <div class="profile-img">
+                @if (isset($patient))
+                    @if (isset($patient->profile_image))
+                        <img src="{{ asset('storage/profile_images/' . $patient->profile_image) }}" alt="Profile Picture">
                     @else
                         <img src="{{ asset('img/default-profile-picture.webp') }}" alt="Default Profile Picture">
                     @endif
@@ -32,71 +32,45 @@
         <div class="col-lg-4 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">Full Name <span class="text-danger">*</span></label>
-                <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name ?? '') }}" required>
+                <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $patient->name ?? '') }}" required>
             </div>
         </div>
+
         <div class="col-lg-4 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">Phone <span class="text-danger">*</span></label>
-                <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', $user->phone ?? '') }}" required>
+                <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', $patient->phone ?? '') }}" required>
             </div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">WhatsApp</label>
-                <input type="whatsapp" name="whatsapp" id="whatsapp" class="form-control" value="{{ old('whatsapp', $user->whatsapp ?? '') }}">
+                <input type="whatsapp" name="whatsapp" id="whatsapp" class="form-control" value="{{ old('whatsapp', $patient->whatsapp ?? '') }}">
             </div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">Email Address</label>
-                <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email ?? '') }}">
+                <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $patient->email ?? '') }}">
             </div>
         </div>
+
         <div class="col-lg-4 col-md-6">
             <div class="form-wrap">
-                <label class="col-form-label">Gender</label>
+                <label class="col-form-label">Gender </label>
                 <select name="gender" id="gender" class="form-control">
                     <option value="">Select</option>
-                    <option value="1" {{ old('gender', $user->gender ?? '') == 1 ? 'selected' : '' }}>Male</option>
-                    <option value="2" {{ old('gender', $user->gender ?? '') == 2 ? 'selected' : '' }}>Female</option>
+                    <option value="1" {{ old('gender', $patient->gender ?? '') == 1 ? 'selected' : '' }}>Male</option>
+                    <option value="2" {{ old('gender', $patient->gender ?? '') == 2 ? 'selected' : '' }}>Female</option>
                 </select>
             </div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">Date Of Birth</label>
-                <input type="date" name="dob" class="form-control" value="{{ old('dob', $user->dob ?? '') }}">
+                <input type="date" name="dob" class="form-control" value="{{ old('dob', $patient->dob ?? '') }}">
             </div>
         </div>
-
-        {{-- experiment while creating patient's view --}}
-        {{-- see if there's no unnessary or complex code since we're using same form for all the users including patient. --}}
-        {{-- @unless ($type ?? 'default_value' == 'patient') --}}
-        @if (isset($user))
-            <div class="col-lg-4 col-md-6">
-                <div class="form-wrap">
-                    <label class="col-form-label">Role</label>
-                    <button type="button" class="btn btn-sm ms-2 px-4 btn-rounded btn-outline-info" disabled>
-                        {{ array_search($user->clinicRole->role_id, config('role')) }}
-                    </button>
-                    <input type="hidden" name="role" value="{{ $user->clinicRole->role_id }}">
-                </div>
-            </div>
-        @else
-            <div class="col-lg-4 col-md-6">
-                <div class="form-wrap">
-                    <label class="col-form-label">Role<span class="text-danger">*</span> </label>
-                    <select name="role" id="role" class="form-control" required>
-                        <option value="">Select Role</option>
-                        @foreach (config('role') as $roleKey => $roleValue)
-                            <option value="{{ $roleValue }}" {{ old('role', $user->clinicRole->role_id ?? '') == $roleValue ? 'selected' : '' }}>{{ ucfirst($roleKey) }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        @endif
-        {{-- @endunless --}}
     </div>
 </div>
 <div class="setting-title">
@@ -110,18 +84,19 @@
                 <select class="form-control select2_dropdown" name="state" id="state">
                     <option value="" selected>Select</option>
                     @foreach ($states as $state)
-                        <option value="{{ $state->id }}" {{ old('state', $user->state_id ?? '') == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                        <option value="{{ $state->id }}" {{ old('state', $patient->state_id ?? '') == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
                     @endforeach
                 </select>
             </div>
         </div>
+
         <div class="col-lg-6 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">City</label>
                 <select class="form-control select2_dropdown" name="city" id="city">
                     <option value="" selected>Select</option>
                     @foreach ($cities as $city)
-                        <option value="{{ $city->id }}" {{ old('city', $user->city_id ?? '') == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                        <option value="{{ $city->id }}" {{ old('city', $patient->city_id ?? '') == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -129,25 +104,19 @@
         <div class="col-lg-6 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">Address</label>
-                <textarea name="address" id="address" class="form-control">{{ old('address', $user->address ?? '') }}</textarea>
+                <textarea name="address" id="address" class="form-control">{{ old('address', $patient->address ?? '') }}</textarea>
             </div>
         </div>
         <div class="col-lg-6 col-md
                 <div class="col-lg-6 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">Pincode</label>
-                <input type="text" name="pincode" id="pincode" class="form-control" value="{{ old('pincode', $user->pincode ?? '') }}">
+                <input type="text" name="pincode" id="pincode" class="form-control" value="{{ old('pincode', $patient->pincode ?? '') }}">
             </div>
         </div>
-
     </div>
 </div>
 
-{{-- Doctor Related Fields --}}
-@if (!isset($user) || (isset($user) && optional($user->clinicRole)->role_id == config('role.doctor')))
-    @include('admin.partials.doctor_fields')
-@endif
-{{-- /Doctor Related Fields --}}
 
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -168,3 +137,46 @@
 <div class="modal-btn text-end">
     <button type="submit" class="btn btn-primary prime-btn">Save Changes</button>
 </div>
+
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $(".doctor-infofmation-card").hide();
+            if ($("#role").val() == '{{ config('role.doctor') }}') {
+                $(".doctor-infofmation-card").show();
+            }
+            $('#role').on('change', function() {
+                if ($(this).val() === '{{ config('role.doctor') }}') {
+                    $(".doctor-infofmation-card").show();
+                } else {
+                    $(".doctor-infofmation-card").hide();
+                }
+            });
+        })
+
+
+        //Image Preview while profile update
+        const uploadInput = document.querySelector('.upload');
+        const previewContainer = document.querySelector('.profile-img');
+
+        uploadInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                const imageData = event.target.result;
+                const image = document.createElement('img');
+                image.src = imageData;
+                image.style.width = '100%';
+                image.style.height = '100%';
+                image.style.objectFit = 'cover';
+
+                previewContainer.innerHTML = '';
+                previewContainer.appendChild(image);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+@endpush

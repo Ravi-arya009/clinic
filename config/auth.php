@@ -65,6 +65,12 @@ return [
             'login_route' => 'doctor.login',
             'index_route' => 'doctor.dashboard'
         ],
+        'receptionist' => [
+            'driver' => 'session',
+            'provider' => 'users',
+            'login_route' => 'receptionist.login',
+            'index_route' => 'receptionist.dashboard'
+        ],
     ],
 
     /*

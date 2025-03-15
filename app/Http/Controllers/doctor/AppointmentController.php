@@ -36,10 +36,17 @@ class AppointmentController extends Controller
     public function show(Request $request)
     {
         $appointment = $this->appointmentService->getAppointmentById($request->appointmentId);
+        if ($appointment->dependant_id == null) {
+            $patientId = $appointment->patient_id;
+            $historicalAppointments = $this->appointmentService->getHistoricalAppointments('self', $patientId);
+        } else {
+            $dependantId = $appointment->dependant_id;
+            $historicalAppointments = $this->appointmentService->getHistoricalAppointments('dependant', $dependantId);
+        }
+        $appointmentCount = $historicalAppointments->count();
         $medicines = $this->medicineService->getClinicMedicines($this->clinicId);
         $laboratoryTests = $this->labTestService->getAllTests();
-        // dd($appointment);
-        return view('doctor.view_appointment', compact('appointment', 'medicines', 'laboratoryTests'));
+        return view('doctor.view_appointment', compact('appointment', 'medicines', 'laboratoryTests', 'historicalAppointments', 'appointmentCount'));
     }
 
     public function store(Request $request)

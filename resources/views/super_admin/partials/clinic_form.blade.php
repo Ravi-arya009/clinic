@@ -1,16 +1,19 @@
-
-{{-- {{dd($clinic)}} --}}
-<form action="{{ $action }}" enctype="multipart/form-data" method="POST">
+{{-- {{dd($ClinicWorkingHours)}} --}}
+@push('stylesheets')
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+@endpush
+<form id="create_clinic_form" action="{{ $action }}" enctype="multipart/form-data" method="POST">
     @csrf
+
+    <!-- Clinic logo -->
     <div class="setting-card">
-        {{-- image upload --}}
         <div class="change-avatar img-upload">
             <div class="profile-img">
                 <div class="clinic-logo">
                     @if (isset($clinic->logo))
                         @if (isset($clinic->logo))
                             <img src="{{ asset('storage/clinic_logos/' . $clinic->logo) }}" alt="Clinic Logo">
-                            {{-- <img src="{{ asset('storage/profile_images/' . $user->profile_image) }}" alt="Profile Picture"> --}}
                         @else
                             <img src="{{ asset('img/default-profile-picture.webp') }}" alt="Default Clinic Logo">
                         @endif
@@ -29,9 +32,9 @@
                 </div>
             </div>
         </div>
-        {{-- /image upload --}}
-
     </div>
+    <!-- /Clinic logo -->
+    <!-- Clinic Information -->
     <div class="setting-title">
         <h5>Clinic Information</h5>
     </div>
@@ -102,135 +105,437 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="setting-title">
-                <h5>Contact Information</h5>
-            </div>
-            <div class="setting-card">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-wrap">
-                            <label class="col-form-label">Clinic's Phone </label>
-                            <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $clinic->phone ?? '') }}">
+    <!-- /Clinic Information -->
+    <!-- Contact Information -->
+    <div class="setting-title">
+        <h5>Contact Information</h5>
+    </div>
+    <div class="setting-card">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="setting-title">
+                    <h6 class="fw-bold">Clinic Contact</h6>
+                </div>
+                <div class="setting-card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-wrap">
+                                <label class="col-form-label">Clinic's Phone </label>
+                                <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $clinic->phone ?? '') }}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-wrap">
-                            <label class="col-form-label">Clinic's WhatsApp </label>
-                            <input type="text" name="whatsapp" id="whatsapp" class="form-control" value="{{ old('whatsapp', $clinic->whatsapp ?? '') }}">
+                        <div class="col-12">
+                            <div class="form-wrap">
+                                <label class="col-form-label">Clinic's WhatsApp </label>
+                                <input type="text" name="whatsapp" id="whatsapp" class="form-control" value="{{ old('whatsapp', $clinic->whatsapp ?? '') }}">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-12">
-                        <div class="form-wrap">
-                            <label class="col-form-label">Clinic's E-mail </label>
-                            <input type="text" name="email" id="email" class="form-control" value="{{ old('email', $clinic->email ?? '') }}">
+                        <div class="col-12">
+                            <div class="form-wrap">
+                                <label class="col-form-label">Clinic's E-mail </label>
+                                <input type="text" name="email" id="email" class="form-control" value="{{ old('email', $clinic->email ?? '') }}">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="setting-title">
-                <h5 class="d-inline-block">Contact Person</h5><span class="text-danger ms-2">(For Super Admin Use Only)</span>
-            </div>
-            <div class="setting-card">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-wrap">
-                            <label class="col-form-label">Contact Person's Name </label>
-                            <input type="text" name="contact_person" id="contact_person" class="form-control" value="{{ old('contact_person', isset($clinic) ? ucfirst($clinic->contact_person) : '') }}">
+            <div class="col-lg-6">
+                <div class="setting-title">
+                    <h6 class="d-inline-block fw-bold">Contact Person</h6><small class="d-inline-block  text-danger ms-1">(For Super Admin Use Only)</small>
+                </div>
+                <div class="setting-card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-wrap">
+                                <label class="col-form-label">Contact Person's Name </label>
+                                <input type="text" name="contact_person" id="contact_person" class="form-control" value="{{ old('contact_person', isset($clinic) ? ucfirst($clinic->contact_person) : '') }}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-wrap">
-                            <label class="col-form-label">Contact Person's Phone</label>
-                            <input type="text" name="contact_person_phone" id="contact_person_phone" class="form-control" value="{{ old('contact_person_phone', $clinic->contact_person_phone ?? '') }}">
+                        <div class="col-12">
+                            <div class="form-wrap">
+                                <label class="col-form-label">Contact Person's Phone</label>
+                                <input type="text" name="contact_person_phone" id="contact_person_phone" class="form-control" value="{{ old('contact_person_phone', $clinic->contact_person_phone ?? '') }}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-wrap">
-                            <label class="col-form-label">Contact Person's WhatsApp</label>
-                            <input type="text" name="contact_person_whatsapp" id="contact_person_whatsapp" class="form-control" value="{{ old('contact_person_whatsapp', $clinic->contact_person_whatsapp ?? '') }}">
+                        <div class="col-12">
+                            <div class="form-wrap">
+                                <label class="col-form-label">Contact Person's WhatsApp</label>
+                                <input type="text" name="contact_person_whatsapp" id="contact_person_whatsapp" class="form-control" value="{{ old('contact_person_whatsapp', $clinic->contact_person_whatsapp ?? '') }}">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-
+    <!-- /Contact Information -->
+    <!-- Clinic Admins -->
     @if (!isset($clinic))
-        {{-- make a user form partial and fetch it instead of writing the whole code --}}
-        <div class="row">
-            <div class="setting-title">
-                <h5>Admin Information</h5>
-            </div>
-            <div class="setting-card">
+        <div class="setting-title">
+            <h5>Admin Information</h5>
+        </div>
+        <div class="setting-card">
+            <div class="row">
                 <input type="hidden" name="admin_id" id="admin_id" value="{{ isset($clinic) ? ucfirst($clinic->admin->id) : '' }}">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="form-wrap">
-                            <label class="col-form-label">Admin Name <span class="text-danger">*</span></label>
-                            <input type="text" name="admin_name" id="admin_name" class="form-control" value="{{ old('admin_name', isset($clinic) ? ucfirst($clinic->admin->name) : '') }}">
-                        </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-wrap">
+                        <label class="col-form-label">Admin Name <span class="text-danger">*</span></label>
+                        <input type="text" name="admin_name" id="admin_name" class="form-control" value="{{ old('admin_name', isset($clinic) ? ucfirst($clinic->admin->name) : '') }}">
                     </div>
-
-                    <div class="col-lg-6 col-md-6">
-                        <div class="form-wrap">
-                            <label class="col-form-label">Admin's Phone <span class="text-danger">*</span></label>
-                            <input type="text" name="admin_phone" id="admin_phone" class="form-control" value="{{ old('admin_phone', $clinic->admin->phone ?? '') }}">
-                        </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-wrap">
+                        <label class="col-form-label">Admin's Phone <span class="text-danger">*</span></label>
+                        <input type="text" name="admin_phone" id="admin_phone" class="form-control" value="{{ old('admin_phone', $clinic->admin->phone ?? '') }}">
                     </div>
                 </div>
             </div>
         </div>
     @else
-        {{-- make a table partial and fetch it instead of writing the whole code --}}
         <div class="setting-title">
             <h5>Clinic Admins</h5>
         </div>
-        <div class="setting-card p-1">
-            <div class="custom-table">
-                <div class="table-responsive">
-                    <table class="table table-center mb-0">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>WhatsApp</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($clinic->admins as $admin)
+        <div class="setting-card">
+            <div class="row">
+                <div class="col">
+                    <div class="custom-table">
+                        <table class="table table-responsive table-center mb-0">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a href="doctor-profile.html" class="avatar avatar-sm me-2">
-                                                <img class="avatar-img rounded-3" src="{{ asset('img/doctors/doctor-thumb-02.jpg') }}" alt="User Image">
-                                            </a>
-                                            <a href="doctor-profile.html">{{ $admin->name }}</a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $admin->phone }}</td>
-                                    <td>{{ $admin->whatsapp ?? '-' }}</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary btn-sm prime-btn">View</a>
-                                    </td>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>WhatsApp</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($clinic->admins as $admin)
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="doctor-profile.html" class="avatar avatar-sm me-2">
+                                                    <img class="avatar-img rounded-3" src="{{ asset('img/doctors/doctor-thumb-02.jpg') }}" alt="User Image">
+                                                </a>
+                                                <a href="doctor-profile.html">{{ $admin->name }}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ $admin->phone }}</td>
+                                        <td>{{ $admin->whatsapp ?? '-' }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-sm prime-btn">View</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     @endif
-    <div class="modal-btn text-end">
-        <button type="submit" class="btn btn-primary prime-btn">Save Changes</button>
+    <!-- /Clinic Admins -->
+    <!-- Clinic Timings -->
+    <div class="setting-title">
+        <h5>Clinic Timings</h5>
     </div>
+    <div class="setting-card">
+        <div class="available-tab">
+            <ul class="nav">
+                <li>
+                    <a href="#" class="active" data-bs-toggle="tab" data-bs-target="#Monday-slot">Monday</a>
+                </li>
+                <li>
+                    <a href="#" data-bs-toggle="tab" data-bs-target="#Tuesday-slot">Tuesday</a>
+                </li>
+                <li>
+                    <a href="#" data-bs-toggle="tab" data-bs-target="#Wednesday-slot">Wedneday</a>
+                </li>
+                <li>
+                    <a href="#" data-bs-toggle="tab" data-bs-target="#Thursday-slot">Thursday</a>
+                </li>
+                <li>
+                    <a href="#" data-bs-toggle="tab" data-bs-target="#Friday-slot">Friday</a>
+                </li>
+                <li>
+                    <a href="#" data-bs-toggle="tab" data-bs-target="#Saturday-slot">Saturday</a>
+                </li>
+                <li>
+                    <a href="#" data-bs-toggle="tab" data-bs-target="#Sunday-slot">Sunday</a>
+                </li>
+            </ul>
+        </div>
 
+        <div class="tab-content pt-0">
+            @for ($i = 1; $i <= 7; $i++)
+                <?php $currentDay = date('l', strtotime('Sunday + ' . $i . ' days')); ?>
+                <div class="tab-pane fade @if ($i == 1) active show @endif" id="{{ $currentDay }}-slot">
+                    <div class="slot-box">
+                        <div class="slot-header">
+                            <h5>{{ $currentDay }}</h5>
+                        </div>
+                        <div class="slot-body">
+                            <ul class="shifts">
+                                <li class="morning_shift border-bottom">
+                                    <h5 class="d-inline-block">Morning</h5>
+                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="1" data-shift="Morning" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Slots</a>
+                                    <ul class="time-slots" id="{{ $currentDay }}-Morning-ul">
+                                        @if (isset($ClinicWorkingHours[$i][1]))
+                                            @foreach ($ClinicWorkingHours[$i][1] as $WorkingHour)
+                                                <li>{{ date('h:i A', strtotime($WorkingHour['opening_time'])) }} - {{ date('h:i A', strtotime($WorkingHour['closing_time'])) }}</li>
+                                            @endforeach
+                                        @else
+                                            <p>-</p>
+                                        @endif
+                                    </ul>
+                                </li>
+                                <li class="afternoon_shift border-bottom mt-3">
+                                    <h5 class="d-inline-block">Afternoon</h5>
+                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="2" data-shift="Afternoon" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Slots</a>
+                                    <ul class="time-slots" id="{{ $currentDay }}-Afternoon-ul">
+                                        @if (isset($ClinicWorkingHours[$i][2]))
+                                            @foreach ($ClinicWorkingHours[$i][2] as $WorkingHour)
+                                                <li>{{ date('h:i A', strtotime($WorkingHour['opening_time'])) }} - {{ date('h:i A', strtotime($WorkingHour['closing_time'])) }}</li>
+                                            @endforeach
+                                        @else
+                                            <p>-</p>
+                                        @endif
+                                    </ul>
+                                </li>
+                                <li class="morning_shift border-bottom mt-3">
+                                    <h5 class="d-inline-block">Evening</h5>
+                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="3" data-shift="Evening" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Slots</a>
+                                    <ul class="time-slots" id="{{ $currentDay }}-Evening-ul">
+                                        @if (isset($ClinicWorkingHours[$i][3]))
+                                            @foreach ($ClinicWorkingHours[$i][3] as $WorkingHour)
+                                                <li>{{ date('h:i A', strtotime($WorkingHour['opening_time'])) }} - {{ date('h:i A', strtotime($WorkingHour['closing_time'])) }}</li>
+                                            @endforeach
+                                        @else
+                                            <p>-</p>
+                                        @endif
+                                    </ul>
+                                </li>
+                                <li class="morning_shift mt-3">
+                                    <h5 class="d-inline-block">Night</h5>
+                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="4" data-shift="Night" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Slots</a>
+                                    <ul class="time-slots" id="{{ $currentDay }}-Night-ul">
+                                        @if (isset($ClinicWorkingHours[$i][4]))
+                                            @foreach ($ClinicWorkingHours[$i][4] as $WorkingHour)
+                                                <li>{{ date('h:i A', strtotime($WorkingHour['opening_time'])) }} - {{ date('h:i A', strtotime($WorkingHour['closing_time'])) }}</li>
+                                            @endforeach
+                                        @else
+                                            <p>-</p>
+                                        @endif
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endfor
+        </div>
+    </div>
+    <!-- /Clinic Timings -->
+    <div class="modal-btn text-end">
+        <button type="submit" class="btn btn-primary prime-btn" id="create_clinic">Save Changes</button>
+    </div>
 </form>
+
+@section('modal')
+    <!-- Add Slots -->
+    <div class="modal fade custom-modals" id="add_slot">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Add Clinic Timings</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="add-dependent">
+                    <div class="modal-body pb-0">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="badge badge-info text-white px-4 mb-3">Day</p> <small class="fw-bold" id="modal-day-text">Monday</small>
+                                <input type="hidden" value="" id="modal-day-number" name="modal-day-number">
+                                <div class="form-wrap">
+                                    <label class="form-label">Opening Time <span class="text-danger">*</span></label>
+                                    <input type="text" id="clinic_opening_time" class="form-control timepicker1" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="badge badge-info text-white px-4 mb-3">Shift</p> <small class="fw-bold" id="modal-shift-text">Evening</small>
+                                <input type="hidden" value="" id="modal-shift-number" name="modal-shift-number">
+                                <div class="form-wrap">
+                                    <label class="form-label">Closing Time <span class="text-danger">*</span></label>
+                                    <input type="text" id="clinic_closing_time" class="form-control timepicker1" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-btn text-end">
+                        <button class="btn btn-primary prime-btn rounded-pill px-5" id="add_slot_modal_button">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Add Slots -->
+    <!-- Remove Slots -->
+    <div class="modal fade info-modal" id="delete_slot">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="success-wrap">
+                        <div class="success-info">
+                            <div class="text-center">
+                                <span class="icon-success bg-red"><i class="fa-solid fa-xmark"></i></span>
+                                <h3>Remove Slots</h3>
+                                <p>Are you sure you want to remove this slots?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-btn text-center">
+                        <a href="#" class="btn btn-gray" data-bs-toggle="modal" data-bs-dismiss="modal">Yes, Remove</a>
+                        <button class="btn btn-primary prime-btn">No, i Changed my mind</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Remove Slots -->
+@endsection
+
+@push('scripts')
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src={{ asset('js/bootstrap-datetimepicker.min.js') }}></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(function() {
+            //adding time slots to ul
+            var clinic_working_hours = [];
+            $("#add_slot_modal_button").on('click', function() {
+                var clinic_opening_time = $("#clinic_opening_time").val();
+                var clinic_closing_time = $("#clinic_closing_time").val();
+                var day = $("#modal-day-text").text();
+                var dayNumber = $("#modal-day-number").text();
+                var shiftNumber = $("#modal-shift-number").text();
+                var shift = $("#modal-shift-text").text();
+                var targetUl = $("#" + day + "-" + shift + "-ul");
+                targetUl.append("<li>" + clinic_opening_time + " - " + clinic_closing_time + "</li>");
+                clinic_working_hours.push({
+                    day: dayNumber,
+                    shift: shiftNumber,
+                    opening_time: clinic_opening_time,
+                    closing_time: clinic_closing_time
+                });
+                $('#add_slot').modal('hide');
+
+                console.log(clinic_working_hours)
+            });
+
+            //shows current day and shift on add time slots modal
+            $(".add-slot").on('click', function() {
+                var day = $(this).data("day");
+                var shift = $(this).data("shift");
+
+                var dayNumber = $(this).data("day-number");
+                var shiftNumber = $(this).data("shift-number");
+
+                $("#modal-day-text").text(day);
+                $("#modal-day-number").text(dayNumber);
+
+                $("#modal-shift-text").text(shift);
+                $("#modal-shift-number").text(shiftNumber);
+            });
+
+            //Image Preview while profile update
+            const uploadInput = document.querySelector('.upload');
+            const previewContainer = document.querySelector('.profile-img');
+            uploadInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const imageData = event.target.result;
+                    const image = document.createElement('img');
+                    image.src = imageData;
+                    image.style.width = '100%';
+                    image.style.height = '100%';
+                    image.style.objectFit = 'cover';
+                    previewContainer.innerHTML = '';
+                    previewContainer.appendChild(image);
+                };
+                reader.readAsDataURL(file);
+            });
+
+
+            // ajax call
+            $('#create_clinic_form').submit(function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                Swal.fire({
+                    title: 'Processing...',
+                    text: 'Creating the clinic',
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false
+                });
+
+                let formData = new FormData(this);
+                formData.append('clinic_working_hours', JSON.stringify(clinic_working_hours));
+
+                $.ajax({
+                    url: "{{ route('super_admin.clinic.store') }}",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.success == true) {
+                            window.location.href = response.redirectRoute;
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            let errorMessage = '';
+
+                            // Create a formatted list of validation errors
+                            $.each(errors, function(key, value) {
+                                errorMessage += `• ${value[0]}<br>`;
+                            });
+
+                            // Show error alert with validation errors
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validation Error',
+                                html: errorMessage,
+                                confirmButtonColor: '#d33'
+                            });
+
+                        } else {
+                            console.log(xhr);
+                            console.log('Something went wrong. Please try again.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong. Please try again later.',
+                                confirmButtonColor: '#d33'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
