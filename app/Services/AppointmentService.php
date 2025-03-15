@@ -158,11 +158,12 @@ class AppointmentService
         }
     }
 
-    public function createWalkInAppointment($patientId, $doctorId, $clinicId, $timeSlotId)
+    public function createWalkInAppointment($patientId, $dependantId, $doctorId, $clinicId, $timeSlotId)
     {
         $appointment = Appointment::create([
             'id' => Str::uuid(),
             'patient_id' => $patientId,
+            'dependant_id' => $dependantId,
             'doctor_id' => $doctorId,
             'clinic_id' => $clinicId,
             'time_slot_id' => $timeSlotId,
@@ -173,5 +174,16 @@ class AppointmentService
         ]);
 
         return $appointment;
+    }
+
+    public function getHistoricalAppointments($appointmentFor, $userId)
+    {
+        if ($appointmentFor == 'self') {
+            $response = Appointment::where('patient_id', $userId)->where('dependant_id', null)->get();
+        }
+        if ($appointmentFor == 'dependant') {
+            $response = Appointment::where('dependant_id', $userId)->get();
+        }
+        return $response;
     }
 }

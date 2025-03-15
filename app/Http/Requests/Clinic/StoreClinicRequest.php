@@ -47,6 +47,12 @@ class StoreClinicRequest extends FormRequest
 
             'admin_name' => 'required|string|max:255',
             'admin_phone' => 'required|digits_between:10,13|unique:users,phone',
+
+            'clinic_working_hours' => 'json',
+            'clinic_working_hours.*.day' => 'in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
+            'clinic_working_hours.*.shift' => 'in:Morning,Afternoon,Evening,Night',
+            'clinic_working_hours.*.opening_time' => 'date_format:H:i A',
+            'clinic_working_hours.*.closing_time' => 'date_format:H:i A|after:opening_time',
         ];
     }
 }

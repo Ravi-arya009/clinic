@@ -63181,3 +63181,17 @@ div.dt-container .dt-paging .dt-paging-button.disabled:active {
     display: list-item !important;
     padding-top: 6px !important;
 }
+
+.slot-box .slot-body ul li .add-slot {
+    color: #0E82FD;
+}
+
+.slot-box .slot-body ul li a {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+.bg-my-blue {
+    background-color: #0E82FD !important;
+}

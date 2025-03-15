@@ -124,13 +124,13 @@
                                 <img src={{ asset('img/doctors-dashboard/doctor-profile-img.jpg') }} alt="User Image" class="avatar-img rounded-circle">
                             </div>
                             <div class="user-text">
-                                <h6>{{ ucwords(auth()->guard('patients')->user()->name )}}</h6>
+                                <h6>{{ ucwords(auth()->guard('patients')->user()->name) }}</h6>
                                 <p class="text-success mb-0">Patient</p>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="{{route('patient.dashboard')}}">Dashboard</a>
-                        <a class="dropdown-item" href="#">Profile Settings</a>
-                        <a class="dropdown-item" href="{{route('patient.logout')}}">Logout</a>
+                        <a class="dropdown-item" href="{{ route('patient.dashboard') }}">Dashboard</a>
+                        <a class="dropdown-item" href="{{ route('patient.profile.show') }}">Profile Settings</a>
+                        <a class="dropdown-item" href="{{ route('patient.logout') }}">Logout</a>
                     </div>
                 </li>
                 <!-- /User Menu -->

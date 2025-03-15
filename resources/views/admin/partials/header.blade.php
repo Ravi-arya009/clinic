@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a>
-                            <a class="dropdown-item" href="#">Profile Settings</a>
+                            <a class="dropdown-item" href="{{route('admin.profile.show')}}">Profile Settings</a>
                             <a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
                         </div>
                     </li>

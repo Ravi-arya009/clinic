@@ -25,7 +25,7 @@ class TimeSlotService
 
     public function getDoctorAvailableTimeSlots($doctorId)
     {
-        $DoctorAvailableTimeSlots = TimeSlot::where('doctor_id', $doctorId)->orderBy('slot_time', 'asc')->get()->groupBy('day_of_week');
+        $DoctorAvailableTimeSlots = TimeSlot::where('doctor_id', $doctorId)->where('slot_type',1)->orderBy('slot_time', 'asc')->get()->groupBy('day_of_week');
 
         if (!$DoctorAvailableTimeSlots) {
             return [

@@ -39,7 +39,8 @@
         <div class="col-lg-4 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">Phone <span class="text-danger">*</span></label>
-                <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', $patient->phone ?? '') }}" required>
+                {{-- <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', $patient->phone ?? '') }}" required> --}}
+                <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', request()->phone ?? $patient->phone ?? '') }}" required>
             </div>
         </div>
         <div class="col-lg-4 col-md-6">

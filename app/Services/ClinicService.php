@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Clinic;
+use App\Models\ClinicWorkingHour;
+use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -101,7 +103,7 @@ class ClinicService
                 $newFileName = $clinic->id . '.' . $clinicLogo->getClientOriginalExtension();
                 $clinicLogo->storeAs('clinic_logos', $newFileName, 'public');
                 $clinic->logo = $newFileName;
-                $clinic ->save();
+                $clinic->save();
             }
 
             $user = $this->userService->storeClinicAdmin($data['admin_name'], $data['admin_phone']);
@@ -166,6 +168,27 @@ class ClinicService
                 'success' => false,
                 'message' => 'Something went wrong while updating clinic'
             ];
+        }
+    }
+
+    public function storeClinicWorkingHours($clinicId, $clinic_working_hours)
+    {
+        foreach ($clinic_working_hours as $working_hour) {
+            $day = $working_hour->day;
+            $shift = $working_hour->shift;
+            $opening_time = $working_hour->opening_time;
+            $closing_time = $working_hour->closing_time;
+
+            $opening_time = DateTime::createFromFormat('h:i A', $opening_time)->format('H:i');
+            $closing_time = DateTime::createFromFormat('h:i A', $closing_time)->format('H:i');
+
+            $ClinicWorkingHours = ClinicWorkingHour::create([
+                'clinic_id' => $clinicId,
+                'day' => $day,
+                'shift' => $shift,
+                'opening_time' => $opening_time,
+                'closing_time' => $closing_time
+            ]);
         }
     }
 }

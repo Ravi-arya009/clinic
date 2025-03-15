@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Http\Controllers\patient\dependantController;
 use App\Models\Patient;
+use App\Models\Dependant;
 use Illuminate\Support\Facades\Hash;
 use  Illuminate\Support\Str;
 
@@ -113,5 +115,26 @@ class PatientService
                 'message' => 'Something went wrong while updating patient'
             ];
         }
+    }
+
+    public function fetchDependants($patientId)
+    {
+        $dependants = Dependant::where('patient_id', $patientId)->get();
+
+        if ($dependants->count() > 0) {
+            return [
+                'status' => 1,
+                'dependants' => 1,
+                'patientId' => $patientId,
+                'data' => $dependants,
+                'message' => 'Dependants fetched successfully'
+            ];
+        }
+        return [
+            'status' => 0,
+            'dependants' => 0,
+            'patientId' => $patientId,
+            'message' => 'No dependants'
+        ];
     }
 }

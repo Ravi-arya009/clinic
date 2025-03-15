@@ -3,19 +3,23 @@
 namespace App\Http\Controllers\patient;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Patient\UpdatePatientRequest;
 use App\Models\Appointment;
 use App\Models\Clinic;
 use App\Services\AppointmentService;
-use Illuminate\Http\Request;
+use App\Services\DataRepositoryService;
+use App\Services\PatientService;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    protected $appointmentService;
+    protected $appointmentService, $patientService,$dataRepositoryService;
 
-    public function __construct(AppointmentService $appointmentService)
+    public function __construct(AppointmentService $appointmentService, PatientService $patientService, DataRepositoryService $dataRepositoryService)
     {
         $this->appointmentService = $appointmentService;
+        $this->dataRepositoryService = $dataRepositoryService;
+        $this->patientService = $patientService;
     }
     public function dashboard()
     {
@@ -41,5 +45,20 @@ class DashboardController extends Controller
     {
         $clinic = Clinic::where('id', $clinicId)->get();
         return view('patient.view_clinic', ['clinic' => $clinic]);
+    }
+
+    public function showProfile()
+    {
+        $states = $this->dataRepositoryService->getAllStates();
+        $cities = $this->dataRepositoryService->getAllCities();
+        $patient = auth()->guard('patients')->user();
+        return view('patient.profile', compact('patient', 'states', 'cities'));
+    }
+
+    public function updateProfile(UpdatePatientRequest $request)
+    {
+        $validatedData = $request->validated();
+        $response = $this->patientService->update($request->input('patientId'), $validatedData);
+        return $response;
     }
 }

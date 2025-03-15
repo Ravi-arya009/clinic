@@ -10,6 +10,20 @@
 
 @push('stylesheets')
     <link rel="stylesheet" href={{ asset('plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css') }}>
+    <style>
+        .appointment-history-body {
+            display: block;
+            max-height: 240px;
+            overflow-y: auto;
+            scrollbar-width: none;
+            width: 100%;
+
+        }
+
+        .table-appointment-wrap {
+            height: 80px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -24,7 +38,7 @@
             <ul>
                 <li>
                     <div class="patinet-information">
-                        <a href="{{route('doctor.patient.show', ['patientId'=>$appointment->patient->id])}}">
+                        <a href="{{ route('doctor.patient.show', ['patientId' => $appointment->patient->id]) }}">
                             @if ($appointment->patient->profile_image == null)
                                 <img src="{{ asset('img/bg/ring-1.png') }}" alt="User Image">
                             @else
@@ -90,7 +104,7 @@
                 </li>
                 <li>
                     <h6>No of Visits</h6>
-                    <span>0</span>
+                    <span>{{ $appointmentCount }}</span>
                 </li>
                 <li>
                     <div class="start-btn">
@@ -167,6 +181,34 @@
                 </ul>
             </div>
         @endif
+
+        <h4 class="fw-bold mb-3">Previous Appointments</h4>
+        <div class="appointment-wrap appointment-detail-card">
+            <table class="table-hover table-responsive w-100">
+                <thead>
+                    <tr>
+                        <th>Date / Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody class="appointment-history-body">
+                    @foreach ($historicalAppointments as $historicalAppointment)
+                        <tr class="table-appointment-wrap">
+                            <td class="mail-info-patient py-3 px-4">
+                                <ul>
+                                    <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($historicalAppointment->appointment_date)) }} {{ date('h:i A', strtotime($historicalAppointment->timeSlot->slot_time)) }}</li>
+                                </ul>
+                            </td>
+                            <td class="appointment-start py-3">
+                                <a href="{{ route('doctor.appointment.show', ['appointmentId' => $historicalAppointment->id]) }}" class="start-link"><i class="fa-solid fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+
+            </table>
+        </div>
         <!-- /Appointment Detail Card -->
         <div class="create-appointment-details">
             <h5 class="head-text">Perscription</h5>
