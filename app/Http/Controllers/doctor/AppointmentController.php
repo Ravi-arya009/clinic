@@ -84,7 +84,14 @@ class AppointmentController extends Controller
         if ($response['success']) {
             return redirect()->back()->with('success', $response['message']);
         } else {
-            return redirect()->back()->with('error', $response['message']);
+            return redirect()->back()->withInput()->with('error', $response['message']);
         }
+    }
+
+    public function fetchAppointmentDetails(Request $request)
+    {
+        $appointmentId = $request->input('appointment_id');
+        $historicalAppointmentDetails = $appointment = $this->appointmentService->getAppointmentById($appointmentId);
+        return view('doctor.historicalAppointmentDetails', compact('historicalAppointmentDetails'));
     }
 }

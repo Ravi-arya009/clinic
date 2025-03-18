@@ -1,7 +1,7 @@
 <div class="setting-card">
     <div class="change-avatar img-upload">
         <div class="profile-img">
-            <div class="profile-img">
+            <div class="">
                 @if (isset($patient))
                     @if (isset($patient->profile_image))
                         <img src="{{ asset('storage/profile_images/' . $patient->profile_image) }}" alt="Profile Picture">
@@ -40,7 +40,7 @@
             <div class="form-wrap">
                 <label class="col-form-label">Phone <span class="text-danger">*</span></label>
                 {{-- <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', $patient->phone ?? '') }}" required> --}}
-                <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', request()->phone ?? $patient->phone ?? '') }}" required>
+                <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', request()->phone ?? ($patient->phone ?? '')) }}" required>
             </div>
         </div>
         <div class="col-lg-4 col-md-6">
@@ -141,6 +141,7 @@
 
 
 @push('scripts')
+    <script src={{ asset('js/clinic-utils.js') }}></script>
     <script>
         $(document).ready(function() {
             $(".doctor-infofmation-card").hide();
@@ -158,26 +159,6 @@
 
 
         //Image Preview while profile update
-        const uploadInput = document.querySelector('.upload');
-        const previewContainer = document.querySelector('.profile-img');
-
-        uploadInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-
-            reader.onload = (event) => {
-                const imageData = event.target.result;
-                const image = document.createElement('img');
-                image.src = imageData;
-                image.style.width = '100%';
-                image.style.height = '100%';
-                image.style.objectFit = 'cover';
-
-                previewContainer.innerHTML = '';
-                previewContainer.appendChild(image);
-            };
-
-            reader.readAsDataURL(file);
-        });
+        ImagePreview('.upload', '.profile-img');
     </script>
 @endpush

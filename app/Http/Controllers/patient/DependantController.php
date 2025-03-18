@@ -40,6 +40,8 @@ class dependantController extends Controller
         if ($dependant == null) {
             return 0;
         } else {
+            // session()->flash('message', 'Family Member Created!');
+            session()->flash('success', 'Family Member Created!');
             return [
                 'status' => 1,
                 'dependant' => $dependant
@@ -64,7 +66,8 @@ class dependantController extends Controller
         ], 404);
     }
 
-    public function updateDependant(UpdateDependantRequest $request){
+    public function updateDependant(UpdateDependantRequest $request)
+    {
         $validatedData = $request->validated();
         $dependant = Dependant::findOrFail($request->input('dependent_id'));
         $dependant->name = $validatedData['dependant_name'];

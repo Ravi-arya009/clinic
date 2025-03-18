@@ -151,8 +151,10 @@
 @endsection
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.all.min.js"></script>
+    <script src={{ asset('js/clinic-utils.js') }}></script>
     <script>
         $(function() {
+            ImagePreview('.upload', '.profile-img');
             $('#update_profile').submit(function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);

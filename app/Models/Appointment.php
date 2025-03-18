@@ -33,7 +33,7 @@ class Appointment extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(User::class)->select('id', 'name', 'phone', 'whatsapp', 'email','gender');
+        return $this->belongsTo(User::class)->select('id', 'name', 'phone', 'whatsapp', 'email','gender','profile_image');
     }
 
 

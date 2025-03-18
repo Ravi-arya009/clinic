@@ -80,18 +80,6 @@
                                     <div class="mb-3">
                                         <button class="btn w-100" type="submit">Sign in</button>
                                     </div>
-                                    @if ($errors->any())
-                                        <div class="login-or">
-                                            <span class="or-line"></span>
-                                        </div>
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
                                 </form>
                                 <x-Alert />
                             </div>

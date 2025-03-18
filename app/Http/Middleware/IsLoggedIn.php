@@ -22,6 +22,8 @@ class IsLoggedIn
             $loginRoute = config("auth.guards.{$guard}.login_route");
             return redirect()->route($loginRoute);
         }
+        view()->share('loggedInUser', auth()->guard($guard)->user());
+        // $user = auth()->guard('admin')->user();
         return $next($request);
     }
 }

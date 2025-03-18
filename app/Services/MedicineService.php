@@ -64,4 +64,24 @@ class MedicineService
             ];
         }
     }
+
+    public function deleteMedicine($medicineId)
+    {
+        try {
+            $medicine = MedicineMaster::where('id', $medicineId)->firstOrFail();
+            $medicine->delete();
+            $response =  [
+                'success' => true,
+                'message' => 'Medicine deleted successfully'
+            ];
+        } catch (\Exception $e) {
+            $response =  [
+                'success' => false,
+                'message' => 'An error occurred while deleting the medicine',
+                'error' => $e->getMessage()
+            ];
+        }
+
+        return $response;
+    }
 }

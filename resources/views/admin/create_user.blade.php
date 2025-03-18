@@ -6,13 +6,16 @@
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', 'Create User')
 
+@push('stylesheets')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+@endpush
 @section('content')
 
     <div class="dashboard-header">
         <h3>Create User</h3>
     </div>
 
-    <form action="{{ route('admin.user.store') }}" enctype="multipart/form-data" method="POST">
+    <form id="create_user_form" action="{{ route('admin.user.store') }}" enctype="multipart/form-data" method="POST">
         @csrf
         @include('admin.partials.user_card')
     </form>
@@ -22,8 +25,13 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src={{ asset('js/clinic-utils.js') }}></script>
     <script>
         $(document).ready(function() {
+            ImagePreview('.upload', '.profile-img');
+
+            //Toggle hide doctor related fields.
             $(".doctor-infofmation-card").hide();
             if ($("#role").val() == '{{ config('role.doctor') }}') {
                 $(".doctor-infofmation-card").show();
@@ -35,31 +43,75 @@
                     $(".doctor-infofmation-card").hide();
                 }
             });
+
+
+            $('#create_user_form').submit(function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Processing...',
+                    text: 'Creating the user',
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false
+                });
+
+                let formData = new FormData(this);
+                $.ajax({
+                    url: "{{ route('admin.user.store') }}",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.success == true) {
+                            window.location.href = response.redirectRoute;
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            let errorMessage = '';
+
+                            // Create a formatted list of validation errors
+                            $('.is-invalid').removeClass('is-invalid');
+                            $('.invalid-feedback').remove();
+                            $.each(errors, function(key, value) {
+                                errorMessage += `• ${value[0]}<br>`;
+                                var inputField = $('#' + key);
+                                inputField.addClass('is-invalid');
+                                inputField.after('<div class="invalid-feedback">' + value[0] + '</div>');
+                            });
+
+                            // Show error alert with validation errors
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validation Error',
+                                html: "there are vlidation errors",
+                                confirmButtonColor: '#d33'
+                            });
+
+                        } else {
+                            console.log(xhr);
+                            console.log('Something went wrong. Please try again.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong. Please try again later.',
+                                confirmButtonColor: '#d33'
+                            });
+                        }
+                    }
+                });
+            });
         })
-
-
-        //Image Preview while profile update
-        const uploadInput = document.querySelector('.upload');
-        const previewContainer = document.querySelector('.profile-img');
-
-        uploadInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-
-            reader.onload = (event) => {
-                const imageData = event.target.result;
-                const image = document.createElement('img');
-                image.src = imageData;
-                image.style.width = '100%';
-                image.style.height = '100%';
-                image.style.objectFit = 'cover';
-
-                previewContainer.innerHTML = '';
-                previewContainer.appendChild(image);
-            };
-
-            reader.readAsDataURL(file);
-        });
     </script>
 @endpush
-

@@ -26,7 +26,11 @@
         @foreach ($appointments as $appointment)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
-                    <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
+                    @if (isset($appointment->doctor->profile_image))
+                        <img src="{{ asset('storage/profile_images/' . $appointment->doctor->profile_image) }}" alt="User Image">
+                        @else
+                        <img src="{{ asset('storage/profile_images/default-profile-picture.webp') }}" alt="User Image">
+                    @endif
                     <div class="patient-info">
                         <h6>{{ ucwords($appointment->doctor->name) }}</h6>
                         <p>{{ ucwords($appointment->clinic->name) }}</p>

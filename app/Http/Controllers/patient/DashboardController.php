@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Patient\UpdatePatientRequest;
 use App\Models\Appointment;
 use App\Models\Clinic;
+use App\Models\dependant;
 use App\Services\AppointmentService;
 use App\Services\DataRepositoryService;
 use App\Services\PatientService;
@@ -27,7 +28,8 @@ class DashboardController extends Controller
         $totalPatientCount = Appointment::where('patient_id', $currentUser->id)->distinct('patient_id')->count();
         $totalDoctorAppointmentCount = Appointment::where('patient_id', $currentUser->id)->count();
         $upcomingAppointments = Appointment::where('patient_id', $currentUser->id)->with('patient', 'timeSlot')->orderBy('appointment_date', 'desc')->limit(7)->get();
-        return view('patient.dashboard', compact('currentUser', 'upcomingAppointments', 'totalDoctorAppointmentCount', 'totalPatientCount'));
+        $familyMemberCount = Dependant::where('patient_id', $currentUser->id)->count();
+        return view('patient.dashboard', compact('currentUser', 'upcomingAppointments', 'totalDoctorAppointmentCount', 'totalPatientCount', 'familyMemberCount'));
     }
 
     public function home()

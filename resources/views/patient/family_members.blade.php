@@ -8,6 +8,7 @@
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 @section('content')
     <div class="dashboard-header">
@@ -176,6 +177,7 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -235,6 +237,7 @@
                     success: function(response) {
                         console.log(response);
                         if (response.status == 1) {
+                            location.reload();
                             $("#add_dependent").modal('hide');
                             var row = $('<tr class="table-appointment-wrap">');
                             row.append('<td class="mail-info-patient"><ul><li>' + response.dependant.name + '</li></ul></td>');
@@ -336,4 +339,12 @@
 
         });
     </script>
+
+    @if (session()->has('success'))
+        <script>
+            $(document).ready(function() {
+                toastr.success('{{ session()->get('success') }}');
+            });
+        </script>
+    @endif
 @endpush

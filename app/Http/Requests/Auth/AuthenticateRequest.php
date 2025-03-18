@@ -26,4 +26,11 @@ class AuthenticateRequest extends FormRequest
             'password' => 'required|min:4',
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'phone.*' => 'Invalid phone number.',
+            'password.*' => 'Invalid password.',
+        ];
+    }
 }

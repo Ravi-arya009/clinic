@@ -55,4 +55,11 @@ class StoreClinicRequest extends FormRequest
             'clinic_working_hours.*.closing_time' => 'date_format:H:i A|after:opening_time',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'slug.*' => 'Invalid slug.',
+        ];
+    }
 }

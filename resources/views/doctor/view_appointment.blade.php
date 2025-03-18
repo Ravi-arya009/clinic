@@ -10,20 +10,8 @@
 
 @push('stylesheets')
     <link rel="stylesheet" href={{ asset('plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css') }}>
-    <style>
-        .appointment-history-body {
-            display: block;
-            max-height: 240px;
-            overflow-y: auto;
-            scrollbar-width: none;
-            width: 100%;
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-        }
-
-        .table-appointment-wrap {
-            height: 80px;
-        }
-    </style>
 @endpush
 
 @section('content')
@@ -96,11 +84,27 @@
                 </li>
                 <li>
                     <h6>Booking Type</h6>
-                    <span>Online</span>
+                    <span>{{ $appointment->appointment_type == 1 ? 'Online' : 'Walk-in' }}</span>
                 </li>
                 <li>
                     <h6>Payment Method</h6>
-                    <span>Online</span>
+                    @switch($appointment->payment_method)
+                        @case(0)
+                            <span>Pending</span>
+                        @break
+
+                        @case(1)
+                            <span>Online</span>
+                        @break
+
+                        @case(2)
+                            <span>Cash</span>
+                        @break
+
+                        @case(3)
+                            <span>Part Payment</span>
+                        @break
+                    @endswitch
                 </li>
                 <li>
                     <h6>No of Visits</h6>
@@ -108,7 +112,7 @@
                 </li>
                 <li>
                     <div class="start-btn">
-                        <a href="#" class="btn btn-secondary">History</a>
+                        <button class="btn btn-primary prime-btn custom-components" type="button" data-bs-toggle="modal" data-bs-target=".appointment-history-modal" data-bs-original-title="" title="">History</button>
                     </div>
                 </li>
             </ul>
@@ -123,7 +127,13 @@
                         <div class="mail-info-patient">
                             <ul>
                                 <li><span class="fw-bold">Name:</span> {{ $appointment->dependant->name }}</li>
-                                <li><span class="fw-bold">Age:</span> {{ $appointment->dependant->dob ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Age:</span>
+                                    @if ($appointment->dependant->dob)
+                                        {{ \Carbon\Carbon::parse($appointment->dependant->dob)->age }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </li>
                                 <li><span class="fw-bold">Gender:</span> {{ $appointment->dependant->gender == 1 ? 'Male' : ($appointment->dependant->gender == 2 ? 'Female' : 'N/A') }}</li>
                             </ul>
                         </div>
@@ -181,34 +191,6 @@
                 </ul>
             </div>
         @endif
-
-        <h4 class="fw-bold mb-3">Previous Appointments</h4>
-        <div class="appointment-wrap appointment-detail-card">
-            <table class="table-hover table-responsive w-100">
-                <thead>
-                    <tr>
-                        <th>Date / Time</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-
-                <tbody class="appointment-history-body">
-                    @foreach ($historicalAppointments as $historicalAppointment)
-                        <tr class="table-appointment-wrap">
-                            <td class="mail-info-patient py-3 px-4">
-                                <ul>
-                                    <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($historicalAppointment->appointment_date)) }} {{ date('h:i A', strtotime($historicalAppointment->timeSlot->slot_time)) }}</li>
-                                </ul>
-                            </td>
-                            <td class="appointment-start py-3">
-                                <a href="{{ route('doctor.appointment.show', ['appointmentId' => $historicalAppointment->id]) }}" class="start-link"><i class="fa-solid fa-eye"></i></a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-
-            </table>
-        </div>
         <!-- /Appointment Detail Card -->
         <div class="create-appointment-details">
             <h5 class="head-text">Perscription</h5>
@@ -376,8 +358,6 @@
                         <x-Alert />
                         <div class="col-md-12">
                             <div class="form-set-button">
-                                <button class="btn btn-light" type="button">Cancel</button>
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#end_session">Save & End Appointment</button>
                                 <input class="btn btn-primary ms-5" type="submit" value="submit">
                             </div>
                         </div>
@@ -609,8 +589,107 @@
         </div>
     </div>
     <!-- /View Prescription -->
+
+    <!-- appointment history modal -->
+    <div class="modal fade appointment-history-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel1">Previous Appointments</h4>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" data-bs-original-title="" title=""></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table-hover my-datatable table-responsive w-100">
+                        <thead>
+                            <tr>
+                                <th>Date / Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="appointment-history-body">
+                            @foreach ($historicalAppointments as $historicalAppointment)
+                                <tr class="table-appointment-wrap">
+                                    <td class="mail-info-patient py-3 px-4">
+                                        <ul>
+                                            <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($historicalAppointment->appointment_date)) }} {{ date('h:i A', strtotime($historicalAppointment->timeSlot->slot_time)) }}</li>
+                                        </ul>
+                                    </td>
+                                    <td class="appointment-start py-3">
+                                        <button type="button" data-appointment-id="{{ $historicalAppointment->id }}" class="start-link view-appointment-history btn btn-link p-0 border-0" style="background: none;"><i class="fa-solid fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- appointment history modal -->
+
+    <!-- view appointment history modal -->
+    <div class="modal fade view-appointment-history-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel2">Appointment Details</h4>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" data-bs-original-title="" title=""></button>
+                </div>
+                <div class="modal-body" id="view-appointment-history-modal-body">
+                    <span class="text-info text-center">This appointment is still pending.</span>
+                </div>
+                <div class="modal-footer">
+                    <button class="appointment_history_back_button btn btn-primary prime-btn" type="button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- view appointment history modal -->
 @endsection
 
 @push('scripts')
     <script src={{ asset('plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js') }}></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(function() {
+                $('body .select2_dropdown').select2();
+
+
+            $(".appointment_history_back_button").on('click', function() {
+                $(".view-appointment-history-modal").modal('hide');
+                $('.modal-backdrop').remove();
+                setTimeout(function() {
+                    $(".appointment-history-modal").modal('show');
+                }, 200);
+            });
+            $(".view-appointment-history").on('click', function() {
+                $(".appointment-history-modal").modal('hide');
+                $('.modal-backdrop').remove();
+
+                setTimeout(function() {
+                    $(".view-appointment-history-modal").modal('show');
+                }, 200);
+                var appointment_id = $(this).data('appointment-id');
+
+                $.ajax({
+                    url: "{{ route('doctor.fetchAppointmentDetails') }}",
+                    type: "POST",
+                    data: {
+                        appointment_id: appointment_id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        $('#view-appointment-history-modal-body').html(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

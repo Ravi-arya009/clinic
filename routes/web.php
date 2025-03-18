@@ -25,6 +25,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\super_admin\AuthController as Super_adminAuthController;
 use App\Http\Controllers\super_admin\ClinicController;
 use App\Http\Controllers\super_admin\DashboardController;
+use App\Http\Controllers\super_admin\DataRepositoryController;
 use App\Http\Controllers\TempController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WebsiteController;
@@ -45,6 +46,7 @@ Route::prefix('super_admin')->group(
             Route::get('clinic/view/{clinicId}', [ClinicController::class, 'show'])->name('super_admin.clinic.show');
             Route::post('clinic/update/{clinicId}', [ClinicController::class, 'update'])->name('super_admin.clinic.update');
             Route::get('clinic/index', [ClinicController::class, 'index'])->name('super_admin.clinic.index');
+            Route::get('/state', [DataRepositoryController::class, 'stateIndex'])->name('admin.state.index');
             Route::get('logout', [Super_adminAuthController::class, 'logout'])->name('super_admin.logout');
         });
     }
@@ -77,6 +79,7 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::get('/medicines', [MedicineController::class, 'index'])->name('admin.medicines.index');
             Route::post('/medicine', [MedicineController::class, 'store'])->name('admin.medicine.store');
             Route::put('/medicine/{medicineId}', [MedicineController::class, 'update'])->name('admin.medicine.update');
+            Route::post('/delete-medicine', [MedicineController::class, 'delete'])->name('admin.medicine.delete');
             Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
             Route::get('patient/create', [UserController::class, 'createPatient'])->name('admin.patient.create');
@@ -116,7 +119,7 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::get('patients', [PatientController::class, 'index'])->name('doctor.patient.index');
             Route::get('profile', [DoctorDashboardController::class, 'showProfile'])->name('doctor.profile.show');
             Route::post('profile', [DoctorDashboardController::class, 'updateProfile'])->name('doctor.profile.update');
-
+            Route::post('profilefetchAppointmentDetails', [DoctorAppointmentController::class, 'fetchAppointmentDetails'])->name('doctor.fetchAppointmentDetails');
         });
     });
 });
@@ -126,8 +129,7 @@ Route::post('addDependant', [dependantController::class, 'addDependant'])->name(
 Route::post('updateDependant', [dependantController::class, 'updateDependant'])->name('updateDependant');
 Route::post('deleteDependant', [dependantController::class, 'deleteDependant'])->name('deleteDependant');
 Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
-Route::post('addDependant', [PatientController::class, 'addDependant'])->name('ajax.addDependant');
-
+Route::post('addDependantajax', [PatientController::class, 'addDependant'])->name('ajax.addDependant');
 
 
 #### Receptionist ####
@@ -143,7 +145,6 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::get('/dashboard', [ReceptionistDashboardController::class, 'dashboard'])->name('receptionist.dashboard');
             Route::get('/logout', [ReceptionistAuthController::class, 'logout'])->name('receptionist.logout');
         });
-
     });
 });
 
@@ -167,6 +168,9 @@ Route::prefix('patient')->group(function () {
 
         Route::get('profile', [PatientDashboardController::class, 'showProfile'])->name('patient.profile.show');
         Route::post('profile', [PatientDashboardController::class, 'updateProfile'])->name('patient.profile.update');
+        Route::post('fetchAppointmentDetails', [PatientAppointmentController::class, 'fetchAppointmentDetails'])->name('patient.fetchAppointmentDetails');
+        Route::get('/prescription', [PatientAppointmentController::class, 'generatePrescription'])->name('patient.prescription.generate');
+        Route::get('/generate-invoice', [PatientAppointmentController::class, 'generateInvoice'])->name('patient.invoice.generate');
     });
 
     Route::middleware('RedirectIfAuthenticated:patients')->group(function () {

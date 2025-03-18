@@ -401,7 +401,6 @@ adding family members on patents.
 
 -clinic admin should be able to manage clinic available hours.
 -payment method and booking type is automatically getting filled on appointment when doctor creates it.
--remove save and end appointment and cancel button from appointment's page on doctor's panel.
 -calculate age of patient on appointment's page.
 -fetch correct profile picture of users on the sidebar and navbar.
 
@@ -413,3 +412,30 @@ adding family members on patents.
 -check the app and look for problems in process/flow.
 
 
+#############
+#clinic admin
+-convert add time slots on admin panel to ajax.
+-add medicines (will get fixed with adding city, states etc)
+-swal on medicine edit.
+
+#doctor
+-save appointment page, swal on save. ajax
+    need to handle all the erorrs and edge cases. turning off for now.
+-relation is not being fetched in the modal while booking new appointment
+
+#check the flow, frontend(app landing), doctor's page, clinic's page.
+
+- if logged in disable the contact person's information while booking new clinic.
+-check prescription for right details.
+    for eg. age is wrong on the pdf (mistake happening in calculation).
+-dependant phone should be nullable in the migration
+
+-while fetching appointment history and no of visits only fetch appointments with status completed.
+
+#after lunch
+-fix billings migration (done)
+-pdf downloads check.(done)
+-check prescription for right details.
+-check invoice prescription for right details.
+-receptionist panel
+    -needed for booking confirmation, payment etc.

@@ -18,7 +18,7 @@
             <div class="imgs-load d-flex align-items-center">
                 <div class="change-photo">
                     Upload New
-                    <input type="file" name="profile_picture" class="upload">
+                    <input type="file" id="profile_picture" name="profile_picture" class="upload">
                 </div>
             </div>
         </div>
@@ -69,10 +69,6 @@
                 <input type="date" name="dob" class="form-control" value="{{ old('dob', $user->dob ?? '') }}">
             </div>
         </div>
-
-        {{-- experiment while creating patient's view --}}
-        {{-- see if there's no unnessary or complex code since we're using same form for all the users including patient. --}}
-        {{-- @unless ($type ?? 'default_value' == 'patient') --}}
         @if (isset($user))
             <div class="col-lg-4 col-md-6">
                 <div class="form-wrap">
@@ -96,7 +92,6 @@
                 </div>
             </div>
         @endif
-        {{-- @endunless --}}
     </div>
 </div>
 <div class="setting-title">

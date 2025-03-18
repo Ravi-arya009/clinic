@@ -1,11 +1,5 @@
-{{-- {{dd($ClinicWorkingHours)}} --}}
-@push('stylesheets')
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-@endpush
 <form id="create_clinic_form" action="{{ $action }}" enctype="multipart/form-data" method="POST">
     @csrf
-
     <!-- Clinic logo -->
     <div class="setting-card">
         <div class="change-avatar img-upload">
@@ -50,6 +44,9 @@
                 <div class="form-wrap">
                     <label class="col-form-label">Slug <span class="text-danger">*</span></label>
                     <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', $clinic->slug ?? '') }}" required>
+                    @error('slug')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -407,135 +404,3 @@
     </div>
     <!-- /Remove Slots -->
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('js/moment.min.js') }}"></script>
-    <script src={{ asset('js/bootstrap-datetimepicker.min.js') }}></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        $(function() {
-            //adding time slots to ul
-            var clinic_working_hours = [];
-            $("#add_slot_modal_button").on('click', function() {
-                var clinic_opening_time = $("#clinic_opening_time").val();
-                var clinic_closing_time = $("#clinic_closing_time").val();
-                var day = $("#modal-day-text").text();
-                var dayNumber = $("#modal-day-number").text();
-                var shiftNumber = $("#modal-shift-number").text();
-                var shift = $("#modal-shift-text").text();
-                var targetUl = $("#" + day + "-" + shift + "-ul");
-                targetUl.append("<li>" + clinic_opening_time + " - " + clinic_closing_time + "</li>");
-                clinic_working_hours.push({
-                    day: dayNumber,
-                    shift: shiftNumber,
-                    opening_time: clinic_opening_time,
-                    closing_time: clinic_closing_time
-                });
-                $('#add_slot').modal('hide');
-
-                console.log(clinic_working_hours)
-            });
-
-            //shows current day and shift on add time slots modal
-            $(".add-slot").on('click', function() {
-                var day = $(this).data("day");
-                var shift = $(this).data("shift");
-
-                var dayNumber = $(this).data("day-number");
-                var shiftNumber = $(this).data("shift-number");
-
-                $("#modal-day-text").text(day);
-                $("#modal-day-number").text(dayNumber);
-
-                $("#modal-shift-text").text(shift);
-                $("#modal-shift-number").text(shiftNumber);
-            });
-
-            //Image Preview while profile update
-            const uploadInput = document.querySelector('.upload');
-            const previewContainer = document.querySelector('.profile-img');
-            uploadInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const imageData = event.target.result;
-                    const image = document.createElement('img');
-                    image.src = imageData;
-                    image.style.width = '100%';
-                    image.style.height = '100%';
-                    image.style.objectFit = 'cover';
-                    previewContainer.innerHTML = '';
-                    previewContainer.appendChild(image);
-                };
-                reader.readAsDataURL(file);
-            });
-
-
-            // ajax call
-            $('#create_clinic_form').submit(function(e) {
-                e.preventDefault(); // Prevent the default form submission
-
-                Swal.fire({
-                    title: 'Processing...',
-                    text: 'Creating the clinic',
-                    didOpen: () => {
-                        Swal.showLoading();
-                    },
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    showConfirmButton: false
-                });
-
-                let formData = new FormData(this);
-                formData.append('clinic_working_hours', JSON.stringify(clinic_working_hours));
-
-                $.ajax({
-                    url: "{{ route('super_admin.clinic.store') }}",
-                    type: "POST",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response.success == true) {
-                            window.location.href = response.redirectRoute;
-                        }
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            let errors = xhr.responseJSON.errors;
-                            let errorMessage = '';
-
-                            // Create a formatted list of validation errors
-                            $.each(errors, function(key, value) {
-                                errorMessage += `• ${value[0]}<br>`;
-                            });
-
-                            // Show error alert with validation errors
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Validation Error',
-                                html: errorMessage,
-                                confirmButtonColor: '#d33'
-                            });
-
-                        } else {
-                            console.log(xhr);
-                            console.log('Something went wrong. Please try again.');
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Something went wrong. Please try again later.',
-                                confirmButtonColor: '#d33'
-                            });
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-@endpush
