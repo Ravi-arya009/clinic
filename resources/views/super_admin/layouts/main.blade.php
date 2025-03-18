@@ -21,7 +21,7 @@
     <meta name="twitter:image" content={{ asset('img/preview-banner.jpg') }}>
 
     <link href={{ asset('img/favicon.png') }} rel="icon"> <!-- Favicons -->
-    <link rel="stylesheet" href={{ asset('css/bootstrap.min.css') }}> <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href={{ asset('css/bootstrap.css') }}> <!-- Bootstrap CSS -->
     <link rel="stylesheet" href={{ asset('plugins/fontawesome/css/fontawesome.min.css') }}> <!-- Fontawesome CSS -->
     <link rel="stylesheet" href={{ asset('plugins/fontawesome/css/all.min.css') }}> <!-- Fontawesome CSS -->
     <link rel="stylesheet" href={{ asset('css/feather.css') }}> <!-- Feathericon CSS -->

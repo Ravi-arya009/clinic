@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Clinic;
 use App\Models\Doctor;
 use App\Models\User;
@@ -47,7 +48,7 @@ class WebsiteController extends Controller
     }
 
     //creates timeslots by date for n number of future days.
-    protected function makeDateWiseSlots($doctor)
+    protected function makeDateWiseSlots_old($doctor)
     {
         if (!$doctor->timeSlots->isEmpty()) {
             $currentDate = date('Y-m-d');
@@ -62,6 +63,47 @@ class WebsiteController extends Controller
         } else {
             $slotsByDate = [];
         }
+        return $slotsByDate;
+    }
+
+
+    protected function makeDateWiseSlots($doctor)
+    {
+        $slotsByDate = [];
+
+        if (!$doctor->timeSlots->isEmpty()) {
+            $currentDate = date('Y-m-d');
+
+            $bookedAppointments = Appointment::where('doctor_id', $doctor->id)
+                ->where('appointment_date', '>=', $currentDate)
+                ->where('appointment_date', '<=', date('Y-m-d', strtotime('+9 days', strtotime($currentDate))))
+                ->get()
+                ->groupBy('appointment_date');
+
+            for ($i = 0; $i < 10; $i++) {
+                $dayNumber = date('N', strtotime($currentDate));
+
+                if (isset($doctor->timeSlots[$dayNumber])) {
+
+                    $availableSlots = collect($doctor->timeSlots[$dayNumber]);
+
+                    if (isset($bookedAppointments[$currentDate])) {
+                        $bookedSlotIds = $bookedAppointments[$currentDate]->pluck('time_slot_id')->toArray();
+                        $availableSlots = $availableSlots->filter(function ($slot) use ($bookedSlotIds) {
+                            return !in_array($slot->id, $bookedSlotIds);
+                        });
+                    }
+
+                    if ($availableSlots->count() > 0) {
+                        $slotsByDate[$currentDate] = $availableSlots;
+                        $slotsByDate[$currentDate]->dayName = date('l', strtotime($currentDate));
+                    }
+                }
+
+                $currentDate = date('Y-m-d', strtotime('+1 day', strtotime($currentDate)));
+            }
+        }
+
         return $slotsByDate;
     }
 

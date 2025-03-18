@@ -27,7 +27,6 @@ class UserController extends Controller
     public function index($clinicSlug)
     {
         $clinicUsers = $this->userService->getUsersByClinicId($this->clinicId);
-        // dd($clinicUsers);
         return view('admin.user_list', compact('clinicUsers'));
     }
 
@@ -45,11 +44,17 @@ class UserController extends Controller
         $validatedData = $request->validated();
         $response = $this->userService->storeUser($validatedData, $this->clinicId);
 
-        if (!$response['success']) {
-            return back()->withInput()->with(['error' => $response['message']]);
-        } else {
-            return redirect()->route('admin.user.show', ['userId' => $response['data']->id, 'roleId' => $response['data']->role])->with('success', $response['message']);
-        }
+        $response = $response['success'] ? [
+            'success' => true,
+            'message' => $response['message'],
+            'redirectRoute' => route('admin.user.show', $response['data']),
+        ] : [
+            'success' => false,
+            'message' => $response['message'],
+            'error' => $response['message'],
+        ];
+
+        return response()->json($response);
     }
 
     public function show(Request $request, $clinicSlug, $userId)

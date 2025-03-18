@@ -2,7 +2,11 @@
     <div class="widget-profile pro-widget-content">
         <div class="profile-info-widget">
             <a href="doctor-profile.html" class="booking-doc-img">
-                <img src={{ asset('img/doctors-dashboard/doctor-profile-img.jpg') }} alt="User Image">
+                @if (isset($loggedInUser->profile_image))
+                    <img src="{{ asset('storage/profile_images/' . $loggedInUser->profile_image) }}" alt="Profile Picture">
+                @else
+                    <img src={{ asset('storage/profile_images/default-profile-picture.webp') }} alt="User Image">
+                @endif
             </a>
             <div class="profile-det-info">
                 <h3><a href="doctor-profile.html">{{ auth()->guard('admin')->user()->name }}</a></h3>
@@ -28,7 +32,7 @@
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs('admin.user.index','admin.user.show') ? 'active' : '' }}">
+                <li class="{{ request()->routeIs('admin.user.index', 'admin.user.show') ? 'active' : '' }}">
                     <a href="{{ route('admin.user.index') }}">
                         <i class="fa-solid fa-users"></i>
                         <span>User List</span>
@@ -42,15 +46,15 @@
                     </a>
                 </li>
 
-                <li class="{{ request()->routeIs('admin.appointments.index','admin.appointment.show') ? 'active' : '' }}">
-                    <a href="{{route('admin.appointments.index')}}">
+                <li class="{{ request()->routeIs('admin.appointments.index', 'admin.appointment.show') ? 'active' : '' }}">
+                    <a href="{{ route('admin.appointments.index') }}">
                         <i class="fa-solid fa-calendar-days"></i>
                         <span>Appointments</span>
                     </a>
                 </li>
 
                 <li class="{{ request()->routeIs('admin.medicines.index') ? 'active' : '' }}">
-                    <a href="{{route('admin.medicines.index')}}">
+                    <a href="{{ route('admin.medicines.index') }}">
                         <i class="fa-duotone fa-solid fa-capsules"></i>
                         <span>Medicines</span>
                     </a>

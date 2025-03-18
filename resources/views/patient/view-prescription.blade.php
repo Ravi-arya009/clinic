@@ -1,8 +1,10 @@
-<div class="prescribe-download">
-    <ul>
-        <button type="button" id="downloadPdfBtn" class="btn btn-primary">Download as PDF</button>
-    </ul>
-</div>
+<style>
+    .invoice-table {
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
+    }
+</style>
 <div class="view-prescribe-details">
     <div class="hospital-addr">
         <div class="invoice-logo">

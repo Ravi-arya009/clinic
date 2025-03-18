@@ -57,4 +57,12 @@ class MedicineController extends Controller
         $response = $this->medicineService->updateMedicine($medicineId, $validatedData['name'], $this->clinicId);
         return $response;
     }
+
+    public function delete(Request $request)
+    {
+        $medicineId = $request->medicineId;
+        $response = $this->medicineService->deleteMedicine($medicineId);
+        return $response;
+
+    }
 }

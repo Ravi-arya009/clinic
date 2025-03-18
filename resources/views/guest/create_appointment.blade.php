@@ -23,6 +23,7 @@
                         @csrf
                         <input type="hidden" value="{{ json_encode($bookingData) }}" name="bookingData">
                         <input type="hidden" name="booking_for" id="booking_for" value="1">
+                        <input type="hidden" name="consultation_fee" id="consultation_fee" value="{{$bookingData->consultation_fee}}">
 
                         <div class="card shadow-sm">
                             <div class="card-header">
@@ -33,7 +34,7 @@
                                     <div class="col-md-6 col-sm-12">
                                         <div class="mb-3 card-label">
                                             <label class="mb-2">Name</label>
-                                            <input type="text" class="form-control" name="name" id="name" value="{{ $loggedInUser ? $loggedInUser->name : old('name') }}" required>
+                                            <input type="text" class="form-control" name="name" id="name" value="{{ $loggedInUser ? $loggedInUser->name : old('name') }}" required >
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-12">

@@ -3350,7 +3350,6 @@ Version      : 1.3
             "</div>";
 
         $(".add-new-med").before(servcontent);
-
         if ($(".select2_dropdown").length > 0) {
             $(".select2_dropdown").select2({
                 minimumResultsForSearch: -1,

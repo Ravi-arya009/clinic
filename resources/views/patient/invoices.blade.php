@@ -11,21 +11,24 @@
 @section('content')
     <x-page-header pageContentTitle="Invoices" :search="true" />
 
-    <table class="my-datatable table-hover">
+    <table class="my-datatable table-hover table-responsive">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Doctor / Clinic</th>
                 <th>Appointment Date</th>
-                <th>Contact</th>
                 <th>Patient</th>
                 <th>Action</th>
             </tr>
         </thead>
 
-        {{-- @foreach ($appointments as $appointment)
+        @foreach ($appointments as $appointment)
             <tr class="table-appointment-wrap">
                 <td class="patinet-information">
-                    <img src="{{ asset('img/doctors-dashboard/profile-0' . rand(1, 8) . '.jpg') }}" alt="User Image">
+                    @if (isset($appointment->doctor->profile_image))
+                        <img src="{{ asset('storage/profile_images/' . $appointment->doctor->profile_image) }}" alt="User Image">
+                    @else
+                        <img src="{{ asset('storage/profile_images/default-profile-picture.webp') }}" alt="User Image">
+                    @endif
                     <div class="patient-info">
                         <h6>{{ ucwords($appointment->doctor->name) }}</h6>
                         <p>{{ ucwords($appointment->clinic->name) }}</p>
@@ -34,34 +37,62 @@
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</li>
+                        <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y', strtotime($appointment->appointment_date)) }}</li>
                         <li><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li><i class="fa-solid fa-user-doctor"></i>{{ optional($appointment->doctor)->phone ?? 'N/A' }}</li>
-                        <li><i class="fa-solid fa-house-chimney-medical"></i>{{ optional($appointment->doctor)->phone ?? 'N/A' }}</li>
-                    </ul>
-                </td>
-                <td class="mail-info-patient">
-                    <ul>
-                        <li>{{ optional($appointment->patient)->name ?? 'N/A' }}</li>
-                        <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
+                        @if ($appointment->dependant_id)
+                            <li>{{ optional($appointment->dependant)->name ?? 'N/A' }} <span class="badge  badge-green table-badge display-inline ms-2">Family</span>
+                            <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }}</li>
+                        @else
+                            <li>{{ optional($appointment->patient)->name ?? 'N/A' }} <span class="badge badge-info table-badge ms-2">Self</span></li>
+                            <li><i class="fa-solid fa-phone"></i>{{ optional($appointment->patient)->phone ?? 'N/A' }} </li>
+                        @endif
                     </ul>
                 </td>
                 <td class="appointment-start">
-                    <a href="{{ route('patient.appointment.show', ['appointmentId' => $appointment->id]) }}" class="start-link">View</a>
+                    {{-- <a href="javascript:void(0);" class="start-link" data-bs-toggle="modal" data-bs-target="#view_prescription">View</a> --}}
+                    <a href="javascript:void(0);" class="start-link viewInvoice" data-appointment-id="{{ $appointment->id }}">View</a>
                 </td>
             </tr>
-        @endforeach --}}
+        @endforeach
     </table>
+@endsection
 
+@section('modal')
+    <!--View Invoice -->
+    <div class="modal fade custom-modals" id="invoice_view">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">View Invoice</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body pb-0">
+                    <div class="prescribe-download">
+                        <h5>{{ date('d M Y') }}</h5>
+                        <ul>
+                            <button type="button" id="downloadPdfBtn" class="btn btn-primary">Download as PDF</button>
+                        </ul>
+                    </div>
+                    <div class="view-prescribe invoice-content" id="invoice-content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /View Invoice -->
 @endsection
 
 
 @push('scripts')
     <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         var table = $('.my-datatable').DataTable({
             lengthChange: false,
@@ -91,6 +122,49 @@
             table.search('').draw();
             $('.fa-magnifying-glass').removeClass('hide');
             $(this).addClass('hide');
+        });
+
+        $(".viewInvoice").on('click', function() {
+            var appointment_id = $(this).attr('data-appointment-id');
+            $.ajax({
+                url: "{{ route('patient.invoice.generate') }}",
+                method: "GET",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "appointment_id": appointment_id
+                },
+                success: function(response) {
+                    console.log(response);
+                    $('#invoice-content').html(response);
+                    $('#invoice_view').modal('show');
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        $(document).on('click', '#downloadPdfBtn', function() {
+            const element = document.getElementById('invoice-content');
+
+            const options = {
+                // margin: 10,
+                filename: 'invoice.pdf',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait'
+                }
+            };
+
+            html2pdf().from(element).set(options).save();
         });
     </script>
 @endpush

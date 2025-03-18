@@ -61,9 +61,7 @@
                 </td>
 
                 <td class="appointment-start">
-                    <a href="#" class="edit-medicine-button start-link" data-bs-toggle="modal" title="Edit Medicine" data-medicine-id="{{ $medicine->id }}" data-medicine-name="{{ $medicine->name }}">
-                        Delete
-                    </a>
+                    <a href="javascript:void(0);" class="delete-medicine" data-bs-toggle="modal" data-bs-target="#delete_medicine_modal" data-medicine-id="{{ $medicine->id }}">Delete</a>
                 </td>
 
                 <td class="appointment-start">
@@ -172,6 +170,32 @@
         </div>
     </div>
     {{-- success modal --}}
+
+
+    <!-- Delete Medicine -->
+    <div class="modal fade info-modal" id="delete_medicine_modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="success-wrap">
+                        <div class="success-info">
+                            <div class="text-center">
+                                <span class="icon-success bg-red"><i class="fa-solid fa-xmark"></i></span>
+                                <h3>Remove Medicine</h3>
+                                <p>Are you sure you want to remove this Medicine?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-btn text-center">
+                        <a href="#" class="btn btn-gray" data-bs-toggle="modal" data-bs-dismiss="modal" data-medicine-id="" id="delete_medicine_modal_button">Yes, Remove</a>
+                        <a href="#" class="btn btn-primary prime-btn px-5" data-bs-toggle="modal" data-bs-dismiss="modal">No</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Delete Medicine -->
 @endsection
 
 @push('scripts')
@@ -179,6 +203,7 @@
     <script>
         var medicineStoreRoute = '{{ route('admin.medicine.store') }}';
         var medicineUpdateRoute = "{{ route('admin.medicine.update', ':medicine') }}";
+        var medicineDeleteRoute = "{{ route('admin.medicine.delete', ':medicine') }}";
         var table = $('.my-datatable').DataTable({
             lengthChange: false,
             searching: true,
@@ -353,6 +378,37 @@
                     },
                 });
             }
+        });
+
+        $("#delete_medicine_modal_button").on('click', function() {
+            var medicine_id = $(this).data('medicine-id');
+            $.ajax({
+                type: "POST",
+                url: medicineDeleteRoute.replace(":medicine", medicine_id),
+                data: {
+                    medicineId: medicine_id,
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response.success == true) {
+                        $("#medicine-row-" + medicine_id).remove();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error adding medicine:", error);
+                },
+            });
+        });
+
+        $(".delete-medicine").on("click", function() {
+            var medicine_id = $(this).data("medicine-id");
+            console.log(medicine_id);
+            $("#delete_medicine_modal_button").attr("data-medicine-id", medicine_id);
         });
     </script>
 @endpush

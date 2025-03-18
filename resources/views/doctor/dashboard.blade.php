@@ -51,7 +51,7 @@
             <div class="dashboard-card w-100">
                 <div class="dashboard-card-head">
                     <div class="header-title">
-                        <h5>Appointment</h5>
+                        <h5>Recent Appointments</h5>
                     </div>
                 </div>
                 <div class="dashboard-card-body">
@@ -70,7 +70,6 @@
                                                     @endif
                                                 </a>
                                                 <div class="patient-name-info">
-                                                    <span>#Apt0001</span>
                                                     <h5><a href="appointments.html">{{ $appointment->patient->name }}</a></h5>
                                                 </div>
                                             </div>
@@ -79,7 +78,6 @@
                                         <td>
                                             <div class="appointment-date-created">
                                                 <h6>{{ date('d M Y', strtotime($appointment->appointment_date)) }}, {{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</h6>
-                                                <span class="badge table-badge">General</span>
                                             </div>
                                         </td>
                                         <td>
@@ -288,8 +286,7 @@
                             window.location.href = dependantUrl;
                         }
                     },
-                    error: function(xhr, status, error) {
-                    }
+                    error: function(xhr, status, error) {}
                 });
             });
 

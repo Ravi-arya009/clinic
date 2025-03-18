@@ -25,6 +25,16 @@ class AppointmentLabTest extends Model
         return $this->belongsTo(LabTestMaster::class,'lab_test_id');
     }
 
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class);
+    }
+
+    public function labTestMaster()
+    {
+        return $this->belongsTo(LabTestMaster::class, 'lab_test_id');
+    }
+
     // public function medicine()
     // {
     //     return $this->belongsTo(MedicineMaster::class, 'medicine_id');

@@ -9,6 +9,9 @@ use App\Models\AppointmentMedication;
 use App\Models\LabTestMaster;
 use App\Models\LabTestsMAster;
 use App\Models\MedicineMaster;
+use App\Services\AppointmentService;
+use App\Services\LabTestService;
+use App\Services\MedicineService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,10 +21,13 @@ use Illuminate\Validation\Rule;
 
 class AppointmentController extends Controller
 {
-    protected $clinicId;
+    protected $clinicId, $appointmentService, $medicineService, $labTestService;
 
-    public function __construct()
+    public function __construct(AppointmentService $appointmentService, MedicineService $medicineService, LabTestService $labTestService)
     {
+        $this->appointmentService = $appointmentService;
+        $this->medicineService = $medicineService;
+        $this->labTestService = $labTestService;
         $this->clinicId = Session::get('current_clinic')['id'];
     }
 
@@ -34,10 +40,18 @@ class AppointmentController extends Controller
     public function show(Request $request)
     {
         $appointmentId = $request->appointmentId;
-        $appointment = Appointment::with('patient', 'timeSlot', 'appointmentDetails', 'medications')->where('id', $appointmentId)->first();
-        $medicines = MedicineMaster::where('clinic_id', $this->clinicId)->get();
-        $laboratoryTests = LabTestMaster::all();
-        return view('admin.view_appointment', compact('appointment', 'medicines', 'laboratoryTests'));
+        $appointment = $this->appointmentService->getAppointmentById($request->appointmentId);
+        if ($appointment->dependant_id == null) {
+            $patientId = $appointment->patient_id;
+            $historicalAppointments = $this->appointmentService->getHistoricalAppointments('self', $patientId);
+        } else {
+            $dependantId = $appointment->dependant_id;
+            $historicalAppointments = $this->appointmentService->getHistoricalAppointments('dependant', $dependantId);
+        }
+        $appointmentCount = $historicalAppointments->count();
+        $medicines = $this->medicineService->getClinicMedicines($this->clinicId);
+        $laboratoryTests = $this->labTestService->getAllTests();
+        return view('admin.view_appointment', compact('appointment', 'medicines', 'laboratoryTests', 'historicalAppointments', 'appointmentCount'));
     }
 
     // public function store(Request $request)

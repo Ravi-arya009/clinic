@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Appointment\StoreAppointmentRequest;
 use App\Models\Appointment;
+use App\Models\Billing;
 use App\Models\dependant;
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -28,7 +29,6 @@ class AppointmentController extends Controller
     {
         $bookingData = json_decode($request->bookingData);
         $validatedData = $request->validated();
-
         if (auth()->guard('patients')->check()) {
             $patient_id = Auth::guard('patients')->id();
         } else {
@@ -50,8 +50,7 @@ class AppointmentController extends Controller
             $dependant = dependant::create([
                 'id' => Str::uuid(),
                 'patient_id' => $patient_id,
-                'relation' =>
-                $validatedData['dependant_relation'],
+                'relation' => $validatedData['dependant_relation'],
                 'name' => $validatedData['dependant_name'],
                 'phone' => $validatedData['dependant_phone'],
                 'whatsapp' => $validatedData['dependant_whatsapp'] ?? null,
@@ -71,9 +70,19 @@ class AppointmentController extends Controller
             'time_slot_id' => $bookingData->slot_id,
             'appointment_date' => $bookingData->appointment_date,
             'booking_for' => $request->booking_for,
+            'appointment_type' => 1,
             'payment_method' => $request->payment_method
         ]);
         $appointmentId = $appointment->id;
+
+        Billing::create([
+            'id' => Str::uuid(),
+            'appointment_id' => $appointmentId,
+            'amount_to_be_paid' => $bookingData->consultation_fee,
+            'amount_paid' => 0,
+            'payment_status' => 0,
+            'payment_method' => $request->payment_method
+        ]);
 
         $appointment_date = $bookingData->appointment_date;
         $slot_id = $bookingData->slot_id;

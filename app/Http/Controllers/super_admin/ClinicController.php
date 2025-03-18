@@ -60,12 +60,9 @@ class ClinicController extends Controller
     public function show($clinicId)
     {
         $clinic = $this->clinicService->getClinicById($clinicId, ['admins', 'WorkingHours']);
-        // $ClinicWorkingHours = $clinic->WorkingHours->groupBy('day', 'shift');
         $ClinicWorkingHours = $clinic->WorkingHours->groupBy('day')->map(function ($dayGroup) {
             return $dayGroup->groupBy('shift');
         });
-        // $ClinicWorkingHours = $clinic->WorkingHours->groupBy('day', 'shift');
-        // dd($ClinicWorkingHours);
         $cities = $this->dataRepositoryService->getAllCities();
         $states = $this->dataRepositoryService->getAllStates();
         $specialities = $this->dataRepositoryService->getAllSpecialities();
@@ -75,7 +72,17 @@ class ClinicController extends Controller
     public function update(UpdateClinicRequest $request, $clinicId)
     {
         $validatedData = $request->validated();
+        $clinic_working_hours =  json_decode($validatedData['clinic_working_hours']);
         $response = $this->clinicService->updateClinic($clinicId, $validatedData);
-        return $response['success'] ? back()->with('success', $response['message']) : back()->withInput()->with('error', $response['message']);
+        $this->clinicService->storeClinicWorkingHours($clinicId, $clinic_working_hours);
+        $response = $response['success'] ? [
+            'success' => true,
+            'message' => $response['message'],
+        ] : [
+            'success' => false,
+            'message' => $response['message'],
+            'error' => $response['message'],
+        ];
+        return response()->json($response);
     }
 }

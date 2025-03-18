@@ -1,3 +1,6 @@
+@php
+    $pageTitle = 'Appointments Details';
+@endphp
 @extends('admin.layouts.main')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -13,28 +16,31 @@
 
 @section('content')
     <!-- Page Content -->
-    <div class="dashboard-header">
-        <div class="header-back">
-            <h3>Appointment Details</h3>
-        </div>
-    </div>
+    <x-page-header :pageContentTitle="$pageTitle" />
     <div class="appointment-details-wrap">
+        <h4 class="fw-bold mb-3">
+            Booking Details
+        </h4>
         <!-- Appointment Detail Card -->
         <div class="appointment-wrap appointment-detail-card">
             <ul>
                 <li>
                     <div class="patinet-information">
-                        <a href="patient-profile.html">
-                            <img src={{ asset('img/doctors-dashboard/profile-02.jpg') }} alt="User Image">
+                        <a href="{{ route('doctor.patient.show', ['patientId' => $appointment->patient->id]) }}">
+                            @if ($appointment->patient->profile_image == null)
+                                <img src="{{ asset('img/bg/ring-1.png') }}" alt="User Image">
+                            @else
+                                <img src="{{ asset('storage/profile_images/' . $appointment->patient->profile_image) }}" alt="User Image">
+                            @endif
+
                         </a>
-                        <div class="patient-info">
-                            <h6><a href="patient-profile.html">{{ ucwords($appointment->patient->name) }}</a></h6>
+                        <div class="patient-info text-black">
+                            <span class="fw-bold">Contact Person:</span> {{ ucwords($appointment->patient->name) }}
                             <div class="mail-info-patient">
                                 <ul>
+                                    <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone ?? 'N/A' }}</li>
+                                    <li><i class="fa-solid fa-brands fa-whatsapp"></i>{{ $appointment->patient->phone ?? 'N/A' }}</li>
                                     <li><i class="fa-solid fa-envelope"></i>{{ optional($appointment->patient)->email ?? 'N/A' }}</li>
-                                    <li><i class="fa-solid fa-phone"></i>{{ $appointment->patient->phone }}</li>
-                                    <li><i class="fas fa-map-marker-alt"></i>An 544 ka/58 Balaganj Lucknow</li>
-                                    {{-- make address dynamic --}}
                                 </ul>
                             </div>
                         </div>
@@ -43,28 +49,32 @@
                 <li class="appointment-info">
                     <div class="mail-info-patient">
                         <ul>
-                            <li><i class="fa-solid fa-calendar-days"></i>{{ date('d M Y, l', strtotime($appointment->appointment_date)) }}</li>
-                            <li><i class="fa-solid fa-clock"></i>{{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</li>
+                            <li><span class="fw-bold">State:</span> {{ $appointment->patient->state->name ?? 'N/A' }}</li>
+                            <li><span class="fw-bold">City:</span> {{ $appointment->patient->city->name ?? 'N/A' }}</li>
+                            <li><span class="fw-bold">Address:</span> {{ $appointment->patient->address ?? 'N/A' }}</li>
                         </ul>
                     </div>
                 </li>
 
-                {{-- remove all this. maybe can add weather it's new patient or re visiting. --}}
+                {{-- change status according to the appointment  status --}}
                 <li class="appointment-action">
                     <div class="detail-badge-info">
-                        <span class="badge bg-yellow">Upcoming</span>
+                        @switch($appointment->status)
+                            @case(0)
+                                <span class="badge bg-yellow">Pending</span>
+                            @break
+
+                            @case(1)
+                                <span class="badge bg-green">Completed</span>
+                            @break
+
+                            @default
+                                <span class="badge bg-yellow">Pending</span>
+                        @endswitch
+                        @if ($appointment->status == 0)
+                        @elseif ($appointment->status == 1)
+                        @endif
                     </div>
-                    <div class="consult-fees">
-                        <h6>Consultation Fees : $200</h6>
-                    </div>
-                    <ul>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-xmark"></i></a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
             <ul class="detail-card-bottom-info">
@@ -73,90 +83,120 @@
                     <span>{{ date('d M Y', strtotime($appointment->appointment_date)) }} - {{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</span>
                 </li>
                 <li>
-                    <h6>Clinic Location</h6>
-                    <span>Adrian’s Dentistry</span>
+                    <h6>Booking Type</h6>
+                    <span>{{ $appointment->booking_type == 1 ? 'Online' : 'Walk-in' }}</span>
                 </li>
                 <li>
-                    <h6>Location</h6>
-                    <span>Newyork, United States</span>
+                    <h6>Payment Method</h6>
+                    @switch($appointment->payment_method)
+                        @case(0)
+                            <span>Pending</span>
+                        @break
+
+                        @case(1)
+                            <span>Online</span>
+                        @break
+
+                        @case(2)
+                            <span>Cash</span>
+                        @break
+
+                        @case(3)
+                            <span>Part Payment</span>
+                        @break
+                    @endswitch
                 </li>
                 <li>
-                    <h6>Visit Type</h6>
-                    <span>General</span>
+                    <h6>No of Visits</h6>
+                    <span>{{ $appointmentCount }}</span>
                 </li>
                 <li>
                     <div class="start-btn">
-                        <a href="#" class="btn btn-secondary">Inprogress</a>
+                        <button class="btn btn-primary prime-btn custom-components" type="button" data-bs-toggle="modal" data-bs-target=".appointment-history-modal" data-bs-original-title="" title="">History</button>
                     </div>
                 </li>
             </ul>
         </div>
         <!-- /Appointment Detail Card -->
+        {{-- dependants information --}}
+        <h4 class="fw-bold mb-3">Patient Information</h4>
+        @if ($appointment->dependant_id != null)
+            <div class="appointment-wrap appointment-detail-card">
+                <ul>
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Name:</span> {{ $appointment->dependant->name }}</li>
+                                <li><span class="fw-bold">Age:</span>
+                                    @if ($appointment->dependant->dob)
+                                        {{ \Carbon\Carbon::parse($appointment->dependant->dob)->age }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </li>
+                                <li><span class="fw-bold">Gender:</span> {{ $appointment->dependant->gender == 1 ? 'Male' : ($appointment->dependant->gender == 2 ? 'Female' : 'N/A') }}</li>
+                            </ul>
+                        </div>
+                    </li>
 
-        <div class="create-appointment-details">
-            <div class="session-end-head">
-                <h6><span>Session Ends in</span>08M:00S</h6>
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Phone:</span> {{ $appointment->dependant->phone ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">WhatsApp:</span> {{ $appointment->dependant->whatsapp ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Email:</span> {{ $appointment->dependant->email ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Relation:</span> {{ config('relations.' . $appointment->dependant->relation) ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <h5 class="head-text">Create Appointment Details</h5>
+        @else
+            <div class="appointment-wrap appointment-detail-card">
+                <ul>
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Name:</span> {{ $appointment->patient->name }}</li>
+                                <li><span class="fw-bold">Age:</span> {{ $appointment->patient->dob ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Gender:</span> {{ $appointment->patient->gender == 1 ? 'Male' : ($appointment->patient->gender == 2 ? 'Female' : 'N/A') }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Phone:</span> {{ $appointment->patient->phone ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">WhatsApp:</span> {{ $appointment->patient->whatsapp ?? 'N/A' }}</li>
+                                <li><span class="fw-bold">Email:</span> {{ $appointment->patient->email ?? 'N/A' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="appointment-info">
+                        <div class="mail-info-patient">
+                            <ul>
+                                <li><span class="fw-bold">Relation:</span> {{ 'Self' }}</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        @endif
+        <!-- /Appointment Detail Card -->
+        <div class="create-appointment-details">
+            <h5 class="head-text">Perscription</h5>
             <div class="create-details-card">
-                <div class="create-details-card-head">
-                    <div class="card-title-text">
-                        <h5>Patient Information</h5>
-                    </div>
-                    <div class="patient-info-box">
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <ul class="info-list">
-                                    <li>Age</li>
-                                    <li>
-                                        <h6>28 Years</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <ul class="info-list">
-                                    <li>Gender</li>
-                                    <li>
-                                        <h6>Female</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <ul class="info-list">
-                                    <li>Blood Group</li>
-                                    <li>
-                                        <h6>O+ve</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <ul class="info-list">
-                                    <li>No of Visit</li>
-                                    <li>
-                                        <h6>0</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="create-details-card-body">
-                    <form action="{{ route('admin.appointment_details.store') }}" method="POST">
-                        @csrf
                         <input type="hidden" value="{{ $appointment->id }}" name="appointment_id">
-                        <div class="start-appointment-set">
-                            <div class="form-bg-title">
-                                <h5>Complaints</h5>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="input-block input-block-new">
-                                        <input class="input-tags form-control" id="inputBox3" type="text" data-role="tagsinput" placeholder="Type New" name="Label" value="Fever,Headache,Stomach Pain">
-                                        <a href="#" class="input-text save-btn">Save</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="start-appointment-set">
                             <div class="form-bg-title">
                                 <h5>Clinical Notes</h5>
@@ -231,20 +271,12 @@
                                                 </div>
                                                 <div class="input-block input-block-new">
                                                     <label class="form-label">Instruction</label>
-                                                    <input type="text" class="form-control" name="instructions[]" value="{{ old('instructions.' . $loop->index, $medication->instruction) }}">
-                                                </div>
-                                                <div class="delete-row">
-                                                    <a href="#" class="delete-btn delete-medication trash text-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                                    <input type="text" class="form-control" name="instructions[]" value="{{ old('instructions.' . $loop->index, $medication->instructions) }}">
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
                                 @endif
-                                <div class="col">
-                                    <div class="add-new-med text-end mb-4">
-                                        <a href="#" class="add-medical more-item mb-0">Add New</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="start-appointment-set">
@@ -252,46 +284,47 @@
                                 <h5>Laboratory Tests</h5>
                             </div>
                             <div class="row meditation-row">
-                                <div class="col-md-12" id="medicine-row">
-                                    <div class="d-flex flex-wrap medication-wrap align-items-center">
-                                        <div class="input-block input-block-new">
-                                            <label class="form-label">Name</label>
-                                            <select id="medicine_select2" class="form-control select2_dropdown" name="medicine_id[]">
-                                                <option selected>Select</option>
-                                                @foreach ($laboratoryTests as $test)
-                                                    <option value="{{ $test->id }}" {{ in_array($test->id, old('test_id', [])) ? 'selected' : '' }}>
-                                                        {{ $test->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="delete-row">
-                                            <a href="#" class="delete-btn delete-test trash text-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                @if ($appointment->labTests->isEmpty())
+                                    <div class="col-md-12" id="lab-test-row">
+                                        <div class="d-flex flex-wrap medication-wrap align-items-center">
+                                            <div class="input-block input-block-new">
+                                                <label class="form-label">Name</label>
+                                                <select id="lab_test_select2" class="form-control select2_dropdown" name="lab_test_id[]">
+                                                    <option selected>Select</option>
+                                                    @foreach ($laboratoryTests as $test)
+                                                        <option value="{{ $test->id }}" {{ in_array($test->id, old('lab_test_id', [])) ? 'selected' : '' }}>
+                                                            {{ $test->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="delete-row">
+                                                <a href="#" class="delete-btn delete-test trash text-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="add-new-lab-test text-end mb-4">
-                                        <a href="##" class="add-lab-test-button more-item mb-0">Add New</a>
-                                    </div>
-                                </div>
+                                @else
+                                    @foreach ($appointment->labTests as $appointmentLabTest)
+                                        <div class="col-md-12" id="lab-test-row">
+                                            <div class="d-flex flex-wrap medication-wrap align-items-center">
+                                                <div class="input-block input-block-new">
+                                                    <label class="form-label">Name</label>
+                                                    <select id="lab_test_select2" class="form-control select2_dropdown" name="lab_test_id[]">
+                                                        <option selected>Select</option>
+                                                        @foreach ($laboratoryTests as $laboratoryTest)
+                                                            <option value="{{ $laboratoryTest->id }}" {{ $laboratoryTest->id == $appointmentLabTest->lab_test_id ? 'selected' : '' }}>
+                                                                {{ $laboratoryTest->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
 
-
-                        <div class="start-appointment-set">
-                            <div class="form-bg-title">
-                                <h5>Laboratory Tests</h5>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="input-block input-block-new">
-                                        <input class="input-tags form-control" id="inputBox2" type="text" data-role="tagsinput" placeholder="Type New" name="Label" value="Hemoglobin A1c (HbA1c),Liver Function Tests (LFTs)">
-                                        <a href="#" class="input-text save-btn">Save</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="start-appointment-set">
                             <div class="form-bg-title">
                                 <h5>Advice</h5>
@@ -304,23 +337,6 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <div class="col-md-12">
-                            <div class="form-set-button">
-                                <button class="btn btn-light" type="button">Cancel</button>
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#end_session">Save & End Appointment</button>
-                                <input class="btn btn-primary ms-5" type="submit" value="submit">
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -548,8 +564,103 @@
         </div>
     </div>
     <!-- /View Prescription -->
+
+
+    <!-- appointment history modal -->
+    <div class="modal fade appointment-history-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel1">Previous Appointments</h4>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" data-bs-original-title="" title=""></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table-hover my-datatable table-responsive w-100">
+                        <thead>
+                            <tr>
+                                <th>Date / Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="appointment-history-body">
+                            @foreach ($historicalAppointments as $historicalAppointment)
+                                <tr class="table-appointment-wrap">
+                                    <td class="mail-info-patient py-3 px-4">
+                                        <ul>
+                                            <li><i class="fa-solid fa-calendar"></i>{{ date('d M Y, l', strtotime($historicalAppointment->appointment_date)) }} {{ date('h:i A', strtotime($historicalAppointment->timeSlot->slot_time)) }}</li>
+                                        </ul>
+                                    </td>
+                                    <td class="appointment-start py-3">
+                                        <button type="button" data-appointment-id="{{ $historicalAppointment->id }}" class="start-link view-appointment-history btn btn-link p-0 border-0" style="background: none;"><i class="fa-solid fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- appointment history modal -->
+
+    <!-- view appointment history modal -->
+    <div class="modal fade view-appointment-history-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel2">Appointment Details</h4>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" data-bs-original-title="" title=""></button>
+                </div>
+                <div class="modal-body" id="view-appointment-history-modal-body">
+                    appointment history will come here.
+                </div>
+                <div class="modal-footer">
+                    <button class="appointment_history_back_button btn btn-primary prime-btn" type="button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- view appointment history modal -->
 @endsection
 
 @push('scripts')
     <script src={{ asset('plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js') }}></script>
+    <script>
+        $(function() {
+            $(".appointment_history_back_button").on('click', function() {
+                $(".view-appointment-history-modal").modal('hide');
+                $('.modal-backdrop').remove();
+                setTimeout(function() {
+                    $(".appointment-history-modal").modal('show');
+                }, 200);
+            });
+            $(".view-appointment-history").on('click', function() {
+                $(".appointment-history-modal").modal('hide');
+                $('.modal-backdrop').remove();
+
+                setTimeout(function() {
+                    $(".view-appointment-history-modal").modal('show');
+                }, 200);
+                var appointment_id = $(this).data('appointment-id');
+
+                $.ajax({
+                    url: "{{ route('doctor.fetchAppointmentDetails') }}",
+                    type: "POST",
+                    data: {
+                        appointment_id: appointment_id
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        $('#view-appointment-history-modal-body').html(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

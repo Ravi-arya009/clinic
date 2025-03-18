@@ -9,7 +9,7 @@
                         <span></span>
                     </span>
                 </a>
-                <a href="{{route('admin.dashboard')}}" class="navbar-brand logo">
+                <a href="{{ route('admin.dashboard') }}" class="navbar-brand logo">
                     <img src={{ asset('img/logo.png') }} class="img-fluid" alt="Logo">
                 </a>
             </div>
@@ -87,13 +87,21 @@
                     <li class="nav-item dropdown has-arrow logged-item">
                         <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                             <span class="user-img">
-                                <img class="rounded-circle" src={{ asset('img/doctors-dashboard/doctor-profile-img.jpg') }} width="31" alt="Darren Elder">
+                                @if (isset($loggedInUser->profile_image))
+                                    <img class="rounded-circle" src="{{ asset('storage/profile_images/' . $loggedInUser->profile_image) }}" alt="Profile Picture">
+                                @else
+                                    <img class="rounded-circle" src={{ asset('storage/profile_images/default-profile-picture.webp') }} width="31" alt="User Image">
+                                @endif
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div class="user-header">
                                 <div class="avatar avatar-sm">
-                                    <img src={{ asset('img/doctors-dashboard/doctor-profile-img.jpg') }} alt="User Image" class="avatar-img rounded-circle">
+                                        @if (isset($loggedInUser->profile_image))
+                                            <img src="{{ asset('storage/profile_images/' . $loggedInUser->profile_image) }}" alt="User Image" class="avatar-img rounded-circle">
+                                        @else
+                                            <img src={{ asset('storage/profile_images/default-profile-picture.webp') }} alt="User Image" class="avatar-img rounded-circle">
+                                        @endif
                                 </div>
                                 <div class="user-text">
                                     <h6>{{ auth()->guard('admin')->user()->name }}</h6>
@@ -101,7 +109,7 @@
                                 </div>
                             </div>
                             <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a>
-                            <a class="dropdown-item" href="{{route('admin.profile.show')}}">Profile Settings</a>
+                            <a class="dropdown-item" href="{{ route('admin.profile.show') }}">Profile Settings</a>
                             <a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
                         </div>
                     </li>

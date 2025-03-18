@@ -1,6 +1,6 @@
-{{-- {{dd($upcomingAppointments)}} --}}
-@extends('admin.layouts.main')
+{{-- {{dd($user->profile_image)}} --}}
 
+@extends('admin.layouts.main')
 @section('title', 'Dashboard')
 
 @section('breadcrum-title', 'Dashboard')
@@ -55,7 +55,6 @@
                                                     @endif
                                                 </a>
                                                 <div class="patient-name-info">
-                                                    <span>#Apt0001</span>
                                                     <h5><a href="appointments.html">{{ $appointment->patient->name }}</a></h5>
                                                 </div>
                                             </div>
@@ -64,21 +63,12 @@
                                         <td>
                                             <div class="appointment-date-created">
                                                 <h6>{{ date('d M Y', strtotime($appointment->appointment_date)) }}, {{ date('h:i A', strtotime($appointment->timeSlot->slot_time)) }}</h6>
-                                                <span class="badge table-badge">
-                                                    @if ($appointment->appointment_type == 2)
-                                                        Walk-in
-                                                    @else
-                                                        Online
-                                                    @endif
-
-
-                                                </span>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="apponiment-actions d-flex align-items-center">
-                                                <a href="#" class="text-success-icon me-2"><i class="fa-solid fa-check"></i></a>
-                                                <a href="#" class="text-danger-icon"><i class="fa-solid fa-xmark"></i></a>
+                                                <a href="#" class="text-info-icon me-2"><i class="fa-solid fa-eye"></i></a>
+                                                <a href="{{ route('admin.appointment.show', ['appointmentId' => $appointment->id]) }}" class="text-success-icon"><i class="fa-solid fa-arrow-right"></i></a>
                                             </div>
                                         </td>
                                     </tr>

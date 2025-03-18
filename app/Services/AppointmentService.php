@@ -63,7 +63,7 @@ class AppointmentService
 
     public function getPatientAppointmentById($appointmentId)
     {
-        $response = Appointment::with('clinic', 'doctor', 'doctor.doctorProfile.qualification', 'patient', 'patient.city', 'patient.state', 'dependant', 'timeSlot', 'appointmentDetails', 'medications', 'labTests')->where('id', $appointmentId)->first();
+        $response = Appointment::with('clinic', 'doctor', 'doctor.doctorProfile.qualification', 'patient', 'patient.city', 'patient.state', 'dependant', 'timeSlot', 'appointmentDetails', 'medications', 'labTests.labTestMaster')->where('id', $appointmentId)->first();
         return $response;
     }
 
@@ -170,7 +170,7 @@ class AppointmentService
             'appointment_date' => now()->format('Y-m-d'),
             'booking_for' => 1,
             'appointment_type' => 2, // Walk-in
-            'payment_method' => 1,
+            'payment_method' => 0,
         ]);
 
         return $appointment;
