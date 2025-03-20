@@ -82,6 +82,7 @@ class AppointmentController extends Controller
         $response = $this->appointmentService->storeAppointment($validatedData);
 
         if ($response['success']) {
+            session()->flash('success', $response['message']);
             return redirect()->back()->with('success', $response['message']);
         } else {
             return redirect()->back()->withInput()->with('error', $response['message']);

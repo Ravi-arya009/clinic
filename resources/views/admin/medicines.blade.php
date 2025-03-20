@@ -9,6 +9,7 @@
 
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 
 @section('content')
@@ -200,6 +201,7 @@
 
 @push('scripts')
     <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         var medicineStoreRoute = '{{ route('admin.medicine.store') }}';
         var medicineUpdateRoute = "{{ route('admin.medicine.update', ':medicine') }}";
@@ -291,10 +293,7 @@
                                 newId +
                                 "</li></ul></td>",
                                 '<td class="mail-info-patient"><ul><li>' +
-                                (response.name ?
-                                    response.name.charAt(0).toUpperCase() +
-                                    response.name.slice(1) :
-                                    "N/A") +
+                                (medicineName) +
                                 "</li></ul></td>",
                                 '<td class="mail-info-patient"><ul><li><span class="badge badge-green status-badge">Available</span></li></ul></td>',
                                 '<td class="appointment-start"><a href="#" class="edit-medicine-button start-link" data-bs-toggle="modal" title="Edit Medicine" data-medicine-id="' +
@@ -368,6 +367,7 @@
                             .addClass("highlight");
                         console.log($(this));
                         $("#edit_medicine").modal("hide");
+                        toastr.success('Medicine Updated');
                     },
                     error: function(xhr, status, error) {
                         if (xhr.status == 422) {

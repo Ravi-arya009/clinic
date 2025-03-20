@@ -9,17 +9,20 @@ use App\Models\User;
 use App\Services\ClinicService;
 use App\Services\DataRepositoryService;
 use App\Services\DoctorService;
+use App\Services\UserService;
 
 class WebsiteController extends Controller
 {
-    protected $clinicService, $doctorService, $dataRepositoryService;
+    protected $clinicService, $doctorService, $dataRepositoryService, $userService;
     public function __construct(
         ClinicService $clinicService,
         DoctorService $doctorService,
-        DataRepositoryService $dataRepositoryService
+        DataRepositoryService $dataRepositoryService,
+        UserService $userService,
     ) {
         $this->clinicService = $clinicService;
         $this->doctorService = $doctorService;
+        $this->userService = $userService;
         $this->dataRepositoryService = $dataRepositoryService;
     }
     public function index()
@@ -43,8 +46,9 @@ class WebsiteController extends Controller
 
     public function ShowClinicProfile($clinicId)
     {
-        $clinic = Clinic::where('id', $clinicId)->first();
-        return view('guest.clinic_profile', compact('clinic'));
+        $clinic = Clinic::where('id', $clinicId)->with('speciality')->first();
+        $doctors = $this->userService->getDoctorsByClinicId($clinic->id);
+        return view('guest.clinic_profile', compact('clinic','doctors'));
     }
 
     //creates timeslots by date for n number of future days.

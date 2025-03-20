@@ -29,7 +29,7 @@ class AuthController extends Controller
             'phone' => 'required|digits_between:10,13',
             'password' => 'required|min:4',
         ]);
-        //checking if user role is doctor and belongs to clinic he's trying to log in into.
+        //checking if user role is receptionish and belongs to clinic he's trying to log in into.
         $user = User::where('phone', $validatedData['phone'])->select(['id', 'password'])->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {

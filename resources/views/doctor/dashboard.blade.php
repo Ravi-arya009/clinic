@@ -143,6 +143,7 @@
                         </tbody>
                     </table>
                     <div class="form-set-button mt-3">
+                        <a id="add_family_member_button" href="#" data-patientId="" class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#add_dependent">Add Family Member</a>
                         <a id="booking_for_self" href="#" class="btn btn-primary prime-btn">Booking for Self</a>
                     </div>
                 </div>
@@ -218,7 +219,7 @@
                                     <div class="form-wrap">
                                         <label class="col-form-label">Date Of Birth</label>
                                         <div class="form-icon">
-                                            <input type="date" name="dependant_dob" class="form-control" value="{{ old('dependant_dob') }}">
+                                            <input type="date" id="dependant_dob" name="dependant_dob" class="form-control" value="{{ old('dependant_dob') }}">
                                             <span class="icon"><i class="fa-regular fa-calendar-days"></i></span>
                                         </div>
                                     </div>
@@ -269,6 +270,10 @@
                 e.preventDefault();
                 let formData = new FormData(this);
                 var patientId = $("#booking_for_someone_else_modal_button").attr('data-patientId');
+                if (patientId == null || patientId == '') {
+                    var patientId = $("#add_family_member_button").attr('data-patientId');
+                }
+                console.log(patientId);
                 formData.append('patientId', patientId)
                 $.ajax({
                     url: "{{ route('ajax.addDependant') }}",
@@ -286,7 +291,22 @@
                             window.location.href = dependantUrl;
                         }
                     },
-                    error: function(xhr, status, error) {}
+                    error: function(xhr, status, error) {
+                        console.log(xhr, status, error);
+
+                        let errors = xhr.responseJSON.errors;
+                        let errorMessage = '';
+
+                        // Create a formatted list of validation errors
+                        $('.is-invalid').removeClass('is-invalid');
+                        $('.invalid-feedback').remove();
+                        $.each(errors, function(key, value) {
+                            errorMessage += `• ${value[0]}<br>`;
+                            var inputField = $('#' + key);
+                            inputField.addClass('is-invalid');
+                            inputField.after('<div class="invalid-feedback">' + value[0] + '</div>');
+                        });
+                    }
                 });
             });
 
@@ -314,7 +334,7 @@
                             phone: result.value
                         },
                         success: function(response) {
-
+                            console.log(response);
                             if (response == 0) {
                                 window.location.href = "{{ route('doctor.patient.create') }}?phone=" + result.value;
                             }
@@ -335,6 +355,7 @@
                                     var baseUrl = "{{ route('createWalkInAppointment', ['patientId' => 1]) }}";
                                     var newUrl = baseUrl.replace("/1", "/" + patientId);
                                     $("#booking_for_self").attr("href", newUrl);
+                                    $("#add_family_member_button").attr('data-patientId', patientId);
 
                                     $('#dependant-table tbody').empty();
                                     $.each(response.data, function(index, value) {

@@ -50,7 +50,7 @@ class Doctor extends Model
     }
     public function timeSlots()
     {
-        return $this->hasMany(TimeSlot::class, 'doctor_id')->orderBy('day_of_week')->orderBy('slot_time');
+        return $this->hasMany(TimeSlot::class, 'doctor_id')->where('slot_type', 1)->orderBy('day_of_week')->orderBy('slot_time');
     }
 
     public function clinics()

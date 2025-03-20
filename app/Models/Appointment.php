@@ -27,19 +27,20 @@ class Appointment extends Model
         'payment_method'
     ];
 
-    public function patient(){
-        return $this->belongsTo(Patient::class)->select('id','name','phone','email','address','gender', 'state_id', 'city_id', 'profile_image');
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
     }
 
     public function doctor()
     {
-        return $this->belongsTo(User::class)->select('id', 'name', 'phone', 'whatsapp', 'email','gender','profile_image');
+        return $this->belongsTo(User::class)->select('id', 'name', 'phone', 'whatsapp', 'email', 'gender', 'profile_image');
     }
 
 
     public function clinic()
     {
-        return $this->belongsTo(Clinic::class)->select('id','name', 'phone','email','whatsapp', 'address');
+        return $this->belongsTo(Clinic::class)->select('id', 'name', 'phone', 'email', 'whatsapp', 'address');
     }
 
     public function timeSlot()
@@ -47,11 +48,13 @@ class Appointment extends Model
         return $this->belongsTo(TimeSlot::class)->select('id', 'slot_time');
     }
 
-    public function appointmentDetails(){
+    public function appointmentDetails()
+    {
         return $this->hasOne(AppointmentDetail::class);
     }
 
-    public function medications(){
+    public function medications()
+    {
         return $this->hasMany(AppointmentMedication::class);
     }
     public function labTests()

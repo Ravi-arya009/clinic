@@ -29,6 +29,15 @@
                         <span class="dash-icon-box"><i class="fa-solid fa-user-doctor"></i></span>
                     </div>
                 </div>
+                <div class="dashboard-widget-box">
+                    <div class="dashboard-content-info">
+                        <h6>Total Appointments</h6>
+                        <h4>{{ $totalAppointmentCount }}</h4>
+                    </div>
+                    <div class="dashboard-widget-icon">
+                        <span class="dash-icon-box"><i class="fa-solid fa-user-doctor"></i></span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-xl-8 d-flex">

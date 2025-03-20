@@ -61,9 +61,6 @@
                                         <li>
                                             <a href="#" class="add-slot add_time_slot" data-bs-toggle="modal" data-bs-target="#add_slot" data-day="{{ $i }}">Add Slots</a>
                                         </li>
-                                        <li>
-                                            <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                        </li>
                                     </ul>
                                 </div>
                                 <div class="slot-body">
