@@ -46,7 +46,7 @@ Route::prefix('super_admin')->group(
             Route::get('clinic/view/{clinicId}', [ClinicController::class, 'show'])->name('super_admin.clinic.show');
             Route::post('clinic/update/{clinicId}', [ClinicController::class, 'update'])->name('super_admin.clinic.update');
             Route::get('clinic/index', [ClinicController::class, 'index'])->name('super_admin.clinic.index');
-            Route::get('/state', [DataRepositoryController::class, 'stateIndex'])->name('admin.state.index');
+            Route::get('/state', [DataRepositoryController::class, 'stateIndex'])->name('super_admin.state.index');
             Route::get('logout', [Super_adminAuthController::class, 'logout'])->name('super_admin.logout');
         });
     }
@@ -81,11 +81,9 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::put('/medicine/{medicineId}', [MedicineController::class, 'update'])->name('admin.medicine.update');
             Route::post('/delete-medicine', [MedicineController::class, 'delete'])->name('admin.medicine.delete');
             Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-
             Route::get('patient/create', [UserController::class, 'createPatient'])->name('admin.patient.create');
             Route::post('patient/store', [UserController::class, 'storePatient'])->name('admin.patient.store');
             Route::get('patient/{patientId}', [UserController::class, 'showPatient'])->name('admin.patient.show');
-
             Route::get('profile', [AdminDashboardController::class, 'showProfile'])->name('admin.profile.show');
             Route::post('profile', [AdminDashboardController::class, 'updateProfile'])->name('admin.profile.update');
         });
@@ -111,7 +109,6 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::post('time_slots', [DoctorTimeSlotController::class, 'store'])->name('doctor.time_slots.store');
             Route::post('delete_slot/{slot_id?}', [DoctorTimeSlotController::class, 'delete'])->name('doctor.slot.delete');
             Route::get('/logout', [DoctorAuthController::class, 'logout'])->name('doctor.logout');
-
             Route::get('/patient/create', [PatientController::class, 'create'])->name('doctor.patient.create');
             Route::post('patient/store', [PatientController::class, 'store'])->name('doctor.patient.store');
             Route::get('patient/{patientId}', [PatientController::class, 'show'])->name('doctor.patient.show');
@@ -123,14 +120,6 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
         });
     });
 });
-
-Route::get('patientPhoneNumberCheck', [PatientController::class, 'patientPhoneNumberCheck'])->name('patientPhoneNumberCheck');
-Route::post('addDependant', [dependantController::class, 'addDependant'])->name('addDependant');
-Route::post('updateDependant', [dependantController::class, 'updateDependant'])->name('updateDependant');
-Route::post('deleteDependant', [dependantController::class, 'deleteDependant'])->name('deleteDependant');
-Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
-Route::post('addDependantajax', [PatientController::class, 'addDependant'])->name('ajax.addDependant');
-
 
 #### Receptionist ####
 Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
@@ -165,7 +154,6 @@ Route::prefix('patient')->group(function () {
         Route::get('logout', [PatientAuthController::class, 'logout'])->name('patient.logout');
         Route::get('temp', [PatientDashboardController::class, 'temp'])->name('patient.temp');
         Route::post('/download-prescription-pdf', [PatientAppointmentController::class, 'downloadPrescriptionPdf'])->name('download.prescription.pdf');
-
         Route::get('profile', [PatientDashboardController::class, 'showProfile'])->name('patient.profile.show');
         Route::post('profile', [PatientDashboardController::class, 'updateProfile'])->name('patient.profile.update');
         Route::post('fetchAppointmentDetails', [PatientAppointmentController::class, 'fetchAppointmentDetails'])->name('patient.fetchAppointmentDetails');
@@ -194,19 +182,22 @@ Route::post('/appointment/store', [AppointmentController::class, 'store'])->name
 
 Route::post('/download-prescription-pdf', [AppointmentController::class, 'downloadPrescriptionPdf'])->name('prescription.download');
 
+Route::get('patientPhoneNumberCheck', [PatientController::class, 'patientPhoneNumberCheck'])->name('patientPhoneNumberCheck');
+Route::post('addDependant', [dependantController::class, 'addDependant'])->name('addDependant');
+Route::post('updateDependant', [dependantController::class, 'updateDependant'])->name('updateDependant');
+Route::post('deleteDependant', [dependantController::class, 'deleteDependant'])->name('deleteDependant');
+Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
+Route::post('addDependantajax', [PatientController::class, 'addDependant'])->name('ajax.addDependant');
+
 
 
 
 ########################################################################################
 ####Routes for testing purposes####
-
 //global logout route. (Temporary, only for testing purposes)
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
-
 Route::get('deletedb', [TempController::class, 'deleteDb'])->name('deletedb');
-
-
 
 ####Routes for testing purposes end####
 ########################################################################################

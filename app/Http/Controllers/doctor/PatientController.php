@@ -40,7 +40,7 @@ class PatientController extends Controller
     public function index()
     {
         $patients = Appointment::where('doctor_id', auth()->guard('doctor')->user()->id)
-            ->with('patient')
+            ->with('patient','patient.city')
             ->select('id', 'patient_id', 'appointment_date')
             ->get()
             ->unique('patient_id')
@@ -49,6 +49,7 @@ class PatientController extends Controller
                 unset($data['patient']);
                 return (object) $data;
             });
+            // dd($patients);
         return view('doctor.patient_list', compact('patients'));
     }
 

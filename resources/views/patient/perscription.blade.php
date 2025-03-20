@@ -1,15 +1,15 @@
 @extends('patient.layouts.main')
 
-@section('title', 'Perscriptions')
+@section('title', 'Prescriptions')
 
-@section('breadcrum-title', 'Perscriptions')
+@section('breadcrum-title', 'Prescriptions')
 @section('breadcrum-link-one', 'Home')
-@section('breadcrum-link-two', 'Perscriptions')
+@section('breadcrum-link-two', 'Prescriptions')
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
 @section('content')
-    <x-page-header pageContentTitle="Perscriptions" :search="true" />
+    <x-page-header pageContentTitle="Prescriptions" :search="true" />
 
     <table class="my-datatable table-hover table-responsive">
         <thead>

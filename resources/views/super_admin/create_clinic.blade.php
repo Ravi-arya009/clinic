@@ -115,7 +115,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Validation Error',
-                                html: "there are vlidation errors",
+                                html: "There are validation errors, Fix them to continue.",
                                 confirmButtonColor: '#d33'
                             });
 

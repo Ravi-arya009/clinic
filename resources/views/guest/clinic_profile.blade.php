@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('guest.partials.header')
+
 <body>
 
     <!-- Main Wrapper -->
@@ -23,37 +24,25 @@
                                 </div>
                                 <div class="doc-info-cont">
                                     <span class="badge doc-avail-badge"><i class="fa-solid fa-circle"></i>Available </span>
-                                    <h4 class="doc-name">{{$clinic->name}} <img src={{ asset('img/icons/badge-check.svg') }} alt="Img"><span class="badge doctor-role-badge"><i class="fa-solid fa-circle"></i>Dentist</span></h4>
-                                    <p>BDS, MDS - Oral & Maxillofacial Surgery</p>
-                                    <p>Speaks : English, French, German</p>
-                                    <p class="address-detail"><span class="loc-icon"><i class="feather-map-pin"></i></span>No 14, 15th Cross, Old Trafford, UK <span class="view-text">( View Location )</span></p>
+                                    <h4 class="doc-name">{{ $clinic->name }} <img src={{ asset('img/icons/badge-check.svg') }} alt="Img"><span class="badge doctor-role-badge"><i class="fa-solid fa-circle"></i>{{ $clinic->speciality->name }}</span></h4>
+                                    <p class="address-detail"><span class="loc-icon"><i class="fa fa-phone"></i></span>{{ $clinic->phone }}</p>
+                                    <p class="address-detail"><span class="loc-icon"><i class="fa fa-brands fa-whatsapp fa-solid"></i></span>{{ $clinic->whatsapp }}</p>
+                                    <p class="address-detail"><span class="loc-icon"><i class="fa fa-envelope"></i></span>{{ $clinic->email }}</p>
                                 </div>
                             </div>
                             <div class="doc-info-right">
                                 <ul class="doctors-activities">
                                     <li>
                                         <div class="hospital-info">
-                                            <span class="list-icon"><img src={{ asset('img/icons/watch-icon.svg') }} alt="Img"></span>
-                                            <p>Full Time, Online Therapy Available</p>
-                                        </div>
-                                        <ul class="sub-links">
-                                            <li><a href="#"><i class="feather-heart"></i></a></li>
-                                            <li><a href="#"><i class="feather-share-2"></i></a></li>
-                                            <li><a href="#"><i class="feather-link"></i></a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <div class="hospital-info">
-                                            <span class="list-icon"><img src={{ asset('img/icons/thumb-icon.svg') }} alt="Img"></span>
-                                            <p><b>94% </b> Recommended</p>
+                                            <span class="list-icon"><img src={{ asset('img/icons/flow-chart-icon-01.svg') }} alt="Img"></span>
+                                            <p>{{ $clinic->address }}</p>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="hospital-info">
                                             <span class="list-icon"><img src={{ asset('img/icons/building-icon.svg') }} alt="Img"></span>
-                                            <p>Royal Prince Alfred Hospital</p>
+                                            <p>{{ $clinic->city->name }}</p>
                                         </div>
-                                        <h5 class="accept-text"><span><i class="feather-check"></i></span>Accepting New Patients</h5>
                                     </li>
                                     <li>
                                         <div class="rating">
@@ -65,35 +54,8 @@
                                             <span>5.0</span>
                                             <a href="#" class="d-inline-block average-rating">150 Reviews</a>
                                         </div>
-                                        <ul class="contact-doctors">
-                                            <li><a href="chat-doctor.html"><span><img src={{ asset('img/icons/device-message2.svg') }} alt="Img"></span>Chat</a></li>
-                                            <li><a href="voice-call.html"><span class="bg-violet"><i class="feather-phone-forwarded"></i></span>Audio Call</a></li>
-                                            <li><a href="video-call.html"><span class="bg-indigo"><i class="fa-solid fa-video"></i></span>Video Call</a></li>
-                                        </ul>
                                     </li>
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="doc-profile-card-bottom">
-                            <ul>
-                                <li>
-                                    <span class="bg-blue"><img src={{ asset('img/icons/calendar3.svg') }} alt="Img"></span>
-                                    Nearly 200+ Appointment Booked
-                                </li>
-                                <li>
-                                    <span class="bg-dark-blue"><img src={{ asset('img/icons/bullseye.svg') }} alt="Img"></span>
-                                    In Practice for 21 Years
-                                </li>
-                                <li>
-                                    <span class="bg-green"><img src={{ asset('img/icons/bookmark-star.svg') }} alt="Img"></span>
-                                    15+ Awards
-                                </li>
-                            </ul>
-                            <div class="bottom-book-btn">
-                                <p><span>Price : $100 - $200 </span> for a Session</p>
-                                <div class="clinic-booking">
-                                    <a class="apt-btn" href="booking.html">Book Appointment</a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -101,151 +63,19 @@
                 <!-- /Doctor Widget -->
 
                 <div class="doctors-detailed-info">
-                    <ul class="information-title-list">
-                        <li class="active">
-                            <a href="#doc_bio">Doctor Bio</a>
-                        </li>
-                        <li>
-                            <a href="#experience">Experience</a>
-                        </li>
-                        <li>
-                            <a href="#insurence">Insurances</a>
-                        </li>
-                        <li>
-                            <a href="#services">Treatments</a>
-                        </li>
-                        <li>
-                            <a href="#speciality">Speciality</a>
-                        </li>
-                        <li>
-                            <a href="#availability">Availability</a>
-                        </li>
-                        <li>
-                            <a href="#clinic">Clinics</a>
-                        </li>
-                        <li>
-                            <a href="#membership">Memberships</a>
-                        </li>
-                        <li>
-                            <a href="#awards">Awards</a>
-                        </li>
-                        <li>
-                            <a href="#bussiness_hour">Business Hours</a>
-                        </li>
-                        <li>
-                            <a href="#review">Review</a>
-                        </li>
-                    </ul>
                     <div class="doc-information-main">
                         <div class="doc-information-details bio-detail" id="doc_bio">
                             <div class="detail-title">
-                                <h4>Doctor Bio</h4>
+                                <h4>About Clinic</h4>
                             </div>
-                            <p>“Highly motivated and experienced doctor with a passion for
+                            <p>“(Static), Can add an option for clinic bio, Ask about it. Highly motivated and experienced doctor with a passion for
                                 providing excellent care to patients. Experienced in a wide variety of
                                 medical settings, with particular expertise in diagnostics, primary care and emergency
                                 medicine. Skilled in using the latest technology to streamline patient care. Committed to
                                 delivering compassionate, personalized care to each and every patient.”
                             </p>
-                            <a href="#" class="show-more d-flex align-items-center">See More<i class="fa-solid fa-chevron-down ms-2"></i></a>
                         </div>
-                        <div class="doc-information-details" id="experience">
-                            <div class="detail-title">
-                                <h4>Practice Experience</h4>
-                            </div>
-                            <div class="experience-info">
-                                <div class="experience-logo">
-                                    <span><img src={{ asset('img/icons/experience-logo-01.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="experience-content">
-                                    <h5>Cambridge University Hospital, NHS Foundation Trust Cambridge</h5>
-                                    <ul class="ent-list">
-                                        <li>ENT </li>
-                                        <li>Cambridge</li>
-                                    </ul>
-                                    <ul class="date-list">
-                                        <li>Dec 2020 - Jan 2022 </li>
-                                        <li>2 Years 2 months</li>
-                                    </ul>
-                                    <p>Experienced in a wide variety of medical settings, with particular expertise in diagnostics, primary care and emergency medicine.</p>
-                                </div>
-                            </div>
-                            <div class="experience-info">
-                                <div class="experience-logo">
-                                    <span><img src={{ asset('img/icons/experience-logo-02.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="experience-content mb-0">
-                                    <h5>Hill Medical Hospital, Newcastle</h5>
-                                    <ul class="ent-list">
-                                        <li>ENT </li>
-                                        <li>Cambridge</li>
-                                    </ul>
-                                    <ul class="date-list">
-                                        <li>Dec 2022 - Jan 2022 </li>
-                                        <li>1 Years 1 months</li>
-                                    </ul>
-                                    <p>Experienced in a wide variety of medical settings, with particular expertise in diagnostics, primary care and emergency medicine.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="doc-information-details" id="insurence">
-                            <div class="detail-title slider-nav d-flex justify-content-between align-items-center">
-                                <h4>Insurance Accepted (6)</h4>
-                                <div class="nav nav-container slide-1"></div>
-                            </div>
-                            <div class="insurence-logo-slider owl-carousel">
-                                <div class="insurence-logo">
-                                    <span><img src={{ asset('img/icons/insurence-logo-01.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="insurence-logo">
-                                    <span><img src={{ asset('img/icons/insurence-logo-02.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="insurence-logo">
-                                    <span><img src={{ asset('img/icons/insurence-logo-03.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="insurence-logo">
-                                    <span><img src={{ asset('img/icons/insurence-logo-04.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="insurence-logo">
-                                    <span><img src={{ asset('img/icons/insurence-logo-05.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="insurence-logo">
-                                    <span><img src={{ asset('img/icons/insurence-logo-06.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="insurence-logo">
-                                    <span><img src={{ asset('img/icons/insurence-logo-03.svg') }} alt="Img"></span>
-                                </div>
-                                <div class="insurence-logo">
-                                    <span><img src={{ asset('img/icons/insurence-logo-04.svg') }} alt="Img"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="doc-information-details" id="speciality">
-                            <div class="detail-title">
-                                <h4>Speciality</h4>
-                            </div>
-                            <ul class="special-links">
-                                <li><a href="#">Orthopedic Consultation</a></li>
-                                <li><a href="#">Delivery Blocks</a></li>
-                                <li><a href="#">Ultrasound Injection</a></li>
-                                <li><a href="#">Tooth Bleaching</a></li>
-                                <li><a href="#">Tooth Bleaching</a></li>
-                                <li><a href="#">Cosmetic</a></li>
-                            </ul>
-                        </div>
-                        <div class="doc-information-details" id="services">
-                            <div class="detail-title">
-                                <h4>Services & Pricing</h4>
-                            </div>
-                            <ul class="special-links">
-                                <li><a href="#">Orthopedic Consultation <span>$52</span></a></li>
-                                <li><a href="#">Delivery Blocks <span>$24</span></a></li>
-                                <li><a href="#">Ultrasound Injection <span>$31</span></a></li>
-                                <li><a href="#">Tooth Bleaching <span>$20</span></a></li>
-                                <li><a href="#">Tooth Bleaching <span>$15</span></a></li>
-                                <li><a href="#">Cosmetic <span>$10</span></a></li>
-                            </ul>
-                        </div>
+
                         <div class="doc-information-details" id="availability">
                             <div class="detail-title slider-nav d-flex justify-content-between align-items-center">
                                 <h4>Availability</h4>
@@ -302,143 +132,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="doc-information-details" id="clinic">
-                            <div class="detail-title">
-                                <h4>Clinics & Locations</h4>
-                            </div>
-                            <div class="clinic-loc">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-7">
-                                        <div class="clinic-info">
-                                            <div class="clinic-img"><img src={{ asset('img/clinic/clinic-11.jpg') }} alt="Img"></div>
-                                            <div class="detail-clinic">
-                                                <h5>Sofi’s Clinic - </h5>
-                                                <span>$350 / Apponitment</span>
-                                                <p>2286 Sundown Lane, Old Trafford 24541, UK</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center avail-time-slot">
-                                            <div class="availability-date">
-                                                <div class="book-date">
-                                                    <h6>Monday</h6>
-                                                    <span>07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="availability-date">
-                                                <div class="book-date">
-                                                    <h6>Tuesday</h6>
-                                                    <span>07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="contact-map d-flex">
-                                            <iframe
-                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.7301009561315!2d-76.13077892422932!3d36.82498697224007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89bae976cfe9f8af%3A0xa61eac05156fbdb9!2sBeachStreet%20USA!5e0!3m2!1sen!2sin!4v1669777904208!5m2!1sen!2sin"
-                                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clinic-loc mb-0">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-7">
-                                        <div class="clinic-info">
-                                            <div class="clinic-img"><img src={{ asset('img/clinic/clinic-12.jpg') }} alt="Img"></div>
-                                            <div class="detail-clinic">
-                                                <h5>The Family Dentistry Clinic </h5>
-                                                <span>$550 / Apponitment</span>
-                                                <p>MDS - Periodontology and Oral Implantology, BDS</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center avail-time-slot">
-                                            <div class="availability-date">
-                                                <div class="book-date">
-                                                    <h6>Friday</h6>
-                                                    <span>07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="availability-date">
-                                                <div class="book-date">
-                                                    <h6>Saturday</h6>
-                                                    <span>07:00 AM - 09:00 PM</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="contact-map d-flex">
-                                            <iframe
-                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.7301009561315!2d-76.13077892422932!3d36.82498697224007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89bae976cfe9f8af%3A0xa61eac05156fbdb9!2sBeachStreet%20USA!5e0!3m2!1sen!2sin!4v1669777904208!5m2!1sen!2sin"
-                                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="doc-information-details" id="membership">
-                            <div class="detail-title">
-                                <h4>Membership</h4>
-                            </div>
-                            <div class="member-ship-info">
-                                <span class="mem-check"><i class="fa-solid fa-check"></i></span>
-                                <p>Affiliate members include related allied health professionals- evidence based
-                                    (Dietitians, Physiotherapist, Occupational therapist and Clinical Psychologist) who will
-                                    team up with allopathic physicians to
-                                    support the Lifestyle Medicine movement in India through ISLM.
-                                </p>
-                            </div>
-                            <div class="member-ship-info mb-0">
-                                <span class="mem-check"><i class="fa-solid fa-check"></i></span>
-                                <p>Physician members include the allopathic doctors only (MBBS, MD, MS, DM, MCH, DNB or equivalent degree)
-                                    who hold a valid medical license as recognized by the Medical Council of India.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="doc-information-details" id="awards">
-                            <div class="detail-title slider-nav d-flex justify-content-between align-items-center">
-                                <h4>Awards</h4>
-                                <div class="nav nav-container slide-3"></div>
-                            </div>
-                            <div class="awards-slider owl-carousel">
-                                <div class="award-card">
-                                    <div class="award-card-info">
-                                        <span><img src={{ asset('img/icons/bookmark-star.svg') }} alt="Img"></span>
-                                        <h5>Award Name (2021)</h5>
-                                        <p>evidence based (Dietitians, Physiotherapist, Occupational therapist and Clinical)</p>
-                                    </div>
-                                </div>
-                                <div class="award-card">
-                                    <div class="award-card-info">
-                                        <span><img src={{ asset('img/icons/bookmark-star.svg') }} alt="Img"></span>
-                                        <h5>Award Name (2022)</h5>
-                                        <p>evidence based (Dietitians, Physiotherapist, Occupational therapist and Clinical)</p>
-                                    </div>
-                                </div>
-                                <div class="award-card">
-                                    <div class="award-card-info">
-                                        <span><img src={{ asset('img/icons/bookmark-star.svg') }} alt="Img"></span>
-                                        <h5>Award Name (2023)</h5>
-                                        <p>evidence based (Dietitians, Physiotherapist, Occupational therapist and Clinical)</p>
-                                    </div>
-                                </div>
-                                <div class="award-card">
-                                    <div class="award-card-info">
-                                        <span><img src={{ asset('img/icons/bookmark-star.svg') }} alt="Img"></span>
-                                        <h5>Award Name (2024)</h5>
-                                        <p>evidence based (Dietitians, Physiotherapist, Occupational therapist and Clinical)</p>
-                                    </div>
-                                </div>
-                                <div class="award-card">
-                                    <div class="award-card-info">
-                                        <span><img src={{ asset('img/icons/bookmark-star.svg') }} alt="Img"></span>
-                                        <h5>Award Name (2020)</h5>
-                                        <p>evidence based (Dietitians, Physiotherapist, Occupational therapist and Clinical)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="doc-information-details" id="bussiness_hour">
                             <div class="detail-title">
                                 <h4>Business Hours</h4>
@@ -484,6 +177,20 @@
                                         <p>07:00 AM - 09:00 PM</p>
                                     </li>
                                 </ul>
+                            </div>
+                        </div>
+                        <div class="doc-information-details" id="clinic">
+                            <div class="detail-title">
+                                <h4>Location</h4>
+                            </div>
+                            <div class="clinic-loc">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <div class="contact-map d-flex">
+                                            <iframe src="https://www.google.com/maps?q={{ $clinic->address }}&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="doc-information-details" id="review">
@@ -605,6 +312,61 @@
                                 <!-- /Pagination -->
                             </div>
                         </div>
+
+                        {{-- <div class="doc-information-details" id="review">
+                            <div class="detail-title">
+                                <h4>Doctors</h4>
+                            </div>
+                            <div class="owl-carousel our-doctors owl-theme">
+                                @foreach ($doctors as $doctor)
+                                    <div class="item">
+                                        <div class="our-doctors-card">
+                                            <div class="doctors-header">
+                                                <img src="{{ $doctor->profile_image ? asset('/storage/profile_images/' . $doctor->profile_image) : asset('img/default-profile-picture.webp') }}" alt="Profile Image" class="img-fluid">
+                                                <div class="img-overlay">
+                                                    <span>₹{{ $doctor->consultation_fee }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="doctors-body">
+                                                <a href="{{ route('doctor.profile', $doctor->id) }}">
+                                                    <h4>{{ $doctor->name }}</h4>
+                                                </a>
+                                                <p class="pt-2">
+                                                    <span class="badge badge-primary doc-badge speciality-badge px-2 py-1">{{ isset($doctor->speciality) ? $doctor->speciality->name : '-' }}</span>
+                                                </p>
+
+                                                <div class="location d-flex">
+                                                    <p><i class="fas fa-map-marker-alt"></i>Null</p>
+                                                </div>
+                                                <div class="rating my-border pt-2">
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <span class="d-inline-block average-ratings">{{ rand(31, 49) / 10 }}</span>
+                                                    <span class="d-inline-block my-review-text ps-1">({{ rand(11, 39) }} reviews)</span>
+                                                </div>
+
+                                                <div class="row row-sm pt-2">
+                                                    <div class="col-6">
+                                                        <a href="{{ route('doctor.profile', $doctor->id) }}" class="btn view-btn" tabindex="0">View Profile</a>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <a href="{{ route('doctor.profile', $doctor->id) }}" class="btn book-btn" tabindex="0">Book Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="specialities-btn pt-3">
+                                <a href="{{ route('search.doctor') }}" class="btn">
+                                    See All Doctors
+                                </a>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
 

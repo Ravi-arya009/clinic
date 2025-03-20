@@ -24,12 +24,11 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-
-        // need to add a where clause. date is greater than equal to today.
         $upcomingAppointments = Appointment::where('clinic_id', $this->clinicId)->with('patient', 'timeSlot')->limit(7)->orderBy('appointment_date', 'desc')->get();
+        $totalAppointmentCount = Appointment::where('clinic_id', $this->clinicId)->count();
         $totalUserCount = $this->userService->getTotalCliniUserCount($this->clinicId);
         $totalDoctorCount = $this->userService->getClinicDoctorCount($this->clinicId);
-        return view('admin.dashboard', compact('totalUserCount', 'totalDoctorCount', 'upcomingAppointments'));
+        return view('admin.dashboard', compact('totalUserCount', 'totalDoctorCount', 'upcomingAppointments', 'totalAppointmentCount'));
     }
     public function showProfile()
     {

@@ -11,7 +11,7 @@
 @push('stylesheets')
     <link rel="stylesheet" href={{ asset('plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css') }}>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -651,10 +651,11 @@
 @push('scripts')
     <script src={{ asset('plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js') }}></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.all.min.js"></script>
 
     <script>
         $(function() {
-                $('body .select2_dropdown').select2();
+            $('body .select2_dropdown').select2();
 
 
             $(".appointment_history_back_button").on('click', function() {
@@ -683,7 +684,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
-                        $('#view-appointment-history-modal-body').html(response);
+                        $('#view-appointment-history-modal-body').empty().html(response);
                     },
                     error: function(error) {
                         console.log(error);
@@ -692,4 +693,26 @@
             });
         });
     </script>
+    @if (session('success'))
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    title: "Success",
+                    text: {!! json_encode(session('success')) !!},
+                    icon: "success"
+                });
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    title: "Error",
+                    text: {!! json_encode(session('error')) !!},
+                    icon: "error"
+                });
+            });
+        </script>
+    @endif
 @endpush

@@ -275,7 +275,7 @@
                             <ul class="shifts">
                                 <li class="morning_shift border-bottom">
                                     <h5 class="d-inline-block">Morning</h5>
-                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="1" data-shift="Morning" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Slots</a>
+                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="1" data-shift="Morning" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Timing</a>
                                     <ul class="time-slots" id="{{ $currentDay }}-Morning-ul">
                                         @if (isset($ClinicWorkingHours[$i][1]))
                                             @foreach ($ClinicWorkingHours[$i][1] as $WorkingHour)
@@ -288,7 +288,7 @@
                                 </li>
                                 <li class="afternoon_shift border-bottom mt-3">
                                     <h5 class="d-inline-block">Afternoon</h5>
-                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="2" data-shift="Afternoon" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Slots</a>
+                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="2" data-shift="Afternoon" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Timing</a>
                                     <ul class="time-slots" id="{{ $currentDay }}-Afternoon-ul">
                                         @if (isset($ClinicWorkingHours[$i][2]))
                                             @foreach ($ClinicWorkingHours[$i][2] as $WorkingHour)
@@ -301,7 +301,7 @@
                                 </li>
                                 <li class="morning_shift border-bottom mt-3">
                                     <h5 class="d-inline-block">Evening</h5>
-                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="3" data-shift="Evening" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Slots</a>
+                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="3" data-shift="Evening" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Timing</a>
                                     <ul class="time-slots" id="{{ $currentDay }}-Evening-ul">
                                         @if (isset($ClinicWorkingHours[$i][3]))
                                             @foreach ($ClinicWorkingHours[$i][3] as $WorkingHour)
@@ -314,7 +314,7 @@
                                 </li>
                                 <li class="morning_shift mt-3">
                                     <h5 class="d-inline-block">Night</h5>
-                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="4" data-shift="Night" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Slots</a>
+                                    <a href="#" class="add-slot float-end" data-bs-toggle="modal" data-bs-target="#add_slot" data-shift-number="4" data-shift="Night" data-day-number="{{ $i }}" data-day="{{ $currentDay }}">Add Timing</a>
                                     <ul class="time-slots" id="{{ $currentDay }}-Night-ul">
                                         @if (isset($ClinicWorkingHours[$i][4]))
                                             @foreach ($ClinicWorkingHours[$i][4] as $WorkingHour)

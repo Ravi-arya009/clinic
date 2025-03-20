@@ -78,9 +78,6 @@
                                             <li>
                                                 <a href="#" class="add-slot add_time_slot" data-bs-toggle="modal" data-bs-target="#add_slot" data-day="{{ $i }}">Add Slots</a>
                                             </li>
-                                            <li>
-                                                <a href="#" class="del-slot" data-bs-toggle="modal" data-bs-target="#delete_slot">Delete All</a>
-                                            </li>
                                         </ul>
                                     </div>
                                     <div class="slot-body">
@@ -202,7 +199,7 @@
                     </div>
 
                     <div class="modal-btn text-center">
-                        <a href="#" class="btn btn-gray" data-bs-toggle="modal" data-bs-dismiss="modal" data-slot_id="" id="delete_slot_modal_button">Yes, Remove</a>
+                        <a href="#" class="btn btn-gray" data-bs-toggle="modal" data-bs-dismiss="modal" data-slot_id="" id="delete_slot_modal_button_admin">Yes, Remove</a>
                         <a href="#" class="btn btn-primary prime-btn px-5" data-bs-toggle="modal" data-bs-dismiss="modal">No</a>
                     </div>
                 </div>
@@ -239,4 +236,32 @@
 @push('scripts')
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src={{ asset('js/bootstrap-datetimepicker.min.js') }}></script>
+    <script>
+        $(function() {
+            $(".time-slots").on("click", ".time_slot_li", function() {
+                var slot_id = $(this).data("id");
+                $("#delete_slot_modal_button_admin").attr("data-slot_id", slot_id);
+            });
+
+            $("#delete_slot_modal_button_admin").on("click", function() {
+                var slot_id = $(this).attr("data-slot_id");
+                $.ajax({
+                    url: "/admin/delete_slot/" + slot_id,
+                    type: "POST",
+                    success: function(response) {
+                        console.log(response);
+                        if (response.success) {
+                            $("#slot_" + slot_id).remove();
+                            $("#alert_modal").modal("show");
+                        } else {
+                            alert("Failed to delete the slot");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert("An error occurred while deleting the slot");
+                    },
+                });
+            });
+        });
+    </script>
 @endpush

@@ -352,6 +352,16 @@ class UserService
 
         return $response;
     }
+    public function getClinicPatientCount($clinicId)
+    {
+        $response = Patient::where('clinic_id', $clinicId)->where('role_id', config('role.patient'))->count();
+
+        if (!$response) {
+            return 0;
+        }
+
+        return $response;
+    }
 }
 
 

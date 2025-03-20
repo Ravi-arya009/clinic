@@ -34,14 +34,14 @@
                         <img src="{{ asset('storage/profile_images/' . $patient->profile_image) }}" alt="User Image">
                     @endif
                     <div class="patient-info">
-                        <p>#Apt0001</p>
+                        {{-- <p>#Apt0001</p> --}}
                         <h6>{{ $patient->name }}</h6>
                     </div>
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        <li>{{ isset($patient->area) ? ucfirst($patient->area) : 'N/A' }}</li>
-                        <li>{{ isset($patient->city->name) ? ucfirst($patient->city->name) : 'N/A' }}</li>
+                        <li>{{ isset($patient->address) ? ucfirst($patient->address) : 'N/A' }}</li>
+                        <li>{{ isset($patient->city) ? ucfirst($patient->city['name']) : 'N/A' }}</li>
                     </ul>
                 </td>
                 <td class="mail-info-patient">

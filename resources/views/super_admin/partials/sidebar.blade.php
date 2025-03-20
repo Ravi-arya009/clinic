@@ -37,15 +37,15 @@
 
                 <hr>
 
-                <li class="">
-                    <a href="">
+                <li class="{{ request()->routeIs('super_admin.state.index') ? 'active' : '' }}">
+                    <a href="{{ route('super_admin.state.index') }}">
                         <i class="fa-solid fa-mountain-city"></i>
                         <span>States</span>
                     </a>
                 </li>
 
                 <li class="">
-                    <a href="">
+                    <a href="#">
                         <i class="fa-solid fa-city"></i>
                         <span>Cities</span>
                     </a>
@@ -61,7 +61,7 @@
                 <hr>
 
                 <li>
-                    <a href="{{route('super_admin.logout')}}">
+                    <a href="{{ route('super_admin.logout') }}">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span>Logout</span>
                     </a>

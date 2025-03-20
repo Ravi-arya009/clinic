@@ -192,10 +192,11 @@
             </div>
         @endif
         <!-- /Appointment Detail Card -->
-        <div class="create-appointment-details">
-            <h5 class="head-text">Perscription</h5>
-            <div class="create-details-card">
-                <div class="create-details-card-body">
+        @if ($appointment->status != 0)
+            <div class="create-appointment-details">
+                <h5 class="head-text">Perscription</h5>
+                <div class="create-details-card">
+                    <div class="create-details-card-body">
                         <input type="hidden" value="{{ $appointment->id }}" name="appointment_id">
                         <div class="start-appointment-set">
                             <div class="form-bg-title">
@@ -240,9 +241,6 @@
                                             <div class="input-block input-block-new">
                                                 <label class="form-label">Instruction</label>
                                                 <input type="text" class="form-control" name="instructions[]">
-                                            </div>
-                                            <div class="delete-row">
-                                                <a href="#" class="delete-btn delete-medication trash text-danger"><i class="fa-solid fa-trash-can"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -298,9 +296,6 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="delete-row">
-                                                <a href="#" class="delete-btn delete-test trash text-danger"><i class="fa-solid fa-trash-can"></i></a>
-                                            </div>
                                         </div>
                                     </div>
                                 @else
@@ -337,9 +332,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection
 @section('modal')

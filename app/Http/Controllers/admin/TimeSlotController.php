@@ -80,4 +80,9 @@ class TimeSlotController extends Controller
             ], 500);  // Return a 500 server error if something goes wrong
         }
     }
+
+    public function delete($clinicSlug, Request $request, $slotId)
+    {
+        return $this->timeSlotService->deleteTimeSlot($slotId);
+    }
 }

@@ -24,10 +24,10 @@ class StoreDependantRequest extends FormRequest
         return [
             'dependant_name' => 'required|string|max:255',
             'dependant_phone' => 'required|digits_between:10,13|unique:dependants,phone',
-            'dependant_whatsapp' => 'digits_between:10,13|unique:dependants,whatsapp',
-            'dependant_email' => 'email',
-            'dependant_dob' => 'date',
-            'dependant_gender' => 'digits_between:1,2',
+            'dependant_whatsapp' => 'nullable|digits_between:10,13|unique:dependants,whatsapp',
+            'dependant_email' => 'nullable|email',
+            'dependant_dob' => 'required|date',
+            'dependant_gender' => 'nullable|digits_between:1,2',
             'dependant_relation' => 'required|in:' . implode(',', array_keys(config('relations'))),
         ];
     }

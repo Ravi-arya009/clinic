@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use App\Services\DataRepositoryService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
@@ -23,9 +24,9 @@ class DashboardController extends Controller
     }
     public function dashboard()
     {
-        $totalPatientCount = Appointment::where('clinic_id', $this->clinicId)->distinct('patient_id')->count();
-        $totalDoctorAppointmentCount = Appointment::where('clinic_id', $this->clinicId)->count();
-        $upcomingAppointments = Appointment::where('clinic_id', $this->clinicId)->with('patient', 'timeSlot')->orderBy('appointment_date', 'desc')->limit(7)->get();
+        $totalPatientCount = Appointment::where('clinic_id', $this->clinicId)->where('doctor_id', Auth::guard('doctor')->user()->id)->distinct('patient_id')->count();
+        $totalDoctorAppointmentCount = Appointment::where('clinic_id', $this->clinicId)->where('doctor_id', Auth::guard('doctor')->user()->id)->count();
+        $upcomingAppointments = Appointment::where('clinic_id', $this->clinicId)->where('doctor_id', Auth::guard('doctor')->user()->id)->with('patient', 'timeSlot')->orderBy('appointment_date', 'desc')->limit(7)->get();
         return view('doctor.dashboard', compact('upcomingAppointments', 'totalDoctorAppointmentCount', 'totalPatientCount'));
     }
 
