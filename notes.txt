@@ -190,3 +190,20 @@ Subscription model
     -patient wise.
 
 if adding existing doctor to some other clinic then we'll need otp verfication from the doctor's side.
+
+
+### After lunch ###
+    #Super admin
+        -states
+        -cities
+        -specialities
+        -qualifications
+        -Services
+
+    -Try to make universal solution that can be simply copied anywhere required such as medicine page
+        -use claude for architecture
+    -create, update, delete
+    -use ajax.
+        -take care of update after add problem.
+    -fix sorting in datatables
+        -see if can use datatables for making entry directly into the database

@@ -51,10 +51,10 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-book-medical"></i>
-                        <span>Specialties</span>
+                <li class="{{ request()->routeIs('super_admin.speciality.index') ? 'active' : '' }}">
+                    <a href="{{ route('super_admin.speciality.index') }}">
+                        <i class="fa-solid fa-mountain-city"></i>
+                        <span>Speciality</span>
                     </a>
                 </li>
 

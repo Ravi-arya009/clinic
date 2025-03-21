@@ -19,11 +19,11 @@
                         <h4 class="paitent-title">Booking Details</h4>
                     </div>
 
-                    <form action="{{ route('appointment.store') }}" method="POST">
+                    <form action="{{ route('appointment.store') }}" method="POST" id="create_appointment">
                         @csrf
                         <input type="hidden" value="{{ json_encode($bookingData) }}" name="bookingData">
                         <input type="hidden" name="booking_for" id="booking_for" value="1">
-                        <input type="hidden" name="consultation_fee" id="consultation_fee" value="{{$bookingData->consultation_fee}}">
+                        <input type="hidden" name="consultation_fee" id="consultation_fee" value="{{ $bookingData->consultation_fee }}">
 
                         <div class="card shadow-sm">
                             <div class="card-header">
@@ -34,7 +34,7 @@
                                     <div class="col-md-6 col-sm-12">
                                         <div class="mb-3 card-label">
                                             <label class="mb-2">Name</label>
-                                            <input type="text" class="form-control" name="name" id="name" value="{{ $loggedInUser ? $loggedInUser->name : old('name') }}" required >
+                                            <input type="text" class="form-control" name="name" id="name" value="{{ $loggedInUser ? $loggedInUser->name : old('name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
@@ -292,6 +292,7 @@
 @endsection
 
 @push('scripts')
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         $(function() {
             $('.nav-link').on('click', function() {
@@ -301,6 +302,65 @@
                     $('#booking_for').val('2');
                 }
             });
+
+            // code for payment gateway, activates when the payment method is online.
+            // $("#create_appointment").submit(function(e) {
+            //     e.preventDefault();
+            //     var formData = new FormData(this);
+            //     console.log(formData);
+            //     var payment_method = formData.get('payment_method');
+            //     if (payment_method == 1) {
+            //         fetch('/create-order', {
+            //                 method: 'POST',
+            //                 headers: {
+            //                     'Content-Type': 'application/json',
+            //                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            //                 },
+            //                 body: JSON.stringify({
+            //                     amount: 6000
+            //                 }) // Amount in INR
+            //             })
+            //             .then(response => response.json())
+            //             .then(data => {
+            //                 if (data.error) {
+            //                     alert("Error: " + data.error);
+            //                     return;
+            //                 }
+
+            //                 var options = {
+            //                     "key": "{{ env('RAZORPAY_KEY_ID') }}",
+            //                     "amount": data.amount,
+            //                     "currency": "INR",
+            //                     "name": "Your Company Name",
+            //                     "description": "Test Transaction",
+            //                     "order_id": data.id,
+            //                     "handler": function(response) {
+            //                         console.log("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+            //                         formData.append('razorpay_payment_id', response.razorpay_payment_id);
+            //                         $('#create_appointment')[0].submit();
+
+            //                     },
+            //                     "prefill": {
+            //                         "name": "Test User",
+            //                         "email": "test@example.com",
+            //                         "contact": "9999999999"
+            //                     },
+            //                     "theme": {
+            //                         "color": "#3399cc"
+            //                     }
+            //                 };
+
+            //                 var rzp1 = new Razorpay(options);
+            //                 rzp1.open();
+            //             })
+            //             .catch(error => console.log(error));
+            //     }
+            //     else{
+            //         $('#create_appointment')[0].submit();
+            //     }
+
+            // });
+
         });
     </script>
 @endpush

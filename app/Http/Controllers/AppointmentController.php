@@ -29,6 +29,9 @@ class AppointmentController extends Controller
     {
         $bookingData = json_decode($request->bookingData);
         $validatedData = $request->validated();
+
+        $temporaryPaymentDetails = $this->getTemporaryPaymentDetails($request);
+
         if (auth()->guard('patients')->check()) {
             $patient_id = Auth::guard('patients')->id();
         } else {
@@ -79,8 +82,8 @@ class AppointmentController extends Controller
             'id' => Str::uuid(),
             'appointment_id' => $appointmentId,
             'amount_to_be_paid' => $bookingData->consultation_fee,
-            'amount_paid' => 0,
-            'payment_status' => 0,
+            'amount_paid' => $temporaryPaymentDetails['amount_paid'],
+            'payment_status' => $temporaryPaymentDetails['payment_status'],
             'payment_method' => $request->payment_method
         ]);
 
@@ -94,5 +97,31 @@ class AppointmentController extends Controller
     {
         $appointment = json_decode($request->appointment_value);
         return view('global.prescription', compact('appointment'));
+    }
+
+    public function getTemporaryPaymentDetails($request)
+    {
+        //this function is a temporary function to mock the payment methods and details.
+        //once the payment gateway is integrated these details will come form there.
+        switch ($request->payment_method) {
+            case 1:
+                $TemporaryPaymentDetails['payment_status'] = 1;
+                $TemporaryPaymentDetails['amount_paid'] = $request->consultation_fee;
+                break;
+            case 2:
+                $TemporaryPaymentDetails['payment_status'] = 0;
+                $TemporaryPaymentDetails['amount_paid'] = 0;
+                break;
+            case 3:
+                $TemporaryPaymentDetails['payment_status'] = 0;
+                $TemporaryPaymentDetails['amount_paid'] = (int) $request->consultation_fee / 2;
+                break;
+
+            default:
+                $TemporaryPaymentDetails['payment_status'] = 0;
+                $TemporaryPaymentDetails['amount_paid'] = 0;
+                break;
+        }
+        return $TemporaryPaymentDetails;
     }
 }

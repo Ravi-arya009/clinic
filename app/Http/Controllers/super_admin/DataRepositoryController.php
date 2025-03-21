@@ -21,4 +21,10 @@ class DataRepositoryController extends Controller
         $states = $this->dataRepositoryService->getAllStates();
         return view('super_admin.state_list', compact('states'));
     }
+
+    public function specialityIndex()
+    {
+        $specialities = $this->dataRepositoryService->getAllSpecialities();
+        return view('super_admin.speciality_list', compact('specialities'));
+    }
 }

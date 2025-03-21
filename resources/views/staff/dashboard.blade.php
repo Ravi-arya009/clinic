@@ -1,3 +1,1 @@
-<html>
-    <h1>Welcome, Staff</h1>
-</html>
+@extends('temp_global.main')

@@ -1,5 +1,3 @@
-{{-- {{dd($user->profile_image)}} --}}
-
 @extends('admin.layouts.main')
 @section('title', 'Dashboard')
 
