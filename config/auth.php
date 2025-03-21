@@ -71,6 +71,12 @@ return [
             'login_route' => 'receptionist.login',
             'index_route' => 'receptionist.dashboard'
         ],
+        'staff' => [
+            'driver' => 'session',
+            'provider' => 'users',
+            'login_route' => 'staff.login',
+            'index_route' => 'staff.dashboard'
+        ],
     ],
 
     /*

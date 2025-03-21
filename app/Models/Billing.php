@@ -22,4 +22,9 @@ class Billing extends Model
         'payment_status',
         'payment_method',
     ];
+
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class);
+    }
 }

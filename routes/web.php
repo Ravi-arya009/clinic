@@ -19,13 +19,18 @@ use App\Http\Controllers\patient\AppointmentController as PatientAppointmentCont
 use App\Http\Controllers\patient\dependantController;
 use App\Http\Controllers\patient\InvoiceController;
 use App\Http\Controllers\patient\PerscriptionController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\receptionist\AuthController as ReceptionistAuthController;
 use App\Http\Controllers\receptionist\DashboardController as ReceptionistDashboardController;
+use App\Http\Controllers\staff\DashboardController as StaffDashboardController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\super_admin\AuthController as Super_adminAuthController;
 use App\Http\Controllers\super_admin\ClinicController;
 use App\Http\Controllers\super_admin\DashboardController;
 use App\Http\Controllers\super_admin\DataRepositoryController;
+use App\Http\Controllers\staff\AuthController as StaffAuthController;
+use App\Http\Controllers\staff\AppointmentController as StaffAppointmentController;
+
 use App\Http\Controllers\TempController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WebsiteController;
@@ -47,6 +52,7 @@ Route::prefix('super_admin')->group(
             Route::post('clinic/update/{clinicId}', [ClinicController::class, 'update'])->name('super_admin.clinic.update');
             Route::get('clinic/index', [ClinicController::class, 'index'])->name('super_admin.clinic.index');
             Route::get('/state', [DataRepositoryController::class, 'stateIndex'])->name('super_admin.state.index');
+            Route::get('/speciality', [DataRepositoryController::class, 'specialityIndex'])->name('super_admin.speciality.index');
             Route::get('logout', [Super_adminAuthController::class, 'logout'])->name('super_admin.logout');
         });
     }
@@ -201,3 +207,25 @@ Route::get('deletedb', [TempController::class, 'deleteDb'])->name('deletedb');
 
 ####Routes for testing purposes end####
 ########################################################################################
+
+
+#### Staff ####
+Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
+    Route::prefix('staff')->group(function () {
+        Route::middleware('IsLoggedIn:staff')->group(function () {
+            Route::get('/dashboard', [StaffDashboardController::class, 'dashboard'])->name('staff.dashboard');
+            Route::get('appointments', [StaffAppointmentController::class, 'upcomingAppointments'])->name('staff.appointments.index');
+            Route::get('/appointment/{appointmentId}', [StaffAppointmentController::class, 'show'])->name('staff.appointment.show');
+        });
+        // Route::get('/login', [StaffDashboardController::class, 'login'])->name('staff.login');
+        Route::middleware('RedirectIfAuthenticated:staff')->group(function () {
+            Route::get('login', [StaffAuthController::class, 'login'])->name('staff.login');
+            Route::post('login', [StaffAuthController::class, 'authenticate'])->name('staff.authenticate');
+            Route::get('register', [StaffAuthController::class, 'register'])->name('staff.register');
+            Route::post('register', [StaffAuthController::class, 'store'])->name('staff.store');
+        });
+    });
+});
+
+Route::post('/create-order', [PaymentController::class, 'createOrder']);
+Route::view('/payment', 'payment');

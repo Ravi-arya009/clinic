@@ -65,4 +65,7 @@ class Appointment extends Model
     {
         return $this->belongsTo(dependant::class);
     }
+    public function billing(){
+        return $this->hasOne(Billing::class);
+    }
 }
