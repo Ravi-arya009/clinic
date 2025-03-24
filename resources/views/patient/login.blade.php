@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 @include('partials.header');
 
 <body class="account-page">
@@ -33,14 +32,17 @@
                                             <input type="text" class="form-control floating" id="phone" name="phone" required>
                                             <label class="focus-label">Phone Number</label>
                                         </div>
-                                        <div class="mb-3 form-focus">
+                                        <div class="mb-3 form-focus password-container">
                                             <input type="password" class="form-control floating" id="password" name="password" required>
                                             <label class="focus-label">Password</label>
                                         </div>
                                         <div class="text-end">
                                             <a class="forgot-link" href="forgot-password.html">Forgot Password ?</a>
+                                            <a class="forgot-link float-start otp-password-link otp-login-btn" href="javascript:void(0);">Login With OTP</a>
+                                            <a class="forgot-link float-start otp-password-link password-login-btn d-none" href="javascript:void(0);">Login With Password</a>
                                         </div>
-                                        <button class="btn btn-primary w-100 btn-lg login-btn" type="submit">Login</button>
+                                        <button class="btn btn-primary w-100 btn-lg login-btn form-submit-btn" type="submit">Login</button>
+                                        <button class="btn btn-primary w-100 btn-lg login-btn ajax-submit-otp-btn d-none" type="button">Send OTP</button>
                                         @if ($errors->any())
                                             <div class="login-or">
                                                 <span class="or-line"></span>
@@ -62,7 +64,6 @@
                                                 {{ session('success') }}
                                             </div>
                                         @endif
-
                                         <div class="text-center dont-have">Don’t have an account? <a href="{{ route('patient.register') }}">Register</a></div>
                                     </form>
                                 </div>
@@ -204,6 +205,49 @@
 
     <!-- Custom JS -->
     <script src={{ asset('js/script.js') }}></script>
+
+    <script>
+        $(function() {
+            $(".otp-password-link").on('click', function() {
+                $(".password-container").slideToggle(300);
+                $(".otp-login-btn").toggleClass("d-none");
+                $(".password-login-btn").toggleClass("d-none");
+                $(".form-submit-btn").toggleClass("d-none");
+                $(".ajax-submit-otp-btn").toggleClass("d-none");
+
+                $(".ajax-submit-otp-btn").on('click', function() {
+                    $(".is-invalid").removeClass('is-invalid');
+                    $(".invalid-feedback").remove();
+                    var phoneField = $("#phone");
+                    var phone = phoneField.val();
+                    const phoneRegex = /^(\+91|91)?\d{10}$/;
+                    if (phone == '' || phone == null || !phoneRegex.test(phone)) {
+                        $("#phone").addClass('is-invalid');
+                        phoneField.tooltip({
+                            title: 'Please enter a valid phone number.',
+                            placement: 'right',
+                            trigger: 'manual'
+                        }).tooltip('show');
+                    } else {
+                        $.ajax({
+                            url: "{{ route('patientPhoneNumberCheck') }}",
+                            type: "GET",
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                phone: phone
+                            },
+                            success: function(response) {
+                                console.log(response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(xhr, status, error);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

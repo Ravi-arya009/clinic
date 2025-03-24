@@ -207,3 +207,10 @@ if adding existing doctor to some other clinic then we'll need otp verfication f
         -take care of update after add problem.
     -fix sorting in datatables
         -see if can use datatables for making entry directly into the database
+
+#Next
+Otp migration, model and service page class is created. service class don't have working code.
+next make a controller. send ajax request from the frontent
+    -phone and user type
+        super_admin, users, patient (basically table name)
+    -verify/validate and generate otp. see register page for the workflow.
