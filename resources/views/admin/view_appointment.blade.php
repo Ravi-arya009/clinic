@@ -1,7 +1,7 @@
 @php
     $pageTitle = 'Appointments Details';
 @endphp
-@extends('admin.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('title', 'Appointments Details')
@@ -13,6 +13,10 @@
 @push('stylesheets')
     <link rel="stylesheet" href={{ asset('plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css') }}>
 @endpush
+
+@section('sidebar')
+    @include('admin.partials.sidebar')
+@endsection
 
 @section('content')
     <!-- Page Content -->
@@ -641,7 +645,7 @@
                 var appointment_id = $(this).data('appointment-id');
 
                 $.ajax({
-                    url: "{{ route('doctor.fetchAppointmentDetails') }}",
+                    url: "{{ route('admin.fetchAppointmentDetails') }}",
                     type: "POST",
                     data: {
                         appointment_id: appointment_id

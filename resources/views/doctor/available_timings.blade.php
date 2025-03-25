@@ -1,7 +1,7 @@
 @php
     $pageTitle = 'Available Timings';
 @endphp
-@extends('doctor.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('title', $pageTitle)
 @section('breadcrum-title', $pageTitle)
@@ -11,6 +11,10 @@
 @push('scripts')
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
 @endpush
+
+@section('sidebar')
+    @include('doctor.partials.sidebar')
+@endsection
 
 @section('content')
 

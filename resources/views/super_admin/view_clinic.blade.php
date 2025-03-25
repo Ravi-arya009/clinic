@@ -1,4 +1,4 @@
-@extends('super_admin.layouts.main')
+@extends('global.layouts.app')
 
 @section('title', 'Edit Clinic')
 
@@ -9,12 +9,14 @@
 @push('stylesheets')
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 
-@section('content')
+@section('sidebar')
+    @include('super_admin.partials.sidebar')
+@endsection
 
+@section('content')
     <div class="dashboard-header">
         <h3>Edit Clinic</h3>
     </div>

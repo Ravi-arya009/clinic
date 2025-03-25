@@ -145,4 +145,11 @@ class AppointmentController extends Controller
                 ->withErrors(['error' => 'An error occurred while saving the prescription.']);
         }
     }
+
+    public function fetchAppointmentDetails(Request $request)
+    {
+        $appointmentId = $request->input('appointment_id');
+        $historicalAppointmentDetails = $appointment = $this->appointmentService->getAppointmentById($appointmentId);
+        return view('doctor.historicalAppointmentDetails', compact('historicalAppointmentDetails'));
+    }
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1); // active, inactive
             $table->timestamps();
             $table->unique(['doctor_id', 'slot_time', 'day_of_week'], 'unique_slot_per_doctor');
-
+            $table->softDeletes();
         });
     }
 

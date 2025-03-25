@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('super_admin')->nullable(); //nullable for now. it stores which superadmin created the clinic.
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

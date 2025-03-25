@@ -1,4 +1,4 @@
-@extends('patient.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('title', 'Family Members')
 
@@ -10,6 +10,11 @@
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
+
+@section('sidebar')
+    @include('patient.partials.sidebar')
+@endsection
+
 @section('content')
     <div class="dashboard-header">
         <h3>Family Members</h3>

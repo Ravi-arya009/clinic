@@ -32,4 +32,8 @@ class DashboardController extends Controller
         $totalPatients = $this->PatientService->getPatientCount();
         return view('super_admin.dashboard', compact('recentClinics', 'totalClinics', 'totalDoctors', 'totalPatients'));
     }
+    public function showProfile()
+    {
+        return view('super_admin.profile');
+    }
 }

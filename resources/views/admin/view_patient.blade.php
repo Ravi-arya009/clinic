@@ -1,10 +1,14 @@
-@extends('admin.layouts.main')
+@extends('global.layouts.app')
 
 @section('title', 'User Profile')
 
 @section('breadcrum-title', 'User Profile')
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', 'User Profile')
+
+@section('sidebar')
+    @include('admin.partials.sidebar')
+@endsection
 
 @section('content')
 

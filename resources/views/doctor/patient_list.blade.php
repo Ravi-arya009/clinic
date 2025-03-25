@@ -1,7 +1,7 @@
 @php
     $pageTitle = 'Patient List';
 @endphp
-@extends('doctor.layouts.main')
+@extends('global.layouts.app')
 @section('title', $pageTitle)
 @section('breadcrum-title', $pageTitle)
 @section('breadcrum-link-one', 'Home')
@@ -10,6 +10,10 @@
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
+
+@section('sidebar')
+    @include('doctor.partials.sidebar')
+@endsection
 
 @section('content')
 

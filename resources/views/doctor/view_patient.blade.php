@@ -1,11 +1,15 @@
 @php
     $pageTitle = 'Patient Profile';
 @endphp
-@extends('doctor.layouts.main')
+@extends('global.layouts.app')
 @section('title', $pageTitle)
 @section('breadcrum-title', $pageTitle)
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', $pageTitle)
+
+@section('sidebar')
+    @include('doctor.partials.sidebar')
+@endsection
 
 @section('content')
 

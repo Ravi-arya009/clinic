@@ -1,10 +1,12 @@
-@extends('super_admin.layouts.main')
-
+@extends('global.layouts.app')
 @section('title', 'Dashboard')
-
 @section('breadcrum-title', 'Dashboard')
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', 'Dashboard')
+
+@section('sidebar')
+    @include('super_admin.partials.sidebar')
+@endsection
 
 @section('content')
     <div class="row">
@@ -62,7 +64,6 @@
                                         <td>
                                             <div class="patient-info-profile">
                                                 <span class="table-avatar">
-                                                    {{-- <i class="fa-solid fa-house-chimney-medical text-info fs-3"></i> --}}
                                                     @if ($clinic->logo == null)
                                                         <img src="{{ asset('img/bg/ring-2.png') }}" alt="User Image">
                                                     @else

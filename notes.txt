@@ -214,3 +214,26 @@ next make a controller. send ajax request from the frontent
     -phone and user type
         super_admin, users, patient (basically table name)
     -verify/validate and generate otp. see register page for the workflow.
+
+
+#global layout
+    -fix the link of breadcrumbs
+    -make super admin profile settings (low priority)
+    -global changes are not yet made on staff panel.
+
+
+-change patient's guard's name to patient from patients (singular/plural)
+-view appointment table is not looking good (this problem is occuring everywhere accross the panel, make some global solution)
+
+#### missing features ####
+    #Super admin
+        -delete time slots of clinic on the page view_clinic.blade.php
+        -manage data repositories
+            -states are related to cities (make sure of this while creating this page)
+        -check register for the notes from the day of demo
+
+#after lunch
+    -work on global auth
+        -look for simplest solution that also is global.
+        -use is_clinicUser from the guard.
+        -check for all the cases.

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('medicine_name');
             $table->integer('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

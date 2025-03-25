@@ -24,6 +24,7 @@ return new class extends Migration
             $table->tinyInteger('payment_method'); //online, offline
             $table->tinyInteger('status')->default(0); //pending, confirmed, cancelled etc.
             $table->timestamps();
+            $table->softDeletes();
             $table->unique(['clinic_id','doctor_id','time_slot_id', 'appointment_date'], 'unique_slot_per_patient');
         });
     }

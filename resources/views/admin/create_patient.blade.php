@@ -1,10 +1,14 @@
-@extends('admin.layouts.main')
+@extends('global.layouts.app')
 
 @section('title', 'Create Patient')
 
 @section('breadcrum-title', 'Create Patient')
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', 'Create Patient')
+
+@section('sidebar')
+    @include('admin.partials.sidebar')
+@endsection
 
 @section('content')
 

@@ -1,7 +1,7 @@
 @php
     $pageTitle = 'Appointments Details';
 @endphp
-@extends('doctor.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('title', $pageTitle)
 @section('breadcrum-title', $pageTitle)
@@ -13,6 +13,10 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css" rel="stylesheet">
 @endpush
+
+@section('sidebar')
+    @include('doctor.partials.sidebar')
+@endsection
 
 @section('content')
     <!-- Page Content -->

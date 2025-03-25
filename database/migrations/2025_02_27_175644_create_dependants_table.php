@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('pincode')->nullable();
             $table->string('profile_image')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

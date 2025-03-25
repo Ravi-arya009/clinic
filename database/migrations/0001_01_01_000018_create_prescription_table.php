@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('time');
             $table->string('notes');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

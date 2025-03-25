@@ -1,4 +1,4 @@
-@extends('super_admin.layouts.main')
+@extends('global.layouts.app')
 
 @section('title', 'Clinic List')
 
@@ -9,6 +9,11 @@
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
+
+@section('sidebar')
+    @include('super_admin.partials.sidebar')
+@endsection
+
 @section('content')
 
     <div class="dashboard-header">

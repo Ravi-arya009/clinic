@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('consultation_fee');
             $table->text('bio')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

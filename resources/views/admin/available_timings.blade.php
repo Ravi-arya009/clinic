@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('title', 'Available Timings')
@@ -7,9 +7,14 @@
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', 'Available Timings')
 
-@push('scripts')
+@push('stylesheets')
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" href={{ asset('plugins/select2/css/select2.min.css') }}>
 @endpush
+
+@section('sidebar')
+    @include('admin.partials.sidebar')
+@endsection
 
 @section('content')
 
@@ -236,6 +241,7 @@
 @push('scripts')
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src={{ asset('js/bootstrap-datetimepicker.min.js') }}></script>
+    <script src={{ asset('plugins/select2/js/select2.min.js') }}></script>
     <script>
         $(function() {
             $(".time-slots").on("click", ".time_slot_li", function() {

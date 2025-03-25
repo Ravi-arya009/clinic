@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('global.layouts.app')
 
 @section('title', 'Create User')
 
@@ -9,6 +9,11 @@
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 @endpush
+
+@section('sidebar')
+    @include('admin.partials.sidebar')
+@endsection
+
 @section('content')
 
     <div class="dashboard-header">
@@ -25,7 +30,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src={{ asset('js/clinic-utils.js') }}></script>
     <script>
         $(document).ready(function() {

@@ -212,15 +212,19 @@
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a href="doctor-profile.html" class="avatar avatar-sm me-2">
-                                                    <img class="avatar-img rounded-3" src="{{ asset('img/doctors/doctor-thumb-02.jpg') }}" alt="User Image">
+                                                    @if (isset($admin->profile_image))
+                                                        <img class="avatar-img rounded-3" src="{{ asset('storage/profile_images/' . $admin->profile_image) }}" alt="User Image">
+                                                    @else
+                                                        <img class="avatar-img rounded-3" src={{ asset('storage/profile_images/default-profile-picture.webp') }} alt="User Image">
+                                                    @endif
                                                 </a>
-                                                <a href="doctor-profile.html">{{ $admin->name }}</a>
+                                                <a href="javascript:void(0);">{{ $admin->name }}</a>
                                             </h2>
                                         </td>
                                         <td>{{ $admin->phone }}</td>
                                         <td>{{ $admin->whatsapp ?? '-' }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-primary btn-sm prime-btn">View</a>
+                                            <a href="javascript:void(0);" class="btn btn-primary btn-sm prime-btn">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
