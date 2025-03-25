@@ -1,10 +1,13 @@
-@extends('patient.layouts.main')
+@extends('global.layouts.app')
 
 @section('title', 'Dashboard')
 
 @section('breadcrum-title', 'Dashboard')
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', 'Dashboard')
+
+@section('sidebar')
+@include('patient.partials.sidebar')@endsection
 
 @section('content')
     <div class="dashboard-header">

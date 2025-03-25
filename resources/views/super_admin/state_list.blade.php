@@ -1,4 +1,4 @@
-@extends('super_admin.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('title', 'States')
@@ -10,6 +10,10 @@
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
+
+@section('sidebar')
+    @include('super_admin.partials.sidebar')
+@endsection
 
 @section('content')
     <div class="dashboard-header">

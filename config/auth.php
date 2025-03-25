@@ -45,37 +45,49 @@ return [
             'provider' => 'super_admins',
             'login_route' => 'super_admin.login',
             'index_route' => 'super_admin.dashboard',
+            'prefix' => 'super_admin',
+            'userRole' => 'Super Admin',
             // 'isClinicUser' => false,
         ],
         'patients' => [
             'driver' => 'session',
             'provider' => 'patients',
             'login_route' => 'patient.login',
-            'index_route' => 'patient.dashboard'
+            'index_route' => 'patient.dashboard',
+            'prefix' => 'patient',
+            'userRole' => 'Patient',
         ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'users',
             'login_route' => 'admin.login',
-            'index_route' => 'admin.dashboard'
+            'index_route' => 'admin.dashboard',
+            'prefix' => 'admin',
+            'userRole' => 'Admin',
         ],
         'doctor' => [
             'driver' => 'session',
             'provider' => 'users',
             'login_route' => 'doctor.login',
-            'index_route' => 'doctor.dashboard'
+            'index_route' => 'doctor.dashboard',
+            'prefix' => 'doctor',
+            'userRole' => 'Doctor',
         ],
         'receptionist' => [
             'driver' => 'session',
             'provider' => 'users',
             'login_route' => 'receptionist.login',
-            'index_route' => 'receptionist.dashboard'
+            'index_route' => 'receptionist.dashboard',
+            'prefix' => 'receptionist',
+            'userRole' => 'Receptionist',
         ],
         'staff' => [
             'driver' => 'session',
             'provider' => 'users',
             'login_route' => 'staff.login',
-            'index_route' => 'staff.dashboard'
+            'index_route' => 'staff.dashboard',
+            'prefix' => 'staff',
+            'userRole' => 'Staff',
         ],
     ],
 

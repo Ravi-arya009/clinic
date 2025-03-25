@@ -1,9 +1,13 @@
-@extends('admin.layouts.main')
+@extends('global.layouts.app')
 @section('title', 'Dashboard')
 
 @section('breadcrum-title', 'Dashboard')
 @section('breadcrum-link-one', 'Home')
 @section('breadcrum-link-two', 'Dashboard')
+
+@section('sidebar')
+    @include('admin.partials.sidebar')
+@endsection
 
 @section('content')
     <div class="row">

@@ -1,7 +1,7 @@
 @php
     $pageTitle = 'Profile';
 @endphp
-@extends('doctor.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('title', $pageTitle)
 @section('breadcrum-title', $pageTitle)
@@ -12,6 +12,11 @@
 @push('stylesheets')
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.cssI" rel="stylesheet">
 @endpush
+
+@section('sidebar')
+    @include('doctor.partials.sidebar')
+@endsection
+
 @section('content')
     <form id="update_profile" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="userId" value="{{ $doctor->id }}">

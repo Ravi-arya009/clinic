@@ -1,7 +1,7 @@
 @php
     $pageTitle = 'Dashboard';
 @endphp
-@extends('doctor.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('title', $pageTitle)
 @section('breadcrum-title', $pageTitle)
@@ -19,6 +19,11 @@
         }
     </style>
 @endpush
+
+@section('sidebar')
+    @include('doctor.partials.sidebar')
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-xl-4 d-flex">

@@ -1,4 +1,4 @@
-@extends('super_admin.layouts.main')
+@extends('global.layouts.app')
 
 @section('title', 'Clinic List')
 

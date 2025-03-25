@@ -34,6 +34,7 @@ use App\Http\Controllers\staff\AppointmentController as StaffAppointmentControll
 use App\Http\Controllers\TempController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WebsiteController;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
 
 ##### Super Admin #####
@@ -46,6 +47,7 @@ Route::prefix('super_admin')->group(
         Route::middleware('IsLoggedIn:super_admin')->group(function () {
             Route::get('/', [DashboardController::class, 'dashboard'])->name('super_admin.index');
             Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('super_admin.dashboard');
+            Route::get('profile', [DashboardController::class, 'showProfile'])->name('super_admin.profile.show');
             Route::get('clinic/create', [ClinicController::class, 'create'])->name('super_admin.clinic.create');
             Route::post('clinic/store', [ClinicController::class, 'store'])->name('super_admin.clinic.store');
             Route::get('clinic/view/{clinicId}', [ClinicController::class, 'show'])->name('super_admin.clinic.show');
@@ -92,6 +94,7 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::get('patient/{patientId}', [UserController::class, 'showPatient'])->name('admin.patient.show');
             Route::get('profile', [AdminDashboardController::class, 'showProfile'])->name('admin.profile.show');
             Route::post('profile', [AdminDashboardController::class, 'updateProfile'])->name('admin.profile.update');
+            Route::post('profilefetchAppointmentDetails', [AdminAppointmentController::class, 'fetchAppointmentDetails'])->name('admin.fetchAppointmentDetails');
         });
     });
 });
@@ -194,7 +197,8 @@ Route::post('updateDependant', [dependantController::class, 'updateDependant'])-
 Route::post('deleteDependant', [dependantController::class, 'deleteDependant'])->name('deleteDependant');
 Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
 Route::post('addDependantajax', [PatientController::class, 'addDependant'])->name('ajax.addDependant');
-
+Route::get('patient/PhoneNumberCheck', [AuthController::class, 'patientPhoneNumberCheck'])->name('patient.PhoneNumberCheck');
+Route::post('otp_verify', [AuthController::class, 'otpVerify'])->name('otpVerify');
 
 
 

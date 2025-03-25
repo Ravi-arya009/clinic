@@ -1,5 +1,5 @@
 {{-- {{ dd($appointment) }} --}}
-@extends('patient.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('title', 'Appointments Details')
@@ -11,6 +11,10 @@
 @push('stylesheets')
     <link rel="stylesheet" href={{ asset('plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css') }}>
 @endpush
+
+@section('sidebar')
+    @include('patient.partials.sidebar')
+@endsection
 
 @section('content')
     <!-- Page Content -->
@@ -398,7 +402,7 @@
 
 @push('scripts')
     <script src={{ asset('plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js') }}></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         $(document).on('click', '#downloadPdfBtn', function() {
             // Get the invoice content div

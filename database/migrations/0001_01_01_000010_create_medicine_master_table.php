@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->unique(['name', 'clinic_id'], 'unique_medicine_per_clinic');
+            $table->softDeletes();
         });
     }
 

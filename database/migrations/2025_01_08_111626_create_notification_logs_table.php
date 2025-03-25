@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('notification_id');
             $table->integer('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

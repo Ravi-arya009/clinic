@@ -3,121 +3,99 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
-use App\Models\User;
+use App\Services\OtpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class AuthController extends Controller
 {
-    public function create()
+    private $otpService;
+    public function __construct(OtpService $otpService)
     {
-        return view('admin.create_user');
+        $this->otpService = $otpService;
     }
 
-    public function store(Request $request)
+
+
+
+
+
+    ############################# OTP #############################
+    public function patientPhoneNumberCheck(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|digits_between:10,13|unique:users,phone',
-            'password' => 'required|min:4|confirmed',
-            'role' => 'required|in:1,2,3,4',
-        ]);
-
-        User::create([
-            'id' => Str::uuid(),
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-        ]);
-
-        return redirect()->back()->with('success', 'User registered successfully!');
-
-        // show messages properly after frontend integration
-        //return to edit profile after frontend integration
-        //this function will be used when user registers himself.
-    }
-
-    public function showLoginForm()
-    {
-        return view('login');
-    }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'phone' => 'required|digits_between:10,13',
-            'password' => 'required|min:4',
-        ]);
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            $user = Auth::user();
-
-            switch ($user->role) {
-                case config('role.admin'):
-                    return redirect()->route('admin.dashboard');
-                    break;
-                case config('role.doctor'):
-                    return redirect()->route('doctor.dashboard');
-                    break;
-                case config('role.staff'):
-                    return redirect()->route('staff.dashboard');
-                    break;
-                case config('role.patient'):
-                    return redirect()->route('patient.dashboard');
-                    break;
-
-                default:
-                    //return to error page.
-                    break;
-            }
+        $phone = $request->phone;
+        $patient = Patient::where('phone', $phone)->first();
+        if ($patient == null) {
+            return [
+                'status' => 0,
+                'message' => 'Mobile Number Not Registered'
+            ];
         } else {
-            echo "something went wrong";
+            $request->session()->put('otp_phone', $request->phone);
+            $this->otpService->generate($patient->id);
+            return [
+                'status' => 1,
+            ];
         }
-
-        // show messages properly adter frontend integration
-        //return to respective dashboard after frontend integration
-        //set role check during login
     }
 
-    public function showPatientRegistrationForm()
+    public function otpVerify(Request $request)
     {
-        return view('patient.register');
+        try {
+            $digits = $request->all();
+            $otp = implode('', $digits);
+
+            if (!session('otp_phone')) {
+                return [
+                    'status' => 0,
+                    'message' => 'No OTP session found'
+                ];
+            }
+
+            $user = Patient::where('phone', session('otp_phone'))->first();
+
+            if (!$user) {
+                return [
+                    'status' => 0,
+                    'message' => 'User not found'
+                ];
+            }
+
+            // Add logging to understand what's happening
+            Log::info('OTP Verification Attempt', [
+                'phone' => session('otp_phone'),
+                'otp' => $otp
+            ]);
+
+            if ($this->otpService->validate($user, $otp)) {
+                // Directly login the user
+                Auth::guard('patients')->login($user);
+                $request->session()->regenerate();
+
+                return [
+                    'status' => 1,
+                    'message' => 'Logged In',
+                    'redirectRoute' => route('patient.dashboard')
+                ];
+            } else {
+                return [
+                    'status' => 0,
+                    'message' => 'Incorrect OTP'
+                ];
+            }
+        } catch (Exception $e) {
+            // Log the full exception
+            Log::error('OTP Verification Error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return [
+                'status' => 0,
+                'message' => 'Something went wrong: ' . $e->getMessage()
+            ];
+        }
     }
-
-    public function patientRegister(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|digits_between:10,13|unique:patients,phone',
-            'password' => 'required|min:4|confirmed',
-        ]);
-
-        Patient::create([
-            'id' => Str::uuid(),
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return redirect()->back()->with('success', 'Registeration successfull!');
-    }
-
-    public function showPatientLoginForm()
-    {
-        return view('patient.login');
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-
-        // $request->session()->invalidate();
-
-        // $request->session()->regenerateToken();
-    }
-
 }

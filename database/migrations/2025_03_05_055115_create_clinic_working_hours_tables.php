@@ -21,6 +21,7 @@ return new class extends Migration
             $table->time('closing_time');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->softDeletes();
 
             // Unique constraint to prevent duplicate entries
             $table->unique(['clinic_id', 'day', 'shift', 'opening_time', 'closing_time'], 'clinic_hours_unique');

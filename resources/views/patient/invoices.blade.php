@@ -1,4 +1,4 @@
-@extends('patient.layouts.main')
+@extends('global.layouts.app')
 
 @section('title', 'Invoices')
 
@@ -8,6 +8,11 @@
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
+
+@section('sidebar')
+    @include('patient.partials.sidebar')
+@endsection
+
 @section('content')
     <x-page-header pageContentTitle="Invoices" :search="true" />
 

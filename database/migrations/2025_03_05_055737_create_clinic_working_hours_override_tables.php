@@ -21,6 +21,7 @@ return new class extends Migration
             $table->time('closing_time')->nullable();
             $table->boolean('closed')->default(false)->comment('true: opened for this shift, false: closed for this shift');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

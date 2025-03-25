@@ -1,4 +1,4 @@
-@extends('super_admin.layouts.main')
+@extends('global.layouts.app')
 @section('title', 'Create Clinic')
 @section('breadcrum-title', 'Create Clinic')
 @section('breadcrum-link-one', 'Home')
@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 @endpush
+
+@section('sidebar')
+    @include('super_admin.partials.sidebar')
+@endsection
 
 @section('content')
     <div class="dashboard-header">

@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('global.layouts.app')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('title', 'Profile')
 
@@ -8,6 +8,11 @@
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
+
+@section('sidebar')
+    @include('admin.partials.sidebar')
+@endsection
+
 @section('content')
     <form id="update_profile" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="userId" value="{{ $admin->id }}">

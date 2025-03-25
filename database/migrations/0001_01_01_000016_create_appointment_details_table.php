@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->text('advice')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
