@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('medicines', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('medicine_name');
-            $table->integer('status');
+            $table->integer('status'); //change to is_active
             $table->timestamps();
             $table->softDeletes();
         });

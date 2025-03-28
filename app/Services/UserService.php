@@ -79,6 +79,7 @@ class UserService
     public function storeUser($data, $clinicId)
     {
         DB::beginTransaction();
+
         try {
             $user = User::create([
                 'id' => Str::uuid(),
@@ -94,13 +95,6 @@ class UserService
                 'pincode' => $data['pincode'],
                 'password' => Hash::make('ravi'),
             ]);
-
-            if (!$user) {
-                return [
-                    'success' => false,
-                    'message' => 'Something went wrong while creating user'
-                ];
-            }
 
             // Handle Profile image file upload and storage
             if (isset($data['profile_picture'])) {
@@ -135,15 +129,42 @@ class UserService
             }
 
             DB::commit();
+
             return [
                 'success' => true,
+                'data' => [
+                    'user' => $user,
+                    'redirectRoute' => route('admin.user.show', $user->id),
+                ],
                 'message' => 'User created successfully',
-                'data' => $user
             ];
         } catch (\Exception $e) {
+            DB::rollBack();
             return [
                 'success' => false,
                 'message' => 'Something went wrong while creating user'
+            ];
+        }
+    }
+
+    public function updateDoctorProfile($data, $doctorId)
+    {
+        try {
+            $doctor = Doctor::where('user_id', $doctorId)->first();
+            $doctor->speciality_id = $data['speciality'];
+            $doctor->qualification_id = $data['qualification'];
+            $doctor->experience = $data['experience'];
+            $doctor->consultation_fee = $data['consultation_fee'];
+            $doctor->bio = $data['bio'];
+            $doctor->save();
+            return [
+                'success' => true,
+                'message' => 'Doctor profile updated successfully',
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'message' => 'Something went wrong while updating doctor profile' . $e
             ];
         }
     }
@@ -255,28 +276,23 @@ class UserService
 
     public function updateUser($userId, $data)
     {
+        DB::beginTransaction();
+
         try {
             $user = User::findOrFail($userId);
 
-            if (!$user) {
-                return [
-                    'success' => false,
-                    'message' => 'User not found'
-                ];
-            }
-
-            $user->name = $data['name'];
-            $user->phone = $data['phone'];
-            $user->whatsapp = $data['whatsapp'];
-            $user->email = $data['email'];
-            $user->gender = $data['gender'];
-            $user->dob = $data['dob'];
-            $user->state_id = $data['state'];
-            $user->city_id = $data['city'];
-            $user->address = $data['address'];
-            $user->pincode = $data['pincode'];
-
-            $user->save();
+            $user->update([
+                'name' => $data['name'],
+                'phone' => $data['phone'],
+                'whatsapp' => $data['whatsapp'],
+                'email' => $data['email'],
+                'gender' => $data['gender'],
+                'dob' => $data['dob'],
+                'state_id' => $data['state'],
+                'city_id' => $data['city'],
+                'address' => $data['address'],
+                'pincode' => $data['pincode'],
+            ]);
 
             if (isset($data['profile_picture'])) {
                 $profilePicture = $data['profile_picture'];
@@ -287,14 +303,14 @@ class UserService
             }
 
             if ($data['role'] == config('role.doctor')) {
-                $doctor = Doctor::where('user_id', $userId)->first();
-                $doctor->speciality_id = $data['speciality'];
-                $doctor->qualification_id = $data['qualification'];
-                $doctor->experience = $data['experience'];
-                $doctor->consultation_fee = $data['consultation_fee'];
-                $doctor->bio = $data['bio'];
-                $doctor->save();
+                $response = $this->updateDoctorProfile($data, $user->id);
+                if (!$response['success']) {
+                    DB::rollBack();
+                    return $response;
+                }
             }
+
+            DB::commit();
 
             return [
                 'success' => true,
@@ -303,37 +319,52 @@ class UserService
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Something went wrong while updating user'
+                'message' => 'Something went wrong while updating user' . $e
             ];
         }
     }
 
     public function getDoctorsByClinicId($clinicId)
     {
-        $doctors = ClinicUser::with('user')->where('clinic_id', $clinicId)->where('role_id', config('role.doctor'))->get();
-        if (!$doctors) {
+        try {
+            $doctors = ClinicUser::with('user')->where('clinic_id', $clinicId)->where('role_id', config('role.doctor'))->get();
+            return [
+                'success' => true,
+                'data' => [
+                    'doctors' => $doctors,
+                ],
+                'message' => 'Doctors retrieved successfully',
+            ];
+        } catch (\Throwable $e) {
             return [
                 'success' => false,
-                'message' => 'No Doctors Found'
+                'message' => 'Unable to retrieve doctors',
             ];
         }
-        return $doctors;
     }
 
     public function getClinicUserById($userId)
     {
-        $user = User::where('id', $userId)->with('clinicRole')->firstOrFail();
-        //in future, when there're multiple role for the same user, we  need to pick this from ClinicUser instead of the User model. It also validates that a the user belongs to the same clinic automatically.
-        //using first because currently there's only one role per user. when the roles per user increase loops will be used.`
-        if (!$user) {
+        /*in future, when there're multiple role for the same user, we  need to pick this from ClinicUser instead of the User model.
+        It also validates that a the user belongs to the same clinic automatically.
+        using first because currently there's only one role per user. when the roles per user increase loops will be used.`
+        */
+        try {
+            $user = User::where('id', $userId)->with('clinicRole')->firstOrFail();
+            $user->setRelation('clinicRole', $user->clinicRole->first());
+            return [
+                'success' => true,
+                'data' => [
+                    'user' => $user,
+                ],
+                'message' => 'User retrieved successfully',
+            ];
+        } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'No Users Found'
+                'message' => 'Unable to retrieve user',
             ];
         }
-        $user->setRelation('clinicRole', $user->clinicRole->first());
-
-        return $user;
     }
 
     public function getTotalCliniUserCount($clinicId)
@@ -352,6 +383,7 @@ class UserService
 
         return $response;
     }
+
     public function getClinicPatientCount($clinicId)
     {
         $response = Patient::where('clinic_id', $clinicId)->where('role_id', config('role.patient'))->count();
@@ -363,7 +395,3 @@ class UserService
         return $response;
     }
 }
-
-
-
-#apply try catch block. proper error handling etc

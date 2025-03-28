@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('pincode')->nullable();
             $table->string('profile_image')->nullable();
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

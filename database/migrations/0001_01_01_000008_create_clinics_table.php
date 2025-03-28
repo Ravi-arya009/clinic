@@ -32,6 +32,7 @@ return new class extends Migration
             $table->foreign('speciality_id')->references('id')->on('specialities')->onDelete('set null');
             $table->string('logo')->nullable();
             $table->string('super_admin')->nullable(); //nullable for now. it stores which superadmin created the clinic.
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -79,7 +79,7 @@
 
                 Swal.fire({
                     title: 'Processing...',
-                    text: 'Creating the clinic',
+                    text: 'Updating the clinic',
                     didOpen: () => {
                         Swal.showLoading();
                     },
@@ -103,15 +103,22 @@
                     success: function(response) {
                         console.log(response);
                         if (response.success == true) {
-                            // window.location.href = response.redirectRoute;
                             Swal.fire({
                                 title: "Success",
                                 text: response.message,
                                 icon: "success"
                             });
                         }
+                        if (response.success == false) {
+                            Swal.fire({
+                                title: "Error",
+                                text: response.message,
+                                icon: "error"
+                            });
+                        }
                     },
-                    error: function(xhr) {
+                    error: function(xhr, status, error) {
+                        console.log(xhr, status, error)
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
                             let errorMessage = '';
@@ -130,7 +137,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Validation Error',
-                                html: "there are vlidation errors",
+                                html: "There are validation errors",
                                 confirmButtonColor: '#d33'
                             });
 

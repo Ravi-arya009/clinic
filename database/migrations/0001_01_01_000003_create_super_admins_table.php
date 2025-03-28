@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('gender')->nullable(); //1 for male, 2 for female
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('is_active')->default(1);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

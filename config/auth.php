@@ -47,7 +47,7 @@ return [
             'index_route' => 'super_admin.dashboard',
             'prefix' => 'super_admin',
             'userRole' => 'Super Admin',
-            // 'isClinicUser' => false,
+            'isClinicUser' => false,
         ],
         'patients' => [
             'driver' => 'session',
@@ -64,6 +64,7 @@ return [
             'index_route' => 'admin.dashboard',
             'prefix' => 'admin',
             'userRole' => 'Admin',
+            'isClinicUser' => true,
         ],
         'doctor' => [
             'driver' => 'session',

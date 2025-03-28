@@ -40,7 +40,7 @@ class PatientController extends Controller
     public function index()
     {
         $patients = Appointment::where('doctor_id', auth()->guard('doctor')->user()->id)
-            ->with('patient','patient.city')
+            ->with('patient', 'patient.city')
             ->select('id', 'patient_id', 'appointment_date')
             ->get()
             ->unique('patient_id')
@@ -49,7 +49,7 @@ class PatientController extends Controller
                 unset($data['patient']);
                 return (object) $data;
             });
-            // dd($patients);
+        // dd($patients);
         return view('doctor.patient_list', compact('patients'));
     }
 
@@ -79,16 +79,16 @@ class PatientController extends Controller
         $response = $this->patientService->store($validatedData);
 
         if (!$response['success']) {
-            return back()->withInput()->with(['error' => $response['message']]);
+            return response()->json($response);
         } else {
-            $patient = $response['data'];
+            $patient = $response['data']['patient'];
             $response = $this->timeSlotService->storeWalkInTimeSlot($this->clinicId, auth()->guard('doctor')->user()->id);
-            $timeSlot = $response['data'];
+            $timeSlot = $response['data']['timeSlot'];
             $response = $this->appointmentService->createWalkInAppointment($patient->id, null, auth()->guard('doctor')->user()->id, $this->clinicId, $timeSlot->id);
-            if ($response) {
-                $appointmentId = $response->id;
-                return redirect()->route('doctor.appointment.show', ['appointmentId' => $appointmentId])->with('success', 'Appointment Created Successfully');
+            if ($response['success']) {
+                session()->flash('success', $response['message']);
             }
+            return response()->json($response);
         }
     }
 
@@ -115,6 +115,7 @@ class PatientController extends Controller
             return $response;
         }
     }
+
 
     public function createWalkInAppointment($patientId, $dependantId = null)
     {

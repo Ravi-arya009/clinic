@@ -60,6 +60,14 @@ class StoreClinicRequest extends FormRequest
     {
         return [
             'slug.*' => 'Invalid slug.',
+            'phone.*' => 'Invalid phone number.',
+            'whatsapp.*' => 'Invalid whatsapp number.',
+            'admin_phone.*' => 'Invalid admin phone number.',
+            'contact_person_phone.*' => 'Invalid phone number.',
+            'contact_person_whatsapp.*' => 'Invalid whatsapp number.',
+            'email.*' => 'Invalid email.',
+            'contact_person_email.*' => 'Invalid email.',
+            'logo.*' => 'Invalid logo.',
         ];
     }
 }

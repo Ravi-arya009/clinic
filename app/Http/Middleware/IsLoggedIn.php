@@ -16,7 +16,8 @@ class IsLoggedIn
      */
     public function handle(Request $request, Closure $next, $guard = null): Response
     {
-        //can use the same middleware for other users too. define route in guards to make it dynamic.
+        //sending guard to the controller for global auth purposes.
+        $request->attributes->set('guard', $guard);
         if (!Auth::guard($guard)->check()) {
             // can include clinic user check by adding a isclinic admin parameter is guard.
             $loginRoute = config("auth.guards.{$guard}.login_route");

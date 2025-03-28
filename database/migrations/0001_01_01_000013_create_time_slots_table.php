@@ -19,7 +19,7 @@ return new class extends Migration
             $table->time('slot_time');
             $table->tinyInteger('day_of_week');
             $table->tinyInteger('slot_type')->default(1); // online, walk-in
-            $table->tinyInteger('status')->default(1); // active, inactive
+            $table->tinyInteger('status')->default(1); // active, inactive change it is_active
             $table->timestamps();
             $table->unique(['doctor_id', 'slot_time', 'day_of_week'], 'unique_slot_per_doctor');
             $table->softDeletes();

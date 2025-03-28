@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->unique();
-            $table->integer('state_id')->default(1);
+            $table->uuid('state_id')->default(1);
             $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();

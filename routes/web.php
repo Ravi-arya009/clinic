@@ -34,14 +34,13 @@ use App\Http\Controllers\staff\AppointmentController as StaffAppointmentControll
 use App\Http\Controllers\TempController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\WebsiteController;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
 
 ##### Super Admin #####
 Route::prefix('super_admin')->group(
     function () {
         Route::middleware('RedirectIfAuthenticated:super_admin')->group(function () {
-            Route::get('/login', [Super_adminAuthController::class, 'login'])->name('super_admin.login');
+            Route::get('/login', [AuthController::class, 'login'])->name('super_admin.login');
             Route::post('/login', [Super_adminAuthController::class, 'authenticate'])->name('super_admin.authenticate');
         });
         Route::middleware('IsLoggedIn:super_admin')->group(function () {
@@ -55,7 +54,7 @@ Route::prefix('super_admin')->group(
             Route::get('clinic/index', [ClinicController::class, 'index'])->name('super_admin.clinic.index');
             Route::get('/state', [DataRepositoryController::class, 'stateIndex'])->name('super_admin.state.index');
             Route::get('/speciality', [DataRepositoryController::class, 'specialityIndex'])->name('super_admin.speciality.index');
-            Route::get('logout', [Super_adminAuthController::class, 'logout'])->name('super_admin.logout');
+            Route::get('logout', [AuthController::class, 'logout'])->name('super_admin.logout');
         });
     }
 );
@@ -67,7 +66,7 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
     Route::prefix('admin')->group(function () {
         Route::middleware('RedirectIfAuthenticated:admin')->group(function () {
             Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
-            Route::post('/login', [AdminAuthController::class, 'authenticate'])->name('admin.authenticate');
+            Route::post('/login', [AuthController::class, 'authenticate'])->name('admin.authenticate');
         });
 
         Route::middleware('IsLoggedIn:admin')->group(function () {
@@ -110,10 +109,10 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
         Route::middleware('IsLoggedIn:doctor')->group(function () {
             Route::get('/', [DoctorDashboardController::class, 'dashboard'])->name('doctor.index');
             Route::get('dashboard', [DoctorDashboardController::class, 'dashboard'])->name('doctor.dashboard');
-            Route::get('appointments', [DoctorAppointmentController::class, 'upcomingAppointments'])->name('doctor.appointments.index');
+            Route::get('appointments/upcoming', [DoctorAppointmentController::class, 'upcomingAppointments'])->name('doctor.appointments.index');
+            Route::get('appointments/history', [DoctorAppointmentController::class, 'appointmentHistory'])->name('doctor.appointments.history');
             Route::get('/appointment/{appointmentId}', [DoctorAppointmentController::class, 'show'])->name('doctor.appointment.show');
             Route::post('/appointment_details/store', [DoctorAppointmentController::class, 'store'])->name('doctor.appointment_details.store');
-            Route::get('appointments/history', [DoctorAppointmentController::class, 'appointmentHistory'])->name('doctor.appointments.history');
             Route::get('time_slots', [DoctorTimeSlotController::class, 'index'])->name('doctor.time_slots.index');
             Route::post('time_slots', [DoctorTimeSlotController::class, 'store'])->name('doctor.time_slots.store');
             Route::post('delete_slot/{slot_id?}', [DoctorTimeSlotController::class, 'delete'])->name('doctor.slot.delete');
@@ -126,6 +125,8 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::get('profile', [DoctorDashboardController::class, 'showProfile'])->name('doctor.profile.show');
             Route::post('profile', [DoctorDashboardController::class, 'updateProfile'])->name('doctor.profile.update');
             Route::post('profilefetchAppointmentDetails', [DoctorAppointmentController::class, 'fetchAppointmentDetails'])->name('doctor.fetchAppointmentDetails');
+
+            Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [DoctorAppointmentController::class, 'storeWalkInAppointment'])->name('doctor.storeWalkInAppointment');
         });
     });
 });
@@ -195,7 +196,7 @@ Route::get('patientPhoneNumberCheck', [PatientController::class, 'patientPhoneNu
 Route::post('addDependant', [dependantController::class, 'addDependant'])->name('addDependant');
 Route::post('updateDependant', [dependantController::class, 'updateDependant'])->name('updateDependant');
 Route::post('deleteDependant', [dependantController::class, 'deleteDependant'])->name('deleteDependant');
-Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
+// Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
 Route::post('addDependantajax', [PatientController::class, 'addDependant'])->name('ajax.addDependant');
 Route::get('patient/PhoneNumberCheck', [AuthController::class, 'patientPhoneNumberCheck'])->name('patient.PhoneNumberCheck');
 Route::post('otp_verify', [AuthController::class, 'otpVerify'])->name('otpVerify');

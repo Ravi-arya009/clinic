@@ -43,23 +43,16 @@ class UserController extends Controller
     {
         $validatedData = $request->validated();
         $response = $this->userService->storeUser($validatedData, $this->clinicId);
-
-        $response = $response['success'] ? [
-            'success' => true,
-            'message' => $response['message'],
-            'redirectRoute' => route('admin.user.show', $response['data']),
-        ] : [
-            'success' => false,
-            'message' => $response['message'],
-            'error' => $response['message'],
-        ];
-
+        if ($response['success']) {
+            session()->flash('success', $response['message']);
+        }
         return response()->json($response);
     }
 
     public function show(Request $request, $clinicSlug, $userId)
     {
-        $user = $this->userService->getClinicUserById($userId);
+        $response = $this->userService->getClinicUserById($userId);
+        $user = $response['data']['user'];
 
         if ($user->clinicRole->role_id === config('role.doctor')) {
             $user->load('doctorProfile', 'doctorProfile.speciality', 'doctorProfile.qualification');
@@ -79,13 +72,9 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $clinicSlug, $userId)
     {
         $validatedData = $request->validated();
-        // dd($validatedData);
         $response = $this->userService->updateUser($userId, $validatedData);
 
-        if ($response['success'] == false) {
-            return redirect()->back()->with('error', $response['message']);
-        }
-        return redirect()->back()->with('success', $response['message']);
+        return response()->json($response);
     }
 
     public function createPatient()

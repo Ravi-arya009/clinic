@@ -16,7 +16,8 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, $guard = null): Response
     {
-        //can use the same middleware for other users too. define route in guards to make it dynamic.
+        //sending guard to the controller for global auth purposes.
+        $request->attributes->set('guard', $guard);
         if (Auth::guard($guard)->check()) {
             $indexRoute = config("auth.guards.{$guard}.index_route");
             return redirect()->route($indexRoute);

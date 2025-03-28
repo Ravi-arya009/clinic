@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
             $table->uuid('role_id');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -66,11 +66,11 @@ class DataRepositoryService
     public function getAllQualifications()
     {
         try {
-            return Qualification::orderBy('name', 'asc')->get();
+            return Qualification::where('is_active', 1)->orderBy('name', 'asc')->get();
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'error' => 'Unable to fetch specialities'
+                'error' => 'Unable to fetch qualifications'
             ];
         }
     }

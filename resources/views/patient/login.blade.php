@@ -255,6 +255,7 @@
                 $(".ajax-submit-otp-btn").on('click', function() {
                     $(".is-invalid").removeClass('is-invalid');
                     $(".invalid-feedback").remove();
+                    $(".error-message-container").remove();
                     var phoneField = $("#phone");
                     var phone = phoneField.val();
                     const phoneRegex = /^(\+91|91)?\d{10}$/;
@@ -276,7 +277,7 @@
                             success: function(response) {
                                 console.log(response);
                                 if (response.status == 0) {
-                                    $(".phone_field").after('<div class="text-danger">' + response.message + '</div>');
+                                    $(".phone_field").after('<div class="text-danger error-message-container">' + response.message + '</div>');
                                 }
                                 if (response.status == 1) {
                                     console.log("show modal");

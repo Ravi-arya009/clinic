@@ -84,7 +84,6 @@
 
                 let formData = new FormData(this);
                 formData.append('clinic_working_hours', JSON.stringify(clinic_working_hours));
-
                 $.ajax({
                     url: "{{ route('super_admin.clinic.store') }}",
                     type: "POST",
@@ -97,8 +96,9 @@
                     success: function(response) {
                         console.log(response);
                         if (response.success == true) {
-                            window.location.href = response.redirectRoute;
+                            window.location.href = response.data.redirectRoute;
                         }
+
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) {
@@ -115,7 +115,6 @@
                                 inputField.after('<div class="invalid-feedback">' + value[0] + '</div>');
                             });
 
-                            // Show error alert with validation errors
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Validation Error',
@@ -136,6 +135,13 @@
                     }
                 });
             });
+
+            // Slug Generation
+            $("#name").on('blur', function() {
+                let clinicName = $(this).val();
+                let slug = clinicName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                $("#slug").val(slug);
+            })
         });
     </script>
 @endpush

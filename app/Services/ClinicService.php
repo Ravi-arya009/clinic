@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Models\Clinic;
 use App\Models\ClinicWorkingHour;
+use Carbon\Carbon;
 use DateTime;
 use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PhpParser\Node\Expr\Throw_;
@@ -21,13 +23,22 @@ class ClinicService
 
     public function getAllClinics()
     {
-        $response = Clinic::orderBy('created_at', 'asc')->get();
-
-        if (!$response) {
-            return null;
+        try {
+            $clinics = Clinic::with('city')->where('is_active', 1)->orderBy('created_at', 'asc')->get();
+            return [
+                'success' => true,
+                'data' => [
+                    'clinics' => $clinics,
+                    'totalClinics' => $clinics->count(),
+                ],
+                'message' => 'Clinics retrieved successfully',
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'message' => 'Unable to retrieve clinics',
+            ];
         }
-
-        return $response;
     }
 
     public function getTopClinics()
@@ -41,20 +52,28 @@ class ClinicService
         return $response;
     }
 
-
-    public function getClinicById($clinicId, $with = [])
+    public function getClinicById($clinicId)
     {
-        $response = Clinic::findorFail($clinicId);
-        if (!empty($with)) {
-            $response->load($with);
+        try {
+            $clinic = Clinic::with('admins')->with('WorkingHours')->findorFail($clinicId);
+            return [
+                'success' => true,
+                'data' => [
+                    'clinic' => $clinic,
+                ],
+                'message' => 'Clinic retrieved successfully',
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'message' => 'Unable to retrieve clinic',
+            ];
         }
-
-        return $response;
     }
 
     public function getRecentClinics()
     {
-        $response = Clinic::with('city')->limit(7)->orderBy('created_at', 'desc')->get();
+        $response = Clinic::with('city')->where('is_active', 1)->limit(7)->orderBy('created_at', 'desc')->get();
 
         if (!$response) {
             return null;
@@ -106,19 +125,19 @@ class ClinicService
                 $clinic->save();
             }
 
-            $user = $this->userService->storeClinicAdmin($data['admin_name'], $data['admin_phone']);
-            $assignedAdmin = $this->userService->assignClinicRoleToUser($user->id, $clinic->id, config('role.admin'));
-
-            if (!$assignedAdmin['success']) {
-                throw new \Exception('Admin role assignment failed');
-            }
+            $this->storeClinicWorkingHours($clinic->id, json_decode($data['clinic_working_hours'])); //Storing Clinic Working Hours
+            $user = $this->userService->storeClinicAdmin($data['admin_name'], $data['admin_phone']); //Storing Clinic Admin
+            $assignedAdmin = $this->userService->assignClinicRoleToUser($user->id, $clinic->id, config('role.admin')); //Assigning Admin Role
 
             DB::commit();
 
             return [
                 'success' => true,
+                'data' => [
+                    'clinicId' => $clinic->id,
+                    'redirectRoute' => route('super_admin.clinic.show', $clinic->id),
+                ],
                 'message' => 'Clinic registered successfully!',
-                'clinicId' => $clinic->id
             ];
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -131,6 +150,7 @@ class ClinicService
 
     public function updateClinic($clinicId, $data)
     {
+        DB::beginTransaction();
         try {
             $clinic = Clinic::findorFail($clinicId);
 
@@ -159,14 +179,27 @@ class ClinicService
                 $clinic->save();
             }
 
+            //Storing Clinic Working Hours
+            if (isset($data['clinic_working_hours']) && json_decode($data['clinic_working_hours']) !== []) {
+                $response = $this->storeClinicWorkingHours($clinic->id, json_decode($data['clinic_working_hours']));
+                if (!$response['success']) {
+                    DB::rollBack();
+                    return $response;
+                }
+            }
+
+
+            DB::commit();
+
             return [
                 'success' => true,
                 'message' => 'Clinic updated successfully!'
             ];
         } catch (\Throwable $e) {
+            DB::rollBack();
             return [
                 'success' => false,
-                'message' => 'Something went wrong while updating clinic'
+                'message' => 'Something went wrong while updating clinic',
             ];
         }
     }
@@ -174,21 +207,43 @@ class ClinicService
     public function storeClinicWorkingHours($clinicId, $clinic_working_hours)
     {
         foreach ($clinic_working_hours as $working_hour) {
-            $day = $working_hour->day;
-            $shift = $working_hour->shift;
-            $opening_time = $working_hour->opening_time;
-            $closing_time = $working_hour->closing_time;
+            try {
+                $day = $working_hour->day;
+                $shift = $working_hour->shift;
+                $opening_time = $working_hour->opening_time;
+                $closing_time = $working_hour->closing_time;
 
-            $opening_time = DateTime::createFromFormat('h:i A', $opening_time)->format('H:i');
-            $closing_time = DateTime::createFromFormat('h:i A', $closing_time)->format('H:i');
+                $opening_time = DateTime::createFromFormat('h:i A', $opening_time)->format('H:i');
+                $closing_time = DateTime::createFromFormat('h:i A', $closing_time)->format('H:i');
+                $opening_time_in_24_hour_format = DateTime::createFromFormat('H:i', $opening_time)->format('g:i A');
 
-            $ClinicWorkingHours = ClinicWorkingHour::create([
-                'clinic_id' => $clinicId,
-                'day' => $day,
-                'shift' => $shift,
-                'opening_time' => $opening_time,
-                'closing_time' => $closing_time
-            ]);
+                $ClinicWorkingHours = ClinicWorkingHour::create([
+                    'clinic_id' => $clinicId,
+                    'day' => $day,
+                    'shift' => $shift,
+                    'opening_time' => $opening_time,
+                    'closing_time' => $closing_time
+                ]);
+
+                return [
+                    'success' => true,
+                    'message' => "Time Slot Created Successfully."
+                ];
+            } catch (QueryException $e) {
+                if ($e->getCode() == 23000) { // 23000 is the SQLSTATE code for integrity constraint violations
+                    $daysOfWeek = Carbon::getDays();
+                    $dayName = $daysOfWeek[$day] ?? 'Unknown Day';
+                    return [
+                        'success' => false,
+                        'message' => "Duplicate entry for {$dayName} {$opening_time_in_24_hour_format}.",
+                    ];
+                }
+                return [
+                    'success' => false,
+                    'message' => "Something went wrong while creating time slot.",
+                ];
+                throw $e;
+            }
         }
     }
 }

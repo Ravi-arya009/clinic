@@ -6,16 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Services\AppointmentService;
 use App\Services\LabTestService;
 use App\Services\MedicineService;
+use App\Services\TimeSlotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class AppointmentController extends Controller
 {
-    protected $clinicId, $appointmentService, $medicineService, $labTestService;
+    protected $clinicId, $appointmentService, $timeSlotService, $medicineService, $labTestService;
 
-    public function __construct(AppointmentService $appointmentService, MedicineService $medicineService, LabTestService $labTestService)
-    {
+    public function __construct(
+        AppointmentService $appointmentService,
+        TimeSlotService $timeSlotService,
+        MedicineService $medicineService,
+        LabTestService $labTestService
+    ) {
         $this->appointmentService = $appointmentService;
+        $this->timeSlotService = $timeSlotService;
         $this->medicineService = $medicineService;
         $this->labTestService = $labTestService;
         $this->clinicId = Session::get('current_clinic')['id'];
@@ -36,6 +42,7 @@ class AppointmentController extends Controller
     public function show(Request $request)
     {
         $appointment = $this->appointmentService->getAppointmentById($request->appointmentId);
+        dd($appointment);
         if ($appointment->dependant_id == null) {
             $patientId = $appointment->patient_id;
             $historicalAppointments = $this->appointmentService->getHistoricalAppointments('self', $patientId);
@@ -94,5 +101,22 @@ class AppointmentController extends Controller
         $appointmentId = $request->input('appointment_id');
         $historicalAppointmentDetails = $appointment = $this->appointmentService->getAppointmentById($appointmentId);
         return view('doctor.historicalAppointmentDetails', compact('historicalAppointmentDetails'));
+    }
+
+    ################
+    public function storeWalkInAppointment($patientId, $dependantId = null)
+    {
+        $response = $this->timeSlotService->storeWalkInTimeSlot($this->clinicId, auth()->guard('doctor')->user()->id);
+        if (!$response['success']) {
+            return $response;
+        }
+        $timeSlot = $response['data']['timeSlot'];
+        $response = $this->appointmentService->createWalkInAppointment($patientId, $dependantId, auth()->guard('doctor')->user()->id, $this->clinicId, $timeSlot->id);
+        if (!$response['success']) {
+            return $response;
+        }
+        $appointmentId = $response['data']['appointment']->id;
+        // dd($appointmentId);
+        return redirect(route('doctor.appointment.show', ['appointmentId' => $appointmentId]));
     }
 }

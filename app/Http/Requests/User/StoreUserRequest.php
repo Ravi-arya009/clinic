@@ -59,4 +59,19 @@ class StoreUserRequest extends FormRequest
             'consultation_fee' => 'required|numeric',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'phone.unique' => 'Phone number already taken.',
+            'phone.*' => 'Invalid phone number.',
+            'whatsapp.unique' => 'WhatsApp number already taken.',
+            'whatsapp.*' => 'Invalid whatsapp number.',
+            'email.*' => 'Invalid email.',
+            'profile_picture.*' => 'Invalid profile picture.',
+            'consultation_fee.*' => 'Invalid consultation fee.',
+            'experience.*' => 'Invalid experience.',
+
+        ];
+    }
 }

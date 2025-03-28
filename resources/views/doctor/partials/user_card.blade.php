@@ -18,7 +18,7 @@
             <div class="imgs-load d-flex align-items-center">
                 <div class="change-photo">
                     Upload New
-                    <input type="file" name="profile_picture" class="upload">
+                    <input type="file" name="profile_picture" id="profile_picture" class="upload">
                 </div>
             </div>
         </div>
@@ -39,7 +39,6 @@
         <div class="col-lg-4 col-md-6">
             <div class="form-wrap">
                 <label class="col-form-label">Phone <span class="text-danger">*</span></label>
-                {{-- <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', $patient->phone ?? '') }}" required> --}}
                 <input type="phone" name="phone" id="phone" class="form-control" value="{{ old('phone', request()->phone ?? ($patient->phone ?? '')) }}" required>
             </div>
         </div>
@@ -129,12 +128,6 @@
     </div>
 @endif
 
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
 <div class="modal-btn text-end">
     <button type="submit" class="btn btn-primary prime-btn">Save Changes</button>
 </div>
@@ -156,7 +149,6 @@
                 }
             });
         })
-
 
         //Image Preview while profile update
         ImagePreview('.upload', '.profile-img');

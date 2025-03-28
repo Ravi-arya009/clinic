@@ -5,10 +5,8 @@ namespace App\Http\Controllers\super_admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Clinic\StoreClinicRequest;
 use App\Http\Requests\Clinic\UpdateClinicRequest;
-use App\Models\ClinicWorkingHour;
 use App\Services\DataRepositoryService;
 use App\Services\ClinicService;
-use DateTime;
 
 class ClinicController extends Controller
 {
@@ -24,9 +22,11 @@ class ClinicController extends Controller
 
     public function index()
     {
-        $clinics = $this->clinicService->getAllClinics();
-        $cities = $this->dataRepositoryService->getAllCities();
-        return view('super_admin.clinic_list', compact('clinics', 'cities'));
+        $response = $this->clinicService->getAllClinics();
+        return view('super_admin.clinic_list', [
+            'clinics' => $response['data']['clinics'],
+            'totalClinics' => $response['data']['totalClinics']
+        ]);
     }
 
     public function create()
@@ -40,26 +40,20 @@ class ClinicController extends Controller
     public function store(StoreClinicRequest $request)
     {
         $validatedData = $request->validated();
-        $clinic_working_hours =  json_decode($validatedData['clinic_working_hours']);
         $response = $this->clinicService->storeClinic($validatedData);
-        $this->clinicService->storeClinicWorkingHours($response['clinicId'], $clinic_working_hours);
-
-        $response = $response['success'] ? [
-            'success' => true,
-            'message' => $response['message'],
-            'redirectRoute' => route('super_admin.clinic.show', $response['clinicId']),
-        ] : [
-            'success' => false,
-            'message' => $response['message'],
-            'error' => $response['message'],
-        ];
-        session()->flash('success', $response['message']);
+        if ($response['success']) {
+            session()->flash('success', $response['message']);
+        }
         return response()->json($response);
     }
 
     public function show($clinicId)
     {
-        $clinic = $this->clinicService->getClinicById($clinicId, ['admins', 'WorkingHours']);
+        $response = $this->clinicService->getClinicById($clinicId);
+        if (!$response['success']) {
+            abort(404);
+        }
+        $clinic = $response['data']['clinic'];
         $ClinicWorkingHours = $clinic->WorkingHours->groupBy('day')->map(function ($dayGroup) {
             return $dayGroup->groupBy('shift');
         });
@@ -71,18 +65,9 @@ class ClinicController extends Controller
 
     public function update(UpdateClinicRequest $request, $clinicId)
     {
+        // dd($request);
         $validatedData = $request->validated();
-        $clinic_working_hours =  json_decode($validatedData['clinic_working_hours']);
         $response = $this->clinicService->updateClinic($clinicId, $validatedData);
-        $this->clinicService->storeClinicWorkingHours($clinicId, $clinic_working_hours);
-        $response = $response['success'] ? [
-            'success' => true,
-            'message' => $response['message'],
-        ] : [
-            'success' => false,
-            'message' => $response['message'],
-            'error' => $response['message'],
-        ];
         return response()->json($response);
     }
 }

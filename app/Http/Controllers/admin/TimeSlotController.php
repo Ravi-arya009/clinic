@@ -3,16 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ClinicUser;
-use App\Models\Doctor;
-use App\Models\TimeSlot;
-use App\Models\User;
 use App\Services\TimeSlotService;
 use App\Services\UserService;
-use Carbon\Carbon;
-use DateTime;
-use Illuminate\Support\Str;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -29,8 +21,8 @@ class TimeSlotController extends Controller
 
     public function index($clinicSlug, $doctorId = null)
     {
-        $doctors = $this->userService->getDoctorsByClinicId($this->clinicId);
-
+        $response = $this->userService->getDoctorsByClinicId($this->clinicId);
+        $doctors = $response['data']['doctors'];
         if ($doctorId) {
             $timeSlots = $this->timeSlotService->getDoctorAvailableTimeSlots($doctorId);
         }
@@ -57,28 +49,8 @@ class TimeSlotController extends Controller
 
     public function deleteSlot($slotId)
     {
-        try {
-            $slot = TimeSlot::find($slotId);
-
-            if (!$slot) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Slot not found'
-                ], 404);
-            } else {
-                $slot->delete();
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Slot deleted successfully'
-                ]);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while deleting the slot',
-                'error' => $e->getMessage()
-            ], 500);  // Return a 500 server error if something goes wrong
-        }
+        $response = $this->timeSlotService->deleteTimeSlot($slotId);
+        return response()->json($response);
     }
 
     public function delete($clinicSlug, Request $request, $slotId)

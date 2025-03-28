@@ -2,7 +2,11 @@
     <div class="widget-profile pro-widget-content">
         <div class="profile-info-widget">
             <a href="doctor-profile.html" class="booking-doc-img">
-                <img src={{ asset('img/doctors-dashboard/doctor-profile-img.jpg') }} alt="User Image">
+                @if (isset($loggedInUser->profile_image))
+                    <img src="{{ asset('storage/profile_images/' . $loggedInUser->profile_image) }}" alt="Profile Picture">
+                @else
+                    <img src={{ asset('storage/profile_images/default-profile-picture.webp') }} alt="User Image">
+                @endif
             </a>
             <div class="profile-det-info">
                 <h3><a href="doctor-profile.html">{{ auth()->guard('super_admin')->user()->name }}</a></h3>

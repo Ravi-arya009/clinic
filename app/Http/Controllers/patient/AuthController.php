@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\patient;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Patient\StorePatientRequest;
+use App\Http\Requests\Patients\StorePatientRequest as PatientsStorePatientRequest;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,20 +19,20 @@ class AuthController extends Controller
         return view('patient.register');
     }
 
-    public function store(Request $request)
+    public function store(PatientsStorePatientRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|digits_between:10,13|unique:patients,phone',
-            'password' => 'required|min:4|confirmed',
-        ]);
+        $ValidatedData = $request->validated();
 
         Patient::create([
             'id' => Str::uuid(),
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
+            'name' => $ValidatedData['name'],
+            'phone' => $ValidatedData['phone'],
+            'password' => Hash::make($ValidatedData['password']),
         ]);
+
+        if (Auth::guard('patients')->attempt(['phone' => $ValidatedData['phone'], 'password' => $ValidatedData['password']])) {
+            $request->session()->regenerate();
+        }
 
         return redirect()->route('patient.login')->with('success', 'Registeration successfull, Login!');
     }
@@ -64,5 +66,4 @@ class AuthController extends Controller
 
         return redirect()->route('index');
     }
-
 }

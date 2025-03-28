@@ -15,7 +15,6 @@
 @endsection
 
 @section('content')
-
     <div class="dashboard-header">
         <h3>Create User</h3>
     </div>
@@ -26,7 +25,6 @@
     </form>
 
     <x-Alert />
-
 @endsection
 
 @push('scripts')
@@ -77,7 +75,7 @@
                     success: function(response) {
                         console.log(response);
                         if (response.success == true) {
-                            window.location.href = response.redirectRoute;
+                            window.location.href = response.data.redirectRoute;
                         }
                     },
                     error: function(xhr) {
@@ -100,7 +98,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Validation Error',
-                                html: "there are vlidation errors",
+                                html: "There are validation errors. Fix them to continue.",
                                 confirmButtonColor: '#d33'
                             });
 

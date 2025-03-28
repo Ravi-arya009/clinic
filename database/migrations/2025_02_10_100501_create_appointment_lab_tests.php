@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid('lab_test_id');
             $table->foreign('lab_test_id')->references('id')->on('lab_test_masters')->onDelete('cascade');
             $table->timestamps();
+            $table->boolean('is_active')->default(1);
             $table->softDeletes();
             $table->unique(['appointment_id', 'lab_test_id'], 'unique_lab_test_per_appointment');
         });

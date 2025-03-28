@@ -39,7 +39,6 @@
                 </div>
             </div>
         </div>
-
         @if (request('doctor_id'))
             <div class="card custom-card">
                 <div class="card-body">
@@ -100,13 +99,10 @@
                             </div>
                         @endfor
                     </div>
-
                 </div>
             </div>
         @endif
     </div>
-
-
 @endsection
 
 @section('modal')
@@ -122,7 +118,6 @@
                 </div>
                 <form action="{{ route('admin.time_slots.store') }}" method="POST">
                     @csrf
-
                     <input type="hidden" id="doctor_id" name="doctor_id" value="{{ request('doctor_id') }}">
                     <div class="modal-body">
                         <div class="timing-modal">

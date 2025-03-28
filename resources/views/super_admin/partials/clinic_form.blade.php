@@ -21,7 +21,7 @@
                 <div class="imgs-load d-flex align-items-center">
                     <div class="change-photo">
                         Upload New
-                        <input type="file" name="logo" class="upload">
+                        <input type="file" id="logo" name="logo" class="upload">
                     </div>
                 </div>
             </div>
@@ -44,9 +44,6 @@
                 <div class="form-wrap">
                     <label class="col-form-label">Slug <span class="text-danger">*</span></label>
                     <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', $clinic->slug ?? '') }}" required>
-                    @error('slug')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -127,7 +124,6 @@
                                 <input type="text" name="whatsapp" id="whatsapp" class="form-control" value="{{ old('whatsapp', $clinic->whatsapp ?? '') }}">
                             </div>
                         </div>
-
                         <div class="col-12">
                             <div class="form-wrap">
                                 <label class="col-form-label">Clinic's E-mail </label>

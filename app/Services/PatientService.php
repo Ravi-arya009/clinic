@@ -61,8 +61,10 @@ class PatientService
             }
             return [
                 'success' => true,
+                'data' => [
+                    'patient' => $patient,
+                ],
                 'message' => 'Patient created successfully',
-                'data' => $patient
             ];
         } catch (\Exception $e) {
             return [

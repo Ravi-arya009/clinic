@@ -25,7 +25,7 @@ class TimeSlotService
 
     public function getDoctorAvailableTimeSlots($doctorId)
     {
-        $DoctorAvailableTimeSlots = TimeSlot::where('doctor_id', $doctorId)->where('slot_type',1)->orderBy('slot_time', 'asc')->get()->groupBy('day_of_week');
+        $DoctorAvailableTimeSlots = TimeSlot::where('doctor_id', $doctorId)->where('slot_type', 1)->orderBy('slot_time', 'asc')->get()->groupBy('day_of_week');
 
         if (!$DoctorAvailableTimeSlots) {
             return [
@@ -73,7 +73,7 @@ class TimeSlotService
     public function storeWalkInTimeSlot($clinicId, $doctorId)
     {
         try {
-            $response = TimeSlot::create([
+            $timeSlot = TimeSlot::create([
                 'id' => Str::uuid(),
                 'slot_time' => now()->format('H:i:s'),
                 'day_of_week' => date('w'),
@@ -81,6 +81,14 @@ class TimeSlotService
                 'clinic_id' => $clinicId,
                 'slot_type' => 2
             ]);
+
+            return [
+                'success' => true,
+                'data' => [
+                    'timeSlot' => $timeSlot,
+                ],
+                'message' => 'Clinic registered successfully!',
+            ];
         } catch (QueryException $e) {
             throw $e;
             return [
@@ -88,11 +96,6 @@ class TimeSlotService
                 'message' => "Something went wrong while creating walkin time slot",
             ];
         }
-        return [
-            'success' => true,
-            'message' => 'Time slots created successfully',
-            'data' => $response
-        ];
     }
 
     public function deleteTimeSlot($slotId)
@@ -101,23 +104,23 @@ class TimeSlotService
             $slot = TimeSlot::find($slotId);
 
             if (!$slot) {
-                return response()->json([
+                return [
                     'success' => false,
-                    'message' => 'Slot not found'
-                ], 404);
-            } else {
-                $slot->delete();
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Slot deleted successfully'
-                ]);
+                    'message' => 'Slot not found',
+                ];
             }
+
+            $slot->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Slot deleted successfully'
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while deleting the slot',
                 'error' => $e->getMessage()
-            ], 500);  // Return a 500 server error if something goes wrong
+            ], 500);
         }
     }
 }

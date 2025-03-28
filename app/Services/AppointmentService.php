@@ -74,9 +74,10 @@ class AppointmentService
 
     public function storeAppointment($data)
     {
-        try {
-            DB::beginTransaction();
+        // return $data;
+        DB::beginTransaction();
 
+        try {
             // Create appointment details
             AppointmentDetail::updateOrCreate(
                 ['appointment_id' => $data['appointment_id']],
@@ -158,27 +159,42 @@ class AppointmentService
             // Handle other database errors
             return [
                 'success' => false,
-                'message' => 'An error occurred while saving the prescription.'
+                'message' => 'An error occurred while saving the appointment.' . $e
             ];
         }
     }
 
     public function createWalkInAppointment($patientId, $dependantId, $doctorId, $clinicId, $timeSlotId)
     {
-        $appointment = Appointment::create([
-            'id' => Str::uuid(),
-            'patient_id' => $patientId,
-            'dependant_id' => $dependantId,
-            'doctor_id' => $doctorId,
-            'clinic_id' => $clinicId,
-            'time_slot_id' => $timeSlotId,
-            'appointment_date' => now()->format('Y-m-d'),
-            'booking_for' => 1,
-            'appointment_type' => 2, // Walk-in
-            'payment_method' => 0,
-        ]);
 
-        return $appointment;
+        try {
+            $appointment = Appointment::create([
+                'id' => Str::uuid(),
+                'patient_id' => $patientId,
+                'dependant_id' => $dependantId,
+                'doctor_id' => $doctorId,
+                'clinic_id' => $clinicId,
+                'time_slot_id' => $timeSlotId,
+                'appointment_date' => now()->format('Y-m-d'),
+                'booking_for' => 1, //self
+                'appointment_type' => 2, // Walk-in
+                'payment_method' => 0, //pending
+            ]);
+
+            return [
+                'success' => true,
+                'data' => [
+                    'appointment' => $appointment,
+                    'redirectRoute' => route('doctor.appointment.show', $appointment->id),
+                ],
+                'message' => 'Appointment created successfully!',
+            ];
+        } catch (QueryException $e) {
+            return [
+                'success' => false,
+                'message' => 'Something went wrong while creating appointment'
+            ];
+        }
     }
 
     public function getHistoricalAppointments($appointmentFor, $userId)

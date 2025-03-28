@@ -291,7 +291,7 @@
                     },
                     success: function(response) {
                         if (response.status == 1) {
-                            let dependantBaseUrl = "{{ route('createWalkInAppointment', ['patientId' => 1, 'dependantId' => 1]) }}";
+                            let dependantBaseUrl = "{{ route('doctor.storeWalkInAppointment', ['patientId' => 1, 'dependantId' => 1]) }}";
                             let dependantUrl = dependantBaseUrl.replace("/1/1", "/" + patientId + "/" + response.dependant.id);
                             window.location.href = dependantUrl;
                         }
@@ -347,7 +347,7 @@
                                 case 0:
 
                                     var patientId = response.patientId;
-                                    var baseUrl = "{{ route('createWalkInAppointment', ['patientId' => 1]) }}";
+                                    var baseUrl = "{{ route('doctor.storeWalkInAppointment', ['patientId' => 1]) }}";
                                     var newUrl = baseUrl.replace("/1", "/" + patientId);
                                     $("#booking_for_self_modal_button").attr("href", newUrl);
                                     $("#booking_for_someone_else_modal_button").attr('data-patientId', patientId);
@@ -357,14 +357,14 @@
 
                                 case 1:
                                     var patientId = response.patientId;
-                                    var baseUrl = "{{ route('createWalkInAppointment', ['patientId' => 1]) }}";
+                                    var baseUrl = "{{ route('doctor.storeWalkInAppointment', ['patientId' => 1]) }}";
                                     var newUrl = baseUrl.replace("/1", "/" + patientId);
                                     $("#booking_for_self").attr("href", newUrl);
                                     $("#add_family_member_button").attr('data-patientId', patientId);
 
                                     $('#dependant-table tbody').empty();
                                     $.each(response.data, function(index, value) {
-                                        let dependantBaseUrl = "{{ route('createWalkInAppointment', ['patientId' => 1, 'dependantId' => 1]) }}";
+                                        let dependantBaseUrl = "{{ route('doctor.storeWalkInAppointment', ['patientId' => 1, 'dependantId' => 1]) }}";
                                         let dependantUrl = dependantBaseUrl.replace("/1/1", "/" + patientId + "/" + value.id);
 
                                         var row = $('<tr class="table-appointment-wrap">');

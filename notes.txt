@@ -232,8 +232,63 @@ next make a controller. send ajax request from the frontent
             -states are related to cities (make sure of this while creating this page)
         -check register for the notes from the day of demo
 
-#after lunch
-    -work on global auth
-        -look for simplest solution that also is global.
-        -use is_clinicUser from the guard.
-        -check for all the cases.
+
+#current
+    Check the feasability of global auth, if doesn't feel good stash all the changes and revert to previous version.
+check the #next page on the register.
+
+#next
+Find a way to make dashboard controllers and service classes to work with current global reponse structure. (start with super admin) (later)
+review super admin panel and then continue with admin panel.
+we have service class global structure, controller global structure. Copy the same structure everywhere else.
+We also need ajax global structure, error and success global structure.
+
+#misc
+-use extra rule of unique phone and whatsapp on clinic validation requests rules.
+-no way to edit user role for admin(i think it's temporarily turned off because of complexity)
+-convert add time slots to ajax. haven't added ajax yet because it requires dom manipulations. do it later.
+    -also, add swal or toastr instead of current alert message
+-check admin profile page too.
+-in save appointment page if the lab tests or medicines are left empty, an error is thrown. using js to remove the empty fields but the ui breaks because containers and delete buttons etc
+doesn't get remove. fix it and copy the solution for both medicine and lab test.
+
+#Findings
+-form ajax can be global, specially the error rendereing.
+-profile picture blade section can be global.
+-profile/clinic picture upload logic can be a separate function.
+-user controller can be global. it already has a global service class. if logic becomes complex then keep it separate else go global.
+-TimeSlot conteroller can be gloabal. it already has a global service class. if logic becomes complex then keep it separate else go global.
+-Appointment service class can be made les redundant. this uses only where and with methods with different parameters.
+Can create some universal functions that handle all the scenarios.
+-need to add a dependant service class.
+-Almost everything in patient panlel should come from somewhere globally. for eg, appointments, incoices, presctiptions can be accessed by
+patients, doctors, admins, staff.
+
+#doctor panel
+-Leaving apointment
+-Leaving Time slot
+    *leaving because of complex dom manipulation, will consume time.*
+
+#patient
+-Fix patient's fontend and includes
+    -on register page login register links are wrong.
+-Remove bloats from patients fronend header menu
+In patient's auth controller, leverage some service class or global controller for store method
+
+-Use user controller/service to create patient in patient auth controller.
+
+jumping to doctor's panel because appointments are gonna be managed from there only.
+#After Lunch
+start with doctor's panel, complete everything then get back to admin and finish appointments
+
+
+Appointment related stuff should be global and organized strictly.
+
+process
+-start with doctor and patients side by side and organize controllers, service classes, etc.
+    -everything appointment related(prescription, invoice, billing etc).
+    -take care of whole flow that includes staff panel too.
+
+bloats
+doctor/patient controller
+    -createcreateWalkInAppointment()

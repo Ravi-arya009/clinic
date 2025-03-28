@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\AuthenticateRequest;
 use App\Models\Patient;
+use App\Services\AuthService;
 use App\Services\OtpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,14 +13,44 @@ use Exception;
 
 class AuthController extends Controller
 {
-    private $otpService;
-    public function __construct(OtpService $otpService)
+    private $otpService, $Authservice;
+    public function __construct(OtpService $otpService, AuthService $Authservice)
     {
         $this->otpService = $otpService;
+        $this->Authservice = $Authservice;
     }
 
+    public function login(Request $request)
+    {
+        // find a better solution to send views dynamically
+        $guard = $request->attributes->get('guard');
+        $loginRoute = config("auth.guards.{$guard}.login_route");
+        return view($guard . '.login');
+    }
+
+    public function authenticate(AuthenticateRequest $request)
+    {
+        $validatedData = $request->validated();
+        $guard = $request->attributes->get('guard');
+        $response = $this->Authservice->authenticate($validatedData, $guard);
 
 
+        if ($response['status'] == 1) {
+            return redirect()->route($response['redirect_route']);
+        } else {
+            return back()->with(['error' => $response['message']]);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $guard = $request->attributes->get('guard');
+        Auth::guard($guard)->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        $loginRoute = config("auth.guards.{$guard}.login_route");
+        return redirect()->route($loginRoute);
+    }
 
 
 
