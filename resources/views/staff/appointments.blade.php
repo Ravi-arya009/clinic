@@ -1,7 +1,7 @@
 @php
     $pageTitle = 'Appointments';
 @endphp
-@extends('temp_global.main')
+@extends('global.layouts.app')
 @section('title', $pageTitle)
 @section('breadcrum-title', $pageTitle)
 @section('breadcrum-link-one', 'Home')
@@ -10,6 +10,10 @@
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 @endpush
+
+@section('sidebar')
+    @include('staff.partials.sidebar')
+@endsection
 
 @section('content')
 
@@ -71,7 +75,7 @@
                 </td>
                 <td class="mail-info-patient">
                     <ul>
-                        @if ($appointment->billing->payment_status == 0)
+                        @if ($appointment->payment_method == 0)
                             <li><span class="badge badge-warning table-badge">Pending</span></li>
                         @else
                             <li><span class="badge badge-green table-badge">Done</span></li>

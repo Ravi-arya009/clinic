@@ -120,10 +120,10 @@ class PatientController extends Controller
     public function createWalkInAppointment($patientId, $dependantId = null)
     {
         $response = $this->timeSlotService->storeWalkInTimeSlot($this->clinicId, auth()->guard('doctor')->user()->id);
-        $timeSlot = $response['data'];
+        $timeSlot = $response['data']['timeSlot'];
         $response = $this->appointmentService->createWalkInAppointment($patientId, $dependantId, auth()->guard('doctor')->user()->id, $this->clinicId, $timeSlot->id);
-        if ($response) {
-            $appointmentId = $response->id;
+        if ($response['success']) {
+            $appointmentId = $response['data']['appointment']->id;
             return redirect(route('doctor.appointment.show', ['appointmentId' => $appointmentId]));
         }
     }

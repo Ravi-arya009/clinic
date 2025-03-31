@@ -292,3 +292,14 @@ process
 bloats
 doctor/patient controller
     -createcreateWalkInAppointment()
+
+
+Misc features/test
+ajax search
+search and filters
+doctor/clinic profiles.
+App's landing page
+Clinic's landing page.
+Clinic's name/logo on the user panels's header.
+
+see register for more. (pickup register from office if found)

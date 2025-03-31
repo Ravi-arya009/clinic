@@ -55,6 +55,8 @@ Route::prefix('super_admin')->group(
             Route::get('/state', [DataRepositoryController::class, 'stateIndex'])->name('super_admin.state.index');
             Route::get('/speciality', [DataRepositoryController::class, 'specialityIndex'])->name('super_admin.speciality.index');
             Route::get('logout', [AuthController::class, 'logout'])->name('super_admin.logout');
+
+            Route::get('clinic/deactivate', [ClinicController::class, 'deactivate'])->name('super_admin.clinic.deactivate');
         });
     }
 );
@@ -126,7 +128,7 @@ Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->gro
             Route::post('profile', [DoctorDashboardController::class, 'updateProfile'])->name('doctor.profile.update');
             Route::post('profilefetchAppointmentDetails', [DoctorAppointmentController::class, 'fetchAppointmentDetails'])->name('doctor.fetchAppointmentDetails');
 
-            Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [DoctorAppointmentController::class, 'storeWalkInAppointment'])->name('doctor.storeWalkInAppointment');
+            Route::get('storeWalkInAppointment/{patientId}/{dependantId?}', [DoctorAppointmentController::class, 'storeWalkInAppointment'])->name('doctor.storeWalkInAppointment');
         });
     });
 });
@@ -196,7 +198,7 @@ Route::get('patientPhoneNumberCheck', [PatientController::class, 'patientPhoneNu
 Route::post('addDependant', [dependantController::class, 'addDependant'])->name('addDependant');
 Route::post('updateDependant', [dependantController::class, 'updateDependant'])->name('updateDependant');
 Route::post('deleteDependant', [dependantController::class, 'deleteDependant'])->name('deleteDependant');
-// Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
+Route::get('createWalkInAppointment/{patientId}/{dependantId?}', [PatientController::class, 'createWalkInAppointment'])->name('createWalkInAppointment');
 Route::post('addDependantajax', [PatientController::class, 'addDependant'])->name('ajax.addDependant');
 Route::get('patient/PhoneNumberCheck', [AuthController::class, 'patientPhoneNumberCheck'])->name('patient.PhoneNumberCheck');
 Route::post('otp_verify', [AuthController::class, 'otpVerify'])->name('otpVerify');
@@ -218,16 +220,19 @@ Route::get('deletedb', [TempController::class, 'deleteDb'])->name('deletedb');
 Route::domain('{clinicSlug}.localhost')->middleware('ClinicSessionManager')->group(function () {
     Route::prefix('staff')->group(function () {
         Route::middleware('IsLoggedIn:staff')->group(function () {
+            Route::get('/', [StaffDashboardController::class, 'dashboard'])->name('staff.index');
             Route::get('/dashboard', [StaffDashboardController::class, 'dashboard'])->name('staff.dashboard');
             Route::get('appointments', [StaffAppointmentController::class, 'upcomingAppointments'])->name('staff.appointments.index');
+            Route::get('appointments/history', [StaffAppointmentController::class, 'appointmentHistory'])->name('staff.appointments.history');
             Route::get('/appointment/{appointmentId}', [StaffAppointmentController::class, 'show'])->name('staff.appointment.show');
+            Route::get('profile', [StaffDashboardController::class, 'showProfile'])->name('staff.profile.show');
+            Route::post('profile', [StaffDashboardController::class, 'updateProfile'])->name('staff.profile.update');
         });
         // Route::get('/login', [StaffDashboardController::class, 'login'])->name('staff.login');
         Route::middleware('RedirectIfAuthenticated:staff')->group(function () {
             Route::get('login', [StaffAuthController::class, 'login'])->name('staff.login');
             Route::post('login', [StaffAuthController::class, 'authenticate'])->name('staff.authenticate');
-            Route::get('register', [StaffAuthController::class, 'register'])->name('staff.register');
-            Route::post('register', [StaffAuthController::class, 'store'])->name('staff.store');
+            Route::get('/logout', [StaffAuthController::class, 'logout'])->name('staff.logout');
         });
     });
 });

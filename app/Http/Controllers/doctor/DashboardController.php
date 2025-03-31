@@ -27,6 +27,7 @@ class DashboardController extends Controller
         $totalPatientCount = Appointment::where('clinic_id', $this->clinicId)->where('doctor_id', Auth::guard('doctor')->user()->id)->distinct('patient_id')->count();
         $totalDoctorAppointmentCount = Appointment::where('clinic_id', $this->clinicId)->where('doctor_id', Auth::guard('doctor')->user()->id)->count();
         $upcomingAppointments = Appointment::where('clinic_id', $this->clinicId)->where('doctor_id', Auth::guard('doctor')->user()->id)->with('patient', 'timeSlot')->orderBy('appointment_date', 'desc')->limit(7)->get();
+        // dd($upcomingAppointments);
         return view('doctor.dashboard', compact('upcomingAppointments', 'totalDoctorAppointmentCount', 'totalPatientCount'));
     }
 

@@ -16,4 +16,12 @@ class DashboardController extends Controller
     {
         return view('staff.login');
     }
+
+    public function showProfile(){
+        return "show profile";
+    }
+
+    public function updateProfile(){
+        return "update profile";
+    }
 }

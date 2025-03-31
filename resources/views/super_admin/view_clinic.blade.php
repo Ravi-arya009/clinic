@@ -19,6 +19,19 @@
 @section('content')
     <div class="dashboard-header">
         <h3>Edit Clinic</h3>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if ($clinic->is_active == 1)
+                    Active
+                @else
+                    Inactive
+                @endif
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:void(0);" id="activate_clinic">Active</a>
+                <a class="dropdown-item" href="javascript:void(0);" id="deactivate_clinic">Inactive</a>
+            </div>
+        </div>
     </div>
 
     @include('super_admin.partials.clinic_form', ['action' => route('super_admin.clinic.update', ['clinicId' => $clinic->id])])
@@ -151,6 +164,27 @@
                                 confirmButtonColor: '#d33'
                             });
                         }
+                    }
+                });
+            });
+            $("#activate_clinic").on('click',function(){
+                console.log("activate clinic");
+            });
+            $("#deactivate_clinic").on('click',function(){
+                 $.ajax({
+                    url: "{{ route('super_admin.clinic.deactivate') }}",
+                    type: "get",
+                    data: {'clinicId': "$clinic->id"},
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr, status, error)
                     }
                 });
             });

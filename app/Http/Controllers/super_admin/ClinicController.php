@@ -70,4 +70,8 @@ class ClinicController extends Controller
         $response = $this->clinicService->updateClinic($clinicId, $validatedData);
         return response()->json($response);
     }
+
+    public function deactivate($clinicId){
+        return "function ran";
+    }
 }

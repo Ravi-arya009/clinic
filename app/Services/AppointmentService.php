@@ -71,6 +71,11 @@ class AppointmentService
         $response = Appointment::where('clinic_id', $clinicId)->where('status', 0)->with('patient', 'dependant', 'timeSlot', 'billing')->get();
         return $response;
     }
+    public function getHistoricalClinicAppointments($clinicId)
+    {
+        $response = Appointment::where('clinic_id', $clinicId)->where('status', 1)->with('patient', 'dependant', 'timeSlot', 'billing')->get();
+        return $response;
+    }
 
     public function storeAppointment($data)
     {

@@ -24,19 +24,19 @@ class AppointmentController extends Controller
     public function upcomingAppointments()
     {
         $appointments = $this->appointmentService->getUpcomingClinicAppointments($this->clinicId);
-        // dd($appointments);
         return view('staff.appointments', compact('appointments'));
     }
 
     public function appointmentHistory()
     {
         $appointments = $this->appointmentService->getHistoricalDoctorAppointments(auth()->guard('doctor')->user()->id, $this->clinicId);
-        return view('doctor.appointments', compact('appointments'));
+        return view('staff.appointments', compact('appointments'));
     }
 
     public function show(Request $request)
     {
         $appointment = $this->appointmentService->getAppointmentById($request->appointmentId);
+        // dd($appointment);
         if ($appointment->dependant_id == null) {
             $patientId = $appointment->patient_id;
             $historicalAppointments = $this->appointmentService->getHistoricalAppointments('self', $patientId);

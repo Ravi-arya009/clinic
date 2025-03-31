@@ -42,7 +42,7 @@ class AppointmentController extends Controller
     public function show(Request $request)
     {
         $appointment = $this->appointmentService->getAppointmentById($request->appointmentId);
-        dd($appointment);
+        // dd($appointment);
         if ($appointment->dependant_id == null) {
             $patientId = $appointment->patient_id;
             $historicalAppointments = $this->appointmentService->getHistoricalAppointments('self', $patientId);
@@ -106,6 +106,7 @@ class AppointmentController extends Controller
     ################
     public function storeWalkInAppointment($patientId, $dependantId = null)
     {
+        // dd($patientId);
         $response = $this->timeSlotService->storeWalkInTimeSlot($this->clinicId, auth()->guard('doctor')->user()->id);
         if (!$response['success']) {
             return $response;
